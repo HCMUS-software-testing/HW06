@@ -1,0 +1,337 @@
+openapi: 3.0.3
+info:
+  title: EShop API Specification
+  description: Tài liệu đặc tả API Backend của hệ thống thương mại điện tử EShop phục vụ kiểm thử phần mềm (HW06).
+  version: 2.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local Development Server
+
+paths:
+  /api/register:
+    post:
+      summary: Đăng ký tài khoản người dùng
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                  example: Nguyen Van A
+                email:
+                  type: string
+                  format: email
+                  example: test@eshop.com
+                password:
+                  type: string
+                  format: password
+                  example: Password123!
+      responses:
+        '200':
+          description: Đăng ký thành công
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User registered successfully
+                  id:
+                    type: integer
+                    example: 1
+        '500':
+          description: Lỗi CSDL / Email đã tồn tại
+
+  /api/login:
+    post:
+      summary: Đăng nhập & Lấy JWT Token (FR-02)
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: test@eshop.com
+                password:
+                  type: string
+                  format: password
+                  example: Test1234!
+      responses:
+        '200':
+          description: Đăng nhập thành công, trả về token và thông tin người dùng
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Login successful
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Sai email hoặc mật khẩu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Tài khoản bị tạm khóa do đăng nhập sai nhiều lần
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/cart:
+    get:
+      summary: Lấy danh sách sản phẩm trong giỏ hàng (FR-07)
+      tags: [Cart]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Danh sách sản phẩm trong giỏ hàng
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartItem'
+        '401':
+          description: Chưa xác thực (thiếu token)
+    post:
+      summary: Thêm sản phẩm vào giỏ hàng (FR-07)
+      tags: [Cart]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+      responses:
+        '200':
+          description: Thêm vào giỏ hàng thành công
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Added to cart
+        '401':
+          description: Chưa xác thực
+
+  /api/products:
+    get:
+      summary: Lấy danh sách sản phẩm (hỗ trợ tìm kiếm)
+      tags: [Products]
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Từ khóa tìm kiếm theo tên sản phẩm
+      responses:
+        '200':
+          description: Danh sách sản phẩm
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      summary: Thêm mới sản phẩm (FR-15 - Yêu cầu Admin)
+      tags: [Products]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '200':
+          description: Tạo sản phẩm thành công
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Product created
+                  id:
+                    type: integer
+                    example: 6
+        '403':
+          description: Không có quyền Admin
+
+  /api/products/{id}:
+    get:
+      summary: Lấy chi tiết một sản phẩm theo ID (FR-15)
+      tags: [Products]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Chi tiết sản phẩm
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    put:
+      summary: Cập nhật thông tin sản phẩm (FR-15 - Yêu cầu Admin)
+      tags: [Products]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '200':
+          description: Cập nhật thành công
+        '403':
+          description: Không có quyền Admin
+    delete:
+      summary: Xóa sản phẩm theo ID (FR-15 - Yêu cầu Admin)
+      tags: [Products]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Xóa thành công
+        '403':
+          description: Không có quyền Admin
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: Test User
+        email:
+          type: string
+          format: email
+          example: test@eshop.com
+        role:
+          type: string
+          enum: [user, admin]
+          example: user
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: iPhone 15 Pro Max
+        price:
+          type: integer
+          example: 30000000
+        description:
+          type: string
+          example: Điện thoại cao cấp của Apple
+        imageUrl:
+          type: string
+          example: https://placehold.co/300x300/png?text=iPhone+15
+        category_id:
+          type: integer
+          example: 1
+
+    ProductInput:
+      type: object
+      required: [name, price, category_id]
+      properties:
+        name:
+          type: string
+          example: Sony WH-1000XM5
+        price:
+          type: integer
+          example: 8500000
+        description:
+          type: string
+          example: Tai nghe chống ồn đỉnh cao
+        imageUrl:
+          type: string
+          example: https://placehold.co/300x300.png
+        category_id:
+          type: integer
+          example: 3
+
+    CartItem:
+      type: object
+      required: [id, name, price, quantity]
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: iPhone 15 Pro Max
+        price:
+          type: integer
+          example: 30000000
+        quantity:
+          type: integer
+          minimum: 1
+          example: 2
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Invalid email or password
