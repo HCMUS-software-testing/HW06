@@ -1,0 +1,170 @@
+{
+  "info": {
+    "_postman_id": "c1a2b3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+    "name": "HW06_API_Testing",
+    "description": "Postman Test Suite cho HW06 - Kiểm thử API EShop (Lâm Hữu Khánh - MSSV: 23127205)\nBao gồm 2 tầng: 01_Sanity_Suite (100% Green trên CI) và 02_Bug_Discovery_Suite (Bắt bug thật của SUT theo SRS).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Collection Level Pre-request Script - Bắt buộc theo Mục 11 Đề bài",
+          "const studentId = pm.environment.get('student_id') || '23127205';",
+          "if (pm.request.headers.upsert) {",
+          "    pm.request.headers.upsert({ key: 'X-Student-Id', value: studentId });",
+          "} else {",
+          "    pm.request.headers.add({ key: 'X-Student-Id', value: studentId });",
+          "}",
+          "console.log('Request Sent with X-Student-Id: ' + studentId);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Collection Level Response Time Check",
+          "pm.test('Response time is acceptable (< 1500ms)', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(1500);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "01_Sanity_Suite",
+      "description": "Tầng kiểm thử Sanity & Regression đảm bảo 100% Pass trên CI/CD",
+      "item": [
+        {
+          "name": "00_Setup_Auth",
+          "description": "Khởi tạo JWT Tokens cho Admin và User",
+          "item": [
+            {
+              "name": "Admin Login (Get Token)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Return valid JWT token', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.property('token');",
+                      "    pm.expect(jsonData.token).to.be.a('string').and.not.empty;",
+                      "    pm.environment.set('admin_token', jsonData.token);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{admin_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "login"]
+                }
+              }
+            },
+            {
+              "name": "User Login (Get Token)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Return valid JWT token', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.property('token');",
+                      "    pm.expect(jsonData.token).to.be.a('string').and.not.empty;",
+                      "    pm.environment.set('user_token', jsonData.token);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "login"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR-02: Login & Account Lockout",
+          "description": "Bộ test cases baseline & extension cho FR-02 (Sanity)",
+          "item": []
+        },
+        {
+          "name": "FR-07: Shopping Cart",
+          "description": "Bộ test cases baseline & extension cho FR-07 (Sanity)",
+          "item": []
+        },
+        {
+          "name": "FR-15: Product CRUD",
+          "description": "Bộ test cases baseline & extension cho FR-15 (Sanity)",
+          "item": []
+        }
+      ]
+    },
+    {
+      "name": "02_Bug_Discovery_Suite",
+      "description": "Tầng kiểm thử vạch trần các lỗi nghiệp vụ và bảo mật thật sự của SUT theo SRS",
+      "item": [
+        {
+          "name": "FR-02: Bugs & Vulnerabilities",
+          "item": []
+        },
+        {
+          "name": "FR-07: Bugs & Missing Endpoints",
+          "item": []
+        },
+        {
+          "name": "FR-15: Bugs & Authorization Flaws",
+          "item": []
+        }
+      ]
+    },
+    {
+      "name": "03_Mock_Server_Demo",
+      "description": "Demo Mock Server giả lập Payment Gateway 3rd-party và lỗi 503",
+      "item": []
+    }
+  ]
+}

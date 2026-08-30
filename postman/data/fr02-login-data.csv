@@ -1,0 +1,9 @@
+test_id,description,email,password,expected_status,expected_message
+TC_FR02_DDT_01,Valid user login,test@eshop.com,Test1234!,200,Login successful
+TC_FR02_DDT_02,Valid admin login,admin@eshop.com,Admin123!,200,Login successful
+TC_FR02_DDT_03,Invalid password wrong chars,test@eshop.com,WrongPass999!,401,Invalid email or password
+TC_FR02_DDT_04,Non existent email,nobody_exists@eshop.com,Test1234!,401,Invalid email or password
+TC_FR02_DDT_05,Empty password field,test@eshop.com,,401,Invalid email or password
+TC_FR02_DDT_06,Empty email field,,Test1234!,401,Invalid email or password
+TC_FR02_DDT_07,Both fields empty,,,401,Invalid email or password
+TC_FR02_DDT_08,SQLi in email payload,' OR 1=1 --,Test1234!,401,Invalid email or password
