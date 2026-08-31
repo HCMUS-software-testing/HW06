@@ -16,3 +16,11 @@ docs(member-4): finalize reports and submission checklist
 
 Export after branch work with:
 git log --date=iso --pretty=format:'%h %ad %s' > submit/docs/git-commit-log.txt
+
+Recorded branch commits/runs:
+ef3ce6e generation + audit
+6116e39 Postman/Newman + classification
+5d0f70d reports/evidence/workflow
+5670868 GitHub Issue links
+61b709f green smoke CI; run 33414783638
+Full conformance failure run: 33414685928

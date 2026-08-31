@@ -11,3 +11,8 @@ Required evidence:
 3. Restore commit: assertion restored; both prior run links/screenshots retained.
 
 The fail-demo is never presented as a product defect. Genuine contract failures remain visible in the conformance run and are linked to bug reports. Add commit hashes, run URLs and screenshots after pushing the branch.
+
+## Recorded runs
+
+- Green smoke run: commit [`61b709f`](https://github.com/HCMUS-software-testing/HW06/commit/61b709f), Actions run [33414783638](https://github.com/HCMUS-software-testing/HW06/actions/runs/33414783638).
+- Full conformance failure: commit [`5670868`](https://github.com/HCMUS-software-testing/HW06/commit/5670868), Actions run [33414685928](https://github.com/HCMUS-software-testing/HW06/actions/runs/33414685928); 66 assertions failed, retained for classification.
