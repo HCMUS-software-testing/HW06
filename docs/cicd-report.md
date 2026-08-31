@@ -16,12 +16,13 @@ Nhằm đảm bảo chất lượng API liên tục (Continuous API Quality Assu
 ```mermaid
 graph LR
     Push["Git Push / PR to khanh/main"] --> Checkout["1. Checkout Code"]
-    Checkout --> SetupNode["2. Setup Node.js v18 & Install Deps"]
-    SetupNode --> SeedDB["3. Re-seed SQLite Database"]
-    SeedDB --> StartSUT["4. Start SUT Express Server (Headless)"]
-    StartSUT --> HealthCheck["5. Health-Check Polling (30 retries)"]
-    HealthCheck --> RunNewman["6. Run Newman Sanity Suite"]
-    RunNewman --> UploadArtifact["7. Upload HTML Test Report Artifact"]
+    Checkout --> SetupNode["2. Setup Node.js v20"]
+    SetupNode --> RunJob["3. Start SUT & Run Newman (Single Step)"]
+    RunJob --> SeedDB["- Re-seed SQLite Database"]
+    SeedDB --> StartSUT["- Start SUT Express Server (Port 3000)"]
+    StartSUT --> HealthCheck["- Health-Check Polling (30 retries)"]
+    HealthCheck --> RunNewman["- Execute Newman Sanity Suite"]
+    RunNewman --> UploadArtifact["4. Upload HTML Test Report Artifact"]
 ```
 
 ---
@@ -34,20 +35,20 @@ File cấu hình workflow CI/CD được định nghĩa tại [.github/workflows
 2. **Cô lập Môi trường & Khởi tạo CSDL:**
    ```bash
    cd eshop-sut/backend
-   npm ci
+   npm install
    node database.js
-   nohup node server.js > server.log 2>&1 &
+   node server.js > server.log 2>&1 &
    ```
    * *Ý nghĩa:* Trước mỗi lần test, CSDL SQLite `database.sqlite` được re-seed mới 100% bằng script `database.js` để triệt tiêu hoàn toàn sự phụ thuộc dữ liệu và ô nhiễm trạng thái.
 3. **Cơ chế Health-Check Polling:**
    ```bash
    for i in {1..30}; do
-     if curl -s http://localhost:3000 > /dev/null; then
-       echo "SUT is UP and HEALTHY!"
+     if curl -s http://localhost:3000/api/products > /dev/null 2>&1; then
+       echo "SUT is UP and responding at attempt $i!"
        break
      fi
-     echo "Waiting for SUT (attempt $i/30)..."
-     sleep 2
+     echo "Waiting for SUT... ($i/30)"
+     sleep 1
    done
    ```
    * *Ý nghĩa:* Đảm bảo server Express đã sẵn sàng nhận traffic trước khi Newman khởi chạy, ngăn chặn hoàn toàn lỗi Flaky Pipeline do Race Condition.
@@ -59,7 +60,7 @@ File cấu hình workflow CI/CD được định nghĩa tại [.github/workflows
      -r htmlextra,cli \
      --reporter-htmlextra-export newman/member-1/ci-report.html
    ```
-   * *Ý nghĩa:* Chỉ chạy tầng `01_Sanity_Suite` trên CI để đóng vai trò làm Quality Gate (chặn code hỏng trước khi merge).
+   * *Ý nghĩa:* Chạy toàn bộ tầng `01_Sanity_Suite` trên CI để đóng vai trò làm Quality Gate (chặn code hỏng trước khi merge).
 5. **Lưu trữ Artifact Báo cáo HTML:** Sử dụng `actions/upload-artifact@v4` với điều kiện `if: always()` để bảo toàn file `newman/member-1/ci-report.html` cho mỗi lần chạy.
 
 ---
@@ -72,8 +73,8 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ### 🟢 LẦN CHẠY 1: TOÀN BỘ API TEST CASES ĐỀU PASS (100% GREEN)
 
-- **Commit SHA:** `77f5c74`
-- **Commit Message:** `feat(skill): implement ai api test generator cli tool and update implementation plan`
+- **Commit SHA:** [`bb73f1e`](https://github.com/HCMUS-software-testing/HW06/commit/bb73f1e)
+- **Commit Message:** `ci(fix): unify sut server lifecycle and newman execution into single job step`
 - **URL GitHub Actions Run:** [https://github.com/HCMUS-software-testing/HW06/actions/workflows/api-tests.yml](https://github.com/HCMUS-software-testing/HW06/actions/workflows/api-tests.yml)
 - **Kết quả thực thi:**
   - **Trạng thái:** ✅ **Success (Passed 100%)**
@@ -87,8 +88,8 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ### 🔴 LẦN CHẠY 2: CỐ TÌNH TẠO ASSERTION FAIL (DEMONSTRATE RED PIPELINE)
 
-- **Commit SHA:** `f53f50d`
-- **Commit Message:** `ci(member-1): trigger intentional assertion failure for ci demonstration`
+- **Commit SHA:** [`a8370b2`](https://github.com/HCMUS-software-testing/HW06/commit/a8370b2)
+- **Commit Message:** `ci(demo): trigger intentional newman assertion failure on github actions`
 - **URL GitHub Actions Run:** [https://github.com/HCMUS-software-testing/HW06/actions/workflows/api-tests.yml](https://github.com/HCMUS-software-testing/HW06/actions/workflows/api-tests.yml)
 - **Chi tiết thay đổi gây lỗi (Intentional Change):**
   Trong `postman/HW06_API_Testing.postman_collection.json`, tại request `Admin Login (Get Token)`, thay đổi assertion mã phản hồi:
@@ -114,8 +115,8 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ### 🟢 LẦN CHẠY 3: KHÔI PHỤC HOÀN TOÀN (REVERT TO GREEN)
 
-- **Commit SHA:** (Commit khôi phục hiện tại)
-- **Commit Message:** `fix(member-1): revert intentional failure and add complete cicd report`
+- **Commit SHA:** [`df32f81`](https://github.com/HCMUS-software-testing/HW06/commit/df32f81)
+- **Commit Message:** `fix(member-1): revert intentional failure and finalize cicd report`
 - **Kết quả:** Khôi phục lại assertion `pm.response.to.have.status(200);`, Pipeline trở lại trạng thái **Success (100% Green)**.
 
 ---
