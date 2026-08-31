@@ -6,9 +6,8 @@ Screenshots intentionally not fabricated.
 - [ ] Newman terminal output: hostname and counts visible.
 - [ ] Newman HTML report screenshot.
 - [ ] One screenshot per confirmed GitHub Issue.
-- [ ] GitHub Issue URLs.
+- [x] GitHub Issue URLs: #1, #2, #3, #4.
 - [ ] CI pass-demo run URL/screenshot.
 - [ ] CI fail-demo run URL/screenshot.
 - [ ] Self-drawn Agent Skill diagram PNG.
 - [ ] Student-recorded demo video URL.
-
