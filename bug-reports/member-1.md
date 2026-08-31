@@ -35,6 +35,8 @@
 ---
 
 ### 🐛 BUG-FR02-01: Bộ đếm `login_attempts` tăng 2 đơn vị mỗi lần đăng nhập sai
+
+![GitHub Issue #1](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-1.png)
 - **Mã lỗi:** `BUG-FR02-01`
 - **API Endpoint:** `POST /api/login`
 - **Mức độ nghiêm trọng:** **High** (Lỗi logic nghiệp vụ ảnh hưởng trực tiếp đến trải nghiệm người dùng)
@@ -63,6 +65,8 @@
 ---
 
 ### 🐛 BUG-FR02-02: Thời gian khóa tài khoản là 180s (3 phút) thay vì 30s
+
+![GitHub Issue #2](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-2.png)
 - **Mã lỗi:** `BUG-FR02-02`
 - **API Endpoint:** `POST /api/login`
 - **Mức độ nghiêm trọng:** **Medium**
@@ -85,6 +89,8 @@
 ---
 
 ### 🐛 BUG-FR02-03: Thiếu validation định dạng Email, trả về 401 thay vì 400
+
+![GitHub Issue #3](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-3.png)
 - **Mã lỗi:** `BUG-FR02-03`
 - **API Endpoint:** `POST /api/login`
 - **Mức độ nghiêm trọng:** **Low**
@@ -96,6 +102,8 @@
 ---
 
 ### 🐛 BUG-FR02-04: Lỗ hổng bảo mật nghiêm trọng — Rò rỉ mật khẩu trong Response Login
+
+![GitHub Issue #4](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-4.png)
 - **Mã lỗi:** `BUG-FR02-04`
 - **API Endpoint:** `POST /api/login`
 - **Mức độ nghiêm trọng:** **Critical** (Lỗ hổng bảo mật loại SEC-01 — Data Exposure / OWASP API Security Top 10)
@@ -142,6 +150,8 @@
 ---
 
 ### 🐛 BUG-FR07-01: Cho phép thêm sản phẩm vào giỏ hàng với số lượng âm hoặc bằng 0
+
+![GitHub Issue #5](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-5.png)
 - **Mã lỗi:** `BUG-FR07-01`
 - **API Endpoint:** `POST /api/cart`
 - **Mức độ nghiêm trọng:** **High** (Lỗi toàn vẹn nghiệp vụ kinh doanh)
@@ -177,6 +187,8 @@
 ---
 
 ### 🐛 BUG-FR07-02: Thêm trùng sản phẩm bị nhân bản dòng thay vì cộng dồn số lượng
+
+![GitHub Issue #6](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-6.png)
 - **Mã lỗi:** `BUG-FR07-02`
 - **API Endpoint:** `POST /api/cart`
 - **Mức độ nghiêm trọng:** **Medium**
@@ -186,6 +198,8 @@
 ---
 
 ### 🐛 BUG-FR07-03: Thiếu hoàn toàn API Cập nhật số lượng (`PUT`) và Xóa item (`DELETE`)
+
+![GitHub Issue #7](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-7.png)
 - **Mã lỗi:** `BUG-FR07-03`
 - **API Endpoint:** `PUT /api/cart` & `DELETE /api/cart/:id`
 - **Mức độ nghiêm trọng:** **Critical** (Thiếu hụt tính năng cốt lõi theo đặc tả hệ thống thương mại điện tử)
@@ -195,6 +209,8 @@
 ---
 
 ### 🐛 BUG-FR07-04: Giỏ hàng lưu in-memory, mất sạch dữ liệu khi server restart
+
+![GitHub Issue #8](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-8.png)
 - **Mã lỗi:** `BUG-FR07-04`
 - **API Endpoint:** `GET/POST /api/cart`
 - **Mức độ nghiêm trọng:** **High** (Lỗi kiến trúc phần mềm)
@@ -208,6 +224,8 @@
 ---
 
 ### 🐛 BUG-FR15-01: Lỗ hổng bảo mật nghiêm trọng — Thiếu Middleware xác thực Admin trên CRUD Sản Phẩm
+
+![GitHub Issue #9](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-9.png)
 - **Mã lỗi:** `BUG-FR15-01`
 - **API Endpoint:** `POST /api/products`, `PUT /api/products/:id`, `DELETE /api/products/:id`
 - **Mức độ nghiêm trọng:** **Critical** (Lỗ hổng bảo mật loại SEC-03 — Broken Object Level Authorization / Missing Authentication)
@@ -239,6 +257,8 @@
 ---
 
 ### 🐛 BUG-FR15-02: Lỗi ép kiểu `price` sang String ở các sản phẩm có ID chẵn
+
+![GitHub Issue #10](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-10.png)
 - **Mã lỗi:** `BUG-FR15-02`
 - **API Endpoint:** `GET /api/products/:id`
 - **Mức độ nghiêm trọng:** **Medium** (Lỗi vi phạm hợp đồng dữ liệu API Schema Contract)
@@ -253,6 +273,8 @@
 ---
 
 ### 🐛 BUG-FR15-03: Cho phép tạo sản phẩm với giá âm (`price < 0`) và tên rỗng
+
+![GitHub Issue #11](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-11.png)
 - **Mã lỗi:** `BUG-FR15-03`
 - **API Endpoint:** `POST /api/products`
 - **Mức độ nghiêm trọng:** **High**
@@ -265,6 +287,8 @@
 ---
 
 ### 🐛 BUG-FR15-04: API Import Sản phẩm thiếu kiểm tra vai trò Admin
+
+![GitHub Issue #12](file:///d:/LEARNING/CNTT_CLC(2023-2027)/NamBa/HK3/Ki%E1%BB%83m%20th%E1%BB%AD%20ph%E1%BA%A7n%20m%E1%BB%81m/HW/HW6/HW06/docs/screenshots/github-issues/issue-12.png)
 - **Mã lỗi:** `BUG-FR15-04`
 - **API Endpoint:** `POST /api/admin/import-products`
 - **Mức độ nghiêm trọng:** **High** (Lỗ hổng leo thang đặc quyền - Privilege Escalation)

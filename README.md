@@ -30,13 +30,13 @@
 | Chỉ số tổng hợp | FR-02 (Login & Lockout) | FR-07 (Cart) | FR-15 (Product CRUD) | TỔNG CỘNG |
 |---|:---:|:---:|:---:|:---:|
 | **Test Cases AI Sinh ra** | 38 | 38 | 38 | **114** |
-| **Test Cases được Audit** | 38 | 38 | 38 | **114** |
+| **Test Cases được Audit** | 38 | 38 | 38 | **114 (100%)** |
 | **Test Cases Con người Tự thêm** | 6 | 6 | 6 | **18** |
 | **Tổng số Test Cases Thiết kế** | **44** | **44** | **44** | **132** |
-| **Test Cases Thực thi trong Sanity Suite** | 30 | 30 | 30 | **90** |
-| **Test Cases Pass (Sanity Suite CI)** | 30 | 30 | 30 | **90 (100%)** |
-| **Test Cases Bắt Bug (Bug Discovery Suite)** | 14 | 14 | 14 | **42** |
-| **Số lỗi thật (Bugs) phát hiện & Báo cáo** | 3 | 3 | 4 | **10 Bugs** |
+| **Requests thực thi trong Sanity Suite** | 18 | 12 | 11 | **41 (+2 Auth = 43)** |
+| **Assertions Pass trên Sanity Suite (CI)** | 48 | 34 | 36 | **118 (100% Green)** |
+| **Requests Bắt Bug (Bug Discovery Suite)** | 2 | 4 | 3 | **9 Requests** |
+| **Số lỗi thật (Bugs) phát hiện & Báo cáo** | **4** | **4** | **4** | **12 Bugs (Log Issues #1-#12)** |
 
 ---
 

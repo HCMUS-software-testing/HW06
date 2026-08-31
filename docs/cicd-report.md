@@ -84,6 +84,8 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
   - **Thời gian thực thi trung bình:** `2 ms / request`
   - **Artifact sinh ra:** `newman-ci-report.zip` chứa `ci-report.html`.
 
+![CI Pass Run Screenshot](screenshots/cicd-runs/ci-pass.png)
+
 ---
 
 ### 🔴 LẦN CHẠY 2: CỐ TÌNH TẠO ASSERTION FAIL (DEMONSTRATE RED PIPELINE)
@@ -110,6 +112,8 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
        inside "01_Sanity_Suite / 00_Setup_Auth / Admin Login (Get Token)"
     ```
   - **Minh chứng bảo vệ:** Pipeline tự động báo đỏ và chặn merge, đồng thời bước `Dump SUT Logs on Failure` in toàn bộ log server ra màn hình.
+
+![CI Fail Run Screenshot](screenshots/cicd-runs/ci-fail.png)
 
 ---
 
