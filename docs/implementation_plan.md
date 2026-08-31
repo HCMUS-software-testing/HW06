@@ -2,6 +2,7 @@
 
 > [!NOTE]
 > **Changelog v2.2 (Sau Phiên Phỏng Vấn Kỹ Thuật /grill-me)**:
+>
 > 1. **Chiến lược Quản lý CSDL & Test Fixtures**: Tạo tài khoản test độc lập trong `database.js` và tự động hóa lệnh `node database.js` (re-seed) trước mỗi lần chạy Newman / CI để loại bỏ hoàn toàn ô nhiễm dữ liệu do Lockout và CRUD.
 > 2. **Kiến trúc Tách Tầng Test Suite**: Phân tách Collection thành `01_Sanity_Suite` (đảm bảo 100% Green cho CI Commit 1) và `02_Bug_Discovery_Suite` (chuyên trách phát hiện và chứng minh bug thật của SUT theo đặc tả SRS).
 > 3. **Phân rã Chi tiết FR-15 (Product CRUD - 44 TC)**: Định lượng phân bổ rủi ro: `POST` (14 TC), `PUT` (12 TC), `DELETE` (10 TC), `GET` (8 TC).
@@ -13,17 +14,17 @@
 
 ## 1. Tổng Quan
 
-| Mục | Chi tiết |
-|---|---|
-| **Sinh viên** | Lâm Hữu Khánh (MSSV: 23127205) |
-| **Vai trò** | Thành viên 1 |
-| **Branch** | `khanh` |
-| **Repo nhóm** | `https://github.com/HCMUS-software-testing/HW06.git` |
+| Mục                     | Chi tiết                                                                                                        |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Sinh viên**           | Lâm Hữu Khánh (MSSV: 23127205)                                                                                  |
+| **Vai trò**             | Thành viên 1                                                                                                    |
+| **Branch**              | `khanh`                                                                                                         |
+| **Repo nhóm**           | `https://github.com/HCMUS-software-testing/HW06.git`                                                            |
 | **Bộ ba API phụ trách** | **FR-02** (Pool A - Đăng nhập & Khóa TK) + **FR-07** (Pool B - Giỏ hàng) + **FR-15** (Pool C - Quản lý SP CRUD) |
-| **Công cụ kiểm thử** | Postman + Newman CLI (`htmlextra`) |
-| **Công cụ AI hỗ trợ** | Antigravity (Claude / Gemini) |
-| **Ngôn ngữ** | Tiếng Việt cho báo cáo chính, Tiếng Anh cho mã nguồn/test case/Postman scripts |
-| **Trùng API nhóm** | ✅ Đã xác nhận không trùng với các thành viên khác |
+| **Công cụ kiểm thử**    | Postman + Newman CLI (`htmlextra`)                                                                              |
+| **Công cụ AI hỗ trợ**   | Antigravity (Claude / Gemini)                                                                                   |
+| **Ngôn ngữ**            | Tiếng Việt cho báo cáo chính, Tiếng Anh cho mã nguồn/test case/Postman scripts                                  |
+| **Trùng API nhóm**      | ✅ Đã xác nhận không trùng với các thành viên khác                                                              |
 
 ---
 
@@ -62,6 +63,7 @@ node server.js
 > [!IMPORTANT]
 > **Chiến lược Test Fixtures Độc lập (Tránh lỗi dây chuyền do Lockout và CRUD):**
 > Trong `database.js`, bổ sung sẵn các tài khoản test chuyên biệt:
+>
 > - **Admin**: `admin@eshop.com` / `Admin123!` (Role: admin)
 > - **User chuẩn (Sanity)**: `test@eshop.com` / `Test1234!` (Role: user)
 > - **User kiểm thử Lockout**: `lockout_target@eshop.com` / `Lockout123!` (Dùng riêng cho kịch bản sai pass liên tiếp)
@@ -130,7 +132,11 @@ HW06/
     { "key": "admin_password", "value": "Admin123!", "enabled": true },
     { "key": "user_email", "value": "test@eshop.com", "enabled": true },
     { "key": "user_password", "value": "Test1234!", "enabled": true },
-    { "key": "lockout_email", "value": "lockout_target@eshop.com", "enabled": true },
+    {
+      "key": "lockout_email",
+      "value": "lockout_target@eshop.com",
+      "enabled": true
+    },
     { "key": "lockout_password", "value": "Lockout123!", "enabled": true },
     { "key": "admin_token", "value": "", "enabled": true },
     { "key": "user_token", "value": "", "enabled": true }
@@ -145,10 +151,13 @@ HW06/
 ```javascript
 // Pre-request Script - Bắt buộc theo Mục 11 Đề bài
 pm.request.headers.add({
-    key: 'X-Student-Id',
-    value: pm.environment.get('student_id') || '23127205'
+  key: "X-Student-Id",
+  value: pm.environment.get("student_id") || "23127205",
 });
-console.log('Request Sent with X-Student-Id: ' + (pm.environment.get('student_id') || '23127205'));
+console.log(
+  "Request Sent with X-Student-Id: " +
+    (pm.environment.get("student_id") || "23127205"),
+);
 ```
 
 **Commit**: `setup(member-1): initialize project structure, postman environments, fixtures and pre-request scripts`
@@ -159,26 +168,29 @@ console.log('Request Sent with X-Student-Id: ' + (pm.environment.get('student_id
 
 ### Định lượng Phân bổ Test Cases (Mục tiêu: 44 TC)
 
-| Phân loại Coverage | Baseline AI (Đã Audit) | Human Extension | Tổng | Trọng tâm kiểm thử |
-|---|---:|---:|---:|---|
-| **Phân hoạch miền** | 14 | 1 | 15 | Email (format, domain, rỗng), Password (độ dài, ký tự đặc biệt, hoa/thường, rỗng) |
-| **Chuyển trạng thái** | 9 | 2 | 11 | Đăng nhập sai 1 $\rightarrow$ 2 $\rightarrow$ 3 lần (khóa) $\rightarrow$ mở khóa, reset counter khi đúng |
-| **Bảo mật (SEC-01~07)** | 9 | 2 | 11 | SQL Injection payload (`' OR 1=1 --`), Brute-force, JWT token validation & tampering, role claim |
-| **Schema Validation** | 6 | 1 | 7 | JSON Schema Response 200 (token + user object), Error Schema 400/401/403, Content-Type |
-| **Tổng cộng** | **38** | **6** | **44** | |
+| Phân loại Coverage      | Baseline AI (Đã Audit) | Human Extension |   Tổng | Trọng tâm kiểm thử                                                                                      |
+| ----------------------- | ---------------------: | --------------: | -----: | ------------------------------------------------------------------------------------------------------- |
+| **Phân hoạch miền**     |                     14 |               1 |     15 | Email (format, domain, rỗng), Password (độ dài, ký tự đặc biệt, hoa/thường, rỗng)                       |
+| **Chuyển trạng thái**   |                      9 |               2 |     11 | Đăng nhập sai 1$\rightarrow$ 2 $\rightarrow$ 3 lần (khóa) $\rightarrow$ mở khóa, reset counter khi đúng |
+| **Bảo mật (SEC-01~07)** |                      9 |               2 |     11 | SQL Injection payload (`' OR 1=1 --`), Brute-force, JWT token validation & tampering, role claim        |
+| **Schema Validation**   |                      6 |               1 |      7 | JSON Schema Response 200 (token + user object), Error Schema 400/401/403, Content-Type                  |
+| **Tổng cộng**           |                 **38** |           **6** | **44** |                                                                                                         |
 
 ### Bước 1.1: Tạo Test Cases bằng AI (Kỷ luật từng bước)
-Sử dụng AI tạo test case qua 5 prompts độc lập (Domain $\rightarrow$ State Transition $\rightarrow$ Security $\rightarrow$ Schema $\rightarrow$ Tổng hợp).  
+
+Sử dụng AI tạo test case qua 5 prompts độc lập (Domain $\rightarrow$ State Transition $\rightarrow$ Security $\rightarrow$ Schema $\rightarrow$ Tổng hợp).
 Lưu transcript tại `docs/ai-audit-transcripts/fr02-generation.md`.
 
 **Commit**: `test(member-1): generate API test cases for FR-02`
 
 ### Bước 1.2: Kiểm toán (Audit)
+
 Đánh giá từng test case do AI sinh ra với 3 nhãn: `VALID`, `INVALID`, `INCOMPLETE` kèm lý do và điều chỉnh. Ghi nhận tại `docs/ai-audit-report.md`.
 
 **Commit**: `test(member-1): audit generated test cases for FR-02`
 
 ### Bước 1.3: Mở rộng (Human Extension — 6 Test Cases)
+
 1. `FR02-EXT-01`: **Lockout Boundary Timing** — Gửi request sai 3 lần, gửi lại ở giây thứ 29 (chưa hết thời hạn khóa) $\rightarrow$ Vẫn bị khóa (403).
 2. `FR02-EXT-02`: **Counter Reset on Success** — Đăng nhập sai 2 lần liên tiếp, lần thứ 3 nhập đúng $\rightarrow$ Đăng nhập thành công và bộ đếm reset về 0.
 3. `FR02-EXT-03`: **Concurrent Lockout Race Condition** — Gửi đồng thời nhiều request sai từ 2 tab Postman để kiểm tra tính nguyên tử của bộ đếm.
@@ -189,8 +201,10 @@ Lưu transcript tại `docs/ai-audit-transcripts/fr02-generation.md`.
 **Commit**: `test(member-1): add human-designed test cases for FR-02`
 
 ### Bước 1.4: Triển khai Postman & Newman
+
 - Sử dụng Data-driven testing với `postman/data/fr02-login-data.csv`.
 - Chạy test và export HTML report qua Newman:
+
 ```bash
 newman run postman/HW06_API_Testing.postman_collection.json \
   -e postman/HW06_Local.postman_environment.json \
@@ -202,6 +216,7 @@ newman run postman/HW06_API_Testing.postman_collection.json \
 **Commit**: `test(member-1): implement Postman tests and Newman report for FR-02`
 
 ### Bước 1.5: Báo cáo Lỗi (Bug Reporting)
+
 Phát hiện và ghi nhận lỗi SUT (ví dụ: `login_attempts` cộng 2 thay vì cộng 1, thời gian khóa 180s thay vì 30s) vào `bug-reports/member-1.md` và tạo GitHub Issue.
 
 **Commit**: `docs(member-1): add bug reports for FR-02`
@@ -212,19 +227,20 @@ Phát hiện và ghi nhận lỗi SUT (ví dụ: `login_attempts` cộng 2 thay 
 
 ### Định lượng Phân bổ Test Cases (Mục tiêu: 44 TC)
 
-| Phân loại Coverage | Baseline AI | Human Extension | Tổng | Trọng tâm kiểm thử |
-|---|---:|---:|---:|---|
-| **Phân hoạch miền** | 12 | 2 | 14 | `product_id` (hợp lệ, âm, ký tự, không tồn tại), `quantity` (0, âm, số thực, vượt tồn kho, max int) |
-| **Chuyển trạng thái** | 10 | 2 | 12 | Thêm mới $\rightarrow$ Thêm trùng (tăng SL) $\rightarrow$ Cập nhật SL $\rightarrow$ Xóa sản phẩm $\rightarrow$ Giỏ hàng rỗng |
-| **Bảo mật (SEC-01~07)** | 9 | 1 | 10 | IDOR truy cập/sửa giỏ hàng người dùng khác, request không token, SQLi trong body payload |
-| **Schema Validation** | 7 | 1 | 8 | Schema giỏ hàng có item, giỏ hàng trống `[]`, schema thông báo lỗi validation |
-| **Tổng cộng** | **38** | **6** | **44** | |
+| Phân loại Coverage      | Baseline AI | Human Extension |   Tổng | Trọng tâm kiểm thử                                                                                                          |
+| ----------------------- | ----------: | --------------: | -----: | --------------------------------------------------------------------------------------------------------------------------- |
+| **Phân hoạch miền**     |          12 |               2 |     14 | `product_id` (hợp lệ, âm, ký tự, không tồn tại), `quantity` (0, âm, số thực, vượt tồn kho, max int)                         |
+| **Chuyển trạng thái**   |          10 |               2 |     12 | Thêm mới$\rightarrow$ Thêm trùng (tăng SL) $\rightarrow$ Cập nhật SL $\rightarrow$ Xóa sản phẩm $\rightarrow$ Giỏ hàng rỗng |
+| **Bảo mật (SEC-01~07)** |           9 |               1 |     10 | IDOR truy cập/sửa giỏ hàng người dùng khác, request không token, SQLi trong body payload                                    |
+| **Schema Validation**   |           7 |               1 |      8 | Schema giỏ hàng có item, giỏ hàng trống`[]`, schema thông báo lỗi validation                                                |
+| **Tổng cộng**           |      **38** |           **6** | **44** |                                                                                                                             |
 
 > [!WARNING]
 > **Vạch trần Lỗi Thiết kế Kiến trúc SUT:**
 > Backend SUT chỉ có `GET /api/cart` và `POST /api/cart` (lưu in-memory `userCarts`), chưa có API `PUT /api/cart` hay `DELETE /api/cart`. Bộ test cases sẽ kiểm thử toàn diện hành vi này và ghi nhận bug thiếu hụt API.
 
 **Commits**:
+
 ```text
 test(member-1): generate API test cases for FR-07
 test(member-1): audit generated test cases for FR-07
@@ -239,15 +255,16 @@ docs(member-1): add bug reports for FR-07
 
 ### Định lượng Phân bổ Chi tiết 44 Test Cases cho 4 HTTP Methods
 
-| HTTP Method & Endpoint | Số lượng TC | Trọng tâm phân hoạch & kiểm thử |
-|---|:---:|---|
-| **POST `/api/products`** (Tạo mới) | **14 TC** | Name (rỗng, 255 ký tự, >255 ký tự), Price (>0, =0, âm, kiểu chuỗi), `category_id` hợp lệ/không tồn tại, quyền Admin vs User (403), Schema 200/201. |
-| **PUT `/api/products/:id`** (Cập nhật) | **12 TC** | Sửa từng trường (chỉ đổi đúng 1 SP, không đổi lan), cập nhật giá âm, ID không tồn tại (404), quyền Admin, XSS payload trong description. |
-| **DELETE `/api/products/:id`** (Xóa) | **10 TC** | Xóa SP thành công $\rightarrow$ verify gọi lại GET trả về 404, xóa SP đã xóa, ID âm / ký tự đặc biệt, quyền Admin vs User (403). |
-| **GET `/api/products/:id`** (Xem chi tiết) | **8 TC** | Lấy SP tồn tại, SP không tồn tại, kiểm tra lỗi SUT ép kiểu `price` sang string ở ID chẵn (Bug phát hiện trong `server.js`), schema response. |
-| **TỔNG CỘNG** | **44 TC** | **38 AI Baseline + 6 Human Extension** |
+| HTTP Method & Endpoint                     | Số lượng TC | Trọng tâm phân hoạch & kiểm thử                                                                                                                   |
+| ------------------------------------------ | :---------: | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **POST `/api/products`** (Tạo mới)         |  **14 TC**  | Name (rỗng, 255 ký tự, >255 ký tự), Price (>0, =0, âm, kiểu chuỗi),`category_id` hợp lệ/không tồn tại, quyền Admin vs User (403), Schema 200/201. |
+| **PUT `/api/products/:id`** (Cập nhật)     |  **12 TC**  | Sửa từng trường (chỉ đổi đúng 1 SP, không đổi lan), cập nhật giá âm, ID không tồn tại (404), quyền Admin, XSS payload trong description.          |
+| **DELETE `/api/products/:id`** (Xóa)       |  **10 TC**  | Xóa SP thành công$\rightarrow$ verify gọi lại GET trả về 404, xóa SP đã xóa, ID âm / ký tự đặc biệt, quyền Admin vs User (403).                   |
+| **GET `/api/products/:id`** (Xem chi tiết) |  **8 TC**   | Lấy SP tồn tại, SP không tồn tại, kiểm tra lỗi SUT ép kiểu`price` sang string ở ID chẵn (Bug phát hiện trong `server.js`), schema response.       |
+| **TỔNG CỘNG**                              |  **44 TC**  | **38 AI Baseline + 6 Human Extension**                                                                                                            |
 
 **Commits**:
+
 ```text
 test(member-1): generate API test cases for FR-15
 test(member-1): audit generated test cases for FR-15
@@ -405,15 +422,15 @@ graph LR
 
 ### 10.1 Ma Trận 7 Tính Năng Postman Nâng Cao
 
-| STT | Tính năng Postman | Vị trí triển khai trong bài | Minh chứng đính kèm |
-|:---:|---|---|---|
-| 1 | **Variables Multi-scope** | Environment (`base_url`), Collection (`student_id`), CSV Data (`email`, `quantity`) | File JSON Collection & Environment |
-| 2 | **Pre-request Scripts** | Tự động inject header `X-Student-Id: 23127205` & dynamic timestamp | Ảnh chụp Console Postman |
-| 3 | **Test Scripts & Assertions**| Chai assertions (`pm.expect`), status code, response time `< 500ms` | Báo cáo Newman HTML |
-| 4 | **JSON Schema Validation** | Thư viện `ajv` validate cấu trúc body response theo OpenAPI spec | Code trong Tests tab & HTML report |
-| 5 | **Data-Driven Testing (DDT)**| Collection Runner chạy 3 file CSV trong thư mục `postman/data/` | Iteration logs trong Newman HTML |
-| 6 | **Mock Server** | Postman Mock Server giả lập Payment Gateway 3rd-party hoặc Mock 503 error | URL mock server & response screenshot |
-| 7 | **Workspaces & Monitors** | Tổ chức Postman Team Workspace chuẩn hóa | Ảnh chụp giao diện Workspace Postman |
+| STT | Tính năng Postman             | Vị trí triển khai trong bài                                                         | Minh chứng đính kèm                   |
+| :-: | ----------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------- |
+|  1  | **Variables Multi-scope**     | Environment (`base_url`), Collection (`student_id`), CSV Data (`email`, `quantity`) | File JSON Collection & Environment    |
+|  2  | **Pre-request Scripts**       | Tự động inject header`X-Student-Id: 23127205` & dynamic timestamp                   | Ảnh chụp Console Postman              |
+|  3  | **Test Scripts & Assertions** | Chai assertions (`pm.expect`), status code, response time `< 500ms`                 | Báo cáo Newman HTML                   |
+|  4  | **JSON Schema Validation**    | Thư viện`ajv` validate cấu trúc body response theo OpenAPI spec                     | Code trong Tests tab & HTML report    |
+|  5  | **Data-Driven Testing (DDT)** | Collection Runner chạy 3 file CSV trong thư mục`postman/data/`                      | Iteration logs trong Newman HTML      |
+|  6  | **Mock Server**               | Postman Mock Server giả lập Payment Gateway 3rd-party hoặc Mock 503 error           | URL mock server & response screenshot |
+|  7  | **Workspaces & Monitors**     | Tổ chức Postman Team Workspace chuẩn hóa                                            | Ảnh chụp giao diện Workspace Postman  |
 
 ### 10.2 Checklist Nộp Bài Cuối Cùng
 
