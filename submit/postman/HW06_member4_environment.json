@@ -1,0 +1,42 @@
+{
+  "id": "hw06-member4-local",
+  "name": "HW06 Member 4 Local",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "enabled": true
+    },
+    {
+      "key": "studentId",
+      "value": "23127326",
+      "enabled": true
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "userToken",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "adminId",
+      "value": "1",
+      "enabled": true
+    },
+    {
+      "key": "userId",
+      "value": "2",
+      "enabled": true
+    },
+    {
+      "key": "orderId",
+      "value": "",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
