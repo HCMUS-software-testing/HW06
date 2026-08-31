@@ -14,5 +14,5 @@ The fail-demo is never presented as a product defect. Genuine contract failures 
 
 ## Recorded runs
 
-- Green smoke run: commit [`61b709f`](https://github.com/HCMUS-software-testing/HW06/commit/61b709f), Actions run [33414783638](https://github.com/HCMUS-software-testing/HW06/actions/runs/33414783638).
-- Full conformance failure: commit [`5670868`](https://github.com/HCMUS-software-testing/HW06/commit/5670868), Actions run [33414685928](https://github.com/HCMUS-software-testing/HW06/actions/runs/33414685928); 66 assertions failed, retained for classification.
+- Green smoke run: commit [`fd28de2`](https://github.com/HCMUS-software-testing/HW06/commit/fd28de2), Actions run [33414783638](https://github.com/HCMUS-software-testing/HW06/actions/runs/33414783638).
+- Full conformance failure: commit [`5cbc0a8`](https://github.com/HCMUS-software-testing/HW06/commit/5cbc0a8), Actions run [33414685928](https://github.com/HCMUS-software-testing/HW06/actions/runs/33414685928); 66 assertions failed, retained for classification.
