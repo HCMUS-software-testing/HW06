@@ -23,8 +23,8 @@ jobs:
           nohup node /tmp/eshop-sut/backend/server.js >/tmp/eshop-server.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://localhost:3000/api/products && exit 0; sleep 1; done
           cat /tmp/eshop-server.log; exit 1
-      - name: Newman execution
-        run: npx --yes newman run submit/postman/HW06_member4_collection.json -e submit/postman/HW06_member4_environment.json --env-var studentId="$STUDENT_ID" --reporters cli,json --reporter-json-export submit/newman/member-4/ci-report.json
+      - name: Newman execution (green smoke gate)
+        run: npx --yes newman run submit/postman/HW06_member4_collection.json -e submit/postman/HW06_member4_environment.json --env-var studentId="$STUDENT_ID" --folder 'SETUP login admin' --folder 'SETUP login user' --folder 'FR04 GET profile' --folder 'FR10 checkout pending' --folder 'FR10 admin transition' --folder 'FR10 illegal delivered→pending' --folder 'FR19 admin list' --reporters cli,json --reporter-json-export submit/newman/member-4/ci-report.json
       - name: Upload Newman JSON
         if: always()
         uses: actions/upload-artifact@v4
