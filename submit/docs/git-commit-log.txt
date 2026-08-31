@@ -1,0 +1,18 @@
+Current source repository log (before member-4 execution commits):
+433e954 add requirements and feature division
+54607b0 first commit
+
+Required branch commits to create after replacing placeholder:
+test(member-4): generate API test cases for FR-04 FR-10 FR-19
+test(member-4): audit generated API test cases
+test(member-4): add human-designed security and state cases
+test(member-4): implement Postman tests and Newman reports
+docs(member-4): add verified bug reports and evidence links
+feat(member-4): add reusable AI API test generator skill
+ci(member-4): add Newman workflow pass-demo
+ci(member-4): demonstrate intentional single-test failure
+ci(member-4): restore passing assertion
+docs(member-4): finalize reports and submission checklist
+
+Export after branch work with:
+git log --date=iso --pretty=format:'%h %ad %s' > submit/docs/git-commit-log.txt

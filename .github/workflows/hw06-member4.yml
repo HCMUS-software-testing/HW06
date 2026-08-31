@@ -1,0 +1,33 @@
+name: HW06 Member 4 Newman
+on:
+  push:
+    paths: ['submit/**', '.github/workflows/hw06-member4.yml']
+  workflow_dispatch:
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    env:
+      STUDENT_ID: ${{ secrets.STUDENT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 20}
+      - name: Validate Student ID
+        run: test "$STUDENT_ID" = "23127326"
+      - name: Clone pinned SUT
+        run: git clone https://github.com/ttbhanh/eshop-sut.git /tmp/eshop-sut && cd /tmp/eshop-sut && git checkout 85af3ba875c88283615e22cb108f13e2fccaf0e9
+      - name: Install and seed SUT
+        run: npm --prefix /tmp/eshop-sut/backend ci && node /tmp/eshop-sut/backend/database.js
+      - name: Start backend and wait
+        run: |
+          nohup node /tmp/eshop-sut/backend/server.js >/tmp/eshop-server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://localhost:3000/api/products && exit 0; sleep 1; done
+          cat /tmp/eshop-server.log; exit 1
+      - name: Newman execution
+        run: npx --yes newman run submit/postman/HW06_member4_collection.json -e submit/postman/HW06_member4_environment.json --env-var studentId="$STUDENT_ID" --reporters cli,json --reporter-json-export submit/newman/member-4/ci-report.json
+      - name: Upload Newman JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: member-4-newman
+          path: submit/newman/member-4/
