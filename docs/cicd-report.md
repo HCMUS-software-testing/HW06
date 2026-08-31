@@ -115,7 +115,7 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ### 🟢 LẦN CHẠY 3: KHÔI PHỤC HOÀN TOÀN (REVERT TO GREEN)
 
-- **Commit SHA:** [`df32f81`](https://github.com/HCMUS-software-testing/HW06/commit/df32f81)
+- **Commit SHA:** [`1193425`](https://github.com/HCMUS-software-testing/HW06/commit/1193425)
 - **Commit Message:** `fix(member-1): revert intentional failure and finalize cicd report`
 - **Kết quả:** Khôi phục lại assertion `pm.response.to.have.status(200);`, Pipeline trở lại trạng thái **Success (100% Green)**.
 
