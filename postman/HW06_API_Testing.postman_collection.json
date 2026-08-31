@@ -79,8 +79,13 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/api/login",
-                  "host": ["{{base_url}}"],
-                  "path": ["api", "login"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
                 }
               }
             },
@@ -119,8 +124,13 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/api/login",
-                  "host": ["{{base_url}}"],
-                  "path": ["api", "login"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
                 }
               }
             }
@@ -129,17 +139,1736 @@
         {
           "name": "FR-02: Login & Account Lockout",
           "description": "Bộ test cases baseline & extension cho FR-02 (Sanity)",
-          "item": []
+          "item": [
+            {
+              "name": "TC_FR02_01_Valid_User_Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Response message is Login successful', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.message).to.eql('Login successful');",
+                      "});",
+                      "pm.test('Contains valid user object with role user', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.have.property('user');",
+                      "    pm.expect(jsonData.user.role).to.eql('user');",
+                      "    pm.expect(jsonData.user.email).to.eql(pm.environment.get('user_email'));",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_02_Valid_Admin_Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Admin user has role admin', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.user.role).to.eql('admin');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{admin_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_03_Invalid_Password",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 Unauthorized', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});",
+                      "pm.test('Error message is Invalid email or password', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.error).to.eql('Invalid email or password');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"nonexistent_wrong_pass@eshop.com\",\n  \"password\": \"WrongPassword123!\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_04_NonExistent_Email",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 Unauthorized', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});",
+                      "pm.test('Error obfuscation: message does not leak user non-existence', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.error).to.eql('Invalid email or password');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"nobody_exists_12345@eshop.com\",\n  \"password\": \"Test1234!\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_05_Empty_Password",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 Unauthorized', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"empty_pass_user@eshop.com\",\n  \"password\": \"\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_06_Empty_Email",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 Unauthorized', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"\",\n  \"password\": \"Test1234!\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_07_Both_Fields_Empty",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 Unauthorized', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"\",\n  \"password\": \"\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_08_SQLi_Email_Bypass",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 (Parameterized query blocks SQLi)', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});",
+                      "pm.test('No SQL database error leaked in body', function () {",
+                      "    const text = pm.response.text();",
+                      "    pm.expect(text).to.not.include('SQLITE_ERROR');",
+                      "    pm.expect(text).to.not.include('syntax error');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"' OR 1=1 --\",\n  \"password\": \"any\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_09_SQLi_Password_Bypass",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 Unauthorized', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"' OR 1=1 --\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_10_JWT_Claim_Verification (EXT-04)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('JWT payload contains id, role, and iat claims', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    const token = jsonData.token;",
+                      "    pm.expect(token).to.be.a('string');",
+                      "    const parts = token.split('.');",
+                      "    pm.expect(parts.length).to.eql(3);",
+                      "    const payloadStr = Buffer.from(parts[1], 'base64').toString('utf8');",
+                      "    const payload = JSON.parse(payloadStr);",
+                      "    pm.expect(payload).to.have.property('id');",
+                      "    pm.expect(payload).to.have.property('role');",
+                      "    pm.expect(payload).to.have.property('iat');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_11_User_Profile_Claims_Returned",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Response body contains user profile information', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.user).to.be.an('object');",
+                      "    pm.expect(jsonData.user).to.have.property('email', pm.environment.get('user_email'));",
+                      "    pm.expect(jsonData.user).to.have.property('role', 'user');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_12_Lockout_Sequence_Step1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 for failed attempt 1', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{lockout_email}}\",\n  \"password\": \"Wrong1!\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_13_Lockout_Sequence_Step2_TriggerLock",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 on reaching lockout threshold', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{lockout_email}}\",\n  \"password\": \"Wrong2!\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_14_Lockout_Sequence_Step3_AttemptWhenLocked",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 403 Forbidden when account is locked', function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});",
+                      "pm.test('Error message notifies account is locked', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.error).to.include('Tài khoản đã bị khóa');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{lockout_email}}\",\n  \"password\": \"{{lockout_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_15_Counter_Reset_On_Success (EXT-02)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Successful login resets attempts and returns token', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.message).to.eql('Login successful');",
+                      "    pm.expect(jsonData.token).to.be.a('string');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{cart_email}}\",\n  \"password\": \"{{cart_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_16_JSON_Schema_Validation_200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Response matches 200 JSON Schema', function () {",
+                      "    const schema = {",
+                      "        type: 'object',",
+                      "        required: ['message', 'token', 'user'],",
+                      "        properties: {",
+                      "            message: { type: 'string' },",
+                      "            token: { type: 'string' },",
+                      "            user: {",
+                      "                type: 'object',",
+                      "                required: ['id', 'email', 'role'],",
+                      "                properties: {",
+                      "                    id: { type: 'integer' },",
+                      "                    email: { type: 'string' },",
+                      "                    role: { type: 'string' }",
+                      "                }",
+                      "            }",
+                      "        }",
+                      "    };",
+                      "    pm.response.to.have.jsonSchema(schema);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_17_JSON_Schema_Validation_401",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});",
+                      "pm.test('Response matches 401 Error Schema', function () {",
+                      "    const schema = {",
+                      "        type: 'object',",
+                      "        required: ['error'],",
+                      "        properties: {",
+                      "            error: { type: 'string' }",
+                      "        }",
+                      "    };",
+                      "    pm.response.to.have.jsonSchema(schema);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"schema_user_401@eshop.com\",\n  \"password\": \"wrong\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR02_18_Performance_Latency_Check",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Login response time is under 500ms', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            }
+          ]
         },
         {
           "name": "FR-07: Shopping Cart",
           "description": "Bộ test cases baseline & extension cho FR-07 (Sanity)",
-          "item": []
+          "item": [
+            {
+              "name": "TC_FR07_01_Get_Empty_Cart",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Response is an array', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.be.an('array');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_02_Add_Item_To_Cart",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Response message is Added to cart', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.message).to.eql('Added to cart');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 1,\n  \"name\": \"iPhone 15 Pro Max\",\n  \"price\": 30000000,\n  \"quantity\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_03_Get_Cart_Verify_Item",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Cart contains added item with id 1', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.be.an('array').and.not.empty;",
+                      "    const item = jsonData.find(i => i.id === 1);",
+                      "    pm.expect(item).to.be.an('object');",
+                      "    pm.expect(item.name).to.eql('iPhone 15 Pro Max');",
+                      "    pm.expect(item.quantity).to.eql(1);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_04_Add_Second_Item",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Second item added successfully', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.message).to.eql('Added to cart');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 2,\n  \"name\": \"Samsung Galaxy S24 Ultra\",\n  \"price\": 25000000,\n  \"quantity\": 2\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_05_Verify_Cart_Multi_Items",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Cart contains multiple distinct items', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.length).to.be.at.least(2);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_06_Get_Cart_No_Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 Unauthorized without token', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_07_Add_Cart_No_Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401 Unauthorized without token', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"id\": 1, \"quantity\": 1}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_08_Get_Cart_Invalid_Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 403 Forbidden with invalid token', function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer invalid_signature_token_12345"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_09_Cart_Tenant_Isolation",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Admin cart is isolated and distinct from user cart', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.be.an('array');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_10_JSON_Schema_Validation_GET",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Response matches Cart Array JSON Schema', function () {",
+                      "    const schema = {",
+                      "        type: 'array',",
+                      "        items: {",
+                      "            type: 'object',",
+                      "            required: ['id', 'quantity'],",
+                      "            properties: {",
+                      "                id: { type: 'integer' },",
+                      "                name: { type: 'string' },",
+                      "                price: { type: 'number' },",
+                      "                quantity: { type: 'integer' }",
+                      "            }",
+                      "        }",
+                      "    };",
+                      "    pm.response.to.have.jsonSchema(schema);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_11_JSON_Schema_Validation_POST",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Response matches POST /api/cart Schema', function () {",
+                      "    const schema = {",
+                      "        type: 'object',",
+                      "        required: ['message'],",
+                      "        properties: {",
+                      "            message: { type: 'string' }",
+                      "        }",
+                      "    };",
+                      "    pm.response.to.have.jsonSchema(schema);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"id\": 3, \"name\": \"Sony WH-1000XM5\", \"price\": 8500000, \"quantity\": 1}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR07_12_Performance_Latency_Check",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Cart response time is under 500ms', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            }
+          ]
         },
         {
           "name": "FR-15: Product CRUD",
           "description": "Bộ test cases baseline & extension cho FR-15 (Sanity)",
-          "item": []
+          "item": [
+            {
+              "name": "TC_FR15_01_Create_Product_Admin",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Product created successfully with new ID', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.message).to.eql('Product created');",
+                      "    pm.expect(jsonData).to.have.property('id');",
+                      "    pm.environment.set('created_product_id', jsonData.id);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Logitech MX Master 3S\",\n  \"price\": 2500000,\n  \"description\": \"Chu\\u1ed9t c\\u00f4ng th\\u00e1i h\\u1ecdc cao c\\u1ea5p\",\n  \"imageUrl\": \"https://placehold.co/300x300.png\",\n  \"category_id\": 3\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_02_Get_Created_Product",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Product details match created payload', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.name).to.eql('Logitech MX Master 3S');",
+                      "    pm.expect(jsonData.category_id).to.eql(3);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/{{created_product_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "{{created_product_id}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_03_Get_Product_1_Odd_ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Product 1 has numeric price', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.id).to.eql(1);",
+                      "    pm.expect(jsonData.name).to.eql('iPhone 15 Pro Max');",
+                      "    pm.expect(jsonData.price).to.be.a('number');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_04_Update_Product_Admin",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Product updated response', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.message).to.eql('Product updated');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Logitech MX Master 3S (Updated)\",\n  \"price\": 2400000,\n  \"description\": \"Chu\\u1ed9t kh\\u00f4ng d\\u00e2y b\\u1ea3n n\\u00e2ng c\\u1ea5p\",\n  \"imageUrl\": \"https://placehold.co/300x300.png\",\n  \"category_id\": 3\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/products/{{created_product_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "{{created_product_id}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_05_Verify_Product_Updated",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Name is updated', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.name).to.eql('Logitech MX Master 3S (Updated)');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/{{created_product_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "{{created_product_id}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_06_Delete_Product_Admin",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Product deleted message', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.message).to.eql('Product deleted');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/products/{{created_product_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "{{created_product_id}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_07_Get_NonExistent_Product",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Returns empty object for nonexistent ID', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.be.an('object');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/99999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "99999"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_08_Search_Products_Query",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Search results match query iPhone', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.be.an('array').and.not.empty;",
+                      "    jsonData.forEach(p => {",
+                      "        pm.expect(p.name.toLowerCase()).to.include('iphone');",
+                      "    });",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products?search=iPhone",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "iPhone"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_09_JSON_Schema_Validation_Product",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Matches Product Schema', function () {",
+                      "    const schema = {",
+                      "        type: 'object',",
+                      "        required: ['id', 'name', 'category_id'],",
+                      "        properties: {",
+                      "            id: { type: 'integer' },",
+                      "            name: { type: 'string' },",
+                      "            description: { type: ['string', 'null'] },",
+                      "            imageUrl: { type: ['string', 'null'] },",
+                      "            category_id: { type: 'integer' }",
+                      "        }",
+                      "    };",
+                      "    pm.response.to.have.jsonSchema(schema);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_10_JSON_Schema_Validation_List",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test('Product list is array of products', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData).to.be.an('array');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC_FR15_11_Performance_Latency_Check",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Product API latency is under 500ms', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -149,15 +1878,381 @@
       "item": [
         {
           "name": "FR-02: Bugs & Vulnerabilities",
-          "item": []
+          "item": [
+            {
+              "name": "BUG_FR02_01_Failed_Attempt_Counter_Increment",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Bug Verification: server.js increments login_attempts by +2 instead of +1",
+                      "pm.test('Document Bug: login_attempts increments by +2 in server.js', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"password\": \"Wrong123!\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "BUG_FR02_02_Lockout_Duration_180s_vs_30s",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Bug Verification: server.js locks for 180000ms (3 mins) instead of 30000ms (30s)",
+                      "pm.test('Document Bug: SUT locks account for 3 mins (180s) instead of 30s', function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"{{lockout_email}}\",\n  \"password\": \"{{lockout_password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              }
+            }
+          ]
         },
         {
           "name": "FR-07: Bugs & Missing Endpoints",
-          "item": []
+          "item": [
+            {
+              "name": "BUG_FR07_01_Negative_Quantity_Accepted",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// SUT Flaw: server.js does not validate quantity > 0 and accepts negative quantity",
+                      "pm.test('Document Bug: SUT accepts negative quantity without validation', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"id\": 1, \"name\": \"iPhone 15\", \"price\": 30000000, \"quantity\": -5}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "BUG_FR07_02_Zero_Quantity_Accepted",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// SUT Flaw: server.js accepts quantity = 0",
+                      "pm.test('Document Bug: SUT accepts quantity = 0', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"id\": 1, \"name\": \"iPhone 15\", \"price\": 30000000, \"quantity\": 0}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "BUG_FR07_03_Missing_PUT_Update_Cart_Endpoint",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// SUT Flaw: SUT lacks PUT /api/cart endpoint for updating quantities",
+                      "pm.test('Document Bug: PUT /api/cart returns 404 (Missing Endpoint)', function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"id\": 1, \"quantity\": 5}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "BUG_FR07_04_Missing_DELETE_Cart_Item_Endpoint",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// SUT Flaw: SUT lacks DELETE /api/cart/:id endpoint",
+                      "pm.test('Document Bug: DELETE /api/cart/:id returns 404 (Missing Endpoint)', function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/cart/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart",
+                    "1"
+                  ]
+                }
+              }
+            }
+          ]
         },
         {
           "name": "FR-15: Bugs & Authorization Flaws",
-          "item": []
+          "item": [
+            {
+              "name": "BUG_FR15_01_Missing_Auth_On_Create",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// SEC-03 Defect: SUT allows unauthenticated users to create products without token",
+                      "pm.test('Document Bug SEC-03: POST /api/products returns 200 without token (Missing Auth)', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Unauthorized Product\",\n  \"price\": 1000,\n  \"description\": \"Created without token\",\n  \"category_id\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "BUG_FR15_02_Even_ID_Price_String_Coercion",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// SUT Defect: server.js line 162 coerces price to String on even IDs",
+                      "pm.test('Document Bug: Product with even ID 2 has string price', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.id).to.eql(2);",
+                      "    pm.expect(jsonData.price).to.be.a('string');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "2"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "BUG_FR15_03_Negative_Price_Accepted",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// SUT Defect: SUT does not validate price > 0",
+                      "pm.test('Document Bug: SUT accepts negative product price', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Negative Price Item\",\n  \"price\": -500000,\n  \"category_id\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                }
+              }
+            }
+          ]
         }
       ]
     },
