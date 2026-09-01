@@ -39,12 +39,13 @@
 
 ```text
 23127185_HW06_AI_API_100/ (hoặc submission/)
-├── docs/
-│   ├── main-report.md & main-report.pdf        # Báo cáo chính (Markdown + PDF)
-│   ├── ai-audit-report.md & ai-audit-report.pdf# Nhật ký kiểm toán AI (15 tương tác)
-│   ├── ai-critique.md & ai-critique.pdf        # Bài viết Phê bình AI (265 từ)
-│   ├── cicd-report.md & cicd-report.pdf        # Báo cáo tích hợp GitHub Actions
-│   ├── git-commit-log.txt                      # Log 11 commits theo từng bước
+├── reports/
+│   ├── main-report.md                          # Báo cáo chính
+│   ├── bug-report.md                           # Báo cáo chi tiết 17 bugs phát hiện (gắn link GitHub Issues #18-#34)
+│   ├── ai-audit-report.md                      # Nhật ký kiểm toán AI (15 tương tác)
+│   ├── ai-critique.md                          # Bài viết Phê bình AI
+│   ├── cicd-report.md                          # Báo cáo tích hợp GitHub Actions
+│   ├── git-commit-log.txt                      # Log commits theo từng bước
 │   └── ai-audit-transcripts/                   # Chi tiết transcripts các phiên prompt
 ├── test-cases/
 │   ├── member-3.xlsx                           # File Excel tổng hợp 137 test cases
