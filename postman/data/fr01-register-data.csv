@@ -1,0 +1,6 @@
+name,email,password,expected_status
+DDT Valid,ddt_valid_1788252499@eshop.test,Valid123!,200
+DDT Weak,ddt_weak@eshop.test,123,400
+DDT NoAt,nodomain,Valid123!,400
+DDT EmptyPw,ddt_emptypw@eshop.test,,400
+DDT Dup,admin@eshop.com,Valid123!,409

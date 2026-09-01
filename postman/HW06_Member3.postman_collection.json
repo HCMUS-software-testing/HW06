@@ -1,0 +1,4947 @@
+{
+  "info": {
+    "name": "HW06 Member 3 API Tests (23127185)",
+    "description": "FR-01 / FR-09 / FR-17. Header X-Student-Id via collection pre-request. Sanity = current SUT; Discovery = spec oracle.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const studentId = pm.environment.get('student_id') || '23127185';",
+          "if (pm.request.headers.upsert) {",
+          "    pm.request.headers.upsert({ key: 'X-Student-Id', value: studentId });",
+          "} else {",
+          "    pm.request.headers.add({ key: 'X-Student-Id', value: studentId });",
+          "}",
+          "console.log('Request Sent with X-Student-Id: ' + studentId);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('Response time is acceptable (< 1500ms)', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(1500);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "01_Sanity_Suite",
+      "item": [
+        {
+          "name": "00_Setup_Auth",
+          "item": [
+            {
+              "name": "M3-SETUP-001 Login admin",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('admin login', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j).to.have.property('token'); pm.environment.set('admin_token', j.token); if (j.user) { pm.environment.set('admin_id', String(j.user.id)); } });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                },
+                "description": "M3-SETUP-001 [setup] Seed admin.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"{{admin_email}}\",\"password\":\"{{admin_password}}\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-SETUP-002 Login coupon user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('user login', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j).to.have.property('token'); pm.environment.set('user_token', j.token); if (j.user) { pm.environment.set('user_id', String(j.user.id)); } });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                },
+                "description": "M3-SETUP-002 [setup] Seed coupon_user.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"{{user_email}}\",\"password\":\"{{user_password}}\"}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR-01",
+          "item": [
+            {
+              "name": "M3-FR01-001 Valid name+email+strong password",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('unique_email', 'm3reg_' + Date.now() + '_' + Math.floor(Math.random()*9999) + '@eshop.test');"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('200 + id', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j.message).to.eql('User registered successfully'); pm.expect(j).to.have.property('id'); pm.expect(j).to.not.have.property('password'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-001 [EP-happy] Khớp spec happy-path / hành vi SUT đã xác nhận live.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"M3 Valid User\",\"email\":\"{{unique_email}}\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-002 Password length BVA exactly 8 meeting policy",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('unique_email', 'm3bva8_' + Date.now() + '@eshop.test');"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('200', function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-002 [BVA] Khớp spec happy-path / hành vi SUT đã xác nhận live.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"M3 BVA8\",\"email\":\"{{unique_email}}\",\"password\":\"Abcd123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-003 Second unique valid register (schema stable)",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('unique_email', 'm3sch_' + Date.now() + '@eshop.test');"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('schema', function () { const j = pm.response.json(); pm.expect(j).to.have.keys('message','id'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-003 [schema] Khớp spec happy-path / hành vi SUT đã xác nhận live.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"M3 Schema\",\"email\":\"{{unique_email}}\",\"password\":\"Schema1!a\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-004 Mass-assign role=admin is ignored (stays user)",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('unique_email', 'm3noesc_' + Date.now() + '@eshop.test');"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('register ok', function () { pm.response.to.have.status(200); const j = pm.response.json(); pm.environment.set('m3_noesc_email', pm.environment.get('unique_email')); pm.environment.set('m3_noesc_id', String(j.id)); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-004 [SEC-06] Khớp spec happy-path / hành vi SUT đã xác nhận live.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"M3 NoEsc\",\"email\":\"{{unique_email}}\",\"password\":\"Valid123!\",\"role\":\"admin\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-005 Login after role=admin body: role remains user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('role is user', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j.user.role).to.eql('user'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                },
+                "description": "M3-FR01-005 [SEC-06] Register ignores role; default DB role is user. Confirmed live.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"{{m3_noesc_email}}\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-H05 Register then login round-trip (state)",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('unique_email', 'm3h_' + Date.now() + '@eshop.test'); pm.environment.set('dup_email', pm.environment.get('unique_email'));"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('register then keep email', function () { pm.response.to.have.status(200); pm.environment.set('m3_round_email', pm.environment.get('unique_email')); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-H05 [state] Human-added sau audit.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"Round\",\"email\":\"{{unique_email}}\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-H05b Login with just-registered account",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('can login', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j).to.have.property('token'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                },
+                "description": "M3-FR01-H05b [state] Nối state từ H05.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"{{m3_round_email}}\",\"password\":\"Valid123!\"}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR-09",
+          "item": [
+            {
+              "name": "M3-FR09-001 Missing code → 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('400 missing code', function () { pm.response.to.have.status(400); pm.expect(pm.response.json().error).to.include('mã'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-001 [EP-missing] SUT trả 400 'Vui lòng nhập mã giảm giá' — khớp spec C1.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-002 Unknown code → 404",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('404 unknown', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-002 [C1] C1 false.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"NOPE999\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-003 EXPIRED above min → 400 expired",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('expired', function () { pm.response.to.have.status(400); pm.expect(pm.response.json().error).to.include('hết hạn'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-003 [C2] SUT kiểm tra hạn sau khi min thoả.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"EXPIRED\",\"total_amount\":200000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-004 BIGBUY 600000 fixed formula (SUT đúng loại fixed)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('fixed formula', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j.success).to.eql(true); pm.expect(j.discount_amount).to.eql(50000); pm.expect(j.final_amount).to.eql(550000); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-004 [formula-fixed] Fixed: discount=50000, final=550000. Confirmed live.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-005 VIP100 400000 fixed 100000",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('vip100', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j.discount_amount).to.eql(100000); pm.expect(j.final_amount).to.eql(300000); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-005 [formula-fixed] Fixed 100k. Confirmed live.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"VIP100\",\"total_amount\":400000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-008 C3 BVA: SAVE10 total min-1 = 299999 rejected",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('below min', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-008 [BVA-C3] Dưới min — cả spec lẫn SUT reject.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10\",\"total_amount\":299999}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-011 Empty code string",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('empty code', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-011 [EP-empty] SUT !code bắt empty.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-013 total_amount zero",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('zero total', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-013 [BVA] 0 < min.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":0}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-015 SQL injection in code",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('sqli not 500', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-015 [SEC-05] Parameterized query → 404 unknown. Good SEC-05 on this endpoint.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10' OR 1=1--\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-025 Code with XSS",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('xss code', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-025 [SEC-04] Unknown code 404, không 500 HTML.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"<script>\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-026 Very long code 500 chars",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('long code', function () { pm.expect(pm.response.code).to.be.below(500); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-026 [BVA] Không 500.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-030 Authenticated apply still computes fixed correctly",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('auth fixed', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j.discount_amount).to.eql(50000); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-030 [C4] Có user_id, fixed vẫn đúng.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000,\"user_id\":6}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-031 Decision: all C true BIGBUY with token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('all C true', function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-031 [decision] Happy path đủ C1–C5 (usage 0).",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000,\"user_id\":6}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-032 Decision: C1 false NOPE",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('C1 F', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-032 [decision] Trùng 002, giữ cho bảng quyết định đủ hàng.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"ZZZ\",\"total_amount\":600000,\"user_id\":6}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-034 Null code",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('null code', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-034 [EP-null] null code.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":null,\"total_amount\":500000}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR-17",
+          "item": [
+            {
+              "name": "M3-FR17-001 GET /api/coupons without token → 401",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('401', function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-001 [SEC-02] SUT authenticateToken 401."
+              }
+            },
+            {
+              "name": "M3-FR17-002 GET /api/coupons as admin → 200 array",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('array', function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('array'); pm.expect(pm.response.json().length).to.be.at.least(1); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-002 [schema] Admin list."
+              }
+            },
+            {
+              "name": "M3-FR17-003 POST admin coupon unique code as admin",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('m3_new_code', 'M3T' + Date.now());"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('created', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j.message).to.eql('Coupon created'); pm.expect(j).to.have.property('id'); pm.environment.set('m3_coupon_id', String(j.id)); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-003 [EP-happy] Happy create.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"{{m3_new_code}}\",\"type\":\"fixed\",\"discount_value\":1000,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-004 DELETE created coupon as admin",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('deleted', function () { pm.response.to.have.status(200); pm.expect(pm.response.json().message).to.eql('Coupon deleted'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/{{m3_coupon_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "{{m3_coupon_id}}"
+                  ]
+                },
+                "description": "M3-FR17-004 [state] Happy delete."
+              }
+            },
+            {
+              "name": "M3-FR17-005 GET /api/admin/coupons path does not exist (404)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('no admin list path', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-005 [schema] List sống ở GET /api/coupons. Confirmed live."
+              }
+            },
+            {
+              "name": "M3-FR17-020 DELETE without token 401",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('del 401', function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "1"
+                  ]
+                },
+                "description": "M3-FR17-020 [SEC-02] No token."
+              }
+            },
+            {
+              "name": "M3-FR17-021 POST without token 401",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('post 401', function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-021 [SEC-02] No token.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"NOTOK\",\"type\":\"fixed\",\"discount_value\":1,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-022 GET coupons malformed token 403",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('bad token', function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer not-a-jwt"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-022 [SEC-02] Bearer abc."
+              }
+            },
+            {
+              "name": "M3-FR17-023 Create percent valid as admin (throwaway)",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('m3_pct_code', 'M3P' + Date.now());"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('pct created', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.environment.set('m3_pct_id', String(j.id)); pm.environment.set('m3_deleted_code', pm.environment.get('m3_pct_code')); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-023 [EP-happy] Percent create.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"{{m3_pct_code}}\",\"type\":\"percent\",\"discount_value\":15,\"min_order_amount\":200000,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":2}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-024 DELETE throwaway percent coupon",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('pct deleted', function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/{{m3_pct_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "{{m3_pct_id}}"
+                  ]
+                },
+                "description": "M3-FR17-024 [state] Cleanup."
+              }
+            },
+            {
+              "name": "M3-FR17-025 List includes SAVE10",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('has SAVE10', function () { const rows = pm.response.json(); pm.expect(rows.some(c => c.code === 'SAVE10')).to.be.true; });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-025 [schema] Seed coupon visible."
+              }
+            },
+            {
+              "name": "M3-FR17-031 GET coupons returns password? no — coupon rows only",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('no user secrets', function () { const t = pm.response.text(); pm.expect(t).to.not.include('Admin123!'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-031 [schema] Không lộ users."
+              }
+            },
+            {
+              "name": "M3-FR17-035 Unauthorized header scheme Basic",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('basic', function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic YWRtaW46YWRtaW4="
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-035 [SEC-02] SUT split(' ')[1] lấy token Basic rồi jwt.verify fail → 403 (không phải 401)."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02_Bug_Discovery_Suite",
+      "item": [
+        {
+          "name": "00_Setup_Auth",
+          "item": [
+            {
+              "name": "M3-SETUP-001 Login admin",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('admin login', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j).to.have.property('token'); pm.environment.set('admin_token', j.token); if (j.user) { pm.environment.set('admin_id', String(j.user.id)); } });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                },
+                "description": "M3-SETUP-001 [setup] Seed admin.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"{{admin_email}}\",\"password\":\"{{admin_password}}\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-SETUP-002 Login coupon user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('user login', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j).to.have.property('token'); pm.environment.set('user_token', j.token); if (j.user) { pm.environment.set('user_id', String(j.user.id)); } });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                },
+                "description": "M3-SETUP-002 [setup] Seed coupon_user.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"{{user_email}}\",\"password\":\"{{user_password}}\"}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR-01",
+          "item": [
+            {
+              "name": "M3-FR01-006 Missing name",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('unique_email', 'm3x_' + Date.now() + '@eshop.test');"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-006 [EP-missing] Thiếu field bắt buộc theo FR-01.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"missname_{{unique_email}}\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-007 Missing email",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-007 [EP-missing] Email bắt buộc.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"No Email\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-008 Missing password",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-008 [EP-missing] Password bắt buộc.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"No Pass\",\"email\":\"nopass@eshop.test\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-009 Empty body {}",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-009 [EP-missing] Không field nào.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-010 Empty name",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-010 [EP-empty] Name rỗng.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"\",\"email\":\"emptyname@eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-011 Empty email",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-011 [EP-empty] Email rỗng.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-012 Empty password",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-012 [EP-empty] Password rỗng.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"emptypw@eshop.test\",\"password\":\"\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-013 Email without @",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-013 [EP-email] Format email.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"nodomain.eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-014 Email without domain",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-014 [EP-email] Format email.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"user@\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-015 Email with spaces",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-015 [EP-email] Email có khoảng trắng.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"a b@eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-016 Email missing TLD",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-016 [EP-email] Thiếu TLD.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"user@eshop\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-017 Password length 7 (BVA -1)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-017 [BVA] Dưới 8 ký tự.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"pw7@eshop.test\",\"password\":\"Abcd12!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-018 Password no uppercase",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-018 [EP-password] Thiếu chữ hoa.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"noup@eshop.test\",\"password\":\"abcd123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-019 Password no lowercase",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-019 [EP-password] Thiếu chữ thường.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"nolow@eshop.test\",\"password\":\"ABCD123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-020 Password no digit",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-020 [EP-password] Thiếu số.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"nodig@eshop.test\",\"password\":\"Abcdefg!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-021 Password no special",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-021 [EP-password] Thiếu ký tự đặc biệt.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"nosp@eshop.test\",\"password\":\"Abcd1234\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-022 Password special not in allowed set (#)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-022 [EP-password] Chỉ @$!%*?&.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"hash@eshop.test\",\"password\":\"Abcd1234#\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-023 Duplicate email of seeded register_user",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 409', function () { pm.response.to.have.status(409); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-023 [state] Email phải unique (SRS). SUT không UNIQUE.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"Dup\",\"email\":\"register_user@eshop.com\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-024 SQL injection in email stored as literal",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-024 [SEC-05] Email không hợp lệ; query parameterized nên không dump DB.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"SQLi\",\"email\":\"sqli@eshop.test' OR 1=1--\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-025 XSS payload in name",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-025 [SEC-04] Name chứa markup — API nên reject hoặc escape.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"<script>alert(1)</script>\",\"email\":\"xss@eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-026 Very long name 1000 chars",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-026 [BVA] Name quá dài.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN\",\"email\":\"longn@eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-027 Null name JSON",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-027 [EP-null] null ≠ string.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":null,\"email\":\"nulln@eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-028 Numeric name",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-028 [EP-type] Sai kiểu.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":12345,\"email\":\"numn@eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-029 confirm_password mismatch (SRS GUI field)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-029 [EP-confirm] SRS yêu cầu xác nhận mật khẩu khớp. API spec không liệt kê field — audit INCOMPLETE rồi sửa thành case tài liệu lệch spec/SRS.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"conf@eshop.test\",\"password\":\"Valid123!\",\"confirm_password\":\"Other123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-030 GET method not allowed",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 405', function () { pm.response.to.have.status(405); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-030 [schema] Chỉ POST."
+              }
+            },
+            {
+              "name": "M3-FR01-031 Whitespace-only name",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-031 [EP-empty] Name chỉ space.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"   \",\"email\":\"ws@eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-032 Email unicode homoglyph",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-032 [EP-email] Unicode email.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"tëst@eshop.test\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-033 Oversized password 300 chars",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('spec status 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-033 [BVA] Password quá dài.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"E\",\"email\":\"huge@eshop.test\",\"password\":\"Aa1!xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-H01 Case-insensitive duplicate of admin@eshop.com",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('duplicate case-insensitive', function () { pm.response.to.have.status(409); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-H01 [state] Human-added sau audit.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"CaseDup\",\"email\":\"Admin@eshop.com\",\"password\":\"Valid123!\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-H02 Content-Type x-www-form-urlencoded",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('reject non-JSON', function () { pm.expect(pm.response.code).to.be.oneOf([400,415]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-H02 [schema] Human-added sau audit.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "name=A&email=form@eshop.test&password=Valid123!"
+                }
+              }
+            },
+            {
+              "name": "M3-FR01-H03 Double-submit same unique email sequentially",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const e = 'm3dbl_' + Date.now() + '@eshop.test';pm.environment.set('dup_email', e);pm.sendRequest({url: pm.environment.get('base_url')+'/api/register', method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:pm.environment.get('student_id')||'23127185'}],body:{mode:'raw', raw: JSON.stringify({name:'Twice', email:e, password:'Valid123!'})}}, function(){});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('second submit rejected', function () { pm.response.to.have.status(409); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                },
+                "description": "M3-FR01-H03 [state] Human-added sau audit.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"Twice\",\"email\":\"{{dup_email}}\",\"password\":\"Valid123!\"}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR-09",
+          "item": [
+            {
+              "name": "M3-FR09-SETUP record VIP100 usage twice",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('usage recorded or already capped', function () { pm.expect(pm.response.code).to.be.oneOf([200,400]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coupon-usage",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupon-usage"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"coupon_id\":3}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-SETUP record VIP100 usage twice",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('usage recorded or already capped', function () { pm.expect(pm.response.code).to.be.oneOf([200,400]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coupon-usage",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupon-usage"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"coupon_id\":3}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-006 C4: apply without JWT must be 401",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('unauth 401', function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-006 [C4-SEC-02] SRS C4: đã đăng nhập. SUT không yêu cầu token.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-007 C3 BVA: SAVE10 total == min 300000 should pass (spec >=)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('boundary min inclusive', function () { pm.response.to.have.status(200); const j = pm.response.json(); pm.expect(j.discount_amount).to.eql(30000); pm.expect(j.final_amount).to.eql(270000); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-007 [BVA-C3] Spec >= ; SUT dùng > nên 400. Bug.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10\",\"total_amount\":300000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-009 Percent formula SAVE10 on 500000 = 50000 / final 450000",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('percent 10%', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j.discount_amount).to.eql(50000); pm.expect(j.final_amount).to.eql(450000); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-009 [formula-percent] Spec: total*10/100. SUT: floor(total*(1-10)) = -4500000.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-010 EXPIRED below min should still be expired (order of checks)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('expired first', function () { pm.response.to.have.status(400); pm.expect(pm.response.json().error).to.include('hết hạn'); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-010 [C2-state] Spec C2 độc lập C3. SUT trả min-order trước.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"EXPIRED\",\"total_amount\":50000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-012 total_amount missing with valid code",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('missing total', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-012 [EP-missing] Thiếu total. SUT so sánh undefined > min → false → 400 min (lệch message).",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-014 total_amount negative",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('neg total', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-014 [EP-invalid] Tổng âm không hợp lệ.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":-1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-016 C5: VIP100 after 2 recorded uses with user_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('max uses', function () { pm.response.to.have.status(400); pm.expect(pm.response.json().error).to.match(/giới hạn|sử dụng/); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-016 [C5-state] Needs coupon-usage pre-req in collection. Spec C5.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"VIP100\",\"total_amount\":400000,\"user_id\":6}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-017 C5 bypass: omit user_id after max uses",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('cannot skip C5', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-017 [C5-SEC] SUT bỏ qua C5 khi không có user_id.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"VIP100\",\"total_amount\":400000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-018 IDOR: apply as user A with user_id of user B",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('idor', function () { pm.expect(pm.response.code).to.be.oneOf([401,403]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-018 [SEC-IDOR] Không được trừ quota user khác / không tin client user_id.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"VIP100\",\"total_amount\":400000,\"user_id\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-019 SAVE10 at min+1 (300001) percent spec",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('min+1 percent', function () { const j = pm.response.json(); pm.response.to.have.status(200); pm.expect(j.final_amount).to.be.below(300001); pm.expect(j.discount_amount).to.be.above(0); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-019 [BVA-C3] Spec discount=30000.1→30000.1 or 30000.1 floor. SUT negative.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10\",\"total_amount\":300001}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-020 BIGBUY exact min 500000 spec >=",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('bigbuy min inclusive', function () { pm.response.to.have.status(200); pm.expect(pm.response.json().discount_amount).to.eql(50000); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-020 [BVA-C3] Spec >= 500000. SUT > nên 400.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-021 Code lowercase save10 (case)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('case', function () { pm.expect(pm.response.code).to.be.oneOf([200,404]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-021 [EP-code] Mã thường so DB hoa. Spec không nói case-fold.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"save10\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-022 total_amount as string '600000'",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('string total', function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-022 [EP-type] Type coercion.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":\"600000\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-023 Apply deleted coupon code",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('deleted coupon', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-023 [state] Lifecycle: create → delete → apply.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"{{deleted_coupon_code}}\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-027 user_id string vs number",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('string user_id', function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-027 [EP-type] Coercion.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"VIP100\",\"total_amount\":400000,\"user_id\":\"6\"}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-028 No body",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('empty body', function () { pm.expect(pm.response.code).to.be.at.least(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-028 [schema] Empty body."
+              }
+            },
+            {
+              "name": "M3-FR09-029 final_amount never negative (spec)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('discount non-negative', function () { pm.expect(pm.response.json().discount_amount).to.be.at.least(0); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-029 [schema] SUT final_amount=5000000 dương nhưng discount âm — spec discount≥0.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-035 Array code",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('array code', function () { pm.expect(pm.response.code).to.be.at.least(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-035 [EP-type] Sai kiểu.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":[\"SAVE10\"],\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-H01 Apply with no JWT (C4) — human-first security",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('C4 human', function () { pm.response.to.have.status(401); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-H01 [C4-SEC-02] Human-added.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-H02 Client-supplied user_id consumes another user's quota (IDOR)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('idor human', function () { pm.expect(pm.response.code).to.be.oneOf([401,403]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-H02 [SEC-IDOR] Human-added.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"VIP100\",\"total_amount\":400000,\"user_id\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-H03 Apply coupon after admin deleted it",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('deleted', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-H03 [state] Human-added.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"{{m3_deleted_code}}\",\"total_amount\":500000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-H04 total_amount exactly min_order (inclusive)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('inclusive min human', function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-H04 [BVA-C3] Human-added.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10\",\"total_amount\":300000}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR09-H05 Omit user_id to skip max-uses (C5 bypass)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('no skip C5', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/apply-coupon",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ]
+                },
+                "description": "M3-FR09-H05 [C5] Human-added.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"VIP100\",\"total_amount\":400000}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR-17",
+          "item": [
+            {
+              "name": "M3-FR17-006 GET coupons with user token must be 403 (SEC-03)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('user forbidden', function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-006 [SEC-03] Spec admin-only. SUT 200."
+              }
+            },
+            {
+              "name": "M3-FR17-007 POST /api/admin/coupons with user token 403",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('user cannot create', function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-007 [SEC-03] User tạo coupon. SUT 200.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"USERHACK\",\"type\":\"percent\",\"discount_value\":5,\"min_order_amount\":1000,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-008 DELETE /api/admin/coupons/:id user token 403",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('user cannot delete', function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "1"
+                  ]
+                },
+                "description": "M3-FR17-008 [SEC-03] User xoá. Không đụng SAVE10 trong sanity — discovery may delete if SUT allows; use high id."
+              }
+            },
+            {
+              "name": "M3-FR17-009 DELETE non-existent id 404",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('missing 404', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/99999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "99999"
+                  ]
+                },
+                "description": "M3-FR17-009 [state] SUT luôn 200."
+              }
+            },
+            {
+              "name": "M3-FR17-010 POST duplicate code SAVE10 → 409 not 500",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('dup 409', function () { pm.expect(pm.response.code).to.be.oneOf([400,409]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-010 [state] UNIQUE nổ SQLITE 500. Spec 409/400.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10\",\"type\":\"percent\",\"discount_value\":10,\"min_order_amount\":1,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-011 POST empty body 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('empty 400', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-011 [EP-missing] SUT 200 với null fields.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-012 POST negative discount_value 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('neg discount', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-012 [EP-invalid] discount_value phải dương. SUT 200.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"NEGDISC\",\"type\":\"percent\",\"discount_value\":-10,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-013 POST min_order_amount < 0 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('neg min', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-013 [EP-invalid] min_order >= 0.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"NEGMIN\",\"type\":\"fixed\",\"discount_value\":10,\"min_order_amount\":-5,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-014 POST max_uses_per_user 0 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('zero uses', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-014 [BVA] max_uses >= 1.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"ZEROUSE\",\"type\":\"fixed\",\"discount_value\":10,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":0}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-015 POST type=bogus 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('bogus type', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-015 [EP-invalid] type chỉ percent|fixed.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BOGUS\",\"type\":\"bogus\",\"discount_value\":10,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-016 POST expired_at in the past still allowed? spec says field required, business C2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('past expiry create', function () { pm.expect(pm.response.code).to.be.oneOf([200,400]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-016 [state] Tạo mã đã hết hạn — nên 400 hoặc chấp nhận nhưng apply phải fail. Spec FR-17 không cấm past; audit INCOMPLETE → giữ như business rule test.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"PAST01\",\"type\":\"fixed\",\"discount_value\":10,\"min_order_amount\":0,\"expired_at\":\"2020-01-01\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-017 POST percent discount_value 1000 (no cap)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('pct cap', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-017 [BVA] Percent > 100 vô nghĩa.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"HUGEPCT\",\"type\":\"percent\",\"discount_value\":1000,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-018 POST missing code",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('no code', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-018 [EP-missing] code bắt buộc.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"type\":\"fixed\",\"discount_value\":10,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-019 POST missing expired_at",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('no expiry', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-019 [EP-missing] expired_at bắt buộc.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"NOEXP\",\"type\":\"fixed\",\"discount_value\":10,\"min_order_amount\":0,\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-026 Mass-assign is_active=0 on create",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set('m3_ia_code', 'M3IA' + Date.now());"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('create', function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-026 [SEC-mass] SUT INSERT không lấy is_active → default 1. Ghi nhận mass-assign ignored (pass).",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"{{m3_ia_code}}\",\"type\":\"fixed\",\"discount_value\":1,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1,\"is_active\":0}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-027 id path traversal ../1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('traversal', function () { pm.expect(pm.response.code).to.be.oneOf([400,404]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/../1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "..",
+                    "1"
+                  ]
+                },
+                "description": "M3-FR17-027 [SEC-05] Path lạ."
+              }
+            },
+            {
+              "name": "M3-FR17-028 DELETE id=abc 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('abc id', function () { pm.expect(pm.response.code).to.be.oneOf([400,404]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/abc",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "abc"
+                  ]
+                },
+                "description": "M3-FR17-028 [EP-type] id không phải số. SUT 200."
+              }
+            },
+            {
+              "name": "M3-FR17-029 POST discount_value string",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('str discount', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-029 [EP-type] Sai kiểu.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"STRVAL\",\"type\":\"fixed\",\"discount_value\":\"abc\",\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-030 POST expired_at invalid format",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('bad date', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-030 [EP-invalid] Format ngày.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"BADEXP\",\"type\":\"fixed\",\"discount_value\":10,\"min_order_amount\":0,\"expired_at\":\"31-12-2099\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-032 Double delete same id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('second delete', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/{{m3_coupon_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "{{m3_coupon_id}}"
+                  ]
+                },
+                "description": "M3-FR17-032 [state] Xoá lần 2 sau 004. Id có thể stale — catalog-ish. Expect 404."
+              }
+            },
+            {
+              "name": "M3-FR17-033 POST code empty string",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('empty code', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-033 [EP-empty] code rỗng.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"\",\"type\":\"fixed\",\"discount_value\":10,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-034 POST type percent discount 0",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('zero disc', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-034 [BVA] discount dương.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"ZERO\",\"type\":\"percent\",\"discount_value\":0,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-H01 GET /api/coupons vs /api/admin/coupons path mismatch",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('admin list path should exist per REST intuition — documented mismatch', function () { pm.expect(pm.response.code).to.eql(200); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-H01 [schema] Human-added."
+              }
+            },
+            {
+              "name": "M3-FR17-H02 User token POST /api/admin/coupons (SEC-03)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('sec03 human', function () { pm.response.to.have.status(403); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{user_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-H02 [SEC-03] Human-added.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"HACKU\",\"type\":\"percent\",\"discount_value\":5,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-H03 Create percent=1000 then apply would exceed total",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('cap human', function () { pm.response.to.have.status(400); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-H03 [BVA] Human-added.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"P1000\",\"type\":\"percent\",\"discount_value\":1000,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            },
+            {
+              "name": "M3-FR17-H04 DELETE missing id still 200 (SUT) vs 404 spec",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('404 human', function () { pm.response.to.have.status(404); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons/88888",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons",
+                    "88888"
+                  ]
+                },
+                "description": "M3-FR17-H04 [state] Human-added."
+              }
+            },
+            {
+              "name": "M3-FR17-H05 Duplicate code unique constraint mapped to 409",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('409 human', function () { pm.expect(pm.response.code).to.be.oneOf([400,409]); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin/coupons",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "coupons"
+                  ]
+                },
+                "description": "M3-FR17-H05 [state] Human-added.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"code\":\"SAVE10\",\"type\":\"fixed\",\"discount_value\":1,\"min_order_amount\":0,\"expired_at\":\"2099-12-31\",\"max_uses_per_user\":1}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03_Data_Driven_Demo",
+      "item": [
+        {
+          "name": "M3-FR01-DDT register from csv",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const expected = parseInt(pm.iterationData.get('expected_status'), 10);",
+                  "pm.test('status matches csv oracle (spec)', function () { pm.response.to.have.status(expected); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"{{name}}\",\"email\":\"{{email}}\",\"password\":\"{{password}}\"}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04_Mock_Server_Demo",
+      "item": [
+        {
+          "name": "Mock — example 200 register (do not run in CI)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "register"
+              ]
+            },
+            "description": "Used with HW06_Mock environment / Postman mock server.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Mock User\",\"email\":\"mock@eshop.test\",\"password\":\"Valid123!\"}"
+            }
+          },
+          "response": [
+            {
+              "name": "example-200",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"User registered successfully\", \"id\": 1}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
