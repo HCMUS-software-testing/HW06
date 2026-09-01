@@ -38,15 +38,16 @@
 ## 3. CẤU TRÚC THƯ MỤC NỘP BÀI (SUBMISSION LAYOUT)
 
 ```text
-23127185_HW06_AI_API_100/ (hoặc submission/)
+submission/
 ├── reports/
-│   ├── main-report.md                          # Báo cáo chính
-│   ├── bug-report.md                           # Báo cáo chi tiết 17 bugs phát hiện (gắn link GitHub Issues #18-#34)
-│   ├── ai-audit-report.md                      # Nhật ký kiểm toán AI (15 tương tác)
-│   ├── ai-critique.md                          # Bài viết Phê bình AI
-│   ├── cicd-report.md                          # Báo cáo tích hợp GitHub Actions
-│   ├── git-commit-log.txt                      # Log commits theo từng bước
-│   └── ai-audit-transcripts/                   # Chi tiết transcripts các phiên prompt
+│   ├── main-report.md & main-report.pdf        # Báo cáo chính
+│   ├── bug-report.md & bug-report.pdf          # Báo cáo chi tiết 17 bugs phát hiện (gắn link GitHub Issues #18-#34)
+│   ├── ai-audit-report.md & ai-audit-report.pdf# Nhật ký kiểm toán AI (15 tương tác)
+│   ├── ai-critique.md & ai-critique.pdf        # Bài viết Phê bình AI (265 từ)
+│   ├── cicd-report.md & cicd-report.pdf        # Báo cáo tích hợp GitHub Actions
+│   ├── git-commit-log.txt                      # Log commits theo từng bước (21+ commits)
+│   ├── screenshots/                            # Ảnh chụp màn hình CI/CD và Console Header
+│   └── ai-audit-transcripts/                   # Chi tiết transcripts các phiên prompt (p1..p6 cho cả 3 FRs)
 ├── test-cases/
 │   ├── member-3.xlsx                           # File Excel tổng hợp 137 test cases
 │   └── generated/                              # CSV test cases từng API (FR-01, FR-09, FR-17)
@@ -59,9 +60,6 @@
 │   ├── sanity-report.html                      # Newman HTML report (Sanity Suite - 100% Pass)
 │   ├── bug-discovery-report.html               # Newman HTML report (Discovery Suite)
 │   └── ci-report.html                          # Newman HTML report CI run
-├── bug-reports/
-│   ├── member-3.md & member-3.pdf              # Báo cáo chi tiết 17 bugs phát hiện
-│   └── (screenshots/issue links)               # Bằng chứng đính kèm
 ├── agent-skill/
 │   ├── SKILL.md                                # Hướng dẫn Agent Skill
 │   ├── diagram.png & diagram.svg               # Sơ đồ kiến trúc generator TỰ VẼ
@@ -71,7 +69,7 @@
 ├── openapi/
 │   └── eshop-member3.yaml                      # OpenAPI 3.0 spec đã kiểm toán
 ├── .github/workflows/
-│   └── api-tests-member-3.yml                  # GitHub Actions workflow
+│   └── api-tests.yml                           # GitHub Actions workflow
 └── README.md                                   # File README chứa bảng tự đánh giá & counts
 ```
 
