@@ -1,4 +1,4 @@
-# Phân loại kết quả Newman — full conformance run
+# Phân loại kết quả Newman — lần conformance đầy đủ
 
 - SUT commit: `85af3ba875c88283615e22cb108f13e2fccaf0e9`
 - Catalogue cases: **140**; PASS: **98**; FAIL: **42**

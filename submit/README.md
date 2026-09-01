@@ -21,7 +21,7 @@ Public repository: <https://github.com/HCMUS-software-testing/HW06/tree/Bao>
 
 Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 assertions**, 63 assertion fail và **0 fixture/request error**. 42 catalogue case fail được quy về **10 root defects**. Data-driven phone run có 6 partition, 12 requests, 18 assertions; bốn invalid partition làm lộ `BUG-FR04-03`.
 
-## Artefact chính
+## Tài liệu chính
 
 - Test catalogue: `test-cases/member-4.csv`, `test-cases/member-4.json`; file XLSX cần export lại từ CSV sau thay đổi cuối.
 - Postman: full collection, environment, data-driven collection + CSV và deterministic CI-demo collection trong `postman/`.
