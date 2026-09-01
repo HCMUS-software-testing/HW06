@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="640" viewBox="0 0 980 640">
+  <!--
+    Member 3 (23127185) — G9.5 Agent Skill diagram.
+    Geometry and labels composed as SVG drawing primitives (rectangles, lines, text).
+    Not an image-model render. Design decisions: 4 layers, spec-as-oracle,
+    sanity vs discovery split at the emitter.
+  -->
+  <rect width="980" height="640" fill="#f7f4ee"/>
+  <text x="490" y="36" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#1f1a14">AI API Test Generator — 4-layer pipeline (Member 3)</text>
+  <text x="490" y="58" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#5c5346">Input: api_specification.md + SRS  ·  Demo feature: FR-09  ·  Student: 23127185</text>
+
+  <!-- inputs -->
+  <rect x="40" y="90" width="200" height="56" rx="6" fill="#fff" stroke="#3d4f3a" stroke-width="2"/>
+  <text x="140" y="114" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1f1a14">API Specification</text>
+  <text x="140" y="132" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5c5346">Markdown / OpenAPI</text>
+
+  <rect x="270" y="90" width="200" height="56" rx="6" fill="#fff" stroke="#3d4f3a" stroke-width="2"/>
+  <text x="370" y="114" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1f1a14">SRS rules</text>
+  <text x="370" y="132" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5c5346">C1–C5, password policy</text>
+
+  <rect x="500" y="90" width="200" height="56" rx="6" fill="#fff" stroke="#3d4f3a" stroke-width="2"/>
+  <text x="600" y="114" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1f1a14">Feature id</text>
+  <text x="600" y="132" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5c5346">FR-01 / FR-09 / FR-17</text>
+
+  <rect x="730" y="90" width="200" height="56" rx="6" fill="#fff" stroke="#3d4f3a" stroke-width="2"/>
+  <text x="830" y="114" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1f1a14">student_id</text>
+  <text x="830" y="132" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5c5346">X-Student-Id header</text>
+
+  <!-- arrows down to L1 -->
+  <line x1="140" y1="146" x2="140" y2="186" stroke="#3d4f3a" stroke-width="1.5"/>
+  <line x1="370" y1="146" x2="370" y2="186" stroke="#3d4f3a" stroke-width="1.5"/>
+  <line x1="600" y1="146" x2="600" y2="186" stroke="#3d4f3a" stroke-width="1.5"/>
+  <line x1="830" y1="146" x2="490" y2="186" stroke="#3d4f3a" stroke-width="1.5"/>
+
+  <!-- Layer 1 -->
+  <rect x="80" y="186" width="820" height="70" rx="8" fill="#e7efe4" stroke="#3d4f3a" stroke-width="2"/>
+  <text x="100" y="214" font-family="sans-serif" font-size="14" font-weight="700" fill="#1f1a14">L1  Parser</text>
+  <text x="100" y="236" font-family="sans-serif" font-size="12" fill="#3d4f3a">Extract endpoint, method, body fields, documented status, role. Attach SRS constraints for the chosen feature. No tests yet.</text>
+
+  <line x1="490" y1="256" x2="490" y2="286" stroke="#3d4f3a" stroke-width="1.5"/>
+
+  <!-- Layer 2 -->
+  <rect x="80" y="286" width="820" height="70" rx="8" fill="#e4eaf0" stroke="#2f4458" stroke-width="2"/>
+  <text x="100" y="314" font-family="sans-serif" font-size="14" font-weight="700" fill="#1f1a14">L2  Heuristic strategy engine (deterministic)</text>
+  <text x="100" y="336" font-family="sans-serif" font-size="12" fill="#2f4458">EP · BVA · decision table · state/lifecycle · SEC-01–07 · schema  —  one generator function per technique</text>
+
+  <line x1="490" y1="356" x2="490" y2="386" stroke="#3d4f3a" stroke-width="1.5"/>
+
+  <!-- Layer 3 -->
+  <rect x="80" y="386" width="820" height="70" rx="8" fill="#f3ead8" stroke="#6b5428" stroke-width="2"/>
+  <text x="100" y="414" font-family="sans-serif" font-size="14" font-weight="700" fill="#1f1a14">L3  Structured prompting (optional LLM) — one technique / one call</text>
+  <text x="100" y="436" font-family="sans-serif" font-size="12" fill="#6b5428">Forbidden: “generate all 35 cases”. Merge by ID. Human still audits VALID / INVALID / INCOMPLETE.</text>
+
+  <line x1="490" y1="456" x2="490" y2="486" stroke="#3d4f3a" stroke-width="1.5"/>
+
+  <!-- Layer 4 -->
+  <rect x="80" y="486" width="820" height="70" rx="8" fill="#eadfd4" stroke="#5a3b2a" stroke-width="2"/>
+  <text x="100" y="514" font-family="sans-serif" font-size="14" font-weight="700" fill="#1f1a14">L4  Validator + emitter</text>
+  <text x="100" y="536" font-family="sans-serif" font-size="12" fill="#5a3b2a">≥35 AI + ≥5 human · unique IDs · expected status present · emit CSV / XLSX / Postman (sanity vs discovery)</text>
+
+  <!-- outputs -->
+  <rect x="80" y="580" width="250" height="40" rx="6" fill="#fff" stroke="#5a3b2a" stroke-width="1.5"/>
+  <text x="205" y="605" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1f1a14">CSV / Excel catalog</text>
+  <rect x="365" y="580" width="250" height="40" rx="6" fill="#fff" stroke="#5a3b2a" stroke-width="1.5"/>
+  <text x="490" y="605" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1f1a14">Postman collection</text>
+  <rect x="650" y="580" width="250" height="40" rx="6" fill="#fff" stroke="#5a3b2a" stroke-width="1.5"/>
+  <text x="775" y="605" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1f1a14">Newman is a later, real run</text>
+</svg>
