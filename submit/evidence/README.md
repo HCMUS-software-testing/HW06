@@ -20,9 +20,9 @@ Không dùng ảnh console/Issue/Actions do AI hoặc HTML card dựng. Chỉ ch
 ## Ảnh chụp execution/CI
 
 - [x] `postman-console-student-id.png`: ảnh chụp Postman thật, request `GET /api/users/me`, header `X-Student-Id: 23127326`, response `200 OK` và Console log.
-- [ ] `newman-full-localhost.png`: Newman HTML thật hiển thị `localhost`, 467 requests, 839 assertions.
-- [ ] `github-actions-pass.png`: trang Actions run pass của commit demo xanh.
-- [ ] `github-actions-one-fail.png`: trang Actions run đỏ hiển thị đúng `CI-DEMO-001 controlled assertion`.
-- [ ] `github-actions-full-conformance.png`: run [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665) hiển thị 467 requests / 839 assertions / 63 fail.
+- [x] `newman-full-localhost.png`: ảnh chụp Newman HTML thật hiển thị 467 request và 839 assertion.
+- [x] `github-actions-pass.png`: ảnh chụp trang Actions run pass của commit demo xanh.
+- [x] `github-actions-one-fail.png`: ảnh chụp trang Actions run đỏ của controlled-failure commit.
+- [x] `github-actions-full-conformance.png`: ảnh chụp run [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665).
 
-Trong phiên này Chrome đọc được nội dung Issue nhưng dịch vụ ảnh không render phần trang web, nên các ảnh GitHub Issue vẫn để trống để tránh nộp ảnh giả. Hãy chụp trực tiếp các URL trên khi giao diện hiển thị bình thường.
+Mười ảnh GitHub Issue trong bảng đã được chụp trực tiếp bằng trình duyệt từ đúng các URL công khai; không dùng ảnh dựng hoặc thẻ HTML giả.
