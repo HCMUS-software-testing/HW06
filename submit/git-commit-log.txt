@@ -25,3 +25,4 @@ ab7d49bb4a98328f94d811acbdd6cd18410b0a6b | 2026-09-01T18:43:58+07:00 | LE MAI HO
 09c5405143a525a1576849b2a9454b2b02a2a12a | 2026-09-01T19:14:35+07:00 | LE MAI HOAI BAO | docs(23127326): move reports to submit root
 ab050f718382dff4c2c73c7ae363af7fd754c5f9 | 2026-09-01T19:19:30+07:00 | LE MAI HOAI BAO | chore(23127326): rename submission artifacts to student id
 bdf5c161a993764a4362ccb4bfcb3b2adbbb5f16 | 2026-09-01T19:26:07+07:00 | LE MAI HOAI BAO | docs(23127326): clarify remaining manual deliverables
+ddc77c984f756b2e05d3cd14900dc6a128966e0c | 2026-09-02T00:12:11+07:00 | LE MAI HOAI BAO | docs(23127326): finalize API testing submission package
