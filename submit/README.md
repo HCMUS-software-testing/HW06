@@ -2,6 +2,8 @@
 
 Public repository: <https://github.com/HCMUS-software-testing/HW06/tree/Bao>
 
+Phạm vi đếm: mỗi feature được xem là một API nghiệp vụ gồm các endpoint công khai của feature đó; mục tiêu `>=35` được áp dụng cho từng nhóm FR-04, FR-10 và FR-19. Catalogue vẫn ghi rõ từng method/endpoint và mapping Postman riêng.
+
 ## Phạm vi
 
 | Pool | Feature                       | API được kiểm thử                                                |
@@ -24,6 +26,7 @@ Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 a
 ## Tài liệu chính
 
 - Test catalogue: `test-cases/23127326.csv`, `test-cases/23127326.json`; file XLSX đã được đồng bộ với catalogue cuối và có summary tính bằng công thức.
+- AI traceability: `AI-001` chuẩn hóa contract; `AI-002` sinh FR-04 (40 case), `AI-003` sinh FR-10 (45 case), `AI-004` sinh FR-19 (40 case); 15 case mở rộng có nguồn `HUMAN-001`.
 - Postman: full collection, environment, data-driven collection + CSV và deterministic CI-demo collection trong `postman/`.
 - Newman: `newman-full-report.html` và `newman-report.html`.
 - Bug register: `bug-reports.md`; 10 GitHub Issues công khai.
@@ -56,10 +59,11 @@ Collection/folder, environment variables, collection variables, collection-level
 | Postman collections, environment và Newman HTML/JSON      | `postman/`, `newman-full-report.html`, `newman-report.html` |
 | Danh sách tính năng Postman                               | Mục “Tính năng Postman đã dùng” bên dưới                    |
 | CI/CD report, run pass, run đúng một failure, ảnh và link | `cicd-report.md`, `evidence/`                               |
+| Workflow CI/CD                                             | `.github/workflows/hw06-23127326.yml`                       |
 | Excel test cases + test summary                           | `23127326_test-cases.xlsx` gồm 2 sheet                      |
 | Agent Skill, sơ đồ và pseudocode                          | `agent-skill/`                                              |
 | Bug report + GitHub Issue screenshots                     | `bug-reports.md`, `evidence/`                               |
 | AI Audit và AI Critique Markdown + PDF                    | `ai-audit-report.*`, `ai-critique.*`                        |
-| Git commit log                                            | `git-commit-log.txt`                                        |
+| Git commit log                                            | `git_commit_log.txt`                                        |
 
 Video demo Agent Skill: [https://youtu.be/1X8fNBIZYV0](https://youtu.be/1X8fNBIZYV0).

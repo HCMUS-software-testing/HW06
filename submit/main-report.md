@@ -8,7 +8,7 @@ Quy ước status: 2xx cho thao tác hợp lệ; 400 cho input/business transiti
 
 ## 2. Sinh test bằng AI, kiểm toán và mở rộng
 
-AI được điều khiển theo bốn interaction tạo ứng viên, tập trung lần lượt vào contract, FR-04, FR-10 và FR-19. AI tạo 125 case (40/45/40). Sinh viên tự audit từng dòng, sửa oracle/fixture/mapping và tự bổ sung 15 case HUMAN (5 mỗi feature). Catalogue cuối cùng có 140/140 nhãn `VALID`; các cột `Audit reason`, `Corrected version`, `Why AI missed` giữ vết quyết định.
+AI được điều khiển theo bốn interaction: AI-001 chuẩn hóa contract, AI-002 sinh FR-04 (40 case), AI-003 sinh FR-10 (45 case), AI-004 sinh FR-19 (40 case). Sinh viên tự audit từng dòng, sửa oracle/fixture/mapping và tự bổ sung 15 case HUMAN (5 mỗi feature). Catalogue cuối cùng có 140/140 nhãn `VALID`; các cột `AI source`, `Audit reason`, `Corrected version`, `Why AI missed` giữ vết quyết định.
 
 Chi tiết audit và mapping Postman nằm trong `test-cases/23127326.csv` và JSON tương đương.
 
@@ -28,13 +28,15 @@ Suite bao phủ ma trận 5×5 giữa `pending`, `confirmed`, `shipping`, `deliv
 
 ### Ánh xạ yêu cầu bảo mật
 
-SEC-01 được quan sát qua việc API làm lộ plaintext password; SEC-02 qua token missing/invalid/stale; SEC-03 qua admin role; SEC-04 qua XSS payload được lưu/round-trip dưới dạng data (UI escaping nằm ngoài phạm vi API); SEC-05 qua injection payload và state invariants; SEC-06 qua protected `role`. SEC-07 chỉ áp dụng OTP reset-password FR-03 nên được ghi `N/A` cho ba API đã chọn, không bịa test OTP ngoài phạm vi.
+SEC-01 được quan sát qua việc API làm lộ plaintext password và các case privacy; SEC-02 qua token missing/invalid/stale; SEC-03 qua admin-role enforcement; SEC-04 qua XSS payload được lưu/round-trip dưới dạng data (UI escaping nằm ngoài phạm vi API); SEC-05 qua injection payload và state invariants; SEC-06 qua protected `role`. Các test ID và mapping cụ thể được tổng hợp trong Phụ lục AI Audit. SEC-07 chỉ áp dụng OTP reset-password FR-03 nên được ghi `N/A` cho ba API đã chọn, không bịa test OTP ngoài phạm vi.
 
 ## 4. Triển khai bộ kiểm thử trên Postman - MSSV 23127326
 
 Full collection gồm hai setup login và 140 catalogue item. Collection-level pre-request script bắt buộc `studentId`, upsert header `X-Student-Id` và log request. Fixture cô lập, cleanup và postcondition được thực hiện bằng `pm.sendRequest`. Assertions kiểm tra exact status, JSON content type, body shape, identity/state và không có 5xx không xử lý.
 
 Tính năng đã dùng: collection/folder, environment/collection/local variables, pre-request/test scripts, dynamic fixtures, data-driven CSV, Collection Runner-compatible data, Newman CLI, JSON/HTML Extra reports và CI artifact. Monitor/mock server không phù hợp vì suite cần reset local SQLite và chạy fixture phá hủy có kiểm soát.
+
+Mỗi feature được tính là một API nghiệp vụ theo đề bài và có từ 35 test case trở lên; các endpoint thành phần vẫn được kiểm thử riêng: FR-04 có GET/PUT, FR-10 có status/cancel, FR-19 có list/delete.
 
 ## 5. Kết quả thực thi
 
@@ -58,7 +60,7 @@ Data-driven FR-04 phone run: 6 iterations, 12 requests, 18 assertions, 4 fail. H
 
 ## 7. Tích hợp CI/CD
 
-Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report. CI-demo có ba stable case đại diện FR-04/FR-10/FR-19 cùng một controlled assertion: `false` cho 22/22 pass; `true` tạo đúng 1 assertion fail. Chế độ `workflow_dispatch: conformance` chạy toàn bộ 140 case và giữ các product defect hiển thị màu đỏ. CI-demo failure được ghi rõ là pipeline-control evidence, không phải bug sản phẩm.
+Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report; workflow được đóng gói cả trong ZIP tại `.github/workflows/`. CI-demo có ba stable case đại diện FR-04/FR-10/FR-19 cùng một controlled assertion: `false` cho 22/22 pass; `true` tạo đúng 1 assertion fail. Chế độ `workflow_dispatch: conformance` chạy toàn bộ 140 case và giữ các product defect hiển thị màu đỏ. CI-demo failure được ghi rõ là pipeline-control evidence, không phải bug sản phẩm.
 
 ## 8. Thiết kế Agent Skill
 
