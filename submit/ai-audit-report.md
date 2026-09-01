@@ -6,7 +6,7 @@ Tôi sử dụng công cụ AI cho các công việc: trích xuất yêu cầu, 
 
 ## Nhật ký tương tác
 
-Thời gian AI-001–AI-005 được giữ từ commit ghi nhận output lần đầu. Output có cấu trúc đầy đủ nằm trong `../test-cases/member-4.json`; phần tóm tắt này không thay thế output đó.
+Thời gian AI-001–AI-005 được giữ từ commit ghi nhận output lần đầu. Output có cấu trúc đầy đủ nằm trong `test-cases/member-4.json`; phần tóm tắt này không thay thế output đó.
 
 ### AI-001 — Codex — 2026-08-31 23:31:15 +07:00
 

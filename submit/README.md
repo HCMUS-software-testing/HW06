@@ -25,9 +25,9 @@ Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 a
 
 - Test catalogue: `test-cases/member-4.csv`, `test-cases/member-4.json`; file XLSX cần export lại từ CSV sau thay đổi cuối.
 - Postman: full collection, environment, data-driven collection + CSV và deterministic CI-demo collection trong `postman/`.
-- Newman: `newman/member-4/newman-full-report.html` và `newman-report.html`.
-- Bug register: `bug-reports/member-4.md`; 10 GitHub Issues công khai.
-- Main report, AI Audit, AI Critique, CI/CD report: `docs/`.
+- Newman: `newman-full-report.html`, `newman-report.html` và `newman-report-readme.md`.
+- Bug register: `bug-reports-member-4.md`; 10 GitHub Issues công khai.
+- Main report, AI Audit, AI Critique, CI/CD report và failure classification nằm trực tiếp trong `submit/`.
 - Agent Skill: pseudocode và design notes trong `agent-skill/`.
 
 ## Tính năng Postman đã dùng

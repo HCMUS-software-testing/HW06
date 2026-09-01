@@ -10,7 +10,7 @@ Quy ước status: 2xx cho thao tác hợp lệ; 400 cho input/business transiti
 
 AI được điều khiển theo năm prompt tách biệt: trích contract; FR-04 domain/security/schema; FR-10 state graph; FR-19 authorization/delete; audit/deduplicate/extension. AI tạo 125 case (40/45/40). Sinh viên audit từng dòng, sửa oracle/fixture/mapping và bổ sung 15 case HUMAN (5 mỗi feature). Catalogue cuối cùng có 140/140 nhãn `VALID`; các cột `Audit reason`, `Corrected version`, `Why AI missed` giữ vết quyết định.
 
-Chi tiết audit và mapping Postman nằm trong `../test-cases/member-4.csv` và JSON tương đương.
+Chi tiết audit và mapping Postman nằm trong `test-cases/member-4.csv` và JSON tương đương.
 
 ## 3. Độ bao phủ theo tính năng
 
@@ -50,11 +50,11 @@ Full run ngày 2026-09-01 trên clean database:
 | Lỗi fixture/request | 0 |
 | Lỗi gốc | 10 |
 
-Data-driven FR-04 phone run: 6 iterations, 12 requests, 18 assertions, 4 fail. Hai valid partition pass; bốn invalid partition bị SUT chấp nhận sai. Báo cáo: `../newman/member-4/newman-full-report.html`, `newman-report.html`; phân loại chi tiết: `failure-classification.md`.
+Data-driven FR-04 phone run: 6 iterations, 12 requests, 18 assertions, 4 fail. Hai valid partition pass; bốn invalid partition bị SUT chấp nhận sai. Báo cáo: `newman-full-report.html`, `newman-report.html`; phân loại chi tiết: `failure-classification.md`.
 
 ## 6. Phân tích lỗi
 
-42 case fail quy về 10 root defects: mass assignment role, credential exposure, missing phone validation, unsafe partial/body update, hai sai state rule FR-10, missing admin-role enforcement, delete-user success sai semantics, stale JWT và self-delete. Không đếm mỗi assertion fail thành một bug. Reproduction, expected/actual, severity, test IDs và public GitHub Issue nằm trong `../bug-reports/member-4.md`.
+42 case fail quy về 10 root defects: mass assignment role, credential exposure, missing phone validation, unsafe partial/body update, hai sai state rule FR-10, missing admin-role enforcement, delete-user success sai semantics, stale JWT và self-delete. Không đếm mỗi assertion fail thành một bug. Reproduction, expected/actual, severity, test IDs và public GitHub Issue nằm trong `bug-reports-member-4.md`.
 
 ## 7. Tích hợp CI/CD
 
@@ -62,7 +62,7 @@ Workflow `.github/workflows/hw06-member4.yml` clone/pin SUT, khởi động data
 
 ## 8. Thiết kế Agent Skill
 
-Thiết kế reusable generator có contract normalizer, bốn planner domain/state/security/schema, candidate critic/deduplicator, human approval gate, exporter và execution feedback loop. Pseudocode trong `../agent-skill/pseudocode.md`. Theo ràng buộc chống gian lận, sơ đồ nộp cuối phải do sinh viên tự vẽ; AI chỉ cung cấp checklist nút/cạnh trong `skill-design.md`.
+Thiết kế reusable generator có contract normalizer, bốn planner domain/state/security/schema, candidate critic/deduplicator, human approval gate, exporter và execution feedback loop. Pseudocode trong `agent-skill/pseudocode.md`. Theo ràng buộc chống gian lận, sơ đồ nộp cuối phải do sinh viên tự vẽ; AI chỉ cung cấp checklist nút/cạnh trong `agent-skill/skill-design.md`.
 
 ## 9. Phụ lục kiểm toán AI
 
@@ -70,4 +70,4 @@ Toàn bộ khai báo công cụ, thời gian, prompt, output và human decision 
 
 ## 10. Tính xác thực của minh chứng và phần bàn giao thủ công
 
-Không dùng console/Issue card dựng. Ảnh GitHub Issues và Actions phải chụp trực tiếp trang thật; Postman Console và Newman hostname phải chụp từ run thật. Danh sách tên file/URL cần chụp nằm trong `../evidence/README.md`. Sinh viên export PDF/XLSX, tự vẽ diagram, quay video tùy chọn và đóng ZIP sau cùng.
+Không dùng console/Issue card dựng. Ảnh GitHub Issues và Actions phải chụp trực tiếp trang thật; Postman Console và Newman hostname phải chụp từ run thật. Danh sách tên file/URL cần chụp nằm trong `evidence/README.md`. Sinh viên export PDF/XLSX, tự vẽ diagram, quay video tùy chọn và đóng ZIP sau cùng.

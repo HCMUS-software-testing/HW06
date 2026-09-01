@@ -16,7 +16,7 @@ Các liên kết dưới đây là run GitHub Actions công khai. Ảnh bắt bu
 
 | Minh chứng | Commit | Lần chạy Actions | Kết quả mong đợi | Ảnh chụp |
 |---|---|---|---|---|
-| CI demo pass | [`90c2b7e`](https://github.com/HCMUS-software-testing/HW06/commit/90c2b7e6ff1cadd24f9d72300de34b646050cdba) | [33498533231](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498533231) | 22/22 assertion pass | `../evidence/github-actions-pass.png` |
-| CI demo đúng một failure | [`10e32d8`](https://github.com/HCMUS-software-testing/HW06/commit/10e32d8) | [33498587297](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498587297) | 21 pass, đúng 1 controlled assertion fail | `../evidence/github-actions-one-fail.png` |
+| CI demo pass | [`90c2b7e`](https://github.com/HCMUS-software-testing/HW06/commit/90c2b7e6ff1cadd24f9d72300de34b646050cdba) | [33498533231](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498533231) | 22/22 assertion pass | `evidence/github-actions-pass.png` |
+| CI demo đúng một failure | [`10e32d8`](https://github.com/HCMUS-software-testing/HW06/commit/10e32d8) | [33498587297](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498587297) | 21 pass, đúng 1 controlled assertion fail | `evidence/github-actions-one-fail.png` |
 | Nhánh xanh khôi phục | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498661968](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498661968) | 22/22 assertion pass | cùng trang run trực tiếp |
-| Conformance đầy đủ | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665) | 467 request; 839 assertion; 63 assertion sản phẩm fail | `../evidence/github-actions-full-conformance.png` |
+| Conformance đầy đủ | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665) | 467 request; 839 assertion; 63 assertion sản phẩm fail | `evidence/github-actions-full-conformance.png` |

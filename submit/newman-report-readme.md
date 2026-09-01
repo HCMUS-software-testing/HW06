@@ -15,7 +15,7 @@ Commit SUT: `85af3ba875c88283615e22cb108f13e2fccaf0e9`. Host: `http://localhost:
 ## Lần chạy FR-04 theo dữ liệu phone
 
 - Tệp: `newman-report.html` / `.json`
-- Dữ liệu: `../../postman/data/fr04-phone-partitions.csv`
+- Dữ liệu: `postman/data/fr04-phone-partitions.csv`
 - 6 iteration, 12 request, 18 assertion
 - 14 pass, 4 fail; cả bốn failure đều tái hiện việc chấp nhận phone không hợp lệ (`BUG-FR04-03`)
 

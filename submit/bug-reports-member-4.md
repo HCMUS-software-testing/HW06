@@ -1,6 +1,6 @@
 # Sổ đăng ký lỗi đã xác nhận — Thành viên 4
 
-Tất cả lỗi được tái hiện trên SUT commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`, host `localhost`, có header MSSV `23127326`. Minh chứng Newman nằm tại `../newman/member-4/newman-full-report.html`; ánh xạ test case chi tiết nằm trong `../docs/failure-classification.md`.
+Tất cả lỗi được tái hiện trên SUT commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`, host `localhost`, có header MSSV `23127326`. Minh chứng Newman nằm tại `newman-full-report.html`; ánh xạ test case chi tiết nằm trong `failure-classification.md`.
 
 | Mã lỗi | Mức độ | Kết quả mong đợi / thực tế | Test ID thất bại | GitHub Issue |
 |---|---|---|---|---|
@@ -15,4 +15,4 @@ Tất cả lỗi được tái hiện trên SUT commit `85af3ba875c88283615e22cb
 | `BUG-FR19-02` | Cao | JWT của subject đã xóa bị từ chối; token cũ vẫn nhận 200 từ `/api/users/me`. | FR19-044 | [#40](https://github.com/HCMUS-software-testing/HW06/issues/40) |
 | `BUG-FR19-03` | Cao | Admin hiện tại không được tự xóa; API trả 200 và xóa tài khoản. | FR19-045 | [#4](https://github.com/HCMUS-software-testing/HW06/issues/4) |
 
-Mỗi Issue đã được chuẩn hóa theo cùng mẫu tiếng Việt: metadata, mô tả, bước tái hiện, actual/expected, minh chứng và nguyên nhân gốc. Ảnh bằng chứng phải là ảnh chụp trang GitHub Issue thật theo `../evidence/README.md`.
+Mỗi Issue đã được chuẩn hóa theo cùng mẫu tiếng Việt: metadata, mô tả, bước tái hiện, actual/expected, minh chứng và nguyên nhân gốc. Ảnh bằng chứng là ảnh chụp trang GitHub Issue thật theo `evidence/README.md`.
