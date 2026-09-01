@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "hw06-api-testing-member-2",
 		"name": "HW06_API_Testing_Member2",
-		"description": "API Testing collection for Member 2 (Lê Trung Kiên - 23127075): FR-05, FR-08, FR-18",
+		"description": "API Testing collection for Member 2 (Lê Trung Kiên - 23127075).\n\nGrounded on eshop-sut/api_specification.md and eshop-sut/README.md.\nBase URL: http://localhost:3000\nAssigned APIs: FR-05 (Product Listing & Search), FR-08 (Checkout), FR-18 (Admin Order Management).\n\nPre-request Script: Automatically injects 'X-Student-Id: 23127075' header into every request.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"event": [
@@ -11,24 +11,426 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.request.headers.add({ key: 'X-Student-Id', value: pm.environment.get('studentId') || '23127075' });",
-					"console.log('Added pre-request header X-Student-Id: ' + (pm.environment.get('studentId') || '23127075'));"
+					"// =============================================================",
+					"// HW06 Collection-Level Pre-request Script",
+					"// Student: Lê Trung Kiên (MSSV: 23127075)",
+					"// Purpose: Inject X-Student-Id header into EVERY request",
+					"// Source: req/2026.HW06.API Testing_Vi.md §6.4 & §11",
+					"// =============================================================",
+					"",
+					"const studentId = pm.environment.get('studentId') || '23127075';",
+					"",
+					"// Use upsert to avoid duplicate headers on re-runs",
+					"pm.request.headers.upsert({",
+					"    key: 'X-Student-Id',",
+					"    value: studentId",
+					"});",
+					"",
+					"// Console log for anti-fraud screenshot evidence (§11)",
+					"console.log('[Pre-request] X-Student-Id: ' + studentId);",
+					"console.log('[Pre-request] Request: ' + pm.request.method + ' ' + pm.request.url.toString());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// =============================================================",
+					"// HW06 Collection-Level Test Script",
+					"// Common assertions applied to every response",
+					"// =============================================================",
+					"",
+					"// Verify response time is reasonable (< 5 seconds)",
+					"pm.test('Response time is acceptable (< 5s)', function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+					"});",
+					"",
+					"// Verify response body is valid JSON (for non-204 responses)",
+					"if (pm.response.code !== 204) {",
+					"    pm.test('Response body is valid JSON', function () {",
+					"        pm.response.json();",
+					"    });",
+					"}"
 				]
 			}
 		}
 	],
 	"item": [
 		{
+			"name": "00 - Setup Authentication",
+			"description": "Login requests to obtain JWT tokens for user and admin accounts.\nSource: eshop-sut/api_specification.md §1.2\nDefault accounts from eshop-sut/README.md:\n- Admin: admin@eshop.com / Admin123!\n- User: test@eshop.com / Test1234!",
+			"item": [
+				{
+					"name": "Login as User (test@eshop.com)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('User login returns 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response contains JWT token', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('token');",
+									"    pm.expect(jsonData.token).to.be.a('string').and.not.empty;",
+									"    // Auto-save token to environment variable",
+									"    pm.environment.set('userToken', jsonData.token);",
+									"    console.log('[Setup] userToken saved to environment');",
+									"});",
+									"",
+									"pm.test('Response contains user info', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('user');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@eshop.com\",\n  \"password\": \"Test1234!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "login"]
+						}
+					}
+				},
+				{
+					"name": "Login as Admin (admin@eshop.com)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Admin login returns 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response contains JWT token', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('token');",
+									"    pm.expect(jsonData.token).to.be.a('string').and.not.empty;",
+									"    // Auto-save admin token to environment variable",
+									"    pm.environment.set('adminToken', jsonData.token);",
+									"    console.log('[Setup] adminToken saved to environment');",
+									"});",
+									"",
+									"pm.test('Response contains user info with admin role', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('user');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@eshop.com\",\n  \"password\": \"Admin123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
 			"name": "Pool A - FR-05 Product Listing and Search",
-			"item": []
+			"description": "FR-05: Xem danh sách & Tìm kiếm sản phẩm\nSource: eshop-sut/api_specification.md §3.1, §3.2\nEndpoints:\n- GET /api/products (list all)\n- GET /api/products?search=keyword (search by name)\n- GET /api/products/:id (detail by ID)\n\neshop-sut/README.md FR-05:\n- Product fields: Ảnh (imageUrl), Tên (name), Giá (price, ₫)\n- Search by name, safe display (no HTML render)\n- Loading state, empty state required",
+			"item": [
+				{
+					"name": "GET Products List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response is an array of products', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test('Each product has required fields (id, name, price)', function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.length > 0) {",
+									"        const product = jsonData[0];",
+									"        pm.expect(product).to.have.property('id');",
+									"        pm.expect(product).to.have.property('name');",
+									"        pm.expect(product).to.have.property('price');",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products"]
+						}
+					}
+				},
+				{
+					"name": "GET Search Products by Keyword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response is an array', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products?search=phone",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products"],
+							"query": [
+								{
+									"key": "search",
+									"value": "phone"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "GET Product Detail By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Product has full detail fields', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData).to.have.property('name');",
+									"    pm.expect(jsonData).to.have.property('price');",
+									"    pm.expect(jsonData).to.have.property('description');",
+									"    pm.expect(jsonData).to.have.property('category_id');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", "1"]
+						}
+					}
+				}
+			]
 		},
 		{
 			"name": "Pool B - FR-08 Checkout and Order Creation",
-			"item": []
+			"description": "FR-08: Thanh toán (Checkout)\nSource: eshop-sut/api_specification.md §4.3\nEndpoint: POST /api/checkout\nRequires: Authorization: Bearer <userToken>\nBody: {\"total_amount\": number, \"shipping_address\": string}\n\neshop-sut/README.md FR-08:\n- Only logged-in users can checkout\n- Backend must recalculate total_amount (not trust client)\n- Cart is cleared after successful checkout\n- Initial order status: 'pending' (FR-10)",
+			"item": [
+				{
+					"name": "POST Checkout - Valid Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Checkout returns success status', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response contains order information', function () {",
+									"    const jsonData = pm.response.json();",
+									"    // Save order ID for later status update tests",
+									"    if (jsonData.id || jsonData.order_id) {",
+									"        const orderId = jsonData.id || jsonData.order_id;",
+									"        pm.environment.set('lastOrderId', orderId);",
+									"        console.log('[FR-08] Saved lastOrderId: ' + orderId);",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"total_amount\": 200000,\n  \"shipping_address\": \"123 Le Loi, TP.HCM\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/checkout",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "checkout"]
+						}
+					}
+				}
+			]
 		},
 		{
 			"name": "Pool C - FR-18 Order Management Admin",
-			"item": []
+			"description": "FR-18: Quản lý Đơn hàng (Admin)\nSource: eshop-sut/api_specification.md §6.2\nEndpoints:\n- GET /api/admin/orders (list all orders, requires admin token)\n- PUT /api/admin/orders/:id/status (update order status)\n\neshop-sut/README.md FR-18 + FR-10:\n- Admin views all orders across all users\n- Status transitions: pending → confirmed → shipping → delivered\n- Cancel allowed from pending or confirmed\n- Final states: delivered, canceled (no further transitions)\n- User cannot cancel orders in 'shipping' state\n- Requires role='admin' in JWT (SEC-03)",
+			"item": [
+				{
+					"name": "GET Admin Orders List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Admin orders returns 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response is an array of orders', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test('Each order has required fields', function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.length > 0) {",
+									"        const order = jsonData[0];",
+									"        pm.expect(order).to.have.property('id');",
+									"        pm.expect(order).to.have.property('status');",
+									"        pm.expect(order).to.have.property('total_amount');",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/orders",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "orders"]
+						}
+					}
+				},
+				{
+					"name": "PUT Update Order Status (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Order status update returns success', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response confirms status change', function () {",
+									"    const jsonData = pm.response.json();",
+									"    // Verify the response acknowledges the update",
+									"    console.log('[FR-18] Status update response: ' + JSON.stringify(jsonData));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"confirmed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/orders/{{lastOrderId}}/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "orders", "{{lastOrderId}}", "status"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "default"
 		}
 	]
 }

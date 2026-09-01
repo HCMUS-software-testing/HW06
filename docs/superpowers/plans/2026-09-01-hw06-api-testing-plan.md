@@ -1,8 +1,8 @@
 # HW06 API Testing (100/100 Points) Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Authority Source:** Grounded strictly in `eshop-sut/api_specification.md` and `eshop-sut/README.md`. Backend Base URL: `http://localhost:3000`.
 
-**Goal:** Complete all requirements for HW06 API Testing for Member 2 (Lê Trung Kiên - 23127075) across 3 assigned APIs (FR-05, FR-08, FR-18) and Agent Skill to achieve 100/100 points.
+**Goal:** Complete all requirements for HW06 API Testing for Member 2 (Lê Trung Kiên - 23127075) across 3 assigned APIs (FR-05: `GET /api/products`, FR-08: `POST /api/checkout`, FR-18: `GET/PUT /api/admin/orders`) and Agent Skill to achieve 100/100 points.
 
 **Architecture:** Standardized test pipeline in `src/` directory covering AI generation, human audit, manual test extension, Postman/Newman automation with `X-Student-Id: 23127075` header, CI/CD GitHub Actions integration, bug reporting, AI critique, and AI test generator Agent Skill.
 
@@ -12,7 +12,8 @@
 
 - All deliverables MUST reside strictly inside `src/` (main working directory).
 - Student ID `23127075` MUST be sent in `X-Student-Id` header for all Postman/Newman requests.
-- Member 2 assigned APIs: FR-05 (Pool A), FR-08 (Pool B), FR-18 (Pool C).
+- Base URL = `http://localhost:3000`.
+- Member 2 assigned APIs: FR-05 (`GET /api/products?search=`), FR-08 (`POST /api/checkout`), FR-18 (`GET/PUT /api/admin/orders`).
 - Each API requires: >= 35 AI test cases, complete VALID/INVALID/INCOMPLETE audit, >= 5 human-designed test cases, Newman HTML report, and bug issues.
 - Agent Skill requires: self-drawn diagram + pseudocode + reusable design notes.
 
@@ -25,11 +26,11 @@
 - Modify: `src/postman/HW06_Local.postman_environment.json`
 
 **Interfaces:**
-- Consumes: EShop SUT endpoints (`GET /api/products`, `POST /api/orders/checkout`, `GET/PUT /api/admin/orders`)
-- Produces: Executable Postman Collection & Environment with pre-request header `X-Student-Id: 23127075`
+- Consumes: EShop SUT endpoints (`GET /api/products`, `POST /api/checkout`, `GET/PUT /api/admin/orders`)
+- Produces: Executable Postman Collection & Environment with pre-request header `X-Student-Id: 23127075` and `baseUrl=http://localhost:3000`
 
 - [ ] **Step 1: Configure Environment Variables**
-  - Set `baseUrl` = `http://localhost:5000`, `studentId` = `23127075`, `userToken`, `adminToken`.
+  - Set `baseUrl` = `http://localhost:3000`, `studentId` = `23127075`, `userToken`, `adminToken`.
 - [ ] **Step 2: Add Collection Pre-request Script for Header Injection**
   - Add JavaScript snippet to set `X-Student-Id: 23127075` header on every request.
 - [ ] **Step 3: Commit Infrastructure Setup**
@@ -48,11 +49,11 @@
 - Create: `src/newman/member-2/FR05_Report.html`
 
 **Interfaces:**
-- Consumes: `GET /api/products`, `GET /api/products/search`
+- Consumes: `GET /api/products`, `GET /api/products?search=keyword`, `GET /api/products/:id`
 - Produces: 35 AI cases + Audit + 5 Human cases + Newman HTML report
 
 - [ ] **Step 1: AI Test Case Generation (35+ cases)**
-  - Generate test cases covering query parameters (page, limit, sort, category), search keywords, edge cases, SQLi in search, and JSON schema.
+  - Generate test cases covering `search` query parameter, product details by ID, edge cases, SQLi/XSS in search, and JSON schema.
 - [ ] **Step 2: Perform Manual Audit (VALID / INVALID / INCOMPLETE)**
   - Audit every generated case with explicit rationale and fixes.
 - [ ] **Step 3: Add Human-designed Cases (5+ cases)**
@@ -75,11 +76,11 @@
 - Create: `src/newman/member-2/FR08_Report.html`
 
 **Interfaces:**
-- Consumes: `POST /api/orders/checkout`
+- Consumes: `POST /api/checkout`
 - Produces: 35 AI cases + Audit + 5 Human cases + Newman HTML report
 
 - [ ] **Step 1: AI Test Case Generation (35+ cases)**
-  - Generate cases covering valid checkout, empty cart, insufficient stock, invalid address, coupon interaction, unauthenticated access, schema validation.
+  - Generate cases covering valid checkout (`total_amount`, `shipping_address`), empty cart, insufficient stock, coupon interaction, unauthenticated access, schema validation.
 - [ ] **Step 2: Perform Manual Audit (VALID / INVALID / INCOMPLETE)**
   - Audit all cases and document fixes for invalid/incomplete cases.
 - [ ] **Step 3: Add Human-designed Cases (5+ cases)**
@@ -102,15 +103,15 @@
 - Create: `src/newman/member-2/FR18_Report.html`
 
 **Interfaces:**
-- Consumes: `GET /api/admin/orders`, `PUT /api/admin/orders/{id}/status`
+- Consumes: `GET /api/admin/orders`, `PUT /api/admin/orders/:id/status`
 - Produces: 35 AI cases + Audit + 5 Human cases + Newman HTML report
 
 - [ ] **Step 1: AI Test Case Generation (35+ cases)**
-  - Generate cases covering admin authorization, status machine (Pending -> Confirmed -> Shipping -> Delivered), invalid transitions, user access restrictions, schema validation.
+  - Generate cases covering admin authorization, status machine (`pending` -> `confirmed` -> `shipping` -> `delivered`, `canceled`), invalid transitions, user access restrictions, schema validation.
 - [ ] **Step 2: Perform Manual Audit (VALID / INVALID / INCOMPLETE)**
   - Audit all cases with rationale.
 - [ ] **Step 3: Add Human-designed Cases (5+ cases)**
-  - Add privilege escalation (regular user calling admin endpoint), IDOR on status updates, invalid backward state transitions; explain AI limitations.
+  - Add privilege escalation (regular user calling admin endpoint), IDOR on status updates, invalid backward state transitions from `delivered` / `canceled`; explain AI limitations.
 - [ ] **Step 4: Implement & Execute via Newman**
   - Export `src/newman/member-2/FR18_Report.html`.
 - [ ] **Step 5: Commit**
