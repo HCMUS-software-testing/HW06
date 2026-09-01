@@ -173,8 +173,20 @@ Quy ước severity: **Critical** (mất tiền / leo quyền / bypass kiểm so
 
 ---
 
-## Tổng hợp
+## Tổng hợp & Phân loại Bug (Summary & Bug Classification)
 
-- **17 bug** được báo cáo (4 Critical, 5 High, 6 Medium, 2 Low).
-- Tất cả 17 lỗi đã được đăng lên GitHub Issues thực tế tại: `https://github.com/HCMUS-software-testing/HW06/issues` (từ Issue `#18` đến `#34`).
-- Evidence thực thi: `newman/member-3/bug-discovery-report.html` (chạy thật trên `http://localhost:3000`, reseed trước khi chạy).
+### Bảng Phân loại Bug theo API và Nguồn phát hiện (AI vs Human)
+
+| Feature API | Lỗi do AI phát hiện (AI-discovered) | Lỗi do Người bổ sung (Human-discovered) | Tổng số Lỗi | Các mã Bug ID |
+| --- | ---: | ---: | ---: | --- |
+| **FR-01 (Register)** | 1 | 2 | **3** | BUG-M3-001, BUG-M3-002, BUG-M3-003 |
+| **FR-09 (Apply Coupon)** | 5 | 3 | **8** | BUG-M3-004, 005, 006, 007, 008, 009, 010, 016 |
+| **FR-17 (Coupon CRUD)** | 4 | 2 | **6** | BUG-M3-011, 012, 013, 014, 015, 017 |
+| **TỔNG CỘNG** | **10 (58.8%)** | **7 (41.2%)** | **17 (100%)** | **BUG-M3-001 đến BUG-M3-017** |
+
+### Tóm tắt chung
+- **Tổng số lỗi:** 17 bugs (4 Critical, 5 High, 6 Medium, 2 Low).
+- **Phát hiện bởi AI:** 10 bugs — tập trung vào sai sót công thức, thiếu validation cơ bản, lỗi logic biên và path mismatch.
+- **Phát hiện bởi Người (Human-in-the-Loop):** 7 bugs — tập trung vào các kịch bản bảo mật chuyên sâu (SEC-03 role bypass, SEC-05 IDOR, omit user_id quota bypass, Content-Type crash).
+- **GitHub Issues:** Tất cả 17 lỗi đã được đăng trên repository thực tế tại `https://github.com/HCMUS-software-testing/HW06/issues` (Issue `#18` đến `#34`).
+- **Evidence thực thi:** `newman/member-3/bug-discovery-report.html` (chạy thật trên `http://localhost:3000`, reseed trước khi chạy).
