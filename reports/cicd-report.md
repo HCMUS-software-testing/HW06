@@ -73,9 +73,9 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ### 🟢 LẦN CHẠY 1: TOÀN BỘ API TEST CASES ĐỀU PASS (100% GREEN)
 
-- **Commit SHA:** [`bb73f1e`](https://github.com/HCMUS-software-testing/HW06/commit/bb73f1e)
-- **Commit Message:** `ci(fix): unify sut server lifecycle and newman execution into single job step`
-- **URL GitHub Actions Run:** [https://github.com/HCMUS-software-testing/HW06/actions/workflows/api-tests.yml](https://github.com/HCMUS-software-testing/HW06/actions/workflows/api-tests.yml)
+- **Commit SHA:** [`8765adc`](https://github.com/HCMUS-software-testing/HW06/commit/8765adc)
+- **Commit Message:** `feat: consolidate project structure, add agent-skill scripts, update real screenshots and PDF reports`
+- **URL GitHub Actions Run:** [https://github.com/HCMUS-software-testing/HW06/actions/runs/33494115345](https://github.com/HCMUS-software-testing/HW06/actions/runs/33494115345)
 - **Kết quả thực thi:**
   - **Trạng thái:** ✅ **Success (Passed 100%)**
   - **Tổng số Requests đã chạy:** `43 requests`
@@ -90,26 +90,26 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ### 🔴 LẦN CHẠY 2: CỐ TÌNH TẠO ASSERTION FAIL (DEMONSTRATE RED PIPELINE)
 
-- **Commit SHA:** [`a8370b2`](https://github.com/HCMUS-software-testing/HW06/commit/a8370b2)
-- **Commit Message:** `ci(demo): trigger intentional newman assertion failure on github actions`
-- **URL GitHub Actions Run:** [https://github.com/HCMUS-software-testing/HW06/actions/workflows/api-tests.yml](https://github.com/HCMUS-software-testing/HW06/actions/workflows/api-tests.yml)
+- **Commit SHA:** [`83ea05e`](https://github.com/HCMUS-software-testing/HW06/commit/83ea05e)
+- **Commit Message:** `test(ci): intentional assertion failure (expect 999) to demonstrate CI quality gate failure`
+- **URL GitHub Actions Run:** [https://github.com/HCMUS-software-testing/HW06/actions/runs/33494842155](https://github.com/HCMUS-software-testing/HW06/actions/runs/33494842155)
 - **Chi tiết thay đổi gây lỗi (Intentional Change):**
-  Trong `postman/HW06_API_Testing.postman_collection.json`, tại request `Admin Login (Get Token)`, thay đổi assertion mã phản hồi:
+  Trong `postman/HW06_API_Testing.postman_collection.json`, tại request `TC_FR02_01_Valid_User_Login`, cố tình thay đổi assertion mã phản hồi mong đợi từ 200 thành 999:
   ```javascript
-  // Mong đợi sai status code 201 thay vì 200
+  // Cố tình mong đợi status code 999 thay vì 200
   pm.test('Status code is 200', function () {
-      pm.response.to.have.status(201);
+      pm.response.to.have.status(999);
   });
   ```
 - **Kết quả thực thi trên GitHub Actions:**
-  - **Trạng thái:** ❌ **Failure (Build Failed)**
+  - **Trạng thái:** ❌ **Failure (Build Failed / Red Quality Gate)**
   - **Chi tiết lỗi bắt được tại Newman Console:**
     ```text
     # failure detail
     1. AssertionError: Status code is 200
-       expected response to have status code 201 but got 200
+       expected response to have status code 999 but got 200
        at assertion:0 in test-script
-       inside "01_Sanity_Suite / 00_Setup_Auth / Admin Login (Get Token)"
+       inside "01_Sanity_Suite / 00_Setup_Auth / Setup User Auth Token"
     ```
   - **Minh chứng bảo vệ:** Pipeline tự động báo đỏ và chặn merge, đồng thời bước `Dump SUT Logs on Failure` in toàn bộ log server ra màn hình.
 
