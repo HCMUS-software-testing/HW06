@@ -6,19 +6,19 @@
 - `GET /api/products?search=keyword` — Tìm kiếm sản phẩm theo tên (api_specification.md §3.1)
 - `GET /api/products/:id` — Xem chi tiết một sản phẩm (api_specification.md §3.2)
 
-**Kỹ thuật:** Phân hoạch miền (Domain Partitioning)  
-**Nguồn đặc tả:** `eshop-sut/api_specification.md` §3.1–§3.2 & `eshop-sut/README.md` FR-05, FR-06
+**Kỹ thuật:** Phân hoạch miền (Domain Partitioning), Kiểm thử Bảo mật (SEC-01..SEC-07), Kiểm tra Response Schema  
+**Nguồn đặc tả:** `eshop-sut/api_specification.md` §3.1–§3.2 & `eshop-sut/README.md` FR-05, FR-06, SEC-04, SEC-05
 
 ---
 
-## 1. Danh Sách Test Cases AI Sinh & Kiểm Toán Audit
+## 1. Danh Sách Test Cases AI Sinh (35 Test Cases) & Kiểm Toán Audit
 
 ### Batch 1: Phân hoạch miền (Domain Partitioning) — 15 test cases
 
 > **Phân vùng miền áp dụng:**
 > - **GET /api/products**: Không tham số (danh sách đầy đủ)
 > - **GET /api/products?search=keyword**: Từ khóa hợp lệ, từ khóa không tồn tại, từ khóa rỗng, ký tự đặc biệt, ký tự Unicode/tiếng Việt, từ khóa rất dài
-> - **GET /api/products/:id**: ID tồn tại, ID = 0, ID âm, ID chuỗi ký tự, ID rất lớn, ID thiếu
+> - **GET /api/products/:id**: ID tồn tại, ID = 0, ID âm, ID chuỗi ký tự, ID rất lớn, ID thập phân
 
 | STT | Test Case Name | Method | Endpoint | Query/Path Params | Expected Status | Expected Schema/Body |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -38,7 +38,40 @@
 | 14 | Lấy chi tiết sản phẩm với ID rất lớn (không tồn tại) | GET | `/api/products/:id` | `:id = 999999999` | 404 Not Found | Thông báo lỗi product không tồn tại |
 | 15 | Lấy chi tiết sản phẩm với ID là số thập phân (float) | GET | `/api/products/:id` | `:id = 1.5` | 400 Bad Request hoặc 404 | Server xử lý gọn gàng: ID phải là integer, không chấp nhận float |
 
-### Bảng Kiểm Toán Audit — Batch 1
+---
+
+### Batch 2: Bảo mật (SQLi/XSS) & Response Schema Validation — 20 test cases
+
+> **Phạm vi kiểm thử:**
+> - **Bảo mật (SEC-01..SEC-07):** SQL Injection (`' OR '1'='1`, `UNION SELECT`), Reflected XSS (`<script>`, `onerror`), Parameter Pollution/Length, Null byte injection, Emojis/Unicode.
+> - **Response Schema & Types:** Kiểm tra cấu trúc mảng/đối tượng JSON, kiểu dữ liệu `id` (integer), `price` (number > 0), `name`/`description`/`imageUrl` (string), `category_id` (integer), `Content-Type: application/json`.
+
+| STT | Test Case Name | Method | Endpoint | Query/Path Params | Expected Status | Expected Schema/Body |
+| --- | --- | --- | --- | --- | --- | --- |
+| 16 | SQL Injection — Tautology Payload | GET | `/api/products` | `?search=' OR '1'='1` | 200 OK | Mảng rỗng `[]` hoặc tìm đúng chuỗi literal; KHÔNG rò rỉ toàn bộ DB (SEC-05 Parameterized Query) |
+| 17 | SQL Injection — Union Based Payload | GET | `/api/products` | `?search=' UNION SELECT 1,2,3,4,5,6--` | 200 OK / 400 Bad Request | Mảng rỗng `[]` hoặc lỗi validation; KHÔNG rò rỉ bảng dữ liệu khác |
+| 18 | SQL Injection — Time Delay / Stacked Queries | GET | `/api/products` | `?search='; SELECT pg_sleep(5)--` | 200 OK / 400 Bad Request | Server phản hồi lập tức (< 1s), KHÔNG bị kẹt delay |
+| 19 | SQL Injection — Comment Out Syntax | GET | `/api/products` | `?search=phone'--` | 200 OK | Mảng rỗng `[]` hoặc kết quả tìm kiếm an toàn; KHÔNG bị 500 SQL syntax error |
+| 20 | Reflected XSS — Script Tag Injection | GET | `/api/products` | `?search=<script>alert('XSS')</script>` | 200 OK | Mảng rỗng `[]`; từ khóa được escape an toàn, KHÔNG thi hành HTML/JS (SEC-04) |
+| 21 | Reflected XSS — Event Handler Payload | GET | `/api/products` | `?search=<img src=x onerror=alert(1)>` | 200 OK | Mảng rỗng `[]`; dữ liệu phản hồi được sanitize an toàn |
+| 22 | Reflected XSS — JavaScript Pseudo-protocol | GET | `/api/products` | `?search=javascript:alert(1)` | 200 OK | Tra cứu như chuỗi thường, trả về `[]`, an toàn |
+| 23 | Oversized Parameter — Buffer Overflow Attempt | GET | `/api/products` | `?search=` + 5000 chars `'A'` | 400 Bad Request / 200 OK | Mảng rỗng `[]` hoặc 400 Bad Request; Server KHÔNG crash 500 |
+| 24 | Null Byte Injection | GET | `/api/products` | `?search=phone%00.php` | 200 OK / 400 Bad Request | Xử lý an toàn chuỗi kết thúc null byte, KHÔNG lộ file hệ thống |
+| 25 | Multi-byte Unicode Emojis Parameter | GET | `/api/products` | `?search=📱💻🔥` | 200 OK | Mảng JSON trả về rỗng `[]`, không bị lỗi mã hóa UTF-8 |
+| 26 | Schema Validation — Kiểu dữ liệu thuộc tính `id` | GET | `/api/products` | *(không có)* | 200 OK | Mảng JSON sản phẩm: `typeof id === 'number'` và `Number.isInteger(id) === true` |
+| 27 | Schema Validation — Kiểu dữ liệu thuộc tính `name` | GET | `/api/products` | *(không có)* | 200 OK | Mảng JSON sản phẩm: `typeof name === 'string'` và `name.length > 0` |
+| 28 | Schema Validation — Kiểu dữ liệu & Giá trị thuộc tính `price` | GET | `/api/products` | *(không có)* | 200 OK | Mảng JSON sản phẩm: `typeof price === 'number'` và `price > 0` |
+| 29 | Schema Validation — Kiểu dữ liệu thuộc tính `description` | GET | `/api/products` | *(không có)* | 200 OK | Mảng JSON sản phẩm: `typeof description === 'string'` |
+| 30 | Schema Validation — Kiểu dữ liệu thuộc tính `imageUrl` | GET | `/api/products` | *(không có)* | 200 OK | Mảng JSON sản phẩm: `typeof imageUrl === 'string'` |
+| 31 | Schema Validation — Kiểu dữ liệu thuộc tính `category_id` | GET | `/api/products` | *(không có)* | 200 OK | Mảng JSON sản phẩm: `typeof category_id === 'number'` và `Number.isInteger(category_id)` |
+| 32 | Schema Validation — Cấu trúc đối tượng chi tiết sản phẩm | GET | `/api/products/1` | `:id = 1` | 200 OK | JSON Object chứa chính xác 6 thuộc tính: `id`, `name`, `price`, `description`, `imageUrl`, `category_id` |
+| 33 | Response Header Validation — Content-Type | GET | `/api/products` | *(không có)* | 200 OK | Response header `Content-Type` chứa `application/json` |
+| 34 | Schema Validation — Cấu trúc danh sách rỗng (Empty State) | GET | `/api/products` | `?search=nonexistent_xyz` | 200 OK | Trả về JSON Array `[]` với `Array.isArray(body) === true` và `body.length === 0` |
+| 35 | Schema Validation — Không rò rỉ trường dữ liệu nhạy cảm | GET | `/api/products` | *(không có)* | 200 OK | Mảng sản phẩm KHÔNG chứa các thuộc tính ẩn/nhạy cảm như `password`, `secret`, `internal_id` |
+
+---
+
+### Bảng Kiểm Toán Audit (35 Test Cases AI Sinh)
 
 | STT | Test Case ID | Trạng thái Audit | Lý do Audit & Hướng sửa đổi |
 | --- | --- | --- | --- |
@@ -57,10 +90,26 @@
 | 13 | TC-FR05-AI-013 | [Manual by user] | [Manual by user] |
 | 14 | TC-FR05-AI-014 | [Manual by user] | [Manual by user] |
 | 15 | TC-FR05-AI-015 | [Manual by user] | [Manual by user] |
-
----
-
-*(Batch 2: Bảo mật SQLi/XSS & Response Schema — 20 test cases sẽ được bổ sung ở prompt tiếp theo)*
+| 16 | TC-FR05-AI-016 | [Manual by user] | [Manual by user] |
+| 17 | TC-FR05-AI-017 | [Manual by user] | [Manual by user] |
+| 18 | TC-FR05-AI-018 | [Manual by user] | [Manual by user] |
+| 19 | TC-FR05-AI-019 | [Manual by user] | [Manual by user] |
+| 20 | TC-FR05-AI-020 | [Manual by user] | [Manual by user] |
+| 21 | TC-FR05-AI-021 | [Manual by user] | [Manual by user] |
+| 22 | TC-FR05-AI-022 | [Manual by user] | [Manual by user] |
+| 23 | TC-FR05-AI-023 | [Manual by user] | [Manual by user] |
+| 24 | TC-FR05-AI-024 | [Manual by user] | [Manual by user] |
+| 25 | TC-FR05-AI-025 | [Manual by user] | [Manual by user] |
+| 26 | TC-FR05-AI-026 | [Manual by user] | [Manual by user] |
+| 27 | TC-FR05-AI-027 | [Manual by user] | [Manual by user] |
+| 28 | TC-FR05-AI-028 | [Manual by user] | [Manual by user] |
+| 29 | TC-FR05-AI-029 | [Manual by user] | [Manual by user] |
+| 30 | TC-FR05-AI-030 | [Manual by user] | [Manual by user] |
+| 31 | TC-FR05-AI-031 | [Manual by user] | [Manual by user] |
+| 32 | TC-FR05-AI-032 | [Manual by user] | [Manual by user] |
+| 33 | TC-FR05-AI-033 | [Manual by user] | [Manual by user] |
+| 34 | TC-FR05-AI-034 | [Manual by user] | [Manual by user] |
+| 35 | TC-FR05-AI-035 | [Manual by user] | [Manual by user] |
 
 ---
 
@@ -68,4 +117,8 @@
 
 | Test Case ID | Tên kịch bản | Loại (Bảo mật / Chuyển trạng thái / Biên) | Input Parameters & Steps | Expected Result | Lý do AI bỏ sót |
 | --- | --- | --- | --- | --- | --- |
-| *(Sẽ được bổ sung sau khi hoàn thành kiểm toán audit batch 1 + batch 2)* | | | | | |
+| TC-FR05-HUMAN-001 | SQLi Blind Boolean-based qua tham số search | Bảo mật (SEC-05) | `GET /api/products?search=phone' AND 1=1--` vs `search=phone' AND 1=2--` | Cả 2 request đều trả về kết quả giống nhau (không rò rỉ boolean SQL injection) | AI thường bỏ sót các kỹ thuật Blind SQLi phức tạp cần so sánh 2 kết quả phản hồi |
+| TC-FR05-HUMAN-002 | Reflected XSS trong thẻ H1/Empty State UI rendering | Bảo mật (SEC-04) | `GET /api/products?search=<svg/onload=alert(1)>` | Response JSON được escape an toàn; UI khi nhận JSON không thi hành SVG script | AI chỉ chú ý đến JSON response mà không đánh giá ngữ cảnh render UI của empty state (README FR-05) |
+| TC-FR05-HUMAN-003 | Parameter Pollution (HPP) trên query `search` | Edge / Security | `GET /api/products?search=phone&search=laptop` | Server xử lý tham số đầu tiên hoặc ghép nối hợp lý, không ném ngoại lệ 500 | AI ít khi kiểm thử việc truyền trùng lặp tên query parameter (HTTP Parameter Pollution) |
+| TC-FR05-HUMAN-004 | Lấy sản phẩm với ID dạng Hexadecimal / Path Traversal | Bảo mật / Path | `GET /api/products/0x1` hoặc `GET /api/products/..%2f1` | Trả về 400 Bad Request hoặc 404 Not Found | AI bỏ sót kết hợp giữa mã hóa URL Hexadecimal và Path Traversal trong đường dẫn URL |
+| TC-FR05-HUMAN-005 | Kiểm tra tính nhất quán giữa danh sách và chi tiết sản phẩm | Data Integrity | 1. Gọi `GET /api/products`<br>2. Lấy `price`, `name` của product ID=1<br>3. Gọi `GET /api/products/1` và so sánh | Thông tin `name`, `price`, `category_id` khớp chính xác 100% giữa 2 endpoint | AI sinh testcase đơn lẻ cho từng endpoint mà không kết hợp liên kết dữ liệu giữa 2 API trong cùng FR |
