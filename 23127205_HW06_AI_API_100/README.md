@@ -20,7 +20,7 @@
 | 1 | **API 1 (FR-02: Login & Lockout)** — Pipeline toàn bộ (Generate + Audit + Extend + Execute + 4 Bugs) | 30 | 30 | `postman/`, `newman/member-1/fr02-report.html`, `test-cases/member-1.xlsx`, `reports/main-report.md` |
 | 2 | **API 2 (FR-07: Shopping Cart)** — Pipeline toàn bộ (Generate + Audit + Extend + Execute + 4 Bugs) | 30 | 30 | `postman/`, `newman/member-1/fr07-report.html`, `test-cases/member-1.xlsx`, `reports/main-report.md` |
 | 3 | **API 3 (FR-15: Product CRUD)** — Pipeline toàn bộ (Generate + Audit + Extend + Execute + 4 Bugs) | 30 | 30 | `postman/`, `newman/member-1/fr15-report.html`, `test-cases/member-1.xlsx`, `reports/main-report.md` |
-| 4 | **Agent Skill (G9.5 - Create)** — Bộ sinh test API tự động từ đặc tả OpenAPI | 10 | 10 | `agent-skill/diagram.png`, `agent-skill/pseudocode.md`, `agent-skill/skill.py`, `agent-skill/SKILL.md` |
+| 4 | **Agent Skill (G9.5 - Create)** — Bộ sinh test API tự động từ đặc tả OpenAPI | 10 | 10 | `agent-skill/diagram.png`, `agent-skill/pseudocode.md`, `agent-skill/scripts/generate_api_tests.py`, `agent-skill/SKILL.md` |
 | | **TỔNG ĐIỂM BÀI TẬP** | **100** | **100** | **Gói nộp bài: `23127205_HW06_AI_API_100.zip`** |
 
 ---
@@ -40,44 +40,63 @@
 
 ---
 
-## 4. Cấu Trúc Thư Mục Bàn Giao Chuẩn Quy Cách
+## 4. Cấu Trúc Thư Mục Chuẩn Quy Cách Trong HW06
 
 ```text
-23127205_HW06_AI_API_100/
-├── README.md                           # Bảng tự đánh giá và báo cáo tóm tắt chỉ số kiểm thử
-├── reports/                            # Thư mục chứa TOÀN BỘ BÁO CÁO & MINH CHỨNG
-│   ├── main-report.md & .pdf           # Báo cáo tổng hợp chính bài tập HW06
+HW06/
+├── 23127205_HW06_AI_API_100/           # Thư mục gom nhóm chuẩn để nộp bài Moodle
+├── 23127205_HW06_AI_API_100.zip       # Gói nén ZIP nộp bài Moodle (~9.7 MB)
+├── README.md                           # Bảng tự đánh giá và tóm tắt chỉ số kiểm thử
+│
+├── reports/                            # TẬP HỢP TOÀN BỘ BÁO CÁO & MINH CHỨNG
+│   ├── main-report.md & .pdf           # Báo cáo tổng hợp chính (kèm danh sách 7 tính năng Postman)
 │   ├── cicd-report.md & .pdf           # Báo cáo cấu hình CI/CD & 2 commit runs mẫu (Pass/Fail)
 │   ├── ai-audit-report.md & .pdf       # Báo cáo kiểm toán AI toàn bộ phiên làm việc
-│   ├── ai-critique.md & .pdf           # Đoạn văn 200-300 từ phê bình AI
-│   ├── bug-report.md                   # Báo cáo chi tiết 12 Lỗi & Lỗ hổng bảo mật SUT
+│   ├── ai-critique.md & .pdf           # Đoạn văn 200-300 từ phê bình AI (Mục 10)
+│   ├── bug-report.md & .pdf            # Báo cáo chi tiết 12 Lỗi & Lỗ hổng bảo mật SUT
 │   ├── git-commit-log.txt              # Nhật ký commit Git text log
 │   └── screenshots/                    # Ảnh chụp minh chứng console, local run, CI/CD, GitHub Issues
-├── docs/                               # Thư mục TÀI LIỆU THAM KHẢO & ĐẶC TẢ
+│
+├── docs/                               # CHỈ CHỨA TÀI LIỆU THAM KHẢO, ĐỀ BÀI & ĐẶC TẢ
 │   ├── req/                            # Yêu cầu đề bài HW06 (Tiếng Việt & Tiếng Anh MD/PDF)
-│   ├── implementation_plan.md          # Kế hoạch triển khai kỹ thuật kiểm thử chi tiết
+│   ├── implementation_plan.md          # Kế hoạch triển khai kỹ thuật chi tiết
 │   ├── openapi.yaml                    # Đặc tả OpenAPI 3.0 YAML chuẩn hóa của SUT
 │   ├── istqb-ct-ai-syllabus.md         # Giáo trình ISTQB AI Testing tham khảo
 │   ├── assignment-policies.md          # Chính sách học vụ môn học
 │   └── hw06-team-task-allocation.md    # Bảng phân công nhiệm vụ nhóm
+│
 ├── test-cases/
 │   └── member-1.xlsx                   # File Excel 132 Test Cases & Execution Matrix
+│
 ├── postman/
-│   ├── HW06_API_Testing.postman_collection.json    # Postman Collection v2.1.0 (Sanity + Bug Discovery)
-│   ├── HW06_Local.postman_environment.json         # Postman Environment Localhost (Port 3000)
-│   ├── HW06_Mock.postman_environment.json          # Postman Environment Mock Server
+│   ├── HW06_API_Testing.postman_collection.json    # Collection chính (Sanity + Bug Discovery)
+│   ├── HW06_Local.postman_environment.json         # Environment Localhost (Port 3000)
+│   ├── HW06_Mock.postman_environment.json          # Environment Mock Server
 │   ├── generated_test_suite.json                   # Postman Collection do Agent Skill sinh ra
 │   └── data/                                       # Dữ liệu Data-Driven Testing (CSV)
+│
 ├── newman/
 │   └── member-1/                       # Các báo cáo thực thi HTML Extra trực quan (100% Pass)
-├── agent-skill/
-│   ├── SKILL.md                        # Đặc tả Agent Skill G9.5 Create
+│
+├── agent-skill/                        # AGENT SKILL (G9.5 CREATE: AI API TEST GENERATOR)
+│   ├── SKILL.md                        # Đặc tả Agent Skill & 4 Cổng Kiểm Soát Con Người (HITL)
 │   ├── diagram.png                     # Sơ đồ kiến trúc 4 tầng tự thiết kế
 │   ├── pseudocode.md                   # Thuật toán Pseudocode chi tiết 4 tầng
-│   ├── skill.py / generate_api_tests.py# Mã nguồn Python CLI thực thi pipeline sinh test
-│   └── audit_log.md                    # Nhật ký kiểm toán tự động
+│   ├── audit_log.md                    # Nhật ký kiểm toán tự động
+│   └── scripts/                        # Bộ 7 scripts tự động hóa chuyên nghiệp
+│       ├── generate_api_tests.py       # Engine sinh test 4 tầng từ OpenAPI 3.0
+│       ├── generate_pdf.py             # Engine Playwright xuất PDF chuẩn in ấn A4
+│       ├── smoke_test_sut.py           # Pre-flight kiểm thử nhanh kết nối API SUT
+│       ├── reset_lockout.py            # Reset tài khoản bị khóa trong CSDL SQLite
+│       ├── audit_logger.py             # Tự động ghi nhật ký kiểm toán AI
+│       ├── verify_hw06.py              # Công cụ chấm điểm tự động kiểm tra Rubric
+│       └── package_submission.py       # Script 1-click đóng gói nộp bài
+│
+├── .agents/skills/api-testing-agent/   # Chuẩn Antigravity Workspace Skill
+│
 ├── .github/workflows/
 │   └── api-tests.yml                   # Pipeline CI/CD GitHub Actions
+│
 └── eshop-sut/                          # Mã nguồn SUT backend và đặc tả API phục vụ chạy test
 ```
 
@@ -111,11 +130,17 @@ newman run postman/HW06_API_Testing.postman_collection.json \
   --reporter-htmlextra-export newman/member-1/bug-discovery-report.html
 ```
 
-### 5.3 Chạy Bộ Sinh Test Tự Động (Agent Skill CLI)
+### 5.3 Chạy Bộ Công Cụ Agent Skill
 ```bash
-python agent-skill/generate_api_tests.py \
-  --spec docs/openapi.yaml \
-  --student-id 23127205 \
-  --output postman/generated_test_suite.json \
-  --audit-out agent-skill/audit_log.md
+# Sinh test suite tự động từ OpenAPI 3.0
+python agent-skill/scripts/generate_api_tests.py --spec docs/openapi.yaml --student-id 23127205
+
+# Tự động xuất toàn bộ báo cáo sang PDF A4
+python agent-skill/scripts/generate_pdf.py --all
+
+# Chấm điểm tự động và kiểm tra 100% tiêu chí bài tập
+python agent-skill/scripts/verify_hw06.py
+
+# Đóng gói file nộp bài chuẩn Moodle
+python agent-skill/scripts/package_submission.py
 ```
