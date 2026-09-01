@@ -1,0 +1,13 @@
+8c21ac1 - Melyenn, 2026-09-01 16:34:53 +0700 : docs(member-3): add main API testing report, CI/CD report, and AI critique
+3824c89 - Melyenn, 2026-09-01 16:34:53 +0700 : ci(member-3): add GitHub Actions pipeline workflow
+7148800 - Melyenn, 2026-09-01 16:34:53 +0700 : docs(member-3): add bug reports for 17 SUT defects with evidence
+b3a03db - Melyenn, 2026-09-01 16:34:53 +0700 : docs(member-3): add OpenAPI 3.0 specification for Member 3 APIs
+9aa2e23 - Melyenn, 2026-09-01 16:34:53 +0700 : feat(member-3): implement AI API test generator agent skill G9.5
+cafee44 - Melyenn, 2026-09-01 16:34:53 +0700 : test(member-3): implement Postman collection, environments, data files, and Newman reports
+f3da723 - Melyenn, 2026-09-01 16:34:53 +0700 : test(member-3): generate, audit, and finalize test cases Excel for FR-17 coupon CRUD
+a0cebc5 - Melyenn, 2026-09-01 16:34:53 +0700 : test(member-3): generate and audit API test cases for FR-09 apply-coupon
+9f11d7d - Melyenn, 2026-09-01 16:34:53 +0700 : test(member-3): generate and audit API test cases for FR-01 register
+dabc3d9 - Melyenn, 2026-09-01 16:34:53 +0700 : docs(member-3): add AI audit framework and implementation plan
+c47870c - Melyenn, 2026-09-01 16:34:53 +0700 : chore(member-3): scaffold project structure, SUT, environment, and X-Student-Id pre-request
+433e954 - TKin, 2026-08-16 22:15:21 +0700 : add requirements and feature division
+54607b0 - TKin, 2026-08-16 15:48:47 +0700 : first commit
