@@ -19,3 +19,4 @@ a910c56f4d5a614e058f160e5ce4bc74460bab41 | 2026-08-31T23:43:58+07:00 | LE MAI HO
 10e32d85d31bd17f948f24b832c3c1c38be329f7 | 2026-09-01T17:40:07+07:00 | LE MAI HOAI BAO | test(ci): demonstrate exactly one controlled failure
 b0b376402b5a84f822d9cbeca5f5e9bd59872959 | 2026-09-01T17:40:58+07:00 | LE MAI HOAI BAO | test(ci): restore passing API gate
 56f206bbfaccead97eb1c94b4cc5199ad6cedb95 | 2026-09-01T17:42:58+07:00 | LE MAI HOAI BAO | docs(ci): record verified pass fail and conformance runs
+d0bb5d857ca8b37dc88fedc65456b354701c63b8 | 2026-09-01T18:38:54+07:00 | LE MAI HOAI BAO | docs(member-4): finalize Vietnamese evidence package
