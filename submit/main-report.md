@@ -54,7 +54,7 @@ Data-driven FR-04 phone run: 6 iterations, 12 requests, 18 assertions, 4 fail. H
 
 ## 6. Phân tích lỗi
 
-42 case fail quy về 10 root defects: mass assignment role, credential exposure, missing phone validation, unsafe partial/body update, hai sai state rule FR-10, missing admin-role enforcement, delete-user success sai semantics, stale JWT và self-delete. Không đếm mỗi assertion fail thành một bug. Reproduction, expected/actual, severity, test IDs và public GitHub Issue nằm trong `bug-reports-23127326.md`.
+42 case fail quy về 10 root defects: mass assignment role, credential exposure, missing phone validation, unsafe partial/body update, hai sai state rule FR-10, missing admin-role enforcement, delete-user success sai semantics, stale JWT và self-delete. Không đếm mỗi assertion fail thành một bug. Reproduction, expected/actual, severity, test IDs và public GitHub Issue nằm trong `bug-reports.md`.
 
 ## 7. Tích hợp CI/CD
 
@@ -74,35 +74,35 @@ Tôi sử dụng Codex cho các công việc: trích xuất yêu cầu, phân t�
 
 ### A.2. Nhật ký tương tác
 
-**AI-001 - 2026-08-31 23:31:15 +07:00**
+**AI-001 - 2026-08-31; batch ghi nhận lúc 23:31:15 +07:00**
 
 - Tên công cụ AI: Codex.
 - Prompt: Trích xuất contract endpoint FR-04, FR-10 và FR-19 từ `api_specification.md` và SRS chuẩn tắc. Liệt kê actor, input, output, role, đồ thị trạng thái và quy tắc SEC liên quan. Đánh dấu giả định schema/status chưa được quy định.
 - Output: Danh mục chuẩn hóa cho các endpoint đã chọn, actor, giả định status và ánh xạ SEC-01-SEC-07; xác định SEC-07 thuộc FR-03 và FR-19 không có endpoint cập nhật role.
 - Quyết định sinh viên: Chấp nhận danh mục endpoint, ghi SEC-07 là N/A và không bịa endpoint.
 
-**AI-002 - 2026-08-31 23:31:15 +07:00**
+**AI-002 - 2026-08-31; batch ghi nhận lúc 23:31:15 +07:00**
 
 - Tên công cụ AI: Codex.
 - Prompt: Với FR-04, tạo ít nhất 40 API test case khác nhau; phân hoạch phone/name/address; bao phủ xác thực, identity binding, mass assignment, trường nhạy cảm, XSS và schema; gồm precondition, data, expected result, cleanup và traceability.
 - Output: 40 ứng viên FR-04, được lưu và truy vết bằng `AI-001`-`AI-002` trong catalogue JSON.
 - Quyết định sinh viên: Viết lại fixture cô lập, status chính xác và postcondition; giữ 40 case sau audit.
 
-**AI-003 - 2026-08-31 23:31:15 +07:00**
+**AI-003 - 2026-08-31; batch ghi nhận lúc 23:31:15 +07:00**
 
 - Tên công cụ AI: Codex.
 - Prompt: Với FR-10, tạo ma trận chuyển trạng thái 5x5, cùng case hủy, ownership, role, replay, status sai, terminal state và schema; không bịa endpoint.
 - Output: 45 ứng viên FR-10 bao phủ transition và biến thể bảo mật/schema.
 - Quyết định sinh viên: Gắn từng transition với fixture order riêng, xác minh state graph và thêm GET postcondition.
 
-**AI-004 - 2026-08-31 23:31:15 +07:00**
+**AI-004 - 2026-08-31; batch ghi nhận lúc 23:31:15 +07:00**
 
 - Tên công cụ AI: Codex.
 - Prompt: Với FR-19, tạo ít nhất 40 case chỉ cho list/delete; bao phủ phân quyền Admin, IDOR, self-delete, ID sai, SQL injection, privacy và schema; loại ý tưởng cập nhật role ngoài contract.
 - Output: 40 ứng viên FR-19 cho list/delete.
 - Quyết định sinh viên: Dùng user một lần cho ca phá hủy, đặt self-delete cuối và loại endpoint không tồn tại.
 
-Phần audit từng dòng, sửa test case và bổ sung 15 case HUMAN được sinh viên thực hiện thủ công sau các interaction trên. Kết quả execution, bug classification, CI evidence và việc hoàn thiện package cũng được sinh viên tự kiểm tra và ghi nhận.
+Phần audit từng dòng, sửa test case và bổ sung 15 case HUMAN được sinh viên thực hiện thủ công sau các interaction trên. Do bản ghi phiên chỉ lưu thời điểm batch, không còn timestamp riêng đáng tin cậy cho từng interaction; không suy diễn thêm thời gian. Kết quả execution, bug classification, CI evidence và việc hoàn thiện package cũng được sinh viên tự kiểm tra và ghi nhận.
 
 ### A.3. Kết quả audit và trách nhiệm con người
 

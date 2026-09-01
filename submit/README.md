@@ -23,10 +23,10 @@ Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 a
 
 ## Tài liệu chính
 
-- Test catalogue: `test-cases/23127326.csv`, `test-cases/23127326.json`; file XLSX cần export lại từ CSV sau thay đổi cuối.
+- Test catalogue: `test-cases/23127326.csv`, `test-cases/23127326.json`; file XLSX đã được đồng bộ với catalogue cuối và có summary tính bằng công thức.
 - Postman: full collection, environment, data-driven collection + CSV và deterministic CI-demo collection trong `postman/`.
 - Newman: `newman-full-report.html` và `newman-report.html`.
-- Bug register: `bug-reports-23127326.md`; 10 GitHub Issues công khai.
+- Bug register: `bug-reports.md`; 10 GitHub Issues công khai.
 - Main report, AI Audit, AI Critique, CI/CD report và failure classification nằm trực tiếp trong `submit/`.
 - Agent Skill: `agent-skill/api-test-generator/SKILL.md`, schema, pseudocode và design notes trong `agent-skill/`.
 - Video demo Agent Skill: [DemoAgentSkill-HW06](https://youtu.be/1X8fNBIZYV0).
@@ -58,7 +58,7 @@ Collection/folder, environment variables, collection variables, collection-level
 | CI/CD report, run pass, run đúng một failure, ảnh và link | `cicd-report.md`, `evidence/`                               |
 | Excel test cases + test summary                           | `23127326_test-cases.xlsx` gồm 2 sheet                      |
 | Agent Skill, sơ đồ và pseudocode                          | `agent-skill/`                                              |
-| Bug report + GitHub Issue screenshots                     | `bug-reports-23127326.md`, `evidence/`                      |
+| Bug report + GitHub Issue screenshots                     | `bug-reports.md`, `evidence/`                               |
 | AI Audit và AI Critique Markdown + PDF                    | `ai-audit-report.*`, `ai-critique.*`                        |
 | Git commit log                                            | `git-commit-log.txt`                                        |
 

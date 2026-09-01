@@ -12,7 +12,7 @@ Thời gian AI-001–AI-004 được giữ từ commit ghi nhận output lần �
 
 **Tên công cụ AI:** Codex
 
-**Ngày và giờ:** 2026-08-31 23:31:15 +07:00
+**Ngày và giờ:** 2026-08-31; batch ghi nhận lúc 23:31:15 +07:00
 
 **Prompt của bạn:** Trích xuất contract endpoint FR-04, FR-10 và FR-19 từ `api_specification.md` và SRS chuẩn tắc. Liệt kê actor, input, output, role, đồ thị trạng thái và quy tắc SEC liên quan. Đánh dấu giả định schema/status chưa được quy định.
 
@@ -24,7 +24,7 @@ Thời gian AI-001–AI-004 được giữ từ commit ghi nhận output lần �
 
 **Tên công cụ AI:** Codex
 
-**Ngày và giờ:** 2026-08-31 23:31:15 +07:00
+**Ngày và giờ:** 2026-08-31; batch ghi nhận lúc 23:31:15 +07:00
 
 **Prompt của bạn:** Với FR-04, tạo ít nhất 40 API test case khác nhau. Phân hoạch phone/name/address; bao phủ xác thực, identity binding, mass assignment, trường nhạy cảm, output an toàn XSS và response schema chính xác. Gồm precondition, data, kết quả mong đợi, cleanup và traceability.
 
@@ -36,7 +36,7 @@ Thời gian AI-001–AI-004 được giữ từ commit ghi nhận output lần �
 
 **Tên công cụ AI:** Codex
 
-**Ngày và giờ:** 2026-08-31 23:31:15 +07:00
+**Ngày và giờ:** 2026-08-31; batch ghi nhận lúc 23:31:15 +07:00
 
 **Prompt của bạn:** Với FR-10, tạo ma trận chuyển trạng thái 5×5 đầy đủ, cùng case hủy, ownership, role, replay, status sai, terminal state và schema. Không bịa endpoint.
 
@@ -48,7 +48,7 @@ Thời gian AI-001–AI-004 được giữ từ commit ghi nhận output lần �
 
 **Tên công cụ AI:** Codex
 
-**Ngày và giờ:** 2026-08-31 23:31:15 +07:00
+**Ngày và giờ:** 2026-08-31; batch ghi nhận lúc 23:31:15 +07:00
 
 **Prompt của bạn:** Với FR-19, tạo ít nhất 40 case chỉ cho list/delete. Bao phủ phân quyền Admin, IDOR, self-delete, ID sai, payload SQL injection, privacy và schema. Đánh dấu ý tưởng cập nhật role là ngoài contract.
 
@@ -58,7 +58,7 @@ Thời gian AI-001–AI-004 được giữ từ commit ghi nhận output lần �
 
 ## Kiểm toán và mở rộng do sinh viên thực hiện
 
-Sau bốn interaction tạo ứng viên, sinh viên tự audit từng dòng theo ba nhãn `VALID/INVALID/INCOMPLETE`, tự sửa các case chưa đạt, khử trùng và bổ sung 15 case HUMAN (5 case cho mỗi feature). Sinh viên cũng tự thực thi Newman, phân loại lỗi, kiểm tra bằng chứng GitHub/CI và hoàn thiện package.
+Sau bốn interaction tạo ứng viên, sinh viên tự audit từng dòng theo ba nhãn `VALID/INVALID/INCOMPLETE`, tự sửa các case chưa đạt, khử trùng và bổ sung 15 case HUMAN (5 case cho mỗi feature). Bản ghi hiện có timestamp batch chung; không có log riêng đủ tin cậy để gán thời gian khác cho từng interaction. Sinh viên cũng tự thực thi Newman, phân loại lỗi, kiểm tra bằng chứng GitHub/CI và hoàn thiện package.
 
 ## Thống kê output
 
