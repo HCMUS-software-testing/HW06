@@ -511,10 +511,28 @@ def update_issue(token: str, issue_number: int, data: dict) -> bool:
 
 def main():
     parser = argparse.ArgumentParser(description="Update 12 GitHub Issues with full Vietnamese and detailed steps")
-    parser.add_argument("--token", "-t", required=True, help="GitHub Personal Access Token")
+    parser.add_argument("--token", "-t", required=False, default=None, help="GitHub Personal Access Token (PAT). Nếu không truyền sẽ yêu cầu nhập tương tác.")
     args = parser.parse_args()
 
-    print("=" * 70)
+    token = args.token or os.environ.get("GITHUB_TOKEN")
+    if not token:
+        print("=" * 70)
+        print("  YÊU CẦU NHẬP GITHUB PERSONAL ACCESS TOKEN (PAT)")
+        print("=" * 70)
+        print("Để cập nhật/đẩy 12 Issues lên GitHub, script cần quyền truy cập repo.")
+        try:
+            import getpass
+            token = getpass.getpass(">> Vui lòng nhập GitHub Token: ").strip()
+            if not token:
+                token = input(">> Vui lòng nhập GitHub Token: ").strip()
+        except Exception:
+            token = input(">> Vui lòng nhập GitHub Token: ").strip()
+
+    if not token:
+        print("\n[-] Lỗi: Không có Token! Vui lòng truyền qua --token hoặc nhập trực tiếp khi được yêu cầu.")
+        sys.exit(1)
+
+    print("\n" + "=" * 70)
     print(f"  UPDATING 12 GITHUB ISSUES (FULL VIETNAMESE & STEPS) ON {REPO_OWNER}/{REPO_NAME}")
     print("=" * 70)
 
@@ -522,7 +540,7 @@ def main():
     for item in ISSUES_DATA:
         num = item["issue_number"]
         print(f"\n[*] Updating Issue #{num} ({item['id']})...")
-        if update_issue(args.token, num, item):
+        if update_issue(token, num, item):
             print(f"    [+] Successfully updated #{num} ({item['title'][:40]}...)")
             success_count += 1
         else:
@@ -536,3 +554,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
