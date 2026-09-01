@@ -1,0 +1,7 @@
+partition,phone,expectedStatus
+valid-10,0912345678,200
+valid-11,01234567890,200
+short-9,091234567,400
+long-12,091234567890,400
+wrong-prefix,1912345678,400
+letters,09abcdefgh,400

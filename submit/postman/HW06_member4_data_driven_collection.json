@@ -1,0 +1,101 @@
+{
+  "info": {
+    "name": "HW06 Member 4 — data-driven FR04 phone partitions",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.upsert({key:'X-Student-Id',value:pm.environment.get('studentId')});",
+          "console.log('[HW06-DATA]',pm.iterationData.get('partition'),'X-Student-Id='+pm.environment.get('studentId'));"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Login user for iteration",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"test@eshop.com\",\"password\":\"Test1234!\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "login"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('setup login succeeds',()=>pm.expect(pm.response.code).to.eql(200));",
+              "const setup=pm.response.json(); pm.environment.set('userToken',setup.token); pm.environment.set('userId',String(setup.user.id));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Data-driven phone partition",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"Data Runner\",\"shipping_address\":\"Data\",\"phone\":\"{{phone}}\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/me",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "me"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('partition status '+pm.iterationData.get('partition'),()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+              "pm.test('X-Student-Id present',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127326'));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,22 @@
-# Newman evidence
+# Newman evidence — Member 4
 
-Local run date: 2026-08-31. SUT commit: `85af3ba875c88283615e22cb108f13e2fccaf0e9`. Hostname: `localhost` / `127.0.0.1`.
+SUT commit: `85af3ba875c88283615e22cb108f13e2fccaf0e9`. Host: `http://localhost:3000`. MSSV: `23127326`.
 
-Current smoke report uses MSSV `23127326`; header appears in HTML/JSON request evidence.
+## Full conformance run
 
-CI smoke gate result: 7 requests, 7 assertions, 7 passed. The local 10-item smoke report contains 7 passed and 3 failed. Full result: 150 requests/assertions, 84 passed, 66 failed. Confirmed failures include FR-04 role mass assignment, FR-19 regular-user admin list authorization and FR-19 admin self-delete; FR-04 sensitive-field exposure was confirmed by direct GET. Current collection contains 150 items. See `newman-report.html`, `newman-full-report.html`, JSON reports and `../../bug-reports/member-4.md`.
+- File: `newman-full-report.html` / `.json`
+- 142 collection items (2 setup + 140 catalogue)
+- 467 HTTP requests including isolated fixtures and postconditions
+- 839 assertions: 776 pass, 63 fail
+- Catalogue result: 98 PASS, 42 FAIL
+- Fixture/request errors: 0
+- Classification: 10 unique root product defects
+
+## Data-driven FR-04 phone run
+
+- File: `newman-report.html` / `.json`
+- Data: `../../postman/data/fr04-phone-partitions.csv`
+- 6 iterations, 12 requests, 18 assertions
+- 14 pass, 4 fail; all four failures reproduce invalid phone acceptance (`BUG-04-003`)
+
+The collection-level pre-request script injects and logs `X-Student-Id`. The anti-cheating screenshot must still be captured from the real Postman Console; the machine-readable/HTML reports do not replace that screenshot.

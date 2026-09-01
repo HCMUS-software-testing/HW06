@@ -1,0 +1,295 @@
+{
+  "info": {
+    "name": "HW06 Member 4 — deterministic CI demonstration",
+    "description": "Stable three-feature gate. forceFailure=true changes exactly one named control assertion; it is not a product-defect claim.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const sid=pm.environment.get('studentId');",
+          "if(!sid) throw new Error('studentId is required');",
+          "pm.request.headers.upsert({key:'X-Student-Id',value:sid});",
+          "console.log('[HW06-CI]',pm.info.requestName,'X-Student-Id='+sid);"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "00 Setup",
+      "item": [
+        {
+          "name": "SETUP login admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin@eshop.com\",\"password\":\"Admin123!\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('setup login succeeds',()=>pm.expect(pm.response.code).to.eql(200));",
+                  "const setup=pm.response.json(); pm.environment.set('adminToken',setup.token); pm.environment.set('adminId',String(setup.user.id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "SETUP login user",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"test@eshop.com\",\"password\":\"Test1234!\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('setup login succeeds',()=>pm.expect(pm.response.code).to.eql(200));",
+                  "const setup=pm.response.json(); pm.environment.set('userToken',setup.token); pm.environment.set('userId',String(setup.user.id));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "01 Stable API checks",
+      "item": [
+        {
+          "name": "FR04-001 — auth",
+          "description": "FR-04, SEC-01/02\n\nOracle: Authenticated user receives the profile bound to the JWT; required fields have correct types.\n\nAudit: VALID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('FR04-001 exact status 200', () => pm.expect(pm.response.code).to.eql(200));",
+                  "pm.test('FR04-001 X-Student-Id present', () => pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127326'));",
+                  "pm.test('response is not an unhandled 5xx', () => pm.expect(pm.response.code).to.be.below(500));",
+                  "pm.test('response Content-Type is JSON', () => pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json'));",
+                  "pm.test('response body matches status schema', () => { const body=pm.response.json(); if (pm.response.code >= 400) { pm.expect(body).to.be.an('object'); pm.expect(body.error).to.be.a('string'); } });",
+                  "pm.test('profile object schema and identity', () => { const b=pm.response.json(); pm.expect(b).to.be.an('object'); pm.expect(b.id).to.be.a('number'); pm.expect(b.name).to.be.a('string'); pm.expect(b.email).to.be.a('string'); pm.expect(b.role).to.be.a('string'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR10-001 — state-matrix",
+          "description": "FR-10, FR-18\n\nOracle: Transition pending→pending is rejected and leaves the source state unchanged.\n\nAudit: VALID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/{{orderId}}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                "{{orderId}}",
+                "status"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\":\"pending\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const checkoutReq = {\"url\":\"{{baseUrl}}/api/checkout\",\"method\":\"POST\",\"header\":{\"X-Student-Id\":\"23127326\",\"Authorization\":\"Bearer {{userToken}}\",\"Content-Type\":\"application/json\"},\"body\":{\"mode\":\"raw\",\"raw\":\"{\\\"total_amount\\\":1000,\\\"shipping_address\\\":\\\"Fixture\\\"}\"}};",
+                  "checkoutReq.url = pm.environment.get('baseUrl') + '/api/checkout';",
+                  "checkoutReq.header.Authorization = 'Bearer ' + pm.environment.get('userToken');",
+                  "pm.sendRequest(checkoutReq, (checkoutErr, checkoutRes) => {",
+                  "  if (checkoutErr || checkoutRes.code !== 200) throw new Error('checkout fixture failed: ' + (checkoutErr || checkoutRes.text()));",
+                  "  const orderId = String(checkoutRes.json().orderId);",
+                  "  pm.variables.set('orderId', orderId);",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('FR10-001 exact status 400', () => pm.expect(pm.response.code).to.eql(400));",
+                  "pm.test('FR10-001 X-Student-Id present', () => pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127326'));",
+                  "pm.test('response is not an unhandled 5xx', () => pm.expect(pm.response.code).to.be.below(500));",
+                  "pm.test('response Content-Type is JSON', () => pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json'));",
+                  "pm.test('response body matches status schema', () => { const body=pm.response.json(); if (pm.response.code >= 400) { pm.expect(body).to.be.an('object'); pm.expect(body.error).to.be.a('string'); } });",
+                  "pm.test(\"order state postcondition\", function(done) { pm.sendRequest({url:pm.environment.get('baseUrl') + '/api/orders/' + pm.variables.get('orderId'),method:'GET',header:{'Authorization':'Bearer ' + pm.environment.get('userToken'),'X-Student-Id':pm.environment.get('studentId')}}, (err,res) => { let failure=null; try { pm.expect(err).to.eql(null); pm.expect(res.code).to.eql(200); pm.expect(res.json().status).to.eql(\"pending\"); } catch(e) { failure=e; } if(failure)done(failure);else done(); }); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR19-001 — list-schema",
+          "description": "FR-19, SEC-01/02/03/05\n\nOracle: Admin receives an array containing seeded users.\n\nAudit: VALID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('FR19-001 exact status 200', () => pm.expect(pm.response.code).to.eql(200));",
+                  "pm.test('FR19-001 X-Student-Id present', () => pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127326'));",
+                  "pm.test('response is not an unhandled 5xx', () => pm.expect(pm.response.code).to.be.below(500));",
+                  "pm.test('response Content-Type is JSON', () => pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json'));",
+                  "pm.test('response body matches status schema', () => { const body=pm.response.json(); if (pm.response.code >= 400) { pm.expect(body).to.be.an('object'); pm.expect(body.error).to.be.a('string'); } });",
+                  "pm.test('admin list schema',()=>{const rows=pm.response.json();pm.expect(rows).to.be.an('array');rows.forEach(u=>{pm.expect(u.id).to.be.a('number');pm.expect(u.name).to.be.a('string');pm.expect(u.email).to.be.a('string');pm.expect(u.role).to.be.a('string');pm.expect(u).to.not.have.property('password');pm.expect(u).to.not.have.property('reset_token');});});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02 Pipeline control",
+      "item": [
+        {
+          "name": "CI-DEMO-001 — controlled pass/fail assertion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('CI demo endpoint responds 200',()=>pm.expect(pm.response.code).to.eql(200));",
+                  "pm.test('CI-DEMO-001 controlled assertion',()=>pm.expect(pm.environment.get('forceFailure')).to.eql('false'));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
