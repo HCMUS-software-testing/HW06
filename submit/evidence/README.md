@@ -7,7 +7,7 @@ Screenshots intentionally not fabricated.
 - [ ] Newman HTML report screenshot.
 - [ ] One screenshot per confirmed GitHub Issue.
 - [x] GitHub Issue URLs: #1, #2, #3, #4.
-- [ ] CI pass-demo run URL/screenshot.
-- [ ] CI fail-demo run URL/screenshot.
-- [ ] Self-drawn Agent Skill diagram PNG.
+- [x] CI pass-demo run URL/screenshot (`CI-pass-run-33415727552.png`).
+- [x] CI fail-demo run URL/screenshot (`CI-fail-run-33414685928.png`).
+- [x] Agent Skill diagram PNG (`../agent-skill/diagram.png`).
 - [ ] Student-recorded demo video URL.

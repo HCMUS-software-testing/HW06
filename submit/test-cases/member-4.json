@@ -15,10 +15,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-001 — auth",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-002",
@@ -36,10 +36,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-002 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-003",
@@ -57,10 +57,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-003 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-004",
@@ -78,10 +78,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-004 — schema",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-005",
@@ -99,10 +99,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-005 — identity",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-006",
@@ -120,10 +120,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-006 — repeat",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-007",
@@ -141,10 +141,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-007 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-008",
@@ -162,10 +162,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-008 — security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-009",
@@ -183,10 +183,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-009 — privacy",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-010",
@@ -204,10 +204,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-010 — idor",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-011",
@@ -225,10 +225,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-011 — positive",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-012",
@@ -246,10 +246,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-012 — positive",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-013",
@@ -267,10 +267,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-013 — positive",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-014",
@@ -288,10 +288,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-014 — positive",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-015",
@@ -309,10 +309,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-015 — boundary",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-016",
@@ -330,10 +330,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-016 — boundary",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-017",
@@ -351,10 +351,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-017 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-018",
@@ -372,10 +372,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-018 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-019",
@@ -393,10 +393,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-019 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-020",
@@ -414,10 +414,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-020 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-021",
@@ -435,10 +435,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-021 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-022",
@@ -456,10 +456,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-022 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-023",
@@ -477,10 +477,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-023 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-024",
@@ -498,10 +498,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-024 — type",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-025",
@@ -519,10 +519,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-025 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-026",
@@ -540,10 +540,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-026 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-027",
@@ -561,10 +561,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-027 — boundary",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-028",
@@ -582,10 +582,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-028 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-029",
@@ -603,10 +603,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-029 — security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-030",
@@ -624,10 +624,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-030 — boundary",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-031",
@@ -645,10 +645,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-031 — type",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-032",
@@ -666,10 +666,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-032 — type",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-033",
@@ -687,10 +687,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-033 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-034",
@@ -708,10 +708,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-034 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-035",
@@ -729,10 +729,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
-    "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Postman mapping": "FR04-035 — security",
+    "Actual result": "HTTP 200; FAIL",
+    "Bug ID": "BUG-04-001",
+    "Evidence": "../evidence/BUG-04-001.png"
   },
   {
     "Test ID": "FR04-036",
@@ -750,10 +750,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-036 — security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-037",
@@ -771,10 +771,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-037 — security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-038",
@@ -792,10 +792,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-038 — security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-039",
@@ -813,10 +813,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-039 — security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-040",
@@ -834,10 +834,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-040 — schema",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-041",
@@ -855,10 +855,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-041 — human-security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-042",
@@ -876,10 +876,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-042 — human-security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-043",
@@ -897,10 +897,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-043 — human-security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-044",
@@ -918,10 +918,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-044 — human-security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR04-045",
@@ -939,10 +939,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR04-045 — human-security",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-001",
@@ -960,10 +960,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-001 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-002",
@@ -981,10 +981,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-002 — state-matrix",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-003",
@@ -1002,10 +1002,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-003 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-004",
@@ -1023,10 +1023,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-004 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-005",
@@ -1044,10 +1044,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-005 — state-matrix",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-006",
@@ -1065,10 +1065,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-006 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-007",
@@ -1086,10 +1086,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-007 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-008",
@@ -1107,10 +1107,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-008 — state-matrix",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-009",
@@ -1128,10 +1128,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-009 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-010",
@@ -1149,10 +1149,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-010 — state-matrix",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-011",
@@ -1170,10 +1170,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-011 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-012",
@@ -1191,10 +1191,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-012 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-013",
@@ -1212,10 +1212,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-013 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-014",
@@ -1233,10 +1233,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-014 — state-matrix",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-015",
@@ -1254,10 +1254,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-015 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-016",
@@ -1275,10 +1275,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-016 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-017",
@@ -1296,10 +1296,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-017 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-018",
@@ -1317,10 +1317,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-018 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-019",
@@ -1338,10 +1338,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-019 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-020",
@@ -1359,10 +1359,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-020 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-021",
@@ -1380,10 +1380,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-021 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-022",
@@ -1401,10 +1401,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-022 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-023",
@@ -1422,10 +1422,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-023 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-024",
@@ -1443,10 +1443,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-024 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-025",
@@ -1464,10 +1464,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-025 — state-matrix",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-026",
@@ -1485,10 +1485,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-026 — cancel/ownership",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-027",
@@ -1506,10 +1506,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-027 — cancel/ownership",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-028",
@@ -1527,10 +1527,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-028 — cancel/ownership",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-029",
@@ -1548,10 +1548,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-029 — cancel/ownership",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-030",
@@ -1569,10 +1569,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-030 — cancel/ownership",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-031",
@@ -1590,10 +1590,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-031 — cancel/ownership",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-032",
@@ -1611,10 +1611,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-032 — cancel/ownership",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-033",
@@ -1632,10 +1632,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-033 — auth-negative",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-034",
@@ -1653,10 +1653,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-034 — auth-negative",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-035",
@@ -1674,10 +1674,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-035 — auth-negative",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-036",
@@ -1695,10 +1695,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-036 — auth-negative",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-037",
@@ -1716,10 +1716,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-037 — auth-negative",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-038",
@@ -1737,10 +1737,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-038 — auth-negative",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-039",
@@ -1758,10 +1758,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-039 — auth-negative",
+    "Actual result": "HTTP 400; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-040",
@@ -1779,10 +1779,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-040 — auth-negative",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-041",
@@ -1800,10 +1800,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-041 — auth-negative",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-042",
@@ -1821,10 +1821,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-042 — auth-negative",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-043",
@@ -1842,10 +1842,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-043 — auth-negative",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-044",
@@ -1863,10 +1863,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-044 — auth-negative",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-045",
@@ -1884,10 +1884,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-045 — auth-negative",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-046",
@@ -1905,10 +1905,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-046 — human-state-security",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-047",
@@ -1926,10 +1926,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-047 — human-state-security",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-048",
@@ -1947,10 +1947,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-048 — human-state-security",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-049",
@@ -1968,10 +1968,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-049 — human-state-security",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR10-050",
@@ -1989,10 +1989,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR10-050 — human-state-security",
+    "Actual result": "HTTP 400; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-001",
@@ -2010,10 +2010,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-001 — list",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-002",
@@ -2031,10 +2031,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-002 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-003",
@@ -2052,10 +2052,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-003 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-004",
@@ -2073,10 +2073,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
-    "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Postman mapping": "FR19-004 — auth",
+    "Actual result": "HTTP 200; FAIL",
+    "Bug ID": "BUG-04-005",
+    "Evidence": "../evidence/BUG-04-005.png"
   },
   {
     "Test ID": "FR19-005",
@@ -2094,10 +2094,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-005 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-006",
@@ -2115,10 +2115,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-006 — schema",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-007",
@@ -2136,10 +2136,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-007 — privacy",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-008",
@@ -2157,10 +2157,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-008 — privacy",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-009",
@@ -2178,10 +2178,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-009 — schema",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-010",
@@ -2199,10 +2199,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-010 — schema",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-011",
@@ -2220,10 +2220,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-011 — idor",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-012",
@@ -2241,10 +2241,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-012 — repeat",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-013",
@@ -2262,10 +2262,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-013 — positive",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-014",
@@ -2283,10 +2283,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-014 — positive",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-015",
@@ -2304,10 +2304,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-015 — negative",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-016",
@@ -2325,10 +2325,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-016 — negative",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-017",
@@ -2346,10 +2346,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-017 — negative",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-018",
@@ -2367,10 +2367,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-018 — negative",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-019",
@@ -2388,10 +2388,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-019 — negative",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-020",
@@ -2409,10 +2409,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-020 — negative",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-021",
@@ -2430,10 +2430,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-021 — repeat",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-022",
@@ -2451,10 +2451,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-022 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-023",
@@ -2472,10 +2472,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-023 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-024",
@@ -2493,10 +2493,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-024 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-025",
@@ -2514,10 +2514,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-025 — auth",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-026",
@@ -2535,10 +2535,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-026 — idor",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-027",
@@ -2556,10 +2556,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
-    "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Postman mapping": "FR19-027 — self-delete",
+    "Actual result": "HTTP 200; FAIL",
+    "Bug ID": "BUG-04-006",
+    "Evidence": "../evidence/BUG-04-006.png"
   },
   {
     "Test ID": "FR19-028",
@@ -2577,10 +2577,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-028 — schema",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-029",
@@ -2598,10 +2598,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-029 — schema",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-030",
@@ -2619,10 +2619,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-030 — privacy",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-031",
@@ -2640,10 +2640,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-031 — integrity",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-032",
@@ -2661,10 +2661,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-032 — type",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-033",
@@ -2682,10 +2682,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-033 — security",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-034",
@@ -2703,10 +2703,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-034 — security",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-035",
@@ -2724,10 +2724,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-035 — privacy",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-036",
@@ -2745,10 +2745,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-036 — authorization",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-037",
@@ -2766,10 +2766,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-037 — authorization",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-038",
@@ -2787,10 +2787,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-038 — concurrency",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-039",
@@ -2808,10 +2808,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-039 — schema",
+    "Actual result": "HTTP 200; PASS",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-040",
@@ -2829,10 +2829,10 @@
     "Audit label": "INCOMPLETE",
     "Audit reason": "AI supplied multiple possible statuses; human must resolve exact oracle from contract/run",
     "Corrected version": "Split into separate cases or document one normative expected result",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-040 — negative",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-041",
@@ -2850,10 +2850,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-041 — human-security",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-042",
@@ -2871,10 +2871,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-042 — human-security",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-043",
@@ -2892,10 +2892,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-043 — human-security",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-044",
@@ -2913,10 +2913,10 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-044 — human-security",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   },
   {
     "Test ID": "FR19-045",
@@ -2934,9 +2934,9 @@
     "Audit label": "VALID",
     "Audit reason": "Contract-aligned, executable, oracle defined",
     "Corrected version": "",
-    "Postman mapping": "Pending Newman mapping",
-    "Actual result": "Not executed",
+    "Postman mapping": "FR19-045 — human-security",
+    "Actual result": "HTTP 200; FAIL",
     "Bug ID": "",
-    "Evidence": "Pending authentic evidence"
+    "Evidence": "../newman/member-4/newman-full-report.html"
   }
 ]

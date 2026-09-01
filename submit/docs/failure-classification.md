@@ -73,7 +73,7 @@ Run: 150 requests/assertions; 66 failed assertions. SUT commit: `85af3ba875c8828
 
 ## Totals
 
-- DEFECT occurrences: **4** (3 unique root defects)
+- DEFECT occurrences in the 66-assertion run: **4** (3 unique root defects; the fourth confirmed defect, sensitive-field exposure, was a direct GET verification outside this assertion set)
 - EXPECTED-NEGATIVE: **0**
 - FIXTURE-ISSUE: **62**
 

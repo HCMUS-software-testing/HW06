@@ -25,4 +25,5 @@ fface29 generation + audit
 fd28de2 green smoke CI; run 33414783638
 Full conformance failure run: 33414685928
 492fb25 CI links/final evidence; green rerun 33414863187
-127c6a4 final commit-log sync
+127c6a4 docs: sync final commit log
+a910c56 docs: sync rewritten commit links

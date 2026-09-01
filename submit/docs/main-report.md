@@ -36,12 +36,16 @@ Detailed rows: `../test-cases/member-4.csv` and `../test-cases/member-4.xlsx`.
 
 Collection: `../postman/HW06_member4_collection.json` contains 10 executable setup/smoke items plus 140 test-case-linked items. Environment: `../postman/HW06_member4_environment.json`. All requests use collection-level pre-request injection of `X-Student-Id: {{studentId}}`, configured as MSSV `23127326`. Newman output belongs in `../newman/` after resolving fixture/oracle rows marked INCOMPLETE.
 
-Local smoke run with MSSV `23127326`: 10 requests, 10 assertions, 7 passed and 3 failed. Full collection run: 150 requests/assertions, 84 passed and 66 failed. Additional direct verification confirmed FR-04 sensitive-field exposure, yielding four confirmed defect observations total. Failures caused by intentionally negative cases and shared-fixture limitations are retained for audit; final report must classify them as defect, expected negative, or fixture issue.
+CI smoke gate with MSSV `23127326`: 7 requests, 7 assertions, 7 passed. The local 10-item smoke report records 7 passed and 3 failed. Full collection run: 150 requests/assertions, 84 passed and 66 failed. The catalogue rows are reconciled to Newman item names and observed HTTP results in `../test-cases/member-4.csv`. Additional direct verification confirmed FR-04 sensitive-field exposure, yielding four confirmed defect observations total. Failure classification: 4 defect occurrences, 0 expected-negative, and 62 fixture issues; details are in `failure-classification.md`.
 
-## 8. Defects
+## 8. Agent Skill design
+
+The reusable generator is documented in `../agent-skill/pseudocode.md` and `../agent-skill/skill-design.md`. The flow diagram is supplied as `../agent-skill/diagram.png`, with editable `diagram.svg` and Mermaid source `diagram.md`. The design deliberately places a human-oracle gate between AI drafting and execution.
+
+## 9. Defects
 
 Only reproducible observations are bugs. Static code observations are hypotheses, not findings. Candidate areas requiring final evidence: role mass assignment/profile data exposure; missing admin role enforcement; illegal order transitions; user cancellation during shipping; admin self-delete.
 
-## 9. Limitations
+## 10. Evidence links and limitations
 
-GitHub Issues URL, screenshots and video URL remain user-owned evidence and cannot be fabricated.
+GitHub Issues #1–#4 and CI run links are recorded in `../bug-reports/member-4.md` and `cicd-report.md`; corresponding PNG evidence is in `../evidence/`. The student-recorded demo video is intentionally left as `VIDEO_URL_PENDING` in the submission README and must be replaced before Moodle upload.

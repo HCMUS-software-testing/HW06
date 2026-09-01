@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="620" viewBox="0 0 1800 620">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#334155"/></marker>
+    <style>
+      .box{rx:18;ry:18;stroke-width:3} .title{font:700 22px Arial;fill:#0f172a}.sub{font:16px Arial;fill:#334155}
+      .arrow{stroke:#334155;stroke-width:4;fill:none;marker-end:url(#arrow)} .gate{fill:#e0f2fe;stroke:#0284c7}.ai{fill:#fef3c7;stroke:#d97706}.human{fill:#dcfce7;stroke:#16a34a}.run{fill:#ede9fe;stroke:#7c3aed}.out{fill:#fce7f3;stroke:#db2777}
+    </style>
+  </defs>
+  <rect width="1800" height="620" fill="#f8fafc"/>
+  <text x="900" y="48" text-anchor="middle" style="font:700 30px Arial;fill:#0f172a">AI API Test-Generator — Human-Gated Flow</text>
+  <rect class="box gate" x="40" y="110" width="210" height="120"/><text class="title" x="145" y="155" text-anchor="middle">API spec + SRS</text><text class="sub" x="145" y="188" text-anchor="middle">requirements, actors,</text><text class="sub" x="145" y="211" text-anchor="middle">schemas, security rules</text>
+  <rect class="box gate" x="300" y="110" width="220" height="120"/><text class="title" x="410" y="155" text-anchor="middle">Normalize</text><text class="sub" x="410" y="188" text-anchor="middle">endpoints + fields</text><text class="sub" x="410" y="211" text-anchor="middle">state graph + roles</text>
+  <rect class="box gate" x="570" y="110" width="230" height="120"/><text class="title" x="685" y="155" text-anchor="middle">Coverage model</text><text class="sub" x="685" y="188" text-anchor="middle">partitions, boundaries,</text><text class="sub" x="685" y="211" text-anchor="middle">SEC-01…SEC-07</text>
+  <rect class="box ai" x="850" y="110" width="210" height="120"/><text class="title" x="955" y="155" text-anchor="middle">AI draft</text><text class="sub" x="955" y="188" text-anchor="middle">test cases + oracles</text><text class="sub" x="955" y="211" text-anchor="middle">traceability IDs</text>
+  <rect class="box human" x="1110" y="110" width="250" height="120"/><text class="title" x="1235" y="155" text-anchor="middle">Human audit gate</text><text class="sub" x="1235" y="188" text-anchor="middle">VALID / INVALID /</text><text class="sub" x="1235" y="211" text-anchor="middle">INCOMPLETE + corrections</text>
+  <rect class="box human" x="1410" y="110" width="330" height="120"/><text class="title" x="1575" y="155" text-anchor="middle">Extend + publish</text><text class="sub" x="1575" y="188" text-anchor="middle">5 human security/state cases</text><text class="sub" x="1575" y="211" text-anchor="middle">CSV / JSON / Postman</text>
+  <path class="arrow" d="M250 170h50M520 170h50M800 170h50M1060 170h50M1360 170h50"/>
+  <rect class="box run" x="300" y="360" width="270" height="120"/><text class="title" x="435" y="405" text-anchor="middle">Newman runner</text><text class="sub" x="435" y="438" text-anchor="middle">fixture setup + requests</text><text class="sub" x="435" y="461" text-anchor="middle">X-Student-Id injection</text>
+  <rect class="box run" x="650" y="360" width="270" height="120"/><text class="title" x="785" y="405" text-anchor="middle">Result oracle</text><text class="sub" x="785" y="438" text-anchor="middle">status, schema, state</text><text class="sub" x="785" y="461" text-anchor="middle">postcondition checks</text>
+  <rect class="box out" x="1000" y="360" width="300" height="120"/><text class="title" x="1150" y="405" text-anchor="middle">Failure classification</text><text class="sub" x="1150" y="438" text-anchor="middle">defect / expected-negative /</text><text class="sub" x="1150" y="461" text-anchor="middle">fixture issue</text>
+  <rect class="box out" x="1380" y="360" width="300" height="120"/><text class="title" x="1530" y="405" text-anchor="middle">Evidence + delivery</text><text class="sub" x="1530" y="438" text-anchor="middle">Issues, CI, reports,</text><text class="sub" x="1530" y="461" text-anchor="middle">PDF + ZIP</text>
+  <path class="arrow" d="M1575 230v90H435v40M570 420h80M920 420h80M1300 420h80"/>
+  <text x="900" y="560" text-anchor="middle" style="font:italic 17px Arial;fill:#475569">Traceability is preserved: requirement → test ID → request → observed result → evidence.</text>
+</svg>
