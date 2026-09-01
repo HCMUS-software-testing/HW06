@@ -11,7 +11,7 @@ Tài liệu này chia công việc HW06 cho nhóm 4 thành viên, đồng thời
 | Thành viên | API Pool A | API Pool B | API Pool C | Lý do phân công phù hợp |
 | --- | --- | --- | --- | --- |
 | Thành viên 1 | FR-02: Đăng nhập và khóa tài khoản | FR-07: Giỏ hàng | FR-15: Quản lý sản phẩm CRUD | Cân bằng giữa xác thực, dữ liệu trạng thái phía người dùng, và kiểm tra CRUD phía admin. |
-| Thành viên 2 | FR-05: Liệt kê và tìm kiếm sản phẩm | FR-08: Thanh toán / tạo đơn hàng | FR-18: Quản lý đơn hàng admin | Bao phủ tốt query parameters, tạo đơn hàng, và thay đổi trạng thái đơn hàng. |
+| Thành viên 2 (Lê Trung Kiên - 23127075) | FR-05: Liệt kê và tìm kiếm sản phẩm | FR-08: Thanh toán / tạo đơn hàng | FR-18: Quản lý đơn hàng admin | Bao phủ tốt query parameters, tạo đơn hàng, và thay đổi trạng thái đơn hàng. |
 | Thành viên 3 | FR-01: Đăng ký tài khoản | FR-09: Mã giảm giá | FR-17: Quản lý mã giảm giá CRUD | Gom hành vi coupon phía người dùng và admin lại với nhau, đồng thời có nhiều kiểm thử phân hoạch miền. |
 | Thành viên 4 | FR-04: Quản lý hồ sơ cá nhân | FR-10: Máy trạng thái đơn hàng | FR-19: Quản lý người dùng admin | Tập trung vào dữ liệu định danh, chuyển trạng thái, và các API admin nhạy cảm về phân quyền. |
 
@@ -38,8 +38,8 @@ Mỗi thành viên lặp lại pipeline này cho từng API trong ba API mình p
 | --- | --- | --- | --- |
 | Setup SUT | Thành viên 1 | Tất cả | Ghi chú setup local, ghi chú seed data, base URL đã xác nhận. |
 | Chuẩn Postman | Thành viên 1 | Tất cả | Cấu trúc workspace chung, environment variables, mẫu pre-request script cho `X-Student-Id`. |
-| Template test case | Thành viên 2 | Tất cả | Các cột Excel thống nhất, quy ước đặt tên, format expected result. |
-| Pipeline CI/CD | Thành viên 2 | Thành viên 1 | GitHub Actions workflow chạy Newman, một run pass toàn bộ, một run fail có chủ đích. |
+| Template test case | Thành viên 2 (Lê Trung Kiên - 23127075) | Tất cả | Các cột Excel thống nhất, quy ước đặt tên, format expected result. |
+| Pipeline CI/CD | Thành viên 2 (Lê Trung Kiên - 23127075) | Thành viên 1 | GitHub Actions workflow chạy Newman, một run pass toàn bộ, một run fail có chủ đích. |
 | Tích hợp báo cáo | Thành viên 3 | Tất cả | Cấu trúc main Markdown report, test summary đã gộp, screenshots và links thống nhất. |
 | Format AI Audit | Thành viên 3 | Tất cả | Format audit log chuẩn: công cụ AI, ngày/giờ, prompt, output, quyết định của con người. |
 | Thiết kế Agent Skill | Thành viên 4 | Tất cả | Sơ đồ tự vẽ, pseudocode, tùy chọn implement Agent Skill reusable, tùy chọn demo video. |
@@ -91,9 +91,9 @@ HW06/
 | Thành viên 1 | FR-02 Đăng nhập và khóa tài khoản | Đăng nhập hợp lệ, sai credentials, ngưỡng lockout, hành vi tài khoản bị khóa, schema response token, SQL injection, chống brute force. |
 | Thành viên 1 | FR-07 Giỏ hàng | Thêm sản phẩm, cập nhật số lượng, xóa sản phẩm, product ID không hợp lệ, biên số lượng, truy cập chưa xác thực, IDOR trên quyền sở hữu giỏ hàng. |
 | Thành viên 1 | FR-15 Quản lý sản phẩm CRUD | Phân quyền admin, tạo/cập nhật/xóa sản phẩm, giá và tồn kho không hợp lệ, thiếu trường, schema validation, kiểm tra leo thang vai trò. |
-| Thành viên 2 | FR-05 Liệt kê và tìm kiếm sản phẩm | Phân hoạch query, phân trang, sắp xếp, keyword edge cases, filter không hợp lệ, response schema, injection trong query parameters. |
-| Thành viên 2 | FR-08 Thanh toán / tạo đơn hàng | Checkout hợp lệ, giỏ hàng rỗng, thiếu tồn kho, địa chỉ không hợp lệ, tương tác coupon, checkout chưa xác thực, schema validation. |
-| Thành viên 2 | FR-18 Quản lý đơn hàng admin | Chỉ admin được truy cập, cập nhật trạng thái đơn hàng, chuyển trạng thái không hợp lệ, user không có quyền, IDOR, response schema. |
+| Thành viên 2 (Lê Trung Kiên - 23127075) | FR-05 Liệt kê và tìm kiếm sản phẩm | Phân hoạch query, phân trang, sắp xếp, keyword edge cases, filter không hợp lệ, response schema, injection trong query parameters. |
+| Thành viên 2 (Lê Trung Kiên - 23127075) | FR-08 Thanh toán / tạo đơn hàng | Checkout hợp lệ, giỏ hàng rỗng, thiếu tồn kho, địa chỉ không hợp lệ, tương tác coupon, checkout chưa xác thực, schema validation. |
+| Thành viên 2 (Lê Trung Kiên - 23127075) | FR-18 Quản lý đơn hàng admin | Chỉ admin được truy cập, cập nhật trạng thái đơn hàng, chuyển trạng thái không hợp lệ, user không có quyền, IDOR, response schema. |
 | Thành viên 3 | FR-01 Đăng ký tài khoản | Phân hoạch định dạng email, độ phức tạp mật khẩu, tài khoản trùng, thiếu trường, input quá dài, SQL injection, response schema. |
 | Thành viên 3 | FR-09 Mã giảm giá | Coupon hợp lệ, coupon hết hạn, giới hạn lượt dùng, giá trị đơn hàng tối thiểu, mã không hợp lệ, dùng lặp lại, kiểm tra ownership hoặc role. |
 | Thành viên 3 | FR-17 Quản lý mã giảm giá CRUD | Phân quyền admin, tạo/cập nhật/xóa coupon, khoảng ngày không hợp lệ, giá trị giảm không hợp lệ, mã trùng, leo thang vai trò. |

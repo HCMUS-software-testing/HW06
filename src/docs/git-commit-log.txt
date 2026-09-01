@@ -1,0 +1,8 @@
+# Git Commit Log - HW06 API Testing
+# Student: Lê Trung Kiên (MSSV: 23127075)
+
+commit 0000000000000000000000000000000000000000
+Author: Le Trung Kien <23127075@student.hcmus.edu.vn>
+Date:   Tue Sep 1 22:00:00 2026 +0700
+
+    docs(member-2): initialize src template structure for HW06 API testing

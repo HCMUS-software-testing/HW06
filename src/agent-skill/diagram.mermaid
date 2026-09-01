@@ -1,0 +1,10 @@
+graph TD
+    A[Nhập API Specification / OpenAPI Spec] --> B[Parse Endpoint & Schema]
+    B --> C[Phân Tích Tham Số & Quy Tắc Nghiệp Vụ]
+    C --> D[Dẫn Dắt AI Sinh Test Cases - Prompting Pipeline]
+    D --> D1[Domain Partitioning Tests]
+    D --> D2[State Transition Tests]
+    D --> D3[Security SEC-01..07 Tests]
+    D --> D4[Response Schema Tests]
+    D1 & D2 & D3 & D4 --> E[Kiểm Toán Tự Động & Lọc Trùng Lặp]
+    E --> F[Xuất Bộ Test Cases & Collection Format]

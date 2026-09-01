@@ -11,7 +11,7 @@ The original homework is written as an individual assignment. Use this plan to c
 | Member | Pool A API | Pool B API | Pool C API | Why This Assignment Fits |
 | --- | --- | --- | --- | --- |
 | Member 1 | FR-02: Login and account lockout | FR-07: Shopping cart | FR-15: Product management CRUD | Good mix of authentication, user-side stateful data, and admin CRUD validation. |
-| Member 2 | FR-05: Product listing and search | FR-08: Checkout / order creation | FR-18: Order management admin | Strong coverage of query parameters, order creation, and order state changes. |
+| Member 2 (Lê Trung Kiên - 23127075) | FR-05: Product listing and search | FR-08: Checkout / order creation | FR-18: Order management admin | Strong coverage of query parameters, order creation, and order state changes. |
 | Member 3 | FR-01: Account registration | FR-09: Discount coupons | FR-17: Coupon management CRUD | Keeps coupon user/admin behavior together and covers domain validation heavily. |
 | Member 4 | FR-04: Personal profile management | FR-10: Order state machine | FR-19: User management admin | Focuses on identity data, state transitions, and access-control sensitive admin APIs. |
 
@@ -38,8 +38,8 @@ Each member repeats this pipeline for each of their three APIs.
 | --- | --- | --- | --- |
 | SUT setup | Member 1 | All | Local setup notes, seed data notes, confirmed base URL. |
 | Postman standards | Member 1 | All | Shared workspace structure, environment variables, `X-Student-Id` pre-request script pattern. |
-| Test case template | Member 2 | All | Common Excel columns, naming convention, expected result format. |
-| CI/CD pipeline | Member 2 | Member 1 | GitHub Actions workflow running Newman, one passing run, one intentionally failing run. |
+| Test case template | Member 2 (Lê Trung Kiên - 23127075) | All | Common Excel columns, naming convention, expected result format. |
+| CI/CD pipeline | Member 2 (Lê Trung Kiên - 23127075) | Member 1 | GitHub Actions workflow running Newman, one passing run, one intentionally failing run. |
 | Report integration | Member 3 | All | Main Markdown report structure, merged test summary, consistent screenshots and links. |
 | AI Audit format | Member 3 | All | Standard audit log format: AI tool, date/time, prompt, output, human decision. |
 | Agent Skill design | Member 4 | All | Self-drawn diagram, pseudocode, optional reusable Agent Skill implementation, optional demo video. |
@@ -90,9 +90,9 @@ HW06/
 | Member 1 | FR-02 Login and account lockout | Valid login, invalid credentials, lockout threshold, locked account behavior, token response schema, SQL injection, brute-force resistance. |
 | Member 1 | FR-07 Shopping cart | Add item, update quantity, remove item, invalid product ID, quantity boundaries, unauthenticated access, IDOR on cart ownership. |
 | Member 1 | FR-15 Product management CRUD | Admin authorization, create/update/delete product, invalid price and stock, missing fields, schema validation, role escalation checks. |
-| Member 2 | FR-05 Product listing and search | Query partitions, pagination, sorting, keyword edge cases, invalid filters, response schema, injection in query parameters. |
-| Member 2 | FR-08 Checkout / order creation | Valid checkout, empty cart, insufficient stock, invalid address, coupon interaction, unauthenticated checkout, schema validation. |
-| Member 2 | FR-18 Order management admin | Admin-only access, order status update, invalid transitions, unauthorized user access, IDOR, response schema. |
+| Member 2 (Lê Trung Kiên - 23127075) | FR-05 Product listing and search | Query partitions, pagination, sorting, keyword edge cases, invalid filters, response schema, injection in query parameters. |
+| Member 2 (Lê Trung Kiên - 23127075) | FR-08 Checkout / order creation | Valid checkout, empty cart, insufficient stock, invalid address, coupon interaction, unauthenticated checkout, schema validation. |
+| Member 2 (Lê Trung Kiên - 23127075) | FR-18 Order management admin | Admin-only access, order status update, invalid transitions, unauthorized user access, IDOR, response schema. |
 | Member 3 | FR-01 Account registration | Email format partitions, password complexity, duplicate account, missing fields, long input, SQL injection, response schema. |
 | Member 3 | FR-09 Discount coupons | Valid coupon, expired coupon, usage limit, minimum order value, invalid code, repeated use, coupon ownership or role checks. |
 | Member 3 | FR-17 Coupon management CRUD | Admin authorization, create/update/delete coupon, invalid date range, invalid discount value, duplicate code, role escalation. |

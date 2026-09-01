@@ -1,0 +1,34 @@
+{
+	"info": {
+		"_postman_id": "hw06-api-testing-member-2",
+		"name": "HW06_API_Testing_Member2",
+		"description": "API Testing collection for Member 2 (Lê Trung Kiên - 23127075): FR-05, FR-08, FR-18",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add({ key: 'X-Student-Id', value: pm.environment.get('studentId') || '23127075' });",
+					"console.log('Added pre-request header X-Student-Id: ' + (pm.environment.get('studentId') || '23127075'));"
+				]
+			}
+		}
+	],
+	"item": [
+		{
+			"name": "Pool A - FR-05 Product Listing and Search",
+			"item": []
+		},
+		{
+			"name": "Pool B - FR-08 Checkout and Order Creation",
+			"item": []
+		},
+		{
+			"name": "Pool C - FR-18 Order Management Admin",
+			"item": []
+		}
+	]
+}
