@@ -1,22 +1,22 @@
-# Newman evidence — Member 4
+# Minh chứng Newman
 
-SUT commit: `85af3ba875c88283615e22cb108f13e2fccaf0e9`. Host: `http://localhost:3000`. MSSV: `23127326`.
+Commit SUT: `85af3ba875c88283615e22cb108f13e2fccaf0e9`. Host: `http://localhost:3000`. MSSV: `23127326`.
 
-## Full conformance run
+## Lần chạy conformance đầy đủ
 
-- File: `newman-full-report.html` / `.json`
-- 142 collection items (2 setup + 140 catalogue)
-- 467 HTTP requests including isolated fixtures and postconditions
-- 839 assertions: 776 pass, 63 fail
-- Catalogue result: 98 PASS, 42 FAIL
-- Fixture/request errors: 0
-- Classification: 10 unique root product defects
+- Tệp: `newman-full-report.html` / `.json`
+- 142 item trong collection (2 setup + 140 catalogue)
+- 467 HTTP request, gồm fixture cô lập và postcondition
+- 839 assertion: 776 pass, 63 fail
+- Kết quả catalogue: 98 PASS, 42 FAIL
+- Lỗi fixture/request: 0
+- Phân loại: 10 lỗi gốc duy nhất của sản phẩm
 
-## Data-driven FR-04 phone run
+## Lần chạy FR-04 theo dữ liệu phone
 
-- File: `newman-report.html` / `.json`
-- Data: `../../postman/data/fr04-phone-partitions.csv`
-- 6 iterations, 12 requests, 18 assertions
-- 14 pass, 4 fail; all four failures reproduce invalid phone acceptance (`BUG-04-003`)
+- Tệp: `newman-report.html` / `.json`
+- Dữ liệu: `../../postman/data/fr04-phone-partitions.csv`
+- 6 iteration, 12 request, 18 assertion
+- 14 pass, 4 fail; cả bốn failure đều tái hiện việc chấp nhận phone không hợp lệ (`BUG-FR04-03`)
 
-The collection-level pre-request script injects and logs `X-Student-Id`. The anti-cheating screenshot must still be captured from the real Postman Console; the machine-readable/HTML reports do not replace that screenshot.
+Pre-request script ở cấp collection tự chèn và ghi log `X-Student-Id`. Ảnh chống gian lận vẫn phải chụp từ Postman Console thật; report máy đọc/HTML không thay thế ảnh đó.

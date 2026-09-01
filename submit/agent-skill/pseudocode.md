@@ -1,4 +1,4 @@
-# AI API Test Generator — pseudocode
+# Bộ sinh API test bằng AI — giả mã
 
 ```text
 function generate_tests(api_spec, requirements, feature):
@@ -27,5 +27,4 @@ function generate_tests(api_spec, requirements, feature):
            human_review_queue(candidates)
 ```
 
-Human gate required before execution: VALID/INVALID/INCOMPLETE label, correction, approved oracle, and evidence mapping.
-
+Cổng duyệt của người là bắt buộc trước execution: gắn nhãn VALID/INVALID/INCOMPLETE, nêu chỉnh sửa, oracle đã duyệt và ánh xạ minh chứng.

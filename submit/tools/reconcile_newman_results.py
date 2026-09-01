@@ -18,48 +18,48 @@ CLASSIFICATION = ROOT / "docs/failure-classification.md"
 
 
 BUGS = {
-    "BUG-04-001": {
-        "title": "Profile update accepts protected role field",
+    "BUG-FR04-01": {
+        "title": "Cập nhật hồ sơ chấp nhận trường role được bảo vệ",
         "cases": {"FR04-033", "FR04-034", "FR04-045"},
     },
-    "BUG-04-002": {
-        "title": "Profile response exposes password/reset-token fields",
+    "BUG-FR04-02": {
+        "title": "Response hồ sơ làm lộ password và reset_token",
         "cases": {"FR04-010"},
     },
-    "BUG-04-003": {
-        "title": "Profile update accepts invalid phone partitions",
+    "BUG-FR04-03": {
+        "title": "Cập nhật hồ sơ chấp nhận các phân hoạch phone không hợp lệ",
         "cases": {f"FR04-{number:03d}" for number in range(14, 22)},
     },
-    "BUG-04-004": {
-        "title": "Profile update lacks safe partial/body validation",
+    "BUG-FR04-04": {
+        "title": "Cập nhật hồ sơ thiếu kiểm tra body và partial update an toàn",
         "cases": {"FR04-028", "FR04-029", "FR04-041"},
     },
-    "BUG-10-001": {
-        "title": "Canceled order can transition to delivered",
+    "BUG-FR10-01": {
+        "title": "Đơn đã hủy có thể chuyển sang đã giao",
         "cases": {"FR10-024"},
     },
-    "BUG-10-002": {
-        "title": "User can cancel an order already in shipping",
+    "BUG-FR10-02": {
+        "title": "Người dùng có thể hủy đơn đang vận chuyển",
         "cases": {"FR10-028"},
     },
-    "BUG-04-005": {
-        "title": "Admin endpoints do not enforce admin role",
+    "BUG-FR12-01": {
+        "title": "API Admin không bắt buộc role admin",
         "cases": {"FR10-034", "FR10-047", "FR19-004", "FR19-029", "FR19-031", "FR19-041"},
     },
-    "BUG-19-001": {
-        "title": "Delete user returns success for invalid/missing/repeated targets",
+    "BUG-FR19-01": {
+        "title": "Xóa user trả success với target sai, không tồn tại hoặc lặp lại",
         "cases": {
             *(f"FR19-{number:03d}" for number in range(17, 27)),
             "FR19-033", "FR19-035", "FR19-036", "FR19-037", "FR19-038",
             "FR19-042", "FR19-043",
         },
     },
-    "BUG-19-002": {
-        "title": "Deleted user's JWT remains accepted",
+    "BUG-FR19-02": {
+        "title": "JWT của user đã bị xóa vẫn được chấp nhận",
         "cases": {"FR19-044"},
     },
-    "BUG-04-006": {
-        "title": "Admin can delete their own account",
+    "BUG-FR19-03": {
+        "title": "Admin có thể tự xóa tài khoản",
         "cases": {"FR19-045"},
     },
 }
@@ -176,7 +176,7 @@ def main() -> None:
         f"- Assertions: **{stats['assertions']['total']}**; failed assertions: **{stats['assertions']['failed']}**",
         "- Fixture/request errors: **0**. Mỗi case FAIL bên dưới được quy về một lỗi sản phẩm, không phải lỗi dữ liệu test.",
         "",
-        "| Bug ID | Root defect | Failed catalogue cases | Số case |",
+        "| Mã lỗi | Lỗi gốc | Test case thất bại | Số case |",
         "|---|---|---|---:|",
     ]
     for bug_id, detail in BUGS.items():

@@ -19,7 +19,7 @@ Public repository: <https://github.com/HCMUS-software-testing/HW06/tree/Bao>
 | FR-19 | 40 | 5 | 45 | 45 | 24 | 21 |
 | **Tổng** | **125** | **15** | **140** | **140** | **98** | **42** |
 
-Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 assertions**, 63 assertion fail và **0 fixture/request error**. 42 catalogue case fail được quy về **10 root defects**. Data-driven phone run có 6 partition, 12 requests, 18 assertions; bốn invalid partition làm lộ `BUG-04-003`.
+Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 assertions**, 63 assertion fail và **0 fixture/request error**. 42 catalogue case fail được quy về **10 root defects**. Data-driven phone run có 6 partition, 12 requests, 18 assertions; bốn invalid partition làm lộ `BUG-FR04-03`.
 
 ## Artefact chính
 

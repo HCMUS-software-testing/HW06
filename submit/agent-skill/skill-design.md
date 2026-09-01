@@ -1,10 +1,10 @@
-# Agent Skill design notes
+# Ghi chú thiết kế Agent Skill
 
-Student must draw the original diagram manually. The submitted `diagram.png` should show: inputs (API spec, SRS, selected feature), parser/normalizer, four parallel coverage planners (domain/state/security/schema), candidate generator, deduplicator/critic, human-review gate, exporters (Excel/Markdown/Postman), execution engine, defect evidence, and a feedback loop from audit/execution back to prompts/rules.
+Sinh viên phải tự vẽ sơ đồ gốc bằng tay. `diagram.png` nộp vào cần thể hiện: đầu vào (API spec, SRS, feature đã chọn), bộ phân tích/chuẩn hóa, bốn planner coverage song song (domain/state/security/schema), bộ sinh candidate, bộ loại trùng/critic, cổng duyệt của người, các exporter (Excel/Markdown/Postman), engine thực thi, minh chứng lỗi và vòng phản hồi từ audit/execution về prompt/rule.
 
-Diagram acceptance: arrows show data flow; human review is a hard gate; execution and bug evidence are downstream of approval; no AI image/diagram generation is used.
+Tiêu chí đạt: mũi tên phải thể hiện luồng dữ liệu; duyệt của người là cổng bắt buộc; execution và bug evidence nằm sau bước duyệt; không dùng AI để tạo ảnh/sơ đồ.
 
-## Required edges for the student-drawn version
+## Các cạnh bắt buộc trong bản sinh viên tự vẽ
 
 1. `API spec + SRS + feature -> Contract normalizer`.
 2. `Contract normalizer -> Domain planner / State planner / Security planner / Schema planner`.
@@ -14,4 +14,4 @@ Diagram acceptance: arrows show data flow; human review is a hard gate; executio
 6. Approved branch `-> CSV/XLSX + Postman exporters -> Newman execution -> failure classifier -> bug evidence`.
 7. Execution feedback `-> Human review gate`.
 
-Student attestation to complete under the final image: `I designed and drew this diagram myself: __________ (name/date).`
+Sinh viên ghi dưới ảnh: `Tôi tự thiết kế và tự vẽ sơ đồ này: __________ (họ tên/ngày).`

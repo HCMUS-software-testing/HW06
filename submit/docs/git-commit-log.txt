@@ -1,11 +1,21 @@
-20d5daf 2026-09-01 15:08:22 +0700 docs: finalize API testing submission artifacts
-a910c56 2026-08-31 23:43:58 +0700 docs: sync rewritten commit links
-127c6a4 2026-08-31 23:35:11 +0700 docs: sync final commit log
-492fb25 2026-08-31 23:34:30 +0700 docs: record CI runs and commit evidence
-fd28de2 2026-08-31 23:33:38 +0700 ci: add green smoke gate and retain conformance failures
-5cbc0a8 2026-08-31 23:32:35 +0700 docs: link verified GitHub bug issues
-7f014c4 2026-08-31 23:31:48 +0700 docs: add reports bug evidence and CI workflow
-9ead1d9 2026-08-31 23:31:31 +0700 test: add Postman Newman execution and failure classification
-fface29 2026-08-31 23:31:15 +0700 test: add generated and audited API cases
-433e954 2026-08-16 22:15:21 +0700 add requirements and feature division
-54607b0 2026-08-16 15:48:47 +0700 first commit
+Branch: Bao
+Repository: https://github.com/HCMUS-software-testing/HW06
+Format: full SHA | author date | author | subject
+
+54607b062b9055fd71f1a1272cffb980bcdb4f6a | 2026-08-16T15:48:47+07:00 | TKin | first commit
+433e954e72bf1127db95487d0fc6962c14e3f869 | 2026-08-16T22:15:21+07:00 | TKin | add requirements and feature division
+fface29a5468c1f8767687914f6e0853ccab7a74 | 2026-08-31T23:31:15+07:00 | LE MAI HOAI BAO | test: add generated and audited API cases
+9ead1d9d4a666535dfb0c2db7ab383278c78fc94 | 2026-08-31T23:31:31+07:00 | LE MAI HOAI BAO | test: add Postman Newman execution and failure classification
+7f014c4c5feb7b5c9e17c06c788e88834d6de117 | 2026-08-31T23:31:48+07:00 | LE MAI HOAI BAO | docs: add reports bug evidence and CI workflow
+5cbc0a8d81c34f69f4ea3d2d9e80382f1cd7a0ef | 2026-08-31T23:32:35+07:00 | LE MAI HOAI BAO | docs: link verified GitHub bug issues
+fd28de2b169f4cec2df2d5ed2a2e9e40a8f12fe4 | 2026-08-31T23:33:38+07:00 | LE MAI HOAI BAO | ci: add green smoke gate and retain conformance failures
+492fb252fcc9cb05c11e4ac0ef5ca885c4790de8 | 2026-08-31T23:34:30+07:00 | LE MAI HOAI BAO | docs: record CI runs and commit evidence
+127c6a4391c3b84d0cfa95bcd1270d2044f7e796 | 2026-08-31T23:35:11+07:00 | LE MAI HOAI BAO | docs: sync final commit log
+a910c56f4d5a614e058f160e5ce4bc74460bab41 | 2026-08-31T23:43:58+07:00 | LE MAI HOAI BAO | docs: sync rewritten commit links
+20d5daf5b9c486be32fe7e348f590546d2bed481 | 2026-09-01T15:08:22+07:00 | LE MAI HOAI BAO | docs: finalize API testing submission artifacts
+0ab25bbf15f8df334a4c74eb9a6e635e14678db8 | 2026-09-01T15:08:32+07:00 | LE MAI HOAI BAO | docs: record final commit log
+8ff2d289ce055f71243ce11e55df925199800ffc | 2026-09-01T17:39:15+07:00 | LE MAI HOAI BAO | test(member-4): rebuild audited executable API suite
+90c2b7e6ff1cadd24f9d72300de34b646050cdba | 2026-09-01T17:39:22+07:00 | LE MAI HOAI BAO | docs(member-4): align reports issues and authentic evidence
+10e32d85d31bd17f948f24b832c3c1c38be329f7 | 2026-09-01T17:40:07+07:00 | LE MAI HOAI BAO | test(ci): demonstrate exactly one controlled failure
+b0b376402b5a84f822d9cbeca5f5e9bd59872959 | 2026-09-01T17:40:58+07:00 | LE MAI HOAI BAO | test(ci): restore passing API gate
+56f206bbfaccead97eb1c94b4cc5199ad6cedb95 | 2026-09-01T17:42:58+07:00 | LE MAI HOAI BAO | docs(ci): record verified pass fail and conformance runs

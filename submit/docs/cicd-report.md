@@ -1,22 +1,22 @@
-# CI/CD Report — Member 4
+# Báo cáo CI/CD
 
 Workflow: `.github/workflows/hw06-member4.yml`.
 
-## Configuration
+## Cấu hình
 
-GitHub Actions validates secret `STUDENT_ID=23127326`, checks out the submission, clones the SUT at commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`, installs backend dependencies, starts a clean SQLite-backed server, waits for `GET /api/products`, executes Newman and uploads JSON/HTML evidence even when the test step fails.
+GitHub Actions kiểm tra secret `STUDENT_ID=23127326`, checkout bài nộp, clone SUT tại commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`, cài dependency backend, khởi động server SQLite sạch, chờ `GET /api/products`, chạy Newman và upload minh chứng JSON/HTML kể cả khi bước test fail.
 
-Push runs use `HW06_member4_ci_demo_collection.json`. It includes stable approved cases representing FR-04, FR-10 and FR-19 plus one explicitly named pipeline-control assertion. With `ci-force-failure.txt=false`, all 22 assertions pass. With `true`, exactly `CI-DEMO-001 controlled assertion` fails; this proves the pipeline detects a red test and is not classified as a SUT defect.
+Các lần chạy khi push dùng `HW06_member4_ci_demo_collection.json`. Bộ này gồm các case đại diện đã duyệt cho FR-04, FR-10, FR-19 và một assertion điều khiển pipeline có tên rõ ràng. Khi `ci-force-failure.txt=false`, cả 22 assertion đều pass. Khi đặt `true`, chỉ `CI-DEMO-001 controlled assertion` fail; điều đó chứng minh pipeline phát hiện test đỏ và không quy nhầm thành lỗi SUT.
 
-Manual `workflow_dispatch` exposes `conformance`, which runs the full 140-case catalogue. It is intentionally red on the pinned defective SUT (42 failed catalogue cases); hiding those failures to make CI green would falsify the conformance result.
+`workflow_dispatch` thủ công có lựa chọn `conformance`, chạy toàn bộ catalogue 140 case. Run này cố ý đỏ trên SUT lỗi đã pin (42 catalogue case fail); che các failure để CI xanh sẽ làm sai kết quả conformance.
 
-## Recorded runs
+## Các lần chạy đã ghi nhận
 
-All links below are public GitHub Actions runs. Required screenshots must be captured from these actual pages; generated status cards are not accepted.
+Các liên kết dưới đây là run GitHub Actions công khai. Ảnh bắt buộc phải chụp từ đúng các trang này; không dùng thẻ trạng thái dựng sẵn.
 
-| Evidence | Commit | Actions run | Expected result | Screenshot |
+| Minh chứng | Commit | Lần chạy Actions | Kết quả mong đợi | Ảnh chụp |
 |---|---|---|---|---|
-| CI demo pass | [`90c2b7e`](https://github.com/HCMUS-software-testing/HW06/commit/90c2b7e6ff1cadd24f9d72300de34b646050cdba) | [33498533231](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498533231) | 22/22 assertions pass | `../evidence/github-actions-pass.png` |
-| CI demo exact-one-fail | [`10e32d8`](https://github.com/HCMUS-software-testing/HW06/commit/10e32d8) | [33498587297](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498587297) | 21 pass, exactly 1 controlled assertion fail | `../evidence/github-actions-one-fail.png` |
-| Restored green branch | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498661968](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498661968) | 22/22 assertions pass | same live run page |
-| Full conformance | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665) | 467 requests; 839 assertions; 63 product assertions fail | `../evidence/github-actions-full-conformance.png` |
+| CI demo pass | [`90c2b7e`](https://github.com/HCMUS-software-testing/HW06/commit/90c2b7e6ff1cadd24f9d72300de34b646050cdba) | [33498533231](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498533231) | 22/22 assertion pass | `../evidence/github-actions-pass.png` |
+| CI demo đúng một failure | [`10e32d8`](https://github.com/HCMUS-software-testing/HW06/commit/10e32d8) | [33498587297](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498587297) | 21 pass, đúng 1 controlled assertion fail | `../evidence/github-actions-one-fail.png` |
+| Nhánh xanh khôi phục | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498661968](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498661968) | 22/22 assertion pass | cùng trang run trực tiếp |
+| Conformance đầy đủ | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665) | 467 request; 839 assertion; 63 assertion sản phẩm fail | `../evidence/github-actions-full-conformance.png` |
