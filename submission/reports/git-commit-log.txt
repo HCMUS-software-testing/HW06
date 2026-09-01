@@ -1,13 +1,107 @@
-8c21ac1 - Melyenn, 2026-09-01 16:34:53 +0700 : docs(member-3): add main API testing report, CI/CD report, and AI critique
-3824c89 - Melyenn, 2026-09-01 16:34:53 +0700 : ci(member-3): add GitHub Actions pipeline workflow
-7148800 - Melyenn, 2026-09-01 16:34:53 +0700 : docs(member-3): add bug reports for 17 SUT defects with evidence
-b3a03db - Melyenn, 2026-09-01 16:34:53 +0700 : docs(member-3): add OpenAPI 3.0 specification for Member 3 APIs
-9aa2e23 - Melyenn, 2026-09-01 16:34:53 +0700 : feat(member-3): implement AI API test generator agent skill G9.5
-cafee44 - Melyenn, 2026-09-01 16:34:53 +0700 : test(member-3): implement Postman collection, environments, data files, and Newman reports
-f3da723 - Melyenn, 2026-09-01 16:34:53 +0700 : test(member-3): generate, audit, and finalize test cases Excel for FR-17 coupon CRUD
-a0cebc5 - Melyenn, 2026-09-01 16:34:53 +0700 : test(member-3): generate and audit API test cases for FR-09 apply-coupon
-9f11d7d - Melyenn, 2026-09-01 16:34:53 +0700 : test(member-3): generate and audit API test cases for FR-01 register
-dabc3d9 - Melyenn, 2026-09-01 16:34:53 +0700 : docs(member-3): add AI audit framework and implementation plan
-c47870c - Melyenn, 2026-09-01 16:34:53 +0700 : chore(member-3): scaffold project structure, SUT, environment, and X-Student-Id pre-request
-433e954 - TKin, 2026-08-16 22:15:21 +0700 : add requirements and feature division
-54607b0 - TKin, 2026-08-16 15:48:47 +0700 : first commit
+commit faff1d9b298594d7380e50d818fd94ebbd90bee7
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 17:57:28 2026 +0700
+
+    docs: update cicd-report with real GitHub Actions run links and screenshots
+
+commit 0fdc0125b36c3b94007dc86fb1728b283dfb3324
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 17:42:18 2026 +0700
+
+    test: intentional assertion fail for CI validation
+
+commit 2b8f449033a55be7cabace41a622e9f396c1682f
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 17:40:51 2026 +0700
+
+    ci: rename workflow to api-tests.yml and fix submission paths
+
+commit b783aa146d3175c5db96182011759f43f4809127
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 17:38:38 2026 +0700
+
+    ci: fix postman collection paths for GitHub Actions workflow
+
+commit e57b68d9d4d6390f212d9e05c282e5978ca542c8
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 17:33:43 2026 +0700
+
+    refactor(submission): rename submission/docs to submission/reports, add bug-report.md with live GitHub Issue links (#18-#34)
+
+commit 55351df3b5c8b6df330cd085092830b9c3d6f728
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:41:49 2026 +0700
+
+    chore: move all submission deliverables into submission directory
+
+commit 11930ed9aff37d0b119e4affb3a74680050cf063
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:39:08 2026 +0700
+
+    docs: finalize PDF reports and update submission package
+
+commit c713b29dcf451a04fb3f61dbaab79c13f678e17d
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    docs: add main API testing report, CI/CD report, and AI critique
+
+commit 69234f9b03ea88535d55a9f58f53ffea2ec1b0c2
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    ci: add GitHub Actions pipeline workflow
+
+commit f7cde96d850efd4440d91415ade14cdf8bbbbcfc
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    docs: add bug reports for 17 SUT defects with evidence
+
+commit adc25cfd51f4007714985ed9a171655965ef1fe0
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    docs: add OpenAPI 3.0 specification for Member 3 APIs
+
+commit 08d97ae83ff951f6900ee8ecc60e4e7ec0f4015d
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    feat: implement AI API test generator agent skill G9.5
+
+commit 71cd0f27f7456db28e87f97571f31e900da55a26
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    test: implement Postman collection, environments, data files, and Newman reports
+
+commit 7b62ada7416226ef3ca3474e04d3a235f0c3a8df
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    test: generate, audit, and finalize test cases Excel for FR-17 coupon CRUD
+
+commit a7188f6684dc76ae81b0d283db53db5b23d98bb2
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    test: generate and audit API test cases for FR-09 apply-coupon
+
+commit d95fa5f470f9a21065b7d380a5e06cc43195b13a
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    test: generate and audit API test cases for FR-01 register
+
+commit 5cf2ab40f70ce134e63e5b8609609d63cc7e8ff9
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    docs: add AI audit framework and implementation plan
+
+commit c05f198e84d6f71ede80dde0d70d9f2e1036b7a9
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 16:34:53 2026 +0700
+
+    chore: scaffold project structure, SUT, environment, and X-Student-Id pre-request
