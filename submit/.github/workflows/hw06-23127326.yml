@@ -1,0 +1,85 @@
+name: HW06 23127326 Newman
+
+on:
+  push:
+    paths:
+      - "submit/**"
+      - ".github/workflows/hw06-23127326.yml"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Suite to execute"
+        required: true
+        default: "ci-demo"
+        type: choice
+        options:
+          - ci-demo
+          - conformance
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    env:
+      STUDENT_ID: ${{ secrets.STUDENT_ID }}
+      RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'ci-demo' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate Student ID
+        run: test "$STUDENT_ID" = "23127326"
+
+      - name: Clone pinned SUT
+        run: |
+          git clone https://github.com/ttbhanh/eshop-sut.git /tmp/eshop-sut
+          git -C /tmp/eshop-sut checkout 85af3ba875c88283615e22cb108f13e2fccaf0e9
+
+      - name: Install SUT
+        run: npm --prefix /tmp/eshop-sut/backend ci
+
+      - name: Start clean backend and wait
+        run: |
+          nohup node /tmp/eshop-sut/backend/server.js >/tmp/eshop-server.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:3000/api/products >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/eshop-server.log
+          exit 1
+
+      - name: Newman deterministic CI demonstration
+        if: env.RUN_MODE == 'ci-demo'
+        run: |
+          FORCE_FAILURE=$(tr -d '[:space:]' < submit/postman/ci-force-failure.txt)
+          npx --yes -p newman@6.2.1 -p newman-reporter-htmlextra@1.23.1 newman run \
+            submit/postman/HW06_23127326_ci_demo_collection.json \
+            -e submit/postman/HW06_23127326_environment.json \
+            --env-var studentId="$STUDENT_ID" \
+            --env-var forceFailure="$FORCE_FAILURE" \
+            --reporters cli,json,htmlextra \
+            --reporter-json-export submit/ci-report.json \
+            --reporter-htmlextra-export submit/ci-report.html
+
+      - name: Newman full conformance suite
+        if: env.RUN_MODE == 'conformance'
+        run: |
+          npx --yes -p newman@6.2.1 -p newman-reporter-htmlextra@1.23.1 newman run \
+            submit/postman/HW06_23127326_collection.json \
+            -e submit/postman/HW06_23127326_environment.json \
+            --env-var studentId="$STUDENT_ID" \
+            --reporters cli,json,htmlextra \
+            --reporter-json-export submit/ci-full-report.json \
+            --reporter-htmlextra-export submit/ci-full-report.html
+
+      - name: Upload Newman evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 23127326-newman-${{ github.run_id }}
+          path: |
+            submit/ci-report.*
+            submit/ci-full-report.*
+          if-no-files-found: warn
