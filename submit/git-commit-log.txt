@@ -22,3 +22,4 @@ b0b376402b5a84f822d9cbeca5f5e9bd59872959 | 2026-09-01T17:40:58+07:00 | LE MAI HO
 d0bb5d857ca8b37dc88fedc65456b354701c63b8 | 2026-09-01T18:38:54+07:00 | LE MAI HOAI BAO | docs(member-4): finalize Vietnamese evidence package
 ab7d49bb4a98328f94d811acbdd6cd18410b0a6b | 2026-09-01T18:43:58+07:00 | LE MAI HOAI BAO | evidence(member-4): add authentic issue CI and Newman screenshots
 70feed4a62fd96734cc3ddf55b4c066384b21805 | 2026-09-01T18:46:25+07:00 | LE MAI HOAI BAO | docs(member-4): translate remaining headings
+09c5405143a525a1576849b2a9454b2b02a2a12a | 2026-09-01T19:14:35+07:00 | LE MAI HOAI BAO | docs(member-4): move reports to submit root
