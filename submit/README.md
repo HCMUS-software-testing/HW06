@@ -48,8 +48,7 @@ Hai điểm Agent Skill chưa tự chấm vì sơ đồ bắt buộc phải do s
 
 ## Việc sinh viên hoàn tất thủ công trước khi ZIP
 
-1. Mở từng GitHub Issue trong `evidence/README.md`, chụp trang Issue thật và lưu đúng tên file đã liệt kê.
-2. Chụp GitHub Actions pass/fail, Postman Console có `X-Student-Id: 23127326`, và Newman HTML có `localhost`.
-3. Tự vẽ lại sơ đồ Agent Skill theo `agent-skill/skill-design.md`; không nộp diagram do AI tạo.
-4. Export lại XLSX/PDF từ CSV/Markdown cuối cùng; thêm video URL nếu quay video.
-5. Đóng gói theo tên `23127326_HW06_AI_API_095.zip`.
+1. Tự vẽ sơ đồ Agent Skill theo `agent-skill/skill-design.md` và lưu thành `agent-skill/diagram.png`; không nộp diagram do AI tạo.
+2. Export XLSX từ `test-cases/23127326.csv` và PDF từ các Markdown report cuối cùng.
+3. Thêm video URL nếu muốn minh họa (video là tùy chọn theo đề).
+4. Đóng gói toàn bộ thư mục theo tên `23127326_HW06_AI_API_095.zip`.
