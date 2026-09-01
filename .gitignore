@@ -19,6 +19,8 @@ server.log
 .DS_Store
 Thumbs.db
 
-# IDE files
+# IDE & Python cache files
 .vscode/
 .idea/
+__pycache__/
+*.pyc
