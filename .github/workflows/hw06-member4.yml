@@ -1,33 +1,85 @@
 name: HW06 Member 4 Newman
+
 on:
   push:
-    paths: ['submit/**', '.github/workflows/hw06-member4.yml']
+    paths:
+      - "submit/**"
+      - ".github/workflows/hw06-member4.yml"
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Suite to execute"
+        required: true
+        default: "ci-demo"
+        type: choice
+        options:
+          - ci-demo
+          - conformance
+
 jobs:
   newman:
     runs-on: ubuntu-latest
     env:
       STUDENT_ID: ${{ secrets.STUDENT_ID }}
+      RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'ci-demo' }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
-        with: {node-version: 20}
+        with:
+          node-version: 20
+
       - name: Validate Student ID
         run: test "$STUDENT_ID" = "23127326"
+
       - name: Clone pinned SUT
-        run: git clone https://github.com/ttbhanh/eshop-sut.git /tmp/eshop-sut && cd /tmp/eshop-sut && git checkout 85af3ba875c88283615e22cb108f13e2fccaf0e9
-      - name: Install and seed SUT
-        run: npm --prefix /tmp/eshop-sut/backend ci && node /tmp/eshop-sut/backend/database.js
-      - name: Start backend and wait
+        run: |
+          git clone https://github.com/ttbhanh/eshop-sut.git /tmp/eshop-sut
+          git -C /tmp/eshop-sut checkout 85af3ba875c88283615e22cb108f13e2fccaf0e9
+
+      - name: Install SUT
+        run: npm --prefix /tmp/eshop-sut/backend ci
+
+      - name: Start clean backend and wait
         run: |
           nohup node /tmp/eshop-sut/backend/server.js >/tmp/eshop-server.log 2>&1 &
-          for i in $(seq 1 30); do curl -fsS http://localhost:3000/api/products && exit 0; sleep 1; done
-          cat /tmp/eshop-server.log; exit 1
-      - name: Newman execution (green smoke gate)
-        run: npx --yes newman run submit/postman/HW06_member4_collection.json -e submit/postman/HW06_member4_environment.json --env-var studentId="$STUDENT_ID" --folder 'SETUP login admin' --folder 'SETUP login user' --folder 'FR04 GET profile' --folder 'FR10 checkout pending' --folder 'FR10 admin transition' --folder 'FR10 illegal delivered→pending' --folder 'FR19 admin list' --reporters cli,json --reporter-json-export submit/newman/member-4/ci-report.json
-      - name: Upload Newman JSON
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:3000/api/products >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/eshop-server.log
+          exit 1
+
+      - name: Newman deterministic CI demonstration
+        if: env.RUN_MODE == 'ci-demo'
+        run: |
+          FORCE_FAILURE=$(tr -d '[:space:]' < submit/postman/ci-force-failure.txt)
+          npx --yes -p newman@6.2.1 -p newman-reporter-htmlextra@1.23.1 newman run \
+            submit/postman/HW06_member4_ci_demo_collection.json \
+            -e submit/postman/HW06_member4_environment.json \
+            --env-var studentId="$STUDENT_ID" \
+            --env-var forceFailure="$FORCE_FAILURE" \
+            --reporters cli,json,htmlextra \
+            --reporter-json-export submit/newman/member-4/ci-report.json \
+            --reporter-htmlextra-export submit/newman/member-4/ci-report.html
+
+      - name: Newman full conformance suite
+        if: env.RUN_MODE == 'conformance'
+        run: |
+          npx --yes -p newman@6.2.1 -p newman-reporter-htmlextra@1.23.1 newman run \
+            submit/postman/HW06_member4_collection.json \
+            -e submit/postman/HW06_member4_environment.json \
+            --env-var studentId="$STUDENT_ID" \
+            --reporters cli,json,htmlextra \
+            --reporter-json-export submit/newman/member-4/ci-full-report.json \
+            --reporter-htmlextra-export submit/newman/member-4/ci-full-report.html
+
+      - name: Upload Newman evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: member-4-newman
-          path: submit/newman/member-4/
+          name: member-4-newman-${{ github.run_id }}
+          path: |
+            submit/newman/member-4/ci-report.*
+            submit/newman/member-4/ci-full-report.*
+          if-no-files-found: warn

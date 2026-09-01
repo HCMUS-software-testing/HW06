@@ -1,37 +1,67 @@
-# AI Audit Report — Member 4
+# AI Audit Report — Member 4 (23127326)
 
 ## Declaration
 
-I use AI tools for the following tasks: requirement extraction, coverage planning, test-case drafting, audit assistance, Postman/CI scaffolding and document structuring. Human review owns final validity, execution and defect decisions.
+I use AI tools for the following tasks: requirement extraction, contract and risk analysis, test-case drafting, row-level audit support, fixture/Postman/CI implementation, execution reconciliation and document structuring. The student owns every final oracle, correction, execution and defect decision.
 
 ## Interaction log
 
-1. **AI-001 — Codex — 2026-08-31, local session.** Inspected Vietnamese requirements and member allocation. Evidence: `req/2026.HW06.API Testing_Vi.md`, `docs/hw06-phan-cong-cong-viec-nhom.md`. Decision: accepted source extraction; noted FR-19 endpoint limitation.
-2. **AI-002 — Codex — 2026-08-31, local session.** Inspected pinned SUT API specification and implementation. Evidence: GitHub SUT commit `85af3ba...`. Decision: risk input only; runtime proof required.
-3. **AI-003 — Codex — 2026-08-31, local session.** Drafted FR-04/FR-10/FR-19 cases and traceability. Evidence: `../test-cases/member-4.csv`. Decision: human audit required for every row.
-4. **AI-004 — Codex — 2026-08-31, local session.** Drafted Postman/Newman/CI/report scaffolding. Evidence: `../postman/`, root `.github/`. Decision: replace placeholders and capture authentic evidence.
-5. **AI-005 — Codex — 2026-09-01, local session.** Reconciled Newman output, classified 66 failures and prepared submission artifacts. Evidence: `../newman/member-4/newman-full-report.json`, `failure-classification.md`. Decision: classify fixture failures separately from reproducible defects.
+Timestamps for AI-001–AI-005 are retained from the commits that first recorded their outputs. Complete structured output is in `../test-cases/member-4.json`; it is not replaced by this summary.
 
-Current draft audit count: 125 AI rows; 109 VALID and 16 INCOMPLETE. No AI row is silently discarded. The 15 HUMAN-001 rows are separate additions. INCOMPLETE rows use slash-separated status alternatives and carry a required correction: split the case or resolve one normative oracle before final execution.
+### AI-001 — Codex — 2026-08-31 23:31:15 +07:00
 
-## Prompt transcript to preserve
+**Prompt:** Extract FR-04, FR-10 and FR-19 endpoint contracts from `api_specification.md` and normative SRS. List actors, inputs, outputs, roles, state graph and relevant SEC rules. Flag unspecified schema/status assumptions.
 
-Retain corresponding output rows in `../test-cases/member-4.json`.
+**AI output:** A normalized inventory of `GET/PUT /api/users/me`, admin/user order-state endpoints, and admin list/delete-user endpoints; actors and status assumptions; mapping SEC-01–SEC-07. It flagged that SEC-07 belongs to FR-03 and that FR-19 exposes no role-update endpoint.
 
-```text
-P1. Extract FR-04, FR-10 and FR-19 endpoint contracts from api_specification.md and normative SRS. List actors, inputs, outputs, roles, state graph and relevant SEC rules. Flag unspecified schema/status assumptions.
-P2. For FR-04, generate at least 40 distinct API cases. Partition phone/name/address inputs, cover auth, identity binding, mass assignment, sensitive fields, XSS-safe output and response schema. Include precondition, data, expected status/body, cleanup and traceability.
-P3. For FR-10, generate a complete 5x5 state transition matrix plus cancellation, ownership, role, replay, malformed status, terminal-state and schema cases. Do not invent endpoints.
-P4. For FR-19, generate at least 40 cases for list/delete only. Cover admin authorization, IDOR, self-delete, invalid IDs, SQL-injection payloads, privacy and schema. Mark any role-update idea as out of contract.
-P5. Audit every row as VALID/INVALID/INCOMPLETE. Identify omissions, deduplicate, then add five human cases per feature that are genuinely absent from the generated set.
-```
+**Human decision:** Accepted endpoint inventory; kept SEC-07 as explicit N/A and prohibited invented endpoints.
 
-## Recorded AI outputs (abridged, linked to retained rows)
+### AI-002 — Codex — 2026-08-31 23:31:15 +07:00
 
-- **P1 output:** normalized FR-04 profile, FR-10 order-state, and FR-19 admin-user contracts; flagged unspecified status/schema assumptions. Human decision: use invariant checks where the SRS is silent.
-- **P2 output:** 40 FR-04 cases covering authentication, phone/name/address partitions, sensitive fields, XSS, IDOR and mass assignment. Human decision: retain 40 rows and mark ambiguous oracles `INCOMPLETE`.
-- **P3 output:** 45 FR-10 cases, including the 5×5 transition matrix, cancellation rules, replay, terminal-state and role checks. Human decision: retain state graph and reject invented endpoints.
-- **P4 output:** 40 FR-19 list/delete cases covering admin authorization, IDOR, self-delete, invalid IDs, SQL injection and privacy schema. Human decision: keep role-update ideas out of scope.
-- **P5 output:** audit result `109 VALID`, `16 INCOMPLETE`, plus 15 human-added cases. Human decision: execute the corrected catalogue and classify failures using runtime evidence.
+**Prompt:** For FR-04, generate at least 40 distinct API cases. Partition phone/name/address inputs; cover authentication, identity binding, mass assignment, sensitive fields, XSS-safe output and exact response schema. Include precondition, data, expected result, cleanup and traceability.
 
-The complete row-level output is retained in `../test-cases/member-4.json` and the generated CSV/XLSX exports.
+**AI output:** 40 structured FR-04 candidate rows spanning authentication, domain boundaries, schema, sensitive fields and security. Output IDs and final corrected forms are `FR04-001`–`FR04-040` in the JSON catalogue.
+
+**Human decision:** Rewrote generic fixtures and alternative statuses into isolated setup, exact integer status and postconditions; retained all 40 as VALID after correction.
+
+### AI-003 — Codex — 2026-08-31 23:31:15 +07:00
+
+**Prompt:** For FR-10, generate a complete 5×5 state transition matrix plus cancellation, ownership, role, replay, malformed-status, terminal-state and schema cases. Do not invent endpoints.
+
+**AI output:** 45 FR-10 candidate rows containing all source/destination combinations and security/schema variants (`FR10-001`–`FR10-045`).
+
+**Human decision:** Bound each transition to its own order fixture, verified the normative state graph and added GET postconditions before marking VALID.
+
+### AI-004 — Codex — 2026-08-31 23:31:15 +07:00
+
+**Prompt:** For FR-19, generate at least 40 cases for list/delete only. Cover admin authorization, IDOR, self-delete, invalid IDs, SQL-injection payloads, privacy and schema. Mark role-update ideas out of contract.
+
+**AI output:** 40 list/delete cases (`FR19-001`–`FR19-040`) with negative ID, role, privacy and postcondition ideas.
+
+**Human decision:** Removed non-endpoint ideas, gave destructive cases disposable users and placed self-delete last; all 40 final rows are VALID.
+
+### AI-005 — Codex — 2026-08-31 23:31:31 +07:00
+
+**Prompt:** Audit every generated row as VALID/INVALID/INCOMPLETE with reason; correct invalid/incomplete rows; deduplicate; then add five human cases per feature that are genuinely absent and explain why AI missed them. Compile the approved catalogue into Postman/Newman.
+
+**AI output:** Row-level labels/reasons/corrections plus 15 separate `HUMAN-001` rows. Initial automation exposed ambiguous statuses and shared mutable fixtures.
+
+**Human decision:** Resolved every ambiguity from the normative SRS, repaired fixtures, added exact status/schema/state assertions, and accepted the final 140/140 rows as VALID (125 AI + 15 HUMAN).
+
+### AI-006 — Codex — 2026-09-01 17:30:59 +07:00
+
+**Prompt:** “Hãy xem xét những thứ và nội dung trong submit còn thiếu gì so với req/2026.HW06.API Testing_Vi.md”; “bạn hãy làm tất cả luôn”; correction: GitHub Issue evidence must be a real screenshot, not a drawn console/card.
+
+**AI output:** Rebuilt the executable 140-case suite; executed 467 full-run requests and 839 assertions; reconciled 98 PASS/42 FAIL into 10 root defects; added a six-row data-driven run; redesigned deterministic pass/exact-one-fail CI; expanded bug register/Issues and removed fabricated screenshot references.
+
+**Human decision:** Accepted code/test/document changes subject to authentic manual screenshots, student-drawn diagram, final PDF/XLSX export and ZIP packaging.
+
+## Output accounting
+
+| Output owner | FR-04 | FR-10 | FR-19 | Total |
+|---|---:|---:|---:|---:|
+| AI-generated, human-audited | 40 | 45 | 40 | 125 |
+| Student-added after audit | 5 | 5 | 5 | 15 |
+| Final VALID/executed | 45 | 50 | 45 | 140 |
+
+Every row contains `AI source`, `Audit label`, `Audit reason`, `Corrected version` and, for HUMAN rows, `Why AI missed`. No raw AI row is silently represented as student-authored.

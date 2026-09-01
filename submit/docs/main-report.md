@@ -1,51 +1,73 @@
-# HW06 API Testing Report — Member 4
+# HW06 API Testing Report — Member 4 (23127326)
 
-## 1. Scope and sources
+## 1. Scope and oracle
 
-SUT: EShop backend, base URL `http://localhost:3000`, pinned upstream commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`.
+SUT là EShop backend chạy tại `http://localhost:3000`, pin ở upstream commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`. Ba feature được chọn đúng ba pool là FR-04, FR-10 và FR-19. Oracle lấy từ `api_specification.md` và SRS/README của SUT; implementation chỉ dùng để điều tra sau khi test đã quan sát sai lệch.
 
-Selected features follow team allocation: FR-04, FR-10 and FR-19. API contract source: `api_specification.md`; behavioral oracle: SRS/README, especially FR-04, FR-10, FR-12, FR-19 and SEC-01–SEC-07.
+Quy ước status: 2xx cho thao tác hợp lệ; 400 cho input/business transition không hợp lệ; 401 cho thiếu/sai xác thực; 403 cho đã xác thực nhưng sai quyền; 404 cho resource không tồn tại. Mỗi case có exact status, schema/invariant và postcondition rõ ràng.
 
-## 2. Test strategy
+## 2. AI-first generation, audit and extension
 
-Each feature receives at least 40 AI-assisted cases plus at least five cases added after human audit. Current draft contains 40/45/40 AI cases for FR-04/FR-10/FR-19 respectively (125 AI cases total) and 15 human-added cases. Coverage dimensions: equivalence partitions, boundaries, negative validation, state transitions, authentication/authorization, IDOR/mass assignment, sensitive-data exposure and response schema.
+AI được điều khiển theo năm prompt tách biệt: trích contract; FR-04 domain/security/schema; FR-10 state graph; FR-19 authorization/delete; audit/deduplicate/extension. AI tạo 125 case (40/45/40). Sinh viên audit từng dòng, sửa oracle/fixture/mapping và bổ sung 15 case HUMAN (5 mỗi feature). Catalogue cuối cùng có 140/140 nhãn `VALID`; các cột `Audit reason`, `Corrected version`, `Why AI missed` giữ vết quyết định.
 
-Status oracle used in automation: 2xx for valid operations; 400 for malformed/invalid business input; 401 for missing/invalid authentication; 403 for authenticated but unauthorized role; 404 for missing resource. Where source specification omits exact status/body, report records the assumption and checks invariant behavior rather than inventing a schema.
+Chi tiết audit và mapping Postman nằm trong `../test-cases/member-4.csv` và JSON tương đương.
 
-## 3. FR-04 coverage
+## 3. Coverage theo feature
 
-`GET /api/users/me` checks authentication, identity binding, schema, forbidden sensitive fields and repeatability. `PUT /api/users/me` checks valid updates, phone partitions (10/11 digits beginning with 0), name/address boundaries, null/type handling, ignored email, rejected role mass assignment and cross-user isolation.
+### FR-04 — Personal profile (45 cases)
 
-Expected invariants: only authenticated user can access own profile; email and role remain unchanged; password/reset token are never returned; only intended fields change.
+`GET /api/users/me` kiểm tra token, identity binding, exact object schema, sensitive fields và tính lặp lại. `PUT /api/users/me` bao phủ phone 10/11 chữ số bắt đầu bằng 0, name/address boundary, null/type, empty/partial body, email/role mass assignment, XSS text và cross-user isolation.
 
-## 4. FR-10 coverage
+### FR-10 — Order state machine (50 cases)
 
-The transition matrix covers every source/destination pair among `pending`, `confirmed`, `shipping`, `delivered` and `canceled`. Valid paths are pending→confirmed→shipping→delivered, plus pending/confirmed→canceled. User cancellation is checked against ownership and state. Terminal states must reject every outgoing transition. Replay, backward transitions, unknown status and stale IDs are included.
+Suite bao phủ ma trận 5×5 giữa `pending`, `confirmed`, `shipping`, `delivered`, `canceled`; valid path `pending → confirmed → shipping → delivered`; cancellation từ pending/confirmed; terminal state, backward/skip/replay transition, ownership, admin role, malformed status/ID và response schema. Mỗi case tạo order riêng và GET lại để kiểm tra state.
 
-## 5. FR-19 coverage
+### FR-19 — Admin user management (45 cases)
 
-`GET /api/admin/users` checks admin-only access, token handling, list schema and password/reset-token absence. `DELETE /api/admin/users/:id` checks valid deletion, invalid IDs, repeated deletion, IDOR, regular-user access and self-delete prohibition. Deletion tests run last and database resets before each full execution.
+`GET /api/admin/users` kiểm tra admin-only, token, list schema và absence of credential fields. `DELETE /api/admin/users/:id` kiểm tra valid/missing/malformed ID, repeated/concurrent delete, SQL-injection payload, IDOR/regular user, stale JWT, self-delete và postcondition user list. Self-delete chạy cuối suite.
 
-## 6. Audit and extension
+### Security mapping
 
-Every generated case is labelled VALID, INVALID or INCOMPLETE with a reason. Corrected cases retain their original AI text and a human revision. Human-added cases are accepted only when absent from the generated set and include a reason for the AI miss.
+SEC-01 được quan sát qua việc API làm lộ plaintext password; SEC-02 qua token missing/invalid/stale; SEC-03 qua admin role; SEC-04 qua XSS payload được lưu/round-trip dưới dạng data (UI escaping nằm ngoài phạm vi API); SEC-05 qua injection payload và state invariants; SEC-06 qua protected `role`. SEC-07 chỉ áp dụng OTP reset-password FR-03 nên được ghi `N/A` cho ba API đã chọn, không bịa test OTP ngoài phạm vi.
 
-Detailed rows: `../test-cases/member-4.csv` and `../test-cases/member-4.xlsx`.
+## 4. Postman implementation
 
-## 7. Execution
+Full collection gồm hai setup login và 140 catalogue item. Collection-level pre-request script bắt buộc `studentId`, upsert header `X-Student-Id` và log request. Fixture cô lập, cleanup và postcondition được thực hiện bằng `pm.sendRequest`. Assertions kiểm tra exact status, JSON content type, body shape, identity/state và không có 5xx không xử lý.
 
-Collection: `../postman/HW06_member4_collection.json` contains 10 executable setup/smoke items plus 140 test-case-linked items. Environment: `../postman/HW06_member4_environment.json`. All requests use collection-level pre-request injection of `X-Student-Id: {{studentId}}`, configured as MSSV `23127326`. Newman output belongs in `../newman/` after resolving fixture/oracle rows marked INCOMPLETE.
+Tính năng đã dùng: collection/folder, environment/collection/local variables, pre-request/test scripts, dynamic fixtures, data-driven CSV, Collection Runner-compatible data, Newman CLI, JSON/HTML Extra reports và CI artifact. Monitor/mock server không phù hợp vì suite cần reset local SQLite và chạy fixture phá hủy có kiểm soát.
 
-CI smoke gate with MSSV `23127326`: 7 requests, 7 assertions, 7 passed. The local 10-item smoke report records 7 passed and 3 failed. Full collection run: 150 requests/assertions, 84 passed and 66 failed. The catalogue rows are reconciled to Newman item names and observed HTTP results in `../test-cases/member-4.csv`. Additional direct verification confirmed FR-04 sensitive-field exposure, yielding four confirmed defect observations total. Failure classification: 4 defect occurrences, 0 expected-negative, and 62 fixture issues; details are in `failure-classification.md`.
+## 5. Execution result
+
+Full run ngày 2026-09-01 trên clean database:
+
+| Metric | Result |
+|---|---:|
+| Catalogue cases | 140 |
+| Catalogue PASS / FAIL | 98 / 42 |
+| HTTP requests, including setup/postconditions | 467 |
+| Assertions | 839 |
+| Failed assertions | 63 |
+| Fixture/request errors | 0 |
+| Root defects | 10 |
+
+Data-driven FR-04 phone run: 6 iterations, 12 requests, 18 assertions, 4 fail. Hai valid partition pass; bốn invalid partition bị SUT chấp nhận sai. Báo cáo: `../newman/member-4/newman-full-report.html`, `newman-report.html`; phân loại chi tiết: `failure-classification.md`.
+
+## 6. Defect analysis
+
+42 case fail quy về 10 root defects: mass assignment role, credential exposure, missing phone validation, unsafe partial/body update, hai sai state rule FR-10, missing admin-role enforcement, delete-user success sai semantics, stale JWT và self-delete. Không đếm mỗi assertion fail thành một bug. Reproduction, expected/actual, severity, test IDs và public GitHub Issue nằm trong `../bug-reports/member-4.md`.
+
+## 7. CI/CD
+
+Workflow `.github/workflows/hw06-member4.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report. CI-demo có ba stable case đại diện FR-04/FR-10/FR-19 cùng một controlled assertion: `false` cho 22/22 pass; `true` tạo đúng 1 assertion fail. Chế độ `workflow_dispatch: conformance` chạy toàn bộ 140 case và giữ các product defect hiển thị màu đỏ. CI-demo failure được ghi rõ là pipeline-control evidence, không phải bug sản phẩm.
 
 ## 8. Agent Skill design
 
-The reusable generator is documented in `../agent-skill/pseudocode.md` and `../agent-skill/skill-design.md`. The flow diagram is supplied as `../agent-skill/diagram.png`, with editable `diagram.svg` and Mermaid source `diagram.md`. The design deliberately places a human-oracle gate between AI drafting and execution.
+Thiết kế reusable generator có contract normalizer, bốn planner domain/state/security/schema, candidate critic/deduplicator, human approval gate, exporter và execution feedback loop. Pseudocode trong `../agent-skill/pseudocode.md`. Theo ràng buộc chống gian lận, sơ đồ nộp cuối phải do sinh viên tự vẽ; AI chỉ cung cấp checklist nút/cạnh trong `skill-design.md`.
 
-## 9. Defects
+## 9. AI Audit appendix
 
-Only reproducible observations are bugs. Static code observations are hypotheses, not findings. Candidate areas requiring final evidence: role mass assignment/profile data exposure; missing admin role enforcement; illegal order transitions; user cancellation during shipping; admin self-delete.
+Toàn bộ khai báo công cụ, thời gian, prompt, output và human decision được đính kèm trong `ai-audit-report.md`. Row-level AI output được giữ nguyên trong JSON test catalogue; 15 row HUMAN không bị trộn vào output AI.
 
-## 10. Evidence links and limitations
+## 10. Evidence integrity and manual handoff
 
-GitHub Issues #1–#4 and CI run links are recorded in `../bug-reports/member-4.md` and `cicd-report.md`; corresponding PNG evidence is in `../evidence/`. The student-recorded demo video is intentionally left as `VIDEO_URL_PENDING` in the submission README and must be replaced before Moodle upload.
+Không dùng console/Issue card dựng. Ảnh GitHub Issues và Actions phải chụp trực tiếp trang thật; Postman Console và Newman hostname phải chụp từ run thật. Danh sách tên file/URL cần chụp nằm trong `../evidence/README.md`. Sinh viên export PDF/XLSX, tự vẽ diagram, quay video tùy chọn và đóng ZIP sau cùng.

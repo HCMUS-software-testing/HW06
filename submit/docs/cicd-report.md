@@ -2,20 +2,20 @@
 
 Workflow: `.github/workflows/hw06-member4.yml`.
 
-Pipeline installs Node dependencies in the pinned EShop SUT, initializes SQLite seed data, starts backend on port 3000, waits for `/api/products`, runs a stable green smoke gate, and uploads JSON/CLI artifacts. Full conformance remains available locally through the 150-item collection and is expected to fail on confirmed defects. `STUDENT_ID` is supplied through a GitHub Actions secret; missing/wrong values fail fast.
+## Configuration
 
-Required evidence:
+GitHub Actions validates secret `STUDENT_ID=23127326`, checks out the submission, clones the SUT at commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`, installs backend dependencies, starts a clean SQLite-backed server, waits for `GET /api/products`, executes Newman and uploads JSON/HTML evidence even when the test step fails.
 
-1. Pass-demo commit: stable smoke gate passes.
-2. Fail-demo commit: full conformance run demonstrates assertion failures from the test suite.
-3. Restore commit: assertion restored; both prior run links/screenshots retained.
+Push runs use `HW06_member4_ci_demo_collection.json`. It includes stable approved cases representing FR-04, FR-10 and FR-19 plus one explicitly named pipeline-control assertion. With `ci-force-failure.txt=false`, all 22 assertions pass. With `true`, exactly `CI-DEMO-001 controlled assertion` fails; this proves the pipeline detects a red test and is not classified as a SUT defect.
 
-The fail-demo is never presented as a product defect. Genuine contract failures remain visible in the conformance run and are linked to bug reports. Screenshots are stored in `../evidence/` and the run metadata is linked below.
+Manual `workflow_dispatch` exposes `conformance`, which runs the full 140-case catalogue. It is intentionally red on the pinned defective SUT (42 failed catalogue cases); hiding those failures to make CI green would falsify the conformance result.
 
 ## Recorded runs
 
-- Green smoke run: commit [`a910c56`](https://github.com/HCMUS-software-testing/HW06/commit/a910c56), Actions run [33415727552](https://github.com/HCMUS-software-testing/HW06/actions/runs/33415727552); Student ID validation and all 7 selected smoke assertions passed. Screenshot: `../evidence/CI-pass-run-33415727552.png`.
-- Full conformance failure: Actions run [33414685928](https://github.com/HCMUS-software-testing/HW06/actions/runs/33414685928); Newman executed the 150-item collection and failed on the recorded 66 assertions. Screenshot: `../evidence/CI-fail-run-33414685928.png`.
-- Restored branch: subsequent pushes [`127c6a4`](https://github.com/HCMUS-software-testing/HW06/commit/127c6a4) and [`a910c56`](https://github.com/HCMUS-software-testing/HW06/commit/a910c56) retain the workflow and evidence links.
+The current pass/fail demonstration commit and Actions URLs will be filled after pushing the two controlled commits. Required screenshots must be captured from the actual GitHub Actions pages; generated status cards are not accepted.
 
-The green job is intentionally a stable smoke gate; the full 150-item conformance run remains a separate diagnostic run because the pinned SUT reproduces four confirmed defects and 62 fixture issues.
+| Evidence | Commit | Actions run | Expected result | Screenshot |
+|---|---|---|---|---|
+| CI demo pass | `PENDING_PUSH` | `PENDING_RUN_URL` | 22/22 assertions pass | `../evidence/github-actions-pass.png` |
+| CI demo exact-one-fail | `PENDING_PUSH` | `PENDING_RUN_URL` | 21 pass, exactly 1 controlled assertion fail | `../evidence/github-actions-one-fail.png` |
+| Restored green branch | `PENDING_PUSH` | `PENDING_RUN_URL` | 22/22 assertions pass | same live run page |

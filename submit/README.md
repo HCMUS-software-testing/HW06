@@ -1,76 +1,55 @@
-# HW06 — API testing submission package
+# HW06 — API Testing — MSSV 23127326
 
-Status: prepared for MSSV `23127326`.
+Public repository: <https://github.com/HCMUS-software-testing/HW06/tree/Bao>
 
-## Scope
+## Phạm vi
 
-- FR-04 Personal profile: `GET/PUT /api/users/me`
-- FR-10 Order state machine: `PUT /api/admin/orders/:id/status`, `PUT /api/orders/:id/cancel`
-- FR-19 Admin user management: `GET /api/admin/users`, `DELETE /api/admin/users/:id`
+| Pool | Feature | API được kiểm thử |
+|---|---|---|
+| A | FR-04 — Personal profile | `GET/PUT /api/users/me` |
+| B | FR-10 — Order state machine | `PUT /api/admin/orders/:id/status`, `PUT /api/orders/:id/cancel` |
+| C | FR-19 — Admin user management | `GET /api/admin/users`, `DELETE /api/admin/users/:id` |
 
-## Current evidence status
+## Tóm tắt kết quả
 
-| Artifact | Status |
-|---|---|
-| Test-case workbook/CSV | 140 catalogue-linked cases; Newman result mapping completed |
-| Postman collection/environment | Configured with MSSV `23127326` |
-| Newman report | Rerun with MSSV `23127326` |
-| Bug report | 4 defects confirmed; Issues #1–#4 and evidence links published |
-| CI workflow/report | Secret configured; green smoke and red full-conformance runs linked |
-| AI audit/critique | Markdown + PDF with interaction log, transcript and critique |
-| Agent Skill pseudocode | Created |
-| Agent Skill diagram | `agent-skill/diagram.png` + editable SVG/Mermaid source |
-| Demo video | **Student records video** |
+| Feature | AI tạo | Sinh viên bổ sung | Đã audit | Executed | Pass | Fail |
+|---|---:|---:|---:|---:|---:|---:|
+| FR-04 | 40 | 5 | 45 | 45 | 28 | 17 |
+| FR-10 | 45 | 5 | 50 | 50 | 46 | 4 |
+| FR-19 | 40 | 5 | 45 | 45 | 24 | 21 |
+| **Tổng** | **125** | **15** | **140** | **140** | **98** | **42** |
 
-PDF reports: `pdf/main-report.pdf`, `pdf/ai-audit-report.pdf`, `pdf/ai-critique.pdf`, `pdf/cicd-report.pdf`.
+Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 assertions**, 63 assertion fail và **0 fixture/request error**. 42 catalogue case fail được quy về **10 root defects**. Data-driven phone run có 6 partition, 12 requests, 18 assertions; bốn invalid partition làm lộ `BUG-04-003`.
 
-Repository: <https://github.com/HCMUS-software-testing/HW06/tree/Bao>
+## Artefact chính
 
-Student video (to be added by student): `VIDEO_URL_PENDING`
+- Test catalogue: `test-cases/member-4.csv`, `test-cases/member-4.json`; file XLSX cần export lại từ CSV sau thay đổi cuối.
+- Postman: full collection, environment, data-driven collection + CSV và deterministic CI-demo collection trong `postman/`.
+- Newman: `newman/member-4/newman-full-report.html` và `newman-report.html`.
+- Bug register: `bug-reports/member-4.md`; 10 GitHub Issues công khai.
+- Main report, AI Audit, AI Critique, CI/CD report: `docs/`.
+- Agent Skill: pseudocode và design notes trong `agent-skill/`.
 
-## Summary target
+## Tính năng Postman đã dùng
 
-| Feature | AI generated | Human added | Audited | Executed target |
-|---|---:|---:|---:|---:|
-| FR-04 | 40 | 5 | 40 | 45 |
-| FR-10 | 45 | 5 | 45 | 50 |
-| FR-19 | 40 | 5 | 40 | 45 |
-| **Total** | **125** | **15** | **125** | **140** |
+Collection/folder, environment variables, collection variables, collection-level pre-request script, dynamic `pm.sendRequest` fixtures/postconditions, test scripts, exact status assertions, JSON/schema assertions, data-driven iteration CSV, Newman CLI, JSON/HTML Extra reporter và GitHub Actions artifact upload. Monitor/mock server không dùng vì SUT local và các ca cần reset SQLite cô lập.
 
-## Test summary
+## Tự đánh giá
 
-| Metric | Value |
-|---|---:|
-| Selected APIs | 3 (FR-04, FR-10, FR-19) |
-| AI-generated cases | 125 |
-| Human-added cases | 15 |
-| Executed requests | 150 (140 catalogue + 10 setup/smoke) |
-| Passed assertions | 84 |
-| Failed assertions | 66 |
-| Confirmed defect observations | 4 (4 unique root defects; one direct GET verification) |
-| Expected-negative failures | 0 |
-| Fixture-issue failures | 62 |
+| STT | Tiêu chí | Điểm | Tự đánh giá |
+|---:|---|---:|---:|
+| 1 | API 1 — full pipeline FR-04 | 30 | 29 |
+| 2 | API 2 — full pipeline FR-10 | 30 | 29 |
+| 3 | API 3 — full pipeline FR-19 | 30 | 29 |
+| 4 | Agent Skill | 10 | 8 |
+|  | **Tổng** | **100** | **95** |
 
-## Self-assessment
+Hai điểm Agent Skill chưa tự chấm vì sơ đồ bắt buộc phải do sinh viên tự vẽ và video là tùy chọn.
 
-| Criterion | Max | Self-assessment |
-|---|---:|---:|
-| AI-generated/audited/extended test cases | 25 | 24 |
-| Postman/Newman execution and evidence | 20 | 17 |
-| Real bug reports + GitHub Issues | 15 | 15 |
-| CI/CD integration and two runs | 15 | 12 |
-| AI Audit Report | 10 | 9 |
-| AI Critique (200–300 words) | 5 | 5 |
-| Agent Skill (diagram + pseudocode) | 10 | 9 |
-| **Total** | **100** | **91** |
+## Việc sinh viên hoàn tất thủ công trước khi ZIP
 
-## Final actions before ZIP
-
-1. Set GitHub Actions `STUDENT_ID` secret to `23127326`.
-2. Start SUT from clean database; execute full Newman collection.
-3. Capture Postman Console showing `X-Student-Id`.
-4. Capture Postman Console and student-recorded video; replace `VIDEO_URL_PENDING`.
-5. Keep GitHub Issue and Actions links/screenshots in `evidence/`.
-6. Export PDFs after the final Markdown edit, then run ZIP checklist.
-
-CI smoke gate: 7 requests, 7 assertions, 7 passed. The local 10-item smoke catalogue recorded 7 passed and 3 failed. Full collection: 150 requests/assertions, 84 passed, 66 failed. Confirmed defects: 4 (FR-04 role mass assignment; FR-04 sensitive profile response; FR-19 regular-user admin list; FR-19 admin self-delete). Full report: `newman/member-4/newman-full-report.html`.
+1. Mở từng GitHub Issue trong `evidence/README.md`, chụp trang Issue thật và lưu đúng tên file đã liệt kê.
+2. Chụp GitHub Actions pass/fail, Postman Console có `X-Student-Id: 23127326`, và Newman HTML có `localhost`.
+3. Tự vẽ lại sơ đồ Agent Skill theo `agent-skill/skill-design.md`; không nộp diagram do AI tạo.
+4. Export lại XLSX/PDF từ CSV/Markdown cuối cùng; thêm video URL nếu quay video.
+5. Đóng gói theo tên `23127326_HW06_AI_API_095.zip`.
