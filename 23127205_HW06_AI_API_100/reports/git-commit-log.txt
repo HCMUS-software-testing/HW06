@@ -1,0 +1,107 @@
+commit 52490112a14f6b5c1c108839cf15dd9e2eb0737e
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 22:40:52 2026 +0700
+
+    fix(member-1): complete all deliverables, synchronize test cases to 132, enhance agent skill G9.5, add screenshots and export PDFs
+
+commit 435b4a11b37311a56525a1f12e01d16bc30f8dc9
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:22:29 2026 +0700
+
+    docs(cicd): update final revert commit sha in cicd report
+
+commit 11934256aba1186d700b335d44f4d01a49da2b27
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:22:02 2026 +0700
+
+    fix(member-1): revert intentional failure and finalize cicd report
+
+commit a8370b23e1692f0df0a70f23fa6d7e57a098f99f
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:21:12 2026 +0700
+
+    ci(demo): trigger intentional newman assertion failure on github actions
+
+commit bb73f1edeef8384b886cac1a9a7978fe26018d09
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:19:46 2026 +0700
+
+    ci(fix): unify sut server lifecycle and newman execution into single job step
+
+commit 8a0308f6d661d6425a34e428dc4ae4ed483503eb
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:18:02 2026 +0700
+
+    fix(member-1): revert intentional failure and add complete cicd report
+
+commit f53f50d54529c70cc5fe2ec7430162da2421f645
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:17:36 2026 +0700
+
+    ci(member-1): trigger intentional assertion failure for ci demonstration
+
+commit 77f5c74567dcd182b16cfef36cf6ed554ca476d0
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:15:37 2026 +0700
+
+    feat(skill): implement ai api test generator cli tool and update implementation plan
+
+commit eb6819fa5e4e68c6b33eb349c52c655cd33ada68
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:15:33 2026 +0700
+
+    docs(bugs): add comprehensive defect reports with root cause analysis and proposed fixes for 12 sut bugs
+
+commit 0c31126ea6aa881aceafc942eef283751a7790db
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:15:28 2026 +0700
+
+    test(newman): add newman html reports with 100% pass rate on sanity suite
+
+commit a104eed018e2319dbdb0a7d59f5dc5ef40a09e1a
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Mon Aug 31 21:15:23 2026 +0700
+
+    test(member-1): implement 132 test cases and postman test scripts for fr-02, fr-07, and fr-15
+
+commit d1d2fa732c58cd4892b60c682937425b21d4dc61
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Sun Aug 30 22:41:09 2026 +0700
+
+    docs(member-1): add openapi 3.0 specification, centralized ai audit report, and readme rubric
+
+commit 0c50c1b3e486f7849c7655a25c679c003f808852
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Sun Aug 30 21:08:15 2026 +0700
+
+    ci(member-1): setup github actions newman workflow and initialize delivery directory structure
+
+commit 168a384e00f8b1efd6fed3b0c285cc196aa173ef
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Sun Aug 30 19:35:48 2026 +0700
+
+    setup(postman): initialize postman environments, collection with pre-request anti-fraud script, and ddt data files
+
+commit c41472686444f8e2ee0fdba6fc1520f9c4515f53
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Sun Aug 30 18:14:22 2026 +0700
+
+    setup(sut): configure backend test fixtures, seed data, and npm utility scripts
+
+commit 16efd85085deb335c4dd1ebce5fcb534ee3d118e
+Author: LamKhanhDepzai <lamhuukhanh69@gmail.com>
+Date:   Sun Aug 30 16:42:18 2026 +0700
+
+    docs(member-1): finalize and commit api testing implementation plan v2.2
+
+commit 433e954e72bf1127db95487d0fc6962c14e3f869
+Author: TKin <letrungkienthd@gmail.com>
+Date:   Sun Aug 16 22:15:21 2026 +0700
+
+    add requirements and feature division
+
+commit 54607b062b9055fd71f1a1272cffb980bcdb4f6a
+Author: TKin <letrungkienthd@gmail.com>
+Date:   Sun Aug 16 15:48:47 2026 +0700
+
+    first commit

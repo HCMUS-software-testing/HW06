@@ -1,0 +1,7 @@
+test_id,description,product_id,product_name,price,quantity,expected_status,expected_message
+TC_FR07_DDT_01,Add valid product quantity 1,1,iPhone 15 Pro Max,30000000,1,200,Added to cart
+TC_FR07_DDT_02,Add valid product quantity 5,2,Samsung Galaxy S24 Ultra,28000000,5,200,Added to cart
+TC_FR07_DDT_03,Add valid product quantity 10,3,MacBook Pro M3,45000000,10,200,Added to cart
+TC_FR07_DDT_04,Add product quantity zero,1,iPhone 15 Pro Max,30000000,0,400,Invalid quantity
+TC_FR07_DDT_05,Add product negative quantity,1,iPhone 15 Pro Max,30000000,-2,400,Invalid quantity
+TC_FR07_DDT_06,Add non-existent product ID,99999,Fake Product,100000,1,404,Product not found

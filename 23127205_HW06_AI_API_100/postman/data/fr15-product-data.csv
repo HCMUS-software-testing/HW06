@@ -1,0 +1,7 @@
+test_id,description,name,price,product_description,imageUrl,category_id,expected_status,expected_message
+TC_FR15_DDT_01,Create valid product standard,Sony WH-1000XM5,8500000,Tai nghe chống ồn đỉnh cao,https://placehold.co/300x300.png,3,200,Product created
+TC_FR15_DDT_02,Create valid product boundary price 1,Giá rẻ 1đ,1,Sản phẩm giá tối thiểu,https://placehold.co/300x300.png,1,200,Product created
+TC_FR15_DDT_03,Create product with empty name,,500000,Thiếu tên sản phẩm,https://placehold.co/300x300.png,1,400,Product name is required
+TC_FR15_DDT_04,Create product with negative price,Sản phẩm giá âm,-50000,Giá không hợp lệ,https://placehold.co/300x300.png,1,400,Price must be greater than 0
+TC_FR15_DDT_05,Create product with zero price,Sản phẩm 0đ,0,Giá bằng không,https://placehold.co/300x300.png,1,400,Price must be greater than 0
+TC_FR15_DDT_06,Create product non-existent category,Sản phẩm sai danh mục,100000,Danh mục không có,https://placehold.co/300x300.png,9999,400,Invalid category
