@@ -48,8 +48,8 @@ jobs:
           echo "=== 3. Executing Newman Sanity Suite ==="
           cd ../..
           mkdir -p newman/member-3
-          npx -p newman -p newman-reporter-htmlextra newman run postman/HW06_Member3.postman_collection.json \
-            -e postman/HW06_Local.postman_environment.json \
+          npx -p newman -p newman-reporter-htmlextra newman run submission/postman/HW06_Member3.postman_collection.json \
+            -e submission/postman/HW06_Local.postman_environment.json \
             --folder "01_Sanity_Suite" \
             --env-var "student_id=${STUDENT_ID}" \
             -r htmlextra,cli \
