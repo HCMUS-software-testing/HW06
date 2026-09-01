@@ -34,7 +34,7 @@
 
 ---
 
-### 🐛 BUG-FR02-01: Bộ đếm `login_attempts` tăng 2 đơn vị mỗi lần đăng nhập sai
+### BUG-FR02-01: Bộ đếm `login_attempts` tăng 2 đơn vị mỗi lần đăng nhập sai
 
 ![GitHub Issue #1](screenshots/github-issues/issue-1.png)
 - **Mã lỗi:** `BUG-FR02-01`
@@ -64,7 +64,7 @@
 
 ---
 
-### 🐛 BUG-FR02-02: Thời gian khóa tài khoản là 180s (3 phút) thay vì 30s
+### BUG-FR02-02: Thời gian khóa tài khoản là 180s (3 phút) thay vì 30s
 
 ![GitHub Issue #2](screenshots/github-issues/issue-2.png)
 - **Mã lỗi:** `BUG-FR02-02`
@@ -88,7 +88,7 @@
 
 ---
 
-### 🐛 BUG-FR02-03: Thiếu validation định dạng Email, trả về 401 thay vì 400
+### BUG-FR02-03: Thiếu validation định dạng Email, trả về 401 thay vì 400
 
 ![GitHub Issue #3](screenshots/github-issues/issue-3.png)
 - **Mã lỗi:** `BUG-FR02-03`
@@ -101,7 +101,7 @@
 
 ---
 
-### 🐛 BUG-FR02-04: Lỗ hổng bảo mật nghiêm trọng — Rò rỉ mật khẩu trong Response Login
+### BUG-FR02-04: Lỗ hổng bảo mật nghiêm trọng — Rò rỉ mật khẩu trong Response Login
 
 ![GitHub Issue #4](screenshots/github-issues/issue-4.png)
 - **Mã lỗi:** `BUG-FR02-04`
@@ -149,7 +149,7 @@
 
 ---
 
-### 🐛 BUG-FR07-01: Cho phép thêm sản phẩm vào giỏ hàng với số lượng âm hoặc bằng 0
+### BUG-FR07-01: Cho phép thêm sản phẩm vào giỏ hàng với số lượng âm hoặc bằng 0
 
 ![GitHub Issue #5](screenshots/github-issues/issue-5.png)
 - **Mã lỗi:** `BUG-FR07-01`
@@ -186,7 +186,7 @@
 
 ---
 
-### 🐛 BUG-FR07-02: Thêm trùng sản phẩm bị nhân bản dòng thay vì cộng dồn số lượng
+### BUG-FR07-02: Thêm trùng sản phẩm bị nhân bản dòng thay vì cộng dồn số lượng
 
 ![GitHub Issue #6](screenshots/github-issues/issue-6.png)
 - **Mã lỗi:** `BUG-FR07-02`
@@ -197,7 +197,7 @@
 
 ---
 
-### 🐛 BUG-FR07-03: Thiếu hoàn toàn API Cập nhật số lượng (`PUT`) và Xóa item (`DELETE`)
+### BUG-FR07-03: Thiếu hoàn toàn API Cập nhật số lượng (`PUT`) và Xóa item (`DELETE`)
 
 ![GitHub Issue #7](screenshots/github-issues/issue-7.png)
 - **Mã lỗi:** `BUG-FR07-03`
@@ -208,7 +208,7 @@
 
 ---
 
-### 🐛 BUG-FR07-04: Giỏ hàng lưu in-memory, mất sạch dữ liệu khi server restart
+### BUG-FR07-04: Giỏ hàng lưu in-memory, mất sạch dữ liệu khi server restart
 
 ![GitHub Issue #8](screenshots/github-issues/issue-8.png)
 - **Mã lỗi:** `BUG-FR07-04`
@@ -223,7 +223,7 @@
 
 ---
 
-### 🐛 BUG-FR15-01: Lỗ hổng bảo mật nghiêm trọng — Thiếu Middleware xác thực Admin trên CRUD Sản Phẩm
+### BUG-FR15-01: Lỗ hổng bảo mật nghiêm trọng — Thiếu Middleware xác thực Admin trên CRUD Sản Phẩm
 
 ![GitHub Issue #9](screenshots/github-issues/issue-9.png)
 - **Mã lỗi:** `BUG-FR15-01`
@@ -256,7 +256,7 @@
 
 ---
 
-### 🐛 BUG-FR15-02: Lỗi ép kiểu `price` sang String ở các sản phẩm có ID chẵn
+### BUG-FR15-02: Lỗi ép kiểu `price` sang String ở các sản phẩm có ID chẵn
 
 ![GitHub Issue #10](screenshots/github-issues/issue-10.png)
 - **Mã lỗi:** `BUG-FR15-02`
@@ -272,7 +272,7 @@
 
 ---
 
-### 🐛 BUG-FR15-03: Cho phép tạo sản phẩm với giá âm (`price < 0`) và tên rỗng
+### BUG-FR15-03: Cho phép tạo sản phẩm với giá âm (`price < 0`) và tên rỗng
 
 ![GitHub Issue #11](screenshots/github-issues/issue-11.png)
 - **Mã lỗi:** `BUG-FR15-03`
@@ -286,7 +286,7 @@
 
 ---
 
-### 🐛 BUG-FR15-04: API Import Sản phẩm thiếu kiểm tra vai trò Admin
+### BUG-FR15-04: API Import Sản phẩm thiếu kiểm tra vai trò Admin
 
 ![GitHub Issue #12](screenshots/github-issues/issue-12.png)
 - **Mã lỗi:** `BUG-FR15-04`

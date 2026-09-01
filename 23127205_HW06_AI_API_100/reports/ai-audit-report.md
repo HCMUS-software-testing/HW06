@@ -30,7 +30,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 1: Khởi Tạo Dự Án & Phân Bổ Nhiệm Vụ Nhóm (Team Task Allocation)
+### Phiên 1: Khởi Tạo Dự Án & Phân Bổ Nhiệm Vụ Nhóm (Team Task Allocation)
 - **Thời gian:** 2026-08-30 19:30:00 +07:00
 - **Mục tiêu:** Phân tích đề bài HW06, xác định 3 phân hệ Pool A (FR-02), Pool B (FR-07), Pool C (FR-15) cho Thành viên 1 (`23127205`), và lập kế hoạch phân công công việc.
 - **Prompt của người dùng:**
@@ -44,7 +44,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 2: Chuyển Đổi Đặc Tả SUT sang Chuẩn OpenAPI 3.0
+### Phiên 2: Chuyển Đổi Đặc Tả SUT sang Chuẩn OpenAPI 3.0
 - **Thời gian:** 2026-08-30 20:00:00 +07:00
 - **Mục tiêu:** Tạo file đặc tả hợp đồng API `docs/openapi.yaml` làm đầu vào chuẩn hóa cho Agent Skill.
 - **Prompt của người dùng:**
@@ -58,7 +58,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 3: Sinh Bộ Test Cases Cho FR-02 — Đăng Nhập & Khóa Tài Khoản (`POST /api/login`)
+### Phiên 3: Sinh Bộ Test Cases Cho FR-02 — Đăng Nhập & Khóa Tài Khoản (`POST /api/login`)
 - **Thời gian:** 2026-08-30 20:45:00 +07:00
 - **Mục tiêu:** Thiết kế 38 Test Cases bao phủ Domain, State Transition, Security và Schema Validation.
 - **Prompt của người dùng:**
@@ -74,7 +74,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 4: Sinh Bộ Test Cases Cho FR-07 — Quản Lý Giỏ Hàng (`GET /api/cart`, `POST /api/cart`)
+### Phiên 4: Sinh Bộ Test Cases Cho FR-07 — Quản Lý Giỏ Hàng (`GET /api/cart`, `POST /api/cart`)
 - **Thời gian:** 2026-08-30 21:40:00 +07:00
 - **Mục tiêu:** Thiết kế 38 Test Cases cho phân hệ Giỏ hàng EShop.
 - **Prompt của người dùng:**
@@ -88,7 +88,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 5: Sinh Bộ Test Cases Cho FR-15 — Quản Lý Sản Phẩm CRUD (`POST/GET/PUT/DELETE /api/products`)
+### Phiên 5: Sinh Bộ Test Cases Cho FR-15 — Quản Lý Sản Phẩm CRUD (`POST/GET/PUT/DELETE /api/products`)
 - **Thời gian:** 2026-08-30 22:30:00 +07:00
 - **Mục tiêu:** Thiết kế 38 Test Cases cho phân hệ Quản lý Sản phẩm Admin.
 - **Prompt của người dùng:**
@@ -102,7 +102,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 6: Xây Dựng Agent Skill — Bộ Sinh Test Tự Động (Bloom-AI G9.5 Create)
+### Phiên 6: Xây Dựng Agent Skill — Bộ Sinh Test Tự Động (Bloom-AI G9.5 Create)
 - **Thời gian:** 2026-08-31 09:00:00 +07:00
 - **Mục tiêu:** Thiết kế kiến trúc 4 tầng, Pseudocode và mã nguồn Python thực thi cho AI API Test Generator.
 - **Prompt của người dùng:**
@@ -116,7 +116,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 7: Xây Dựng Postman Collection & Data-Driven CSVs
+### Phiên 7: Xây Dựng Postman Collection & Data-Driven CSVs
 - **Thời gian:** 2026-08-31 14:00:00 +07:00
 - **Mục tiêu:** Đóng gói 132 test cases vào Postman Collection v2.1 với 4 thư mục chuyên biệt.
 - **Prompt của người dùng:**
@@ -129,7 +129,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 8: Kiểm Toán Bằng Chứng Xác Thực Sinh Viên (`X-Student-Id`) & Newman Run
+### Phiên 8: Kiểm Toán Bằng Chứng Xác Thực Sinh Viên (`X-Student-Id`) & Newman Run
 - **Thời gian:** 2026-09-01 15:30:00 +07:00
 - **Mục tiêu:** Chứng minh sinh viên thật thực thi kiểm thử thật (Anti-Fraud Constraints theo Mục 11).
 - **Thắc mắc của người dùng:** *"cách chụp ảnh minh chứng postman hướng dẫn chi tiết", "ảnh newman đâu có student header", "chụp postman như nào gửi request như nào"*.
@@ -140,7 +140,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 9: Tái Hiện & Bắt Trọn 12 Lỗi Thực Tế Trong Postman
+### Phiên 9: Tái Hiện & Bắt Trọn 12 Lỗi Thực Tế Trong Postman
 - **Thời gian:** 2026-09-01 16:15:00 +07:00
 - **Mục tiêu:** Chụp ảnh minh chứng thực tế cho toàn bộ 12 Bug Reports từ Issue #1 đến Issue #12.
 - **Thắc mắc của người dùng:** *"cái bug 2 thời gian hiển thị gì ở đâu??", "cái issue 10 response v nè sai nhe: price: '28000000'"*.
@@ -151,7 +151,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 10: Tự Động Hóa Đẩy 12 Bug Reports Lên GitHub Issues
+### Phiên 10: Tự Động Hóa Đẩy 12 Bug Reports Lên GitHub Issues
 - **Thời gian:** 2026-09-01 16:45:00 +07:00
 - **Mục tiêu:** Xuất bản 12 báo cáo lỗi lên GitHub Issues của repository `HCMUS-software-testing/HW06`.
 - **Yêu cầu của người dùng:** *"tạo script để đẩy lên github issues, xóa icon trang trí, viết tiếng Việt có dấu đầy đủ và kèm ảnh bug"*.
@@ -162,7 +162,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 11: Chứng Minh 2 Lần Chạy CI/CD Mẫu Trên GitHub Actions (Pass & Fail)
+### Phiên 11: Chứng Minh 2 Lần Chạy CI/CD Mẫu Trên GitHub Actions (Pass & Fail)
 - **Thời gian:** 2026-09-01 16:55:00 +07:00
 - **Mục tiêu:** Thực hiện 2 pipeline runs thực tế (1 run Pass 100%, 1 run Fail bắt lỗi) theo Mục 14 Đề bài.
 - **Thực thi & Kiểm toán:**
@@ -172,7 +172,7 @@ Dưới đây là biên bản kiểm toán chi tiết của toàn bộ **12 Phi�
 
 ---
 
-### 🔹 Phiên 12: Khắc Phục Sự Cố Render PDF (PDF.js Type3 Patterns & Mermaid SVG)
+### Phiên 12: Khắc Phục Sự Cố Render PDF (PDF.js Type3 Patterns & Mermaid SVG)
 - **Thời gian:** 2026-09-01 17:00:00 +07:00
 - **Mục tiêu:** Xử lý triệt để lỗi PDF.js crash trên VS Code và hỗ trợ render biểu đồ Mermaid trong PDF.
 - **Phản hồi của người dùng:** *"hiện tại khi generate pdf thì cái chart mermaid bị lỗi"*.

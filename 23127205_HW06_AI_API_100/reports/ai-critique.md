@@ -12,7 +12,7 @@
 
 Trong khuôn khổ bài tập HW06, AI (Large Language Models) được ứng dụng xuyên suốt quá trình thiết kế test cases, chuyển đổi đặc tả OpenAPI, sinh test scripts Postman và xây dựng Agent Skill. Báo cáo này đưa ra đánh giá phản biện chuyên môn độc lập (Critical Assessment) về **những gì AI làm xuất sắc**, **những điểm mù / ảo giác (Hallucinations) nguy hiểm của AI**, và **lý do tại sao vai trò của Kỹ sư QA con người là không thể thay thế (Human-in-the-Loop)**.
 
-### 📌 Đoạn Văn Phê Bình AI Tổng Kết (200–300 Từ - Bắt Buộc Theo Mục 10)
+### Đoạn Văn Phê Bình AI Tổng Kết (200–300 Từ - Bắt Buộc Theo Mục 10)
 
 > Trong quá trình kiểm thử API hệ thống EShop, AI (LLMs) thể hiện thế mạnh vượt trội trong việc tự động hóa các tác vụ lặp lại như sinh phân hoạch tương đương (Domain/BVA), cấu trúc hóa dữ liệu OpenAPI 3.0 và viết JSON Schema. Tuy nhiên, AI bộc lộ 3 điểm mù và sai lệch nghiêm trọng: *(1) Ảo giác endpoint* (tự suy diễn ra `PUT/DELETE /api/cart` không tồn tại trong SUT); *(2) Mù ô nhiễm trạng thái CSDL* (dùng chung email khiến tài khoản bị khóa liên đới gây gãy test suite); và *(3) Bỏ sót hoàn toàn các lỗ hổng bảo mật cấp độ Critical* như rò rỉ mật khẩu plaintext (SEC-01) hay thiếu phân quyền Admin trên CRUD sản phẩm (SEC-03) do AI chỉ sinh test theo luồng gửi token hợp lệ.
 >
@@ -40,7 +40,7 @@ graph TD
 
 ---
 
-### 🔹 KHÍA CẠNH 1: KHẢ NĂNG HIỂU NGỮ CẢNH NGHIỆP VỤ & EDGE CASES
+### KHÍA CẠNH 1: KHẢ NĂNG HIỂU NGỮ CẢNH NGHIỆP VỤ & EDGE CASES
 
 #### 1.1 Điểm mạnh vượt trội (Strengths):
 * **Tốc độ bao phủ phân hoạch tương đương & giá trị biên (Domain & BVA):** AI sinh trong vài giây hàng chục ca kiểm thử với các giá trị biên kinh điển: chuỗi rỗng `""`, chuỗi 255 ký tự, số âm, số 0, số thực, và email thiếu `@`.
@@ -54,7 +54,7 @@ graph TD
 
 ---
 
-### 🔹 KHÍA CẠNH 2: KHẢ NĂNG SINH ASSERTIONS & SCHEMA VALIDATION
+### KHÍA CẠNH 2: KHẢ NĂNG SINH ASSERTIONS & SCHEMA VALIDATION
 
 #### 2.1 Điểm mạnh vượt trội:
 * **Tạo JSON Schema chuẩn cú pháp Ajv/tv4:** AI sinh các khối schema `{ type: 'object', required: [...], properties: {...} }` cho các phản hồi thành công `200 OK` rất nhanh và chuẩn xác.
@@ -68,7 +68,7 @@ graph TD
 
 ---
 
-### 🔹 KHÍA CẠNH 3: PHÁT HIỆN LỖ HỔNG BẢO MẬT (OWASP API SECURITY TOP 10)
+### KHÍA CẠNH 3: PHÁT HIỆN LỖ HỔNG BẢO MẬT (OWASP API SECURITY TOP 10)
 
 #### 3.1 Điểm mạnh:
 * **Thuộc lòng các vector tấn công Injection kinh điển:** AI sinh rất tốt các payload SQL Injection (`' OR 1=1 --`, `admin' OR '1'='1`) và XSS Script tags (`<script>alert(1)</script>`).
@@ -90,7 +90,7 @@ graph TD
 | **FR-15** (Quản lý sản phẩm CRUD) | 38 | 31 (81.6%) | 5 (13.2%) | 2 (5.3%) | **18.4%** |
 | **TỔNG CỘNG** | **114** | **92 (80.7%)** | **13 (11.4%)** | **9 (7.9%)** | **19.3%** |
 
-> 📌 **Kết luận định lượng:** Gần **1/5 số test cases do AI sinh ra (19.3%)** chứa lỗi logic, giả định sai status code hoặc thiếu sót nghiêm trọng về mặt bảo mật và quản lý trạng thái CSDL.
+>  **Kết luận định lượng:** Gần **1/5 số test cases do AI sinh ra (19.3%)** chứa lỗi logic, giả định sai status code hoặc thiếu sót nghiêm trọng về mặt bảo mật và quản lý trạng thái CSDL.
 
 ---
 

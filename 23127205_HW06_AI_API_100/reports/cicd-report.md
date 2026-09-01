@@ -71,13 +71,13 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ---
 
-### 🟢 LẦN CHẠY 1: TOÀN BỘ API TEST CASES ĐỀU PASS (100% GREEN)
+### [Pass] LẦN CHẠY 1: TOÀN BỘ API TEST CASES ĐỀU PASS (100% GREEN)
 
 - **Commit SHA:** [`8765adc`](https://github.com/HCMUS-software-testing/HW06/commit/8765adc)
 - **Commit Message:** `feat: consolidate project structure, add agent-skill scripts, update real screenshots and PDF reports`
 - **URL GitHub Actions Run:** [https://github.com/HCMUS-software-testing/HW06/actions/runs/33494115345](https://github.com/HCMUS-software-testing/HW06/actions/runs/33494115345)
 - **Kết quả thực thi:**
-  - **Trạng thái:** ✅ **Success (Passed 100%)**
+  - **Trạng thái:** [Pass] **Success (Passed 100%)**
   - **Tổng số Requests đã chạy:** `43 requests`
   - **Tổng số Assertions:** `118 assertions`
   - **Assertions Passed:** `118/118 (100%)`
@@ -88,7 +88,7 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ---
 
-### 🔴 LẦN CHẠY 2: CỐ TÌNH TẠO ASSERTION FAIL (DEMONSTRATE RED PIPELINE)
+### [Fail] LẦN CHẠY 2: CỐ TÌNH TẠO ASSERTION FAIL (DEMONSTRATE RED PIPELINE)
 
 - **Commit SHA:** [`83ea05e`](https://github.com/HCMUS-software-testing/HW06/commit/83ea05e)
 - **Commit Message:** `test(ci): intentional assertion failure (expect 999) to demonstrate CI quality gate failure`
@@ -102,7 +102,7 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
   });
   ```
 - **Kết quả thực thi trên GitHub Actions:**
-  - **Trạng thái:** ❌ **Failure (Build Failed / Red Quality Gate)**
+  - **Trạng thái:** [Fail] **Failure (Build Failed / Red Quality Gate)**
   - **Chi tiết lỗi bắt được tại Newman Console:**
     ```text
     # failure detail
@@ -117,7 +117,7 @@ Theo yêu cầu tại Mục 6 Đề bài, dưới đây là minh chứng chi ti�
 
 ---
 
-### 🟢 LẦN CHẠY 3: KHÔI PHỤC HOÀN TOÀN (REVERT TO GREEN)
+### [Pass] LẦN CHẠY 3: KHÔI PHỤC HOÀN TOÀN (REVERT TO GREEN)
 
 - **Commit SHA:** [`1193425`](https://github.com/HCMUS-software-testing/HW06/commit/1193425)
 - **Commit Message:** `fix(member-1): revert intentional failure and finalize cicd report`
