@@ -1,29 +1,11 @@
-Current source repository log (before member-4 execution commits):
-433e954 add requirements and feature division
-54607b0 first commit
-
-Required branch commits to create after replacing placeholder:
-test(member-4): generate API test cases for FR-04 FR-10 FR-19
-test(member-4): audit generated API test cases
-test(member-4): add human-designed security and state cases
-test(member-4): implement Postman tests and Newman reports
-docs(member-4): add verified bug reports and evidence links
-feat(member-4): add reusable AI API test generator skill
-ci(member-4): add Newman workflow pass-demo
-ci(member-4): demonstrate intentional single-test failure
-ci(member-4): restore passing assertion
-docs(member-4): finalize reports and submission checklist
-
-Export after branch work with:
-git log --date=iso --pretty=format:'%h %ad %s' > submit/docs/git-commit-log.txt
-
-Recorded branch commits/runs:
-fface29 generation + audit
-9ead1d9 Postman/Newman + classification
-7f014c4 reports/evidence/workflow
-5cbc0a8 GitHub Issue links
-fd28de2 green smoke CI; run 33414783638
-Full conformance failure run: 33414685928
-492fb25 CI links/final evidence; green rerun 33414863187
-127c6a4 docs: sync final commit log
-a910c56 docs: sync rewritten commit links
+20d5daf 2026-09-01 15:08:22 +0700 docs: finalize API testing submission artifacts
+a910c56 2026-08-31 23:43:58 +0700 docs: sync rewritten commit links
+127c6a4 2026-08-31 23:35:11 +0700 docs: sync final commit log
+492fb25 2026-08-31 23:34:30 +0700 docs: record CI runs and commit evidence
+fd28de2 2026-08-31 23:33:38 +0700 ci: add green smoke gate and retain conformance failures
+5cbc0a8 2026-08-31 23:32:35 +0700 docs: link verified GitHub bug issues
+7f014c4 2026-08-31 23:31:48 +0700 docs: add reports bug evidence and CI workflow
+9ead1d9 2026-08-31 23:31:31 +0700 test: add Postman Newman execution and failure classification
+fface29 2026-08-31 23:31:15 +0700 test: add generated and audited API cases
+433e954 2026-08-16 22:15:21 +0700 add requirements and feature division
+54607b0 2026-08-16 15:48:47 +0700 first commit
