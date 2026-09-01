@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: EShop Member 3 APIs (FR-01, FR-09, FR-17)
+  version: "1.0"
+  description: |
+    OpenAPI excerpt for Member 3 (23127185). Generated from
+    eshop-sut/api_specification.md + SRS, then audited against live SUT.
+    Expected responses follow the **spec**, not the buggy implementation.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/register:
+    post:
+      tags: [FR-01]
+      summary: Account registration
+      parameters:
+        - in: header
+          name: X-Student-Id
+          required: true
+          schema: { type: string, example: "23127185" }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name: { type: string }
+                email: { type: string, format: email }
+                password:
+                  type: string
+                  minLength: 8
+                  description: 1 upper, 1 lower, 1 digit, 1 of @$!%*?&
+      responses:
+        "200":
+          description: Registered
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [message, id]
+                properties:
+                  message: { type: string }
+                  id: { type: integer }
+        "400": { description: Validation failed }
+        "409": { description: Email already exists }
+  /api/apply-coupon:
+    post:
+      tags: [FR-09]
+      summary: Apply discount coupon (C1–C5)
+      parameters:
+        - in: header
+          name: X-Student-Id
+          required: true
+          schema: { type: string }
+        - in: header
+          name: Authorization
+          required: true
+          schema: { type: string, example: "Bearer <jwt>" }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code, total_amount]
+              properties:
+                code: { type: string }
+                total_amount: { type: number, minimum: 0 }
+                user_id: { type: integer }
+      responses:
+        "200":
+          description: Coupon applied
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, coupon_id, discount_amount, final_amount]
+                properties:
+                  success: { type: boolean }
+                  coupon_id: { type: integer }
+                  discount_amount: { type: number }
+                  final_amount: { type: number }
+                  message: { type: string }
+        "400": { description: Expired, below min, or max uses }
+        "401": { description: Missing/invalid JWT (C4 / SEC-02) }
+        "404": { description: Unknown or inactive code }
+  /api/coupons:
+    get:
+      tags: [FR-17]
+      summary: List coupons (admin)
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Coupon array
+        "401": { description: No token }
+        "403": { description: Not admin (SEC-03) }
+  /api/admin/coupons:
+    post:
+      tags: [FR-17]
+      summary: Create coupon (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code, type, discount_value, expired_at]
+              properties:
+                code: { type: string }
+                type: { type: string, enum: [percent, fixed] }
+                discount_value: { type: number, exclusiveMinimum: 0 }
+                min_order_amount: { type: number, minimum: 0 }
+                expired_at: { type: string, format: date }
+                max_uses_per_user: { type: integer, minimum: 1 }
+      responses:
+        "200": { description: Created }
+        "400": { description: Validation failed }
+        "401": { description: No token }
+        "403": { description: Not admin }
+        "409": { description: Duplicate code }
+  /api/admin/coupons/{id}:
+    delete:
+      tags: [FR-17]
+      summary: Delete coupon (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200": { description: Deleted }
+        "401": { description: No token }
+        "403": { description: Not admin }
+        "404": { description: Id not found }
