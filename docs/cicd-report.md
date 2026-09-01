@@ -14,7 +14,7 @@ Pipeline CI/CD được thiết lập sử dụng **GitHub Actions** để tự 
 ### 1.1 Các bước thực hiện trong Workflow (`.github/workflows/api-tests.yml`)
 
 ```yaml
-name: API Tests Member 3 - Newman CI
+name: API Tests - Newman CI
 
 on:
   push:
@@ -87,31 +87,31 @@ jobs:
 
 ---
 
-## 2. CHỨNG MINH HAI LẦN CHẠY PIPELINE (PASS & INTENTIONAL FAIL)
+## 2. CHÚNG MINH HAI LẦN CHẠY PIPELINE (PASS & INTENTIONAL FAIL)
 
 Yêu cầu bài tập (Mục 6 - CI/CD): Cung cấp 2 sample commits thể hiện 2 lần chạy pipeline thực tế trên GitHub Actions: 1 run PASS toàn bộ (Sanity) và 1 run FAIL có chủ đích (Intentional Failure).
 
 ### 2.1 Pipeline Run 1: PASS toàn bộ (Sanity Suite - Green Status 🟢)
-- **Commit:** `ci(member-3): rename workflow to api-tests.yml and fix submission paths` (`b5e092e`)
+- **Commit:** `ci: execute full api sanity test suite` (`63d6267`)
 - **Mô tả:** Khởi chạy thành công backend SUT, thực thi trọn vẹn bộ kiểm thử `01_Sanity_Suite` qua Newman. 100% assertions đạt PASS.
 - **Trạng thái GitHub Actions:** `SUCCESS` (Dấu tích xanh ✔️).
 - **Báo cáo HTML sinh ra:** `newman/member-3/ci-report.html` (100% Pass Rate).
-- **Link Run Thật:** [https://github.com/HCMUS-software-testing/HW06/actions/runs/33498651557](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498651557)
+- **Link Run Thật:** [https://github.com/HCMUS-software-testing/HW06/actions/runs/33500679825](https://github.com/HCMUS-software-testing/HW06/actions/runs/33500679825)
 
 ![GitHub Actions Run PASS](screenshots/cicd-run-pass.png)
-*Hình 2.1: Giao diện GitHub Actions Run 33498651557 thành công (Green - SUCCESS)*
+*Hình 2.1: Giao diện GitHub Actions Run 33500679825 thành công (Green - SUCCESS)*
 
 ---
 
 ### 2.2 Pipeline Run 2: FAIL có chủ đích (Intentional Failure - Red Status 🔴)
-- **Commit:** `test(member-3): intentional assertion fail for CI validation` (`8ffbae7`)
+- **Commit:** `test: intentional assertion fail for CI validation` (`3184527`)
 - **Mô tả:** Thử nghiệm trường hợp kiểm thử / pipeline phát hiện lỗi (Intentional assertion failure). Newman / Pipeline nhận diện lỗi, kết thúc với exit code khác 0 (`exit 1`) và lập tức chuyển trạng thái job sang Failure.
 - **Kết quả:** GitHub Actions ghi nhận lỗi và tải dump log SUT backend.
 - **Trạng thái GitHub Actions:** `FAILURE` (Dấu X màu đỏ ❌).
-- **Link Run Thật:** [https://github.com/HCMUS-software-testing/HW06/actions/runs/33498774921](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498774921)
+- **Link Run Thật:** [https://github.com/HCMUS-software-testing/HW06/actions/runs/33500745624](https://github.com/HCMUS-software-testing/HW06/actions/runs/33500745624)
 
 ![GitHub Actions Run FAIL](screenshots/cicd-run-fail.png)
-*Hình 2.2: Giao diện GitHub Actions Run 33498774921 thất bại có chủ đích (Red - FAILURE)*
+*Hình 2.2: Giao diện GitHub Actions Run 33500745624 thất bại có chủ đích (Red - FAILURE)*
 
 ---
 

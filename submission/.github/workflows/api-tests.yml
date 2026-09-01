@@ -1,4 +1,5 @@
-name: API Tests Member 3 - Newman CI
+name: API Tests - Newman CI
+# HW06 API Testing Workflow - Sanity Suite
 
 on:
   push:
