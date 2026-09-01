@@ -1,8 +1,72 @@
+commit 8e03e5021c24df8ab66caf280757c31e3d06538c
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 18:25:00 2026 +0700
+
+    docs: add postman console screenshot evidence for X-Student-Id pre-request header
+
+ docs/screenshots/postman-console-student-id.png    | Bin 0 -> 113064 bytes
+ submission/23127185_HW06_AI_API_100.zip            | Bin 872385 -> 1184324 bytes
+ submission/reports/main-report.md                  |   3 ++-
+ .../screenshots/postman-console-student-id.png     | Bin 0 -> 113064 bytes
+ 4 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 442daad06889ab4815c50bcc4ebc3bd3bee6b38a
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 18:09:41 2026 +0700
+
+    docs: update cicd report with fresh run links and screenshots
+
+ .github/workflows/api-tests.yml                  |   1 -
+ docs/cicd-report.md                              |  16 ++++++++--------
+ docs/screenshots/cicd-run-fail.png               | Bin 96125 -> 93552 bytes
+ docs/screenshots/cicd-run-pass.png               | Bin 95534 -> 89843 bytes
+ submission/.github/workflows/api-tests.yml       |   3 ++-
+ submission/reports/cicd-report.md                |  16 ++++++++--------
+ submission/reports/screenshots/cicd-run-fail.png | Bin 96125 -> 93552 bytes
+ submission/reports/screenshots/cicd-run-pass.png | Bin 95534 -> 89843 bytes
+ 8 files changed, 18 insertions(+), 18 deletions(-)
+
+commit 31845276b266529347ab310ffea6adbd0111eec4
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 18:06:01 2026 +0700
+
+    test: intentional assertion fail for CI validation
+
+ .github/workflows/api-tests.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 63d626757fb5276e98032d271fee38a009c7b6c2
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 18:05:14 2026 +0700
+
+    ci: execute full api sanity test suite
+
+ .github/workflows/api-tests.yml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit aef08a2be71f84deca2dc518f90faf537c47b31b
+Author: Melyenn <thiduyen310@gmail.com>
+Date:   Tue Sep 1 18:02:28 2026 +0700
+
+    docs: update git commit log artifact
+
+ submission/reports/git-commit-log.txt | 120 ++++++++++++++++++++++++++++++----
+ 1 file changed, 107 insertions(+), 13 deletions(-)
+
 commit faff1d9b298594d7380e50d818fd94ebbd90bee7
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 17:57:28 2026 +0700
 
     docs: update cicd-report with real GitHub Actions run links and screenshots
+
+ .github/workflows/api-tests.yml                  |   1 -
+ docs/cicd-report.md                              | 122 +++++++++++++++++++++++
+ docs/screenshots/cicd-run-fail.png               | Bin 0 -> 96125 bytes
+ docs/screenshots/cicd-run-pass.png               | Bin 0 -> 95534 bytes
+ submission/reports/cicd-report.md                | 115 ++++++++++++---------
+ submission/reports/screenshots/cicd-run-fail.png | Bin 0 -> 96125 bytes
+ submission/reports/screenshots/cicd-run-pass.png | Bin 0 -> 95534 bytes
+ 7 files changed, 191 insertions(+), 47 deletions(-)
 
 commit 0fdc0125b36c3b94007dc86fb1728b283dfb3324
 Author: Melyenn <thiduyen310@gmail.com>
@@ -10,11 +74,21 @@ Date:   Tue Sep 1 17:42:18 2026 +0700
 
     test: intentional assertion fail for CI validation
 
+ .github/workflows/api-tests.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
 commit 2b8f449033a55be7cabace41a622e9f396c1682f
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 17:40:51 2026 +0700
 
     ci: rename workflow to api-tests.yml and fix submission paths
+
+ .../{api-tests-member-3.yml => api-tests.yml}      |   0
+ docs/hw06-phan-cong-cong-viec-nhom.md              | 156 ++++++++++
+ docs/hw06-team-task-allocation.md                  | 155 ++++++++++
+ docs/member-3-implementation-plan.md               | 324 +++++++++++++++++++++
+ .../{api-tests-member-3.yml => api-tests.yml}      |   4 +-
+ 5 files changed, 637 insertions(+), 2 deletions(-)
 
 commit b783aa146d3175c5db96182011759f43f4809127
 Author: Melyenn <thiduyen310@gmail.com>
@@ -22,11 +96,57 @@ Date:   Tue Sep 1 17:38:38 2026 +0700
 
     ci: fix postman collection paths for GitHub Actions workflow
 
+ .github/workflows/api-tests-member-3.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 commit e57b68d9d4d6390f212d9e05c282e5978ca542c8
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 17:33:43 2026 +0700
 
     refactor(submission): rename submission/docs to submission/reports, add bug-report.md with live GitHub Issue links (#18-#34)
+
+ submission/README.md                               |  13 +-
+ submission/bug-reports/member-3.pdf                | Bin 173092 -> 0 bytes
+ submission/docs/ai-audit-report.pdf                | Bin 165230 -> 0 bytes
+ submission/docs/ai-critique.pdf                    | Bin 54105 -> 0 bytes
+ submission/docs/cicd-report.pdf                    | Bin 94565 -> 0 bytes
+ submission/docs/hw06-phan-cong-cong-viec-nhom.md   | 156 ----------
+ submission/docs/hw06-team-task-allocation.md       | 155 ----------
+ submission/docs/main-report.pdf                    | Bin 196595 -> 0 bytes
+ submission/docs/member-3-implementation-plan.md    | 324 ---------------------
+ submission/{docs => reports}/ai-audit-report.md    |   0
+ .../ai-audit-transcripts/p1-fr01-extract.md        |   0
+ .../ai-audit-transcripts/p1-fr01-extract.out.md    |   0
+ .../ai-audit-transcripts/p1-fr09-extract.md        |   0
+ .../ai-audit-transcripts/p1-fr09-extract.out.md    |   0
+ .../ai-audit-transcripts/p1-fr17-extract.md        |   0
+ .../ai-audit-transcripts/p1-fr17-extract.out.md    |   0
+ .../ai-audit-transcripts/p2-fr01-ep-bva.md         |   0
+ .../ai-audit-transcripts/p2-fr01-ep-bva.out.md     |   0
+ .../ai-audit-transcripts/p2-fr09-ep-bva.md         |   0
+ .../ai-audit-transcripts/p2-fr09-ep-bva.out.md     |   0
+ .../ai-audit-transcripts/p3-fr09-decision.md       |   0
+ .../ai-audit-transcripts/p3-fr09-decision.out.md   |   0
+ .../ai-audit-transcripts/p4-fr09-state.md          |   0
+ .../ai-audit-transcripts/p4-fr09-state.out.md      |   0
+ .../ai-audit-transcripts/p5-fr01-security.md       |   0
+ .../ai-audit-transcripts/p5-fr01-security.out.md   |   0
+ .../ai-audit-transcripts/p5-fr09-security.md       |   0
+ .../ai-audit-transcripts/p5-fr09-security.out.md   |   0
+ .../ai-audit-transcripts/p6-fr01-schema.md         |   0
+ .../ai-audit-transcripts/p6-fr01-schema.out.md     |   0
+ .../ai-audit-transcripts/p6-fr17-schema.md         |   0
+ .../ai-audit-transcripts/p6-fr17-schema.out.md     |   0
+ .../ai-audit-transcripts/p7-skill-generator.md     |   0
+ .../ai-audit-transcripts/p7-skill-generator.out.md |   0
+ .../ai-audit-transcripts/p8-fixture-drift.md       |   0
+ .../ai-audit-transcripts/p8-fixture-drift.out.md   |   0
+ submission/{docs => reports}/ai-critique.md        |   0
+ .../member-3.md => reports/bug-report.md}          |  87 +++---
+ submission/{docs => reports}/cicd-report.md        |   0
+ submission/{docs => reports}/git-commit-log.txt    |   0
+ submission/{docs => reports}/main-report.md        |   0
+ 41 files changed, 52 insertions(+), 683 deletions(-)
 
 commit 55351df3b5c8b6df330cd085092830b9c3d6f728
 Author: Melyenn <thiduyen310@gmail.com>
@@ -34,11 +154,85 @@ Date:   Tue Sep 1 16:41:49 2026 +0700
 
     chore: move all submission deliverables into submission directory
 
+ README.md => submission/README.md                           |   0
+ {agent-skill => submission/agent-skill}/SKILL.md            |   0
+ {agent-skill => submission/agent-skill}/audit_logger.py     |   0
+ {agent-skill => submission/agent-skill}/diagram.png         | Bin
+ {agent-skill => submission/agent-skill}/diagram.svg         |   0
+ .../agent-skill}/generate_api_tests.py                      |   0
+ {agent-skill => submission/agent-skill}/pseudocode.md       |   0
+ {bug-reports => submission/bug-reports}/member-3.md         |   0
+ {bug-reports => submission/bug-reports}/member-3.pdf        | Bin
+ {docs => submission/docs}/ai-audit-report.md                |   0
+ {docs => submission/docs}/ai-audit-report.pdf               | Bin
+ .../docs}/ai-audit-transcripts/p1-fr01-extract.md           |   0
+ .../docs}/ai-audit-transcripts/p1-fr01-extract.out.md       |   0
+ .../docs}/ai-audit-transcripts/p1-fr09-extract.md           |   0
+ .../docs}/ai-audit-transcripts/p1-fr09-extract.out.md       |   0
+ .../docs}/ai-audit-transcripts/p1-fr17-extract.md           |   0
+ .../docs}/ai-audit-transcripts/p1-fr17-extract.out.md       |   0
+ .../docs}/ai-audit-transcripts/p2-fr01-ep-bva.md            |   0
+ .../docs}/ai-audit-transcripts/p2-fr01-ep-bva.out.md        |   0
+ .../docs}/ai-audit-transcripts/p2-fr09-ep-bva.md            |   0
+ .../docs}/ai-audit-transcripts/p2-fr09-ep-bva.out.md        |   0
+ .../docs}/ai-audit-transcripts/p3-fr09-decision.md          |   0
+ .../docs}/ai-audit-transcripts/p3-fr09-decision.out.md      |   0
+ .../docs}/ai-audit-transcripts/p4-fr09-state.md             |   0
+ .../docs}/ai-audit-transcripts/p4-fr09-state.out.md         |   0
+ .../docs}/ai-audit-transcripts/p5-fr01-security.md          |   0
+ .../docs}/ai-audit-transcripts/p5-fr01-security.out.md      |   0
+ .../docs}/ai-audit-transcripts/p5-fr09-security.md          |   0
+ .../docs}/ai-audit-transcripts/p5-fr09-security.out.md      |   0
+ .../docs}/ai-audit-transcripts/p6-fr01-schema.md            |   0
+ .../docs}/ai-audit-transcripts/p6-fr01-schema.out.md        |   0
+ .../docs}/ai-audit-transcripts/p6-fr17-schema.md            |   0
+ .../docs}/ai-audit-transcripts/p6-fr17-schema.out.md        |   0
+ .../docs}/ai-audit-transcripts/p7-skill-generator.md        |   0
+ .../docs}/ai-audit-transcripts/p7-skill-generator.out.md    |   0
+ .../docs}/ai-audit-transcripts/p8-fixture-drift.md          |   0
+ .../docs}/ai-audit-transcripts/p8-fixture-drift.out.md      |   0
+ {docs => submission/docs}/ai-critique.md                    |   0
+ {docs => submission/docs}/ai-critique.pdf                   | Bin
+ {docs => submission/docs}/cicd-report.md                    |   0
+ {docs => submission/docs}/cicd-report.pdf                   | Bin
+ {docs => submission/docs}/git-commit-log.txt                |   0
+ {docs => submission/docs}/hw06-phan-cong-cong-viec-nhom.md  |   0
+ {docs => submission/docs}/hw06-team-task-allocation.md      |   0
+ {docs => submission/docs}/main-report.md                    |   0
+ {docs => submission/docs}/main-report.pdf                   | Bin
+ {docs => submission/docs}/member-3-implementation-plan.md   |   0
+ .../newman}/member-3/bug-discovery-report.html              |   0
+ {newman => submission/newman}/member-3/ci-report.html       |   0
+ {newman => submission/newman}/member-3/sanity-report.html   |   0
+ {openapi => submission/openapi}/eshop-member3.yaml          |   0
+ .../postman}/HW06_Local.postman_environment.json            |   0
+ .../postman}/HW06_Member3.postman_collection.json           |   0
+ .../postman}/HW06_Mock.postman_environment.json             |   0
+ {postman => submission/postman}/data/fr01-register-data.csv |   0
+ {postman => submission/postman}/data/fr09-coupon-data.csv   |   0
+ {test-cases => submission/test-cases}/generated/FR-01.csv   |   0
+ {test-cases => submission/test-cases}/generated/FR-09.csv   |   0
+ {test-cases => submission/test-cases}/generated/FR-17.csv   |   0
+ {test-cases => submission/test-cases}/member-3.xlsx         | Bin
+ 60 files changed, 0 insertions(+), 0 deletions(-)
+
 commit 11930ed9aff37d0b119e4affb3a74680050cf063
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 16:39:08 2026 +0700
 
     docs: finalize PDF reports and update submission package
+
+ README.md                                          | 115 ++++++++++++++++++++-
+ bug-reports/member-3.pdf                           | Bin 0 -> 173092 bytes
+ docs/ai-audit-report.pdf                           | Bin 0 -> 165230 bytes
+ docs/ai-critique.pdf                               | Bin 0 -> 54105 bytes
+ docs/cicd-report.pdf                               | Bin 0 -> 94565 bytes
+ docs/git-commit-log.txt                            |  13 +++
+ docs/main-report.pdf                               | Bin 0 -> 196595 bytes
+ newman/member-3/ci-report.html                     |   1 +
+ .../.github/workflows/api-tests-member-3.yml       |  69 +++++++++++++
+ submission/23127185_HW06_AI_API_100.zip            | Bin 0 -> 872385 bytes
+ 10 files changed, 197 insertions(+), 1 deletion(-)
 
 commit c713b29dcf451a04fb3f61dbaab79c13f678e17d
 Author: Melyenn <thiduyen310@gmail.com>
@@ -46,11 +240,19 @@ Date:   Tue Sep 1 16:34:53 2026 +0700
 
     docs: add main API testing report, CI/CD report, and AI critique
 
+ docs/ai-critique.md |   9 +++
+ docs/cicd-report.md |  99 +++++++++++++++++++++++++++++++
+ docs/main-report.md | 165 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 273 insertions(+)
+
 commit 69234f9b03ea88535d55a9f58f53ffea2ec1b0c2
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 16:34:53 2026 +0700
 
     ci: add GitHub Actions pipeline workflow
+
+ .github/workflows/api-tests-member-3.yml | 69 ++++++++++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
 
 commit f7cde96d850efd4440d91415ade14cdf8bbbbcfc
 Author: Melyenn <thiduyen310@gmail.com>
@@ -58,11 +260,17 @@ Date:   Tue Sep 1 16:34:53 2026 +0700
 
     docs: add bug reports for 17 SUT defects with evidence
 
+ bug-reports/member-3.md | 177 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 177 insertions(+)
+
 commit adc25cfd51f4007714985ed9a171655965ef1fe0
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 16:34:53 2026 +0700
 
     docs: add OpenAPI 3.0 specification for Member 3 APIs
+
+ openapi/eshop-member3.yaml | 140 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 140 insertions(+)
 
 commit 08d97ae83ff951f6900ee8ecc60e4e7ec0f4015d
 Author: Melyenn <thiduyen310@gmail.com>
@@ -70,11 +278,27 @@ Date:   Tue Sep 1 16:34:53 2026 +0700
 
     feat: implement AI API test generator agent skill G9.5
 
+ agent-skill/SKILL.md              |   64 ++
+ agent-skill/audit_logger.py       |   60 ++
+ agent-skill/diagram.png           |  Bin 0 -> 198281 bytes
+ agent-skill/diagram.svg           |   69 +++
+ agent-skill/generate_api_tests.py | 1187 +++++++++++++++++++++++++++++++++++++
+ agent-skill/pseudocode.md         |   71 +++
+ 6 files changed, 1451 insertions(+)
+
 commit 71cd0f27f7456db28e87f97571f31e900da55a26
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 16:34:53 2026 +0700
 
     test: implement Postman collection, environments, data files, and Newman reports
+
+ newman/member-3/bug-discovery-report.html    | 26663 +++++++++++++++++++++++++
+ newman/member-3/ci-report.html               | 10953 ++++++++++
+ newman/member-3/sanity-report.html           | 10953 ++++++++++
+ postman/HW06_Member3.postman_collection.json |  4947 +++++
+ postman/data/fr01-register-data.csv          |     6 +
+ postman/data/fr09-coupon-data.csv            |     6 +
+ 6 files changed, 53528 insertions(+)
 
 commit 7b62ada7416226ef3ca3474e04d3a235f0c3a8df
 Author: Melyenn <thiduyen310@gmail.com>
@@ -82,11 +306,18 @@ Date:   Tue Sep 1 16:34:53 2026 +0700
 
     test: generate, audit, and finalize test cases Excel for FR-17 coupon CRUD
 
+ test-cases/generated/FR-17.csv |  46 +++++++++++++++++++++++++++++++++++++++++
+ test-cases/member-3.xlsx       | Bin 0 -> 23342 bytes
+ 2 files changed, 46 insertions(+)
+
 commit a7188f6684dc76ae81b0d283db53db5b23d98bb2
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 16:34:53 2026 +0700
 
     test: generate and audit API test cases for FR-09 apply-coupon
+
+ test-cases/generated/FR-09.csv | 46 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
 commit d95fa5f470f9a21065b7d380a5e06cc43195b13a
 Author: Melyenn <thiduyen310@gmail.com>
@@ -94,14 +325,84 @@ Date:   Tue Sep 1 16:34:53 2026 +0700
 
     test: generate and audit API test cases for FR-01 register
 
+ test-cases/generated/FR-01.csv | 47 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
 commit 5cf2ab40f70ce134e63e5b8609609d63cc7e8ff9
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 16:34:53 2026 +0700
 
     docs: add AI audit framework and implementation plan
 
+ docs/ai-audit-report.md                            | 313 ++++++++++++++++++++
+ docs/ai-audit-transcripts/p1-fr01-extract.md       |   5 +
+ docs/ai-audit-transcripts/p1-fr01-extract.out.md   |  12 +
+ docs/ai-audit-transcripts/p1-fr09-extract.md       |   3 +
+ docs/ai-audit-transcripts/p1-fr09-extract.out.md   |   7 +
+ docs/ai-audit-transcripts/p1-fr17-extract.md       |   3 +
+ docs/ai-audit-transcripts/p1-fr17-extract.out.md   |   6 +
+ docs/ai-audit-transcripts/p2-fr01-ep-bva.md        |   3 +
+ docs/ai-audit-transcripts/p2-fr01-ep-bva.out.md    |  27 ++
+ docs/ai-audit-transcripts/p2-fr09-ep-bva.md        |   3 +
+ docs/ai-audit-transcripts/p2-fr09-ep-bva.out.md    |   6 +
+ docs/ai-audit-transcripts/p3-fr09-decision.md      |   6 +
+ docs/ai-audit-transcripts/p3-fr09-decision.out.md  |  17 ++
+ docs/ai-audit-transcripts/p4-fr09-state.md         |   8 +
+ docs/ai-audit-transcripts/p4-fr09-state.out.md     |   9 +
+ docs/ai-audit-transcripts/p5-fr01-security.md      |   3 +
+ docs/ai-audit-transcripts/p5-fr01-security.out.md  |   4 +
+ docs/ai-audit-transcripts/p5-fr09-security.md      |   5 +
+ docs/ai-audit-transcripts/p5-fr09-security.out.md  |  11 +
+ docs/ai-audit-transcripts/p6-fr01-schema.md        |   3 +
+ docs/ai-audit-transcripts/p6-fr01-schema.out.md    |   4 +
+ docs/ai-audit-transcripts/p6-fr17-schema.md        |   4 +
+ docs/ai-audit-transcripts/p6-fr17-schema.out.md    |  14 +
+ docs/ai-audit-transcripts/p7-skill-generator.md    |   3 +
+ .../ai-audit-transcripts/p7-skill-generator.out.md |   8 +
+ docs/ai-audit-transcripts/p8-fixture-drift.md      |   3 +
+ docs/ai-audit-transcripts/p8-fixture-drift.out.md  |   9 +
+ docs/member-3-implementation-plan.md               | 324 +++++++++++++++++++++
+ 28 files changed, 823 insertions(+)
+
 commit c05f198e84d6f71ede80dde0d70d9f2e1036b7a9
 Author: Melyenn <thiduyen310@gmail.com>
 Date:   Tue Sep 1 16:34:53 2026 +0700
 
     chore: scaffold project structure, SUT, environment, and X-Student-Id pre-request
+
+ .gitignore                                  |   20 +
+ CLAUDE.md                                   |  153 +++
+ eshop-sut/README.md                         |  288 +++++
+ eshop-sut/api_specification.md              |  214 ++++
+ eshop-sut/backend/database.js               |  125 ++
+ eshop-sut/backend/database.sqlite           |  Bin 0 -> 36864 bytes
+ eshop-sut/backend/package-lock.json         | 1663 +++++++++++++++++++++++++++
+ eshop-sut/backend/package.json              |   23 +
+ eshop-sut/backend/server.js                 |  572 +++++++++
+ eshop-sut/backend/test_profile.js           |    8 +
+ eshop-sut/setup_guide.md                    |  117 ++
+ postman/HW06_Local.postman_environment.json |   87 ++
+ postman/HW06_Mock.postman_environment.json  |   87 ++
+ 13 files changed, 3357 insertions(+)
+
+commit 433e954e72bf1127db95487d0fc6962c14e3f869
+Author: TKin <letrungkienthd@gmail.com>
+Date:   Sun Aug 16 22:15:21 2026 +0700
+
+    add requirements and feature division
+
+ docs/hw06-phan-cong-cong-viec-nhom.md | 156 +++++++++++++++++++++++++++
+ docs/hw06-team-task-allocation.md     | 155 ++++++++++++++++++++++++++
+ req/2026.HW06.API Testing_En.md       | 198 ++++++++++++++++++++++++++++++++++
+ req/2026.HW06.API Testing_En.pdf      | Bin 0 -> 455391 bytes
+ req/2026.HW06.API Testing_Vi.md       | 198 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 707 insertions(+)
+
+commit 54607b062b9055fd71f1a1272cffb980bcdb4f6a
+Author: TKin <letrungkienthd@gmail.com>
+Date:   Sun Aug 16 15:48:47 2026 +0700
+
+    first commit
+
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)

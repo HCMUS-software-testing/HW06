@@ -185,21 +185,21 @@ SQLi code; missing JWT 401; IDOR user_id; mass-assign ignore; oversized.
 ### AUDIT-10
 - Tool: Claude Code (Opus 5)
 - Date/time: 2026-08-31T23:40:00+07:00
-- Task: FR-17 extract CRUD (Prompt 1)
+- Task: FR-17 extract CRUD, EP/BVA, Decision & State (Prompts 1-5)
 - Prompt:
 
 ```text
-Đây là đoạn spec CRUD coupon: GET /api/coupons, POST /api/admin/coupons, DELETE /api/admin/coupons/:id. Liệt kê field, role, status, schema. Chưa sinh test.
+Đoạn spec CRUD coupon: GET /api/coupons, POST /api/admin/coupons, DELETE /api/admin/coupons/:id. Liệt kê field, role, status, schema, EP/BVA, decision table, state lifecycle, security SEC-01..07.
 ```
 
-- AI output: (rút gọn; full: `docs/ai-audit-transcripts/p1-fr17-extract.out.md`)
+- AI output: (rút gọn; full transcripts: `p1-fr17-extract.out.md`, `p2-fr17-ep-bva.out.md`, `p3-fr17-decision.out.md`, `p4-fr17-state.out.md`, `p5-fr17-security.out.md`)
 
 ```text
-GET list admin 200/401/403. POST required code/type/discount/expired_at. DELETE 200/401/403/404. Duplicate 409.
+GET list admin 200/401/403. POST required code/type/discount/expired_at. DELETE 200/401/403/404. Duplicate 409. EP/BVA 16 partitions. Decision table rules R1-R8. State transition ACTIVE->EXHAUSTED->DELETED. Security SEC-01/03/04/05.
 ```
 
 - Human decision: REVISE
-- Follow-up: Path mismatch GET /api/admin/coupons vs /api/coupons → H01. authenticateToken không check role → SEC-03.
+- Follow-up: Path mismatch GET /api/admin/coupons vs /api/coupons → H01. authenticateToken không check role → SEC-03. SUT không validate percent > 100 → H03.
 
 ### AUDIT-11
 - Tool: Claude Code (Opus 5)
@@ -211,7 +211,7 @@ GET list admin 200/401/403. POST required code/type/discount/expired_at. DELETE 
 Gộp GET /api/coupons, POST /api/admin/coupons, DELETE /api/admin/coupons/:id thành M3-FR17-<nnn>. ≥ 35. Spec là oracle.
 ```
 
-- AI output: (rút gọn; full: `docs/ai-audit-transcripts/p6-fr17-schema.out.md`)
+- AI output: (rút gọn; full: `p6-fr17-schema.out.md`)
 
 ```text
 40 AI cases: happy POST/GET/DELETE; user token 403; invalid create 400; missing id 404; duplicate 409.

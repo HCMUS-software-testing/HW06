@@ -75,15 +75,16 @@ Với mỗi API, quy trình kiểm thử tuân thủ nghiêm ngặt 5 bước AI
 
 ## 4. TÍNH NĂNG POSTMAN ĐÃ SỬ DỤNG
 
-Bài làm đã khai thác tối đa và hiệu quả các tính năng nâng cao của Postman:
+Bài làm đã khai thác tối đa và hiệu quả các tính năng nâng cao của Postman theo đúng yêu cầu đồ án:
 
-1. **Workspaces & Collections:** Tổ chức collection chuẩn mực `HW06_Member3.postman_collection.json` chia folder theo từng Feature API và chia Suite (Sanity vs Bug Discovery).
+1. **Workspaces & Collections:** Tổ chức collection chuẩn mực `HW06_Member3.postman_collection.json` chia folder theo từng Feature API và chia Suite (`01_Sanity_Suite` vs `02_Bug_Discovery_Suite`).
 2. **Environments & Variables:** Sử dụng `HW06_Local.postman_environment.json` và `HW06_Mock.postman_environment.json` chứa các biến `base_url`, `student_id`, `admin_token`, `user_token`, `expired_coupon_code`,...
 3. **Collection-Level Pre-request Scripts:** Tự động bắt mọi request truyền header `X-Student-Id: 23127185` và ghi log `console.log("Request Sent with X-Student-Id:", studentId)`.
    ![Postman Console Log X-Student-Id](screenshots/postman-console-student-id.png)
 4. **Data-driven Testing (DDT CSV):** Sử dụng các file dữ liệu `postman/data/fr01-register-data.csv` và `postman/data/fr09-coupon-data.csv` để chạy lặp Collection Runner với hàng loạt biên dữ liệu (EP/BVA).
-5. **Postman Mock Server:** Xây dựng mock environment để kiểm thử offline các schema response chuẩn.
+5. **Postman Mock Server:** Xây dựng mock environment (`HW06_Mock.postman_environment.json`) để kiểm thử offline các schema response chuẩn (200 OK, 400 Bad Request, 401 Unauthorized) trước khi ghép nối SUT thật.
 6. **Console Logging & Assertion Scripts:** Viết test scripts kiểm tra cả HTTP Status Code, Response Time (< 2000ms), JSON Schema, và exact business values (`discount_amount`, `final_amount`).
+7. **Postman Monitor (Ghi chú giải trình kiến trúc):** Do SUT Backend EShop chạy ở môi trường nội bộ `http://localhost:3000` (Private Network) không mở public tunnel (ngrok), Postman Cloud Runner không thể gọi trực tiếp tới localhost. Vì vậy, quy trình chạy tự động định kỳ đã được triển khai thay thế triệt để bằng **GitHub Actions CI/CD Pipeline (`api-tests.yml`)** tích hợp Newman CLI, tự động spin-up SUT container và thực thi suite kiểm thử.
 
 ---
 
