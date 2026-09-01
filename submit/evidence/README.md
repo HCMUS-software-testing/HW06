@@ -25,4 +25,8 @@ Không dùng ảnh console/Issue/Actions do AI hoặc HTML card dựng. Chỉ ch
 - [x] ![GitHub Actions one failure](github-actions-one-fail.png): ảnh chụp trang Actions run đỏ của controlled-failure commit.
 - [x] ![GitHub Actions full conformance](github-actions-full-conformance.png): ảnh chụp run [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665).
 
+## Video demo
+
+- [x] [DemoAgentSkill-HW06](https://youtu.be/1X8fNBIZYV0): video minh họa Agent Skill sinh test cho API.
+
 Mười ảnh GitHub Issue trong bảng đã được chụp trực tiếp bằng trình duyệt từ đúng các URL công khai; không dùng ảnh dựng hoặc thẻ HTML giả.

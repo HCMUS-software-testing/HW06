@@ -64,6 +64,8 @@ Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động dat
 
 Thiết kế reusable generator có contract normalizer, bốn planner domain/state/security/schema, candidate critic/deduplicator, human approval gate, exporter và execution feedback loop. Skill thực thi được mô tả tại `agent-skill/api-test-generator/SKILL.md`, schema catalogue tại `agent-skill/api-test-generator/references/test-case-schema.md`, pseudocode tại `agent-skill/pseudocode.md`. Theo ràng buộc chống gian lận, sơ đồ nộp cuối phải do sinh viên tự vẽ; AI chỉ cung cấp checklist nút/cạnh trong `agent-skill/skill-design.md`.
 
+Video demo Agent Skill: [DemoAgentSkill-HW06](https://youtu.be/1X8fNBIZYV0).
+
 ## 9. Phụ lục A - Báo cáo kiểm toán AI
 
 ### A.1. Khai báo sử dụng AI
@@ -112,4 +114,4 @@ AI thường nhầm một ý tưởng kiểm thử hợp lý với một test ca
 
 ## 10. Tính xác thực của minh chứng và phần bàn giao thủ công
 
-Không dùng console/Issue card dựng. Ảnh GitHub Issues và Actions phải chụp trực tiếp trang thật; Postman Console và Newman hostname phải chụp từ run thật. Danh sách tên file/URL cần chụp nằm trong `evidence/README.md`. Video demo Agent Skill là tùy chọn theo đề; hiện package không khai báo video. Sinh viên export PDF/XLSX và đóng ZIP sau cùng.
+Không dùng console/Issue card dựng. Ảnh GitHub Issues và Actions phải chụp trực tiếp trang thật; Postman Console và Newman hostname phải chụp từ run thật. Danh sách tên file/URL cần chụp nằm trong `evidence/README.md`. Video demo Agent Skill được đính kèm tại [DemoAgentSkill-HW06](https://youtu.be/1X8fNBIZYV0). Sinh viên export PDF/XLSX và đóng ZIP sau cùng.

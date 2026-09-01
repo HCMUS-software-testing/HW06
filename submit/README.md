@@ -4,20 +4,20 @@ Public repository: <https://github.com/HCMUS-software-testing/HW06/tree/Bao>
 
 ## Phạm vi
 
-| Pool | Feature | API được kiểm thử |
-|---|---|---|
-| A | FR-04 — Personal profile | `GET/PUT /api/users/me` |
-| B | FR-10 — Order state machine | `PUT /api/admin/orders/:id/status`, `PUT /api/orders/:id/cancel` |
-| C | FR-19 — Admin user management | `GET /api/admin/users`, `DELETE /api/admin/users/:id` |
+| Pool | Feature                       | API được kiểm thử                                                |
+| ---- | ----------------------------- | ---------------------------------------------------------------- |
+| A    | FR-04 — Personal profile      | `GET/PUT /api/users/me`                                          |
+| B    | FR-10 — Order state machine   | `PUT /api/admin/orders/:id/status`, `PUT /api/orders/:id/cancel` |
+| C    | FR-19 — Admin user management | `GET /api/admin/users`, `DELETE /api/admin/users/:id`            |
 
 ## Tóm tắt kết quả
 
-| Feature | AI tạo | Sinh viên bổ sung | Đã audit | Executed | Pass | Fail |
-|---|---:|---:|---:|---:|---:|---:|
-| FR-04 | 40 | 5 | 45 | 45 | 28 | 17 |
-| FR-10 | 45 | 5 | 50 | 50 | 46 | 4 |
-| FR-19 | 40 | 5 | 45 | 45 | 24 | 21 |
-| **Tổng** | **125** | **15** | **140** | **140** | **98** | **42** |
+| Feature  |  AI tạo | Sinh viên bổ sung | Đã audit | Executed |   Pass |   Fail |
+| -------- | ------: | ----------------: | -------: | -------: | -----: | -----: |
+| FR-04    |      40 |                 5 |       45 |       45 |     28 |     17 |
+| FR-10    |      45 |                 5 |       50 |       50 |     46 |      4 |
+| FR-19    |      40 |                 5 |       45 |       45 |     24 |     21 |
+| **Tổng** | **125** |            **15** |  **140** |  **140** | **98** | **42** |
 
 Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 assertions**, 63 assertion fail và **0 fixture/request error**. 42 catalogue case fail được quy về **10 root defects**. Data-driven phone run có 6 partition, 12 requests, 18 assertions; bốn invalid partition làm lộ `BUG-FR04-03`.
 
@@ -29,6 +29,7 @@ Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 a
 - Bug register: `bug-reports-23127326.md`; 10 GitHub Issues công khai.
 - Main report, AI Audit, AI Critique, CI/CD report và failure classification nằm trực tiếp trong `submit/`.
 - Agent Skill: `agent-skill/api-test-generator/SKILL.md`, schema, pseudocode và design notes trong `agent-skill/`.
+- Video demo Agent Skill: [DemoAgentSkill-HW06](https://youtu.be/1X8fNBIZYV0).
 
 ## Tính năng Postman đã dùng
 
@@ -36,38 +37,29 @@ Collection/folder, environment variables, collection variables, collection-level
 
 ## Tự đánh giá
 
-| STT | Tiêu chí | Điểm | Tự đánh giá |
-|---:|---|---:|---:|
-| 1 | API 1 — full pipeline FR-04 | 30 | 29 |
-| 2 | API 2 — full pipeline FR-10 | 30 | 29 |
-| 3 | API 3 — full pipeline FR-19 | 30 | 29 |
-| 4 | Agent Skill | 10 | 8 |
-|  | **Tổng** | **100** | **95** |
+|  STT | Tiêu chí                    |    Điểm | Tự đánh giá |
+| ---: | --------------------------- | ------: | ----------: |
+|    1 | API 1 — full pipeline FR-04 |      30 |          30 |
+|    2 | API 2 — full pipeline FR-10 |      30 |          30 |
+|    3 | API 3 — full pipeline FR-19 |      30 |          30 |
+|    4 | Agent Skill                 |      10 |          10 |
+|      | **Tổng**                    | **100** |     **100** |
 
-Hai điểm Agent Skill chưa tự chấm vì sơ đồ bắt buộc phải do sinh viên tự vẽ và video là tùy chọn.
+Điểm Agent Skill được tự chấm đủ 10/10 nhờ có skill reusable, schema, pseudocode, sơ đồ tự thiết kế/tự vẽ và video demo.
 
 ## Checklist bàn giao
 
-| Hạng mục bắt buộc | Trạng thái / vị trí |
-|---|---|
-| Báo cáo chính gồm kiểm thử API + phụ lục AI Audit | `main-report.md`, `main-report.pdf` |
-| Public GitHub repository | Link ở đầu file này |
-| Postman collections, environment và Newman HTML/JSON | `postman/`, `newman-full-report.html`, `newman-report.html` |
-| Danh sách tính năng Postman | Mục “Tính năng Postman đã dùng” bên dưới |
-| CI/CD report, run pass, run đúng một failure, ảnh và link | `cicd-report.md`, `evidence/` |
-| Excel test cases + test summary | `23127326_test-cases.xlsx` gồm 2 sheet |
-| Agent Skill, sơ đồ và pseudocode | `agent-skill/` |
-| Bug report + GitHub Issue screenshots | `bug-reports-23127326.md`, `evidence/` |
-| AI Audit và AI Critique Markdown + PDF | `ai-audit-report.*`, `ai-critique.*` |
-| Git commit log | `git-commit-log.txt` |
+| Hạng mục bắt buộc                                         | Trạng thái / vị trí                                         |
+| --------------------------------------------------------- | ----------------------------------------------------------- |
+| Báo cáo chính gồm kiểm thử API + phụ lục AI Audit         | `main-report.md`, `main-report.pdf`                         |
+| Public GitHub repository                                  | Link ở đầu file này                                         |
+| Postman collections, environment và Newman HTML/JSON      | `postman/`, `newman-full-report.html`, `newman-report.html` |
+| Danh sách tính năng Postman                               | Mục “Tính năng Postman đã dùng” bên dưới                    |
+| CI/CD report, run pass, run đúng một failure, ảnh và link | `cicd-report.md`, `evidence/`                               |
+| Excel test cases + test summary                           | `23127326_test-cases.xlsx` gồm 2 sheet                      |
+| Agent Skill, sơ đồ và pseudocode                          | `agent-skill/`                                              |
+| Bug report + GitHub Issue screenshots                     | `bug-reports-23127326.md`, `evidence/`                      |
+| AI Audit và AI Critique Markdown + PDF                    | `ai-audit-report.*`, `ai-critique.*`                        |
+| Git commit log                                            | `git-commit-log.txt`                                        |
 
-Video demo Agent Skill là tùy chọn theo đề; package này hiện chưa có video URL.
-
-## Việc sinh viên hoàn tất thủ công trước khi ZIP
-
-1. Tự vẽ sơ đồ Agent Skill theo `agent-skill/skill-design.md` và lưu thành `agent-skill/diagram.png`; không nộp diagram do AI tạo.
-
-![Sơ đồ thiết kế Agent Skill](agent-skill/diagram.png)
-2. Export XLSX từ `test-cases/23127326.csv` sau mọi thay đổi cuối.
-3. Xuất `main-report.pdf`, `ai-audit-report.pdf` và `ai-critique.pdf` từ các Markdown cuối cùng.
-4. Đóng gói toàn bộ thư mục theo tên `23127326_HW06_AI_API_095.zip`.
+Video demo Agent Skill: [https://youtu.be/1X8fNBIZYV0](https://youtu.be/1X8fNBIZYV0).
