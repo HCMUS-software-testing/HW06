@@ -1,4 +1,4 @@
-# Sổ đăng ký lỗi đã xác nhận — Thành viên 4
+# Sổ đăng ký lỗi đã xác nhận — MSSV 23127326
 
 Tất cả lỗi được tái hiện trên SUT commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`, host `localhost`, có header MSSV `23127326`. Minh chứng Newman nằm tại `newman-full-report.html`; ánh xạ test case chi tiết nằm trong `failure-classification.md`.
 

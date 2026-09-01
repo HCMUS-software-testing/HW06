@@ -1,4 +1,4 @@
-# Báo cáo kiểm thử API HW06 — Thành viên 4 (23127326)
+# Báo cáo kiểm thử API HW06 — MSSV 23127326
 
 ## 1. Phạm vi và oracle
 
@@ -10,7 +10,7 @@ Quy ước status: 2xx cho thao tác hợp lệ; 400 cho input/business transiti
 
 AI được điều khiển theo năm prompt tách biệt: trích contract; FR-04 domain/security/schema; FR-10 state graph; FR-19 authorization/delete; audit/deduplicate/extension. AI tạo 125 case (40/45/40). Sinh viên audit từng dòng, sửa oracle/fixture/mapping và bổ sung 15 case HUMAN (5 mỗi feature). Catalogue cuối cùng có 140/140 nhãn `VALID`; các cột `Audit reason`, `Corrected version`, `Why AI missed` giữ vết quyết định.
 
-Chi tiết audit và mapping Postman nằm trong `test-cases/member-4.csv` và JSON tương đương.
+Chi tiết audit và mapping Postman nằm trong `test-cases/23127326.csv` và JSON tương đương.
 
 ## 3. Độ bao phủ theo tính năng
 
@@ -54,11 +54,11 @@ Data-driven FR-04 phone run: 6 iterations, 12 requests, 18 assertions, 4 fail. H
 
 ## 6. Phân tích lỗi
 
-42 case fail quy về 10 root defects: mass assignment role, credential exposure, missing phone validation, unsafe partial/body update, hai sai state rule FR-10, missing admin-role enforcement, delete-user success sai semantics, stale JWT và self-delete. Không đếm mỗi assertion fail thành một bug. Reproduction, expected/actual, severity, test IDs và public GitHub Issue nằm trong `bug-reports-member-4.md`.
+42 case fail quy về 10 root defects: mass assignment role, credential exposure, missing phone validation, unsafe partial/body update, hai sai state rule FR-10, missing admin-role enforcement, delete-user success sai semantics, stale JWT và self-delete. Không đếm mỗi assertion fail thành một bug. Reproduction, expected/actual, severity, test IDs và public GitHub Issue nằm trong `bug-reports-23127326.md`.
 
 ## 7. Tích hợp CI/CD
 
-Workflow `.github/workflows/hw06-member4.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report. CI-demo có ba stable case đại diện FR-04/FR-10/FR-19 cùng một controlled assertion: `false` cho 22/22 pass; `true` tạo đúng 1 assertion fail. Chế độ `workflow_dispatch: conformance` chạy toàn bộ 140 case và giữ các product defect hiển thị màu đỏ. CI-demo failure được ghi rõ là pipeline-control evidence, không phải bug sản phẩm.
+Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report. CI-demo có ba stable case đại diện FR-04/FR-10/FR-19 cùng một controlled assertion: `false` cho 22/22 pass; `true` tạo đúng 1 assertion fail. Chế độ `workflow_dispatch: conformance` chạy toàn bộ 140 case và giữ các product defect hiển thị màu đỏ. CI-demo failure được ghi rõ là pipeline-control evidence, không phải bug sản phẩm.
 
 ## 8. Thiết kế Agent Skill
 

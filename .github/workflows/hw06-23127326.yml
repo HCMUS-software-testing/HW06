@@ -1,10 +1,10 @@
-name: HW06 Member 4 Newman
+name: HW06 23127326 Newman
 
 on:
   push:
     paths:
       - "submit/**"
-      - ".github/workflows/hw06-member4.yml"
+      - ".github/workflows/hw06-23127326.yml"
   workflow_dispatch:
     inputs:
       mode:
@@ -55,31 +55,31 @@ jobs:
         run: |
           FORCE_FAILURE=$(tr -d '[:space:]' < submit/postman/ci-force-failure.txt)
           npx --yes -p newman@6.2.1 -p newman-reporter-htmlextra@1.23.1 newman run \
-            submit/postman/HW06_member4_ci_demo_collection.json \
-            -e submit/postman/HW06_member4_environment.json \
+            submit/postman/HW06_23127326_ci_demo_collection.json \
+            -e submit/postman/HW06_23127326_environment.json \
             --env-var studentId="$STUDENT_ID" \
             --env-var forceFailure="$FORCE_FAILURE" \
             --reporters cli,json,htmlextra \
-            --reporter-json-export submit/newman/member-4/ci-report.json \
-            --reporter-htmlextra-export submit/newman/member-4/ci-report.html
+            --reporter-json-export submit/ci-report.json \
+            --reporter-htmlextra-export submit/ci-report.html
 
       - name: Newman full conformance suite
         if: env.RUN_MODE == 'conformance'
         run: |
           npx --yes -p newman@6.2.1 -p newman-reporter-htmlextra@1.23.1 newman run \
-            submit/postman/HW06_member4_collection.json \
-            -e submit/postman/HW06_member4_environment.json \
+            submit/postman/HW06_23127326_collection.json \
+            -e submit/postman/HW06_23127326_environment.json \
             --env-var studentId="$STUDENT_ID" \
             --reporters cli,json,htmlextra \
-            --reporter-json-export submit/newman/member-4/ci-full-report.json \
-            --reporter-htmlextra-export submit/newman/member-4/ci-full-report.html
+            --reporter-json-export submit/ci-full-report.json \
+            --reporter-htmlextra-export submit/ci-full-report.html
 
       - name: Upload Newman evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: member-4-newman-${{ github.run_id }}
+          name: 23127326-newman-${{ github.run_id }}
           path: |
-            submit/newman/member-4/ci-report.*
-            submit/newman/member-4/ci-full-report.*
+            submit/ci-report.*
+            submit/ci-full-report.*
           if-no-files-found: warn

@@ -622,7 +622,7 @@ def build_collection() -> dict[str, Any]:
         items = [compile_case(c) for c in feature_cases]
         folders.append({"name": title, "item": items})
     return {
-        "info": {"name": "HW06 Member 4 — audited executable suite", "description": "140 catalogue cases with isolated fixtures, exact oracles, schema checks and postconditions.", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+        "info": {"name": "HW06 23127326 — audited executable suite", "description": "140 catalogue cases with isolated fixtures, exact oracles, schema checks and postconditions.", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
         "event": [{"listen": "prerequest", "script": {"type": "text/javascript", "exec": common_pre}}],
         "variable": [{"key": "baseUrl", "value": "http://localhost:3000"}, {"key": "studentId", "value": STUDENT_ID}],
         "item": [
@@ -664,11 +664,11 @@ def write_catalogue() -> None:
             "Evidence": "",
         })
     TC_DIR.mkdir(parents=True, exist_ok=True)
-    with (TC_DIR / "member-4.csv").open("w", encoding="utf-8", newline="") as handle:
+    with (TC_DIR / "23127326.csv").open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=headers, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
-    (TC_DIR / "member-4.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
+    (TC_DIR / "23127326.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def write_data_driven_assets() -> None:
@@ -700,11 +700,11 @@ def write_data_driven_assets() -> None:
         ]}}],
     }
     collection = {
-        "info": {"name": "HW06 Member 4 — data-driven FR04 phone partitions", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+        "info": {"name": "HW06 23127326 — data-driven FR04 phone partitions", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
         "event": [{"listen": "prerequest", "script": {"type": "text/javascript", "exec": ["pm.request.headers.upsert({key:'X-Student-Id',value:pm.environment.get('studentId')});", "console.log('[HW06-DATA]',pm.iterationData.get('partition'),'X-Student-Id='+pm.environment.get('studentId'));"]}}],
         "item": [login, update],
     }
-    (PM_DIR / "HW06_member4_data_driven_collection.json").write_text(json.dumps(collection, ensure_ascii=False, indent=2), encoding="utf-8")
+    (PM_DIR / "HW06_23127326_data_driven_collection.json").write_text(json.dumps(collection, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def write_ci_demo_asset() -> None:
@@ -728,7 +728,7 @@ def write_ci_demo_asset() -> None:
     }
     collection = {
         "info": {
-            "name": "HW06 Member 4 — deterministic CI demonstration",
+            "name": "HW06 23127326 — deterministic CI demonstration",
             "description": "Stable three-feature gate. forceFailure=true changes exactly one named control assertion; it is not a product-defect claim.",
             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         },
@@ -748,14 +748,14 @@ def write_ci_demo_asset() -> None:
             {"name": "02 Pipeline control", "item": [control_item]},
         ],
     }
-    (PM_DIR / "HW06_member4_ci_demo_collection.json").write_text(json.dumps(collection, ensure_ascii=False, indent=2), encoding="utf-8")
+    (PM_DIR / "HW06_23127326_ci_demo_collection.json").write_text(json.dumps(collection, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def main() -> None:
     build_cases()
     write_catalogue()
     PM_DIR.mkdir(parents=True, exist_ok=True)
-    (PM_DIR / "HW06_member4_collection.json").write_text(json.dumps(build_collection(), ensure_ascii=False, indent=2), encoding="utf-8")
+    (PM_DIR / "HW06_23127326_collection.json").write_text(json.dumps(build_collection(), ensure_ascii=False, indent=2), encoding="utf-8")
     write_data_driven_assets()
     write_ci_demo_asset()
     print(f"generated {len(CASES)} audited catalogue cases")

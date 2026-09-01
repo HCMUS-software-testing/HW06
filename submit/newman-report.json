@@ -110,7 +110,7 @@
     "variable": [],
     "info": {
       "_postman_id": "9ed1d200-3813-48a9-811b-ab79ab3ce18f",
-      "name": "HW06 Member 4 — data-driven FR04 phone partitions",
+      "name": "HW06 23127326 — data-driven FR04 phone partitions",
       "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     }
   },
@@ -118,8 +118,8 @@
     "_": {
       "postman_variable_scope": "environment"
     },
-    "id": "hw06-member4-local",
-    "name": "HW06 Member 4 Local",
+    "id": "hw06-23127326-local",
+    "name": "HW06 23127326 Local",
     "values": [
       {
         "type": "any",
@@ -5087,7 +5087,7 @@
           "variable": [],
           "info": {
             "_postman_id": "9ed1d200-3813-48a9-811b-ab79ab3ce18f",
-            "name": "HW06 Member 4 — data-driven FR04 phone partitions",
+            "name": "HW06 23127326 — data-driven FR04 phone partitions",
             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
           }
         },
@@ -5284,7 +5284,7 @@
           "variable": [],
           "info": {
             "_postman_id": "9ed1d200-3813-48a9-811b-ab79ab3ce18f",
-            "name": "HW06 Member 4 — data-driven FR04 phone partitions",
+            "name": "HW06 23127326 — data-driven FR04 phone partitions",
             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
           }
         },
@@ -5481,7 +5481,7 @@
           "variable": [],
           "info": {
             "_postman_id": "9ed1d200-3813-48a9-811b-ab79ab3ce18f",
-            "name": "HW06 Member 4 — data-driven FR04 phone partitions",
+            "name": "HW06 23127326 — data-driven FR04 phone partitions",
             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
           }
         },
@@ -5678,7 +5678,7 @@
           "variable": [],
           "info": {
             "_postman_id": "9ed1d200-3813-48a9-811b-ab79ab3ce18f",
-            "name": "HW06 Member 4 — data-driven FR04 phone partitions",
+            "name": "HW06 23127326 — data-driven FR04 phone partitions",
             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
           }
         },

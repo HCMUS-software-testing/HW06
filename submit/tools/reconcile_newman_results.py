@@ -11,10 +11,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REPORT = ROOT / "newman/member-4/newman-full-report.json"
-CSV_FILE = ROOT / "test-cases/member-4.csv"
-JSON_FILE = ROOT / "test-cases/member-4.json"
-CLASSIFICATION = ROOT / "docs/failure-classification.md"
+REPORT = ROOT / "newman-full-report.json"
+CSV_FILE = ROOT / "test-cases/23127326.csv"
+JSON_FILE = ROOT / "test-cases/23127326.json"
+CLASSIFICATION = ROOT / "failure-classification.md"
 
 
 BUGS = {
@@ -143,7 +143,7 @@ def main() -> None:
                 "Observed status": str(status),
                 "Classification": "PRODUCT DEFECT" if bug_id != "UNCLASSIFIED" else "REVIEW REQUIRED",
                 "Bug ID": bug_id,
-                "Evidence": f"newman/member-4/newman-full-report.html#{cid.lower()}",
+                "Evidence": f"newman-full-report.html#{cid.lower()}",
             })
         else:
             passed.append(cid)
@@ -152,7 +152,7 @@ def main() -> None:
                 "Observed status": str(status),
                 "Classification": "PASS",
                 "Bug ID": "",
-                "Evidence": "newman/member-4/newman-full-report.html",
+                "Evidence": "newman-full-report.html",
             })
 
     fieldnames = list(rows[0])

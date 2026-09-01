@@ -1,12 +1,12 @@
 # Báo cáo CI/CD
 
-Workflow: `.github/workflows/hw06-member4.yml`.
+Workflow: `.github/workflows/hw06-23127326.yml`.
 
 ## Cấu hình
 
 GitHub Actions kiểm tra secret `STUDENT_ID=23127326`, checkout bài nộp, clone SUT tại commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`, cài dependency backend, khởi động server SQLite sạch, chờ `GET /api/products`, chạy Newman và upload minh chứng JSON/HTML kể cả khi bước test fail.
 
-Các lần chạy khi push dùng `HW06_member4_ci_demo_collection.json`. Bộ này gồm các case đại diện đã duyệt cho FR-04, FR-10, FR-19 và một assertion điều khiển pipeline có tên rõ ràng. Khi `ci-force-failure.txt=false`, cả 22 assertion đều pass. Khi đặt `true`, chỉ `CI-DEMO-001 controlled assertion` fail; điều đó chứng minh pipeline phát hiện test đỏ và không quy nhầm thành lỗi SUT.
+Các lần chạy khi push dùng `HW06_23127326_ci_demo_collection.json`. Bộ này gồm các case đại diện đã duyệt cho FR-04, FR-10, FR-19 và một assertion điều khiển pipeline có tên rõ ràng. Khi `ci-force-failure.txt=false`, cả 22 assertion đều pass. Khi đặt `true`, chỉ `CI-DEMO-001 controlled assertion` fail; điều đó chứng minh pipeline phát hiện test đỏ và không quy nhầm thành lỗi SUT.
 
 `workflow_dispatch` thủ công có lựa chọn `conformance`, chạy toàn bộ catalogue 140 case. Run này cố ý đỏ trên SUT lỗi đã pin (42 catalogue case fail); che các failure để CI xanh sẽ làm sai kết quả conformance.
 

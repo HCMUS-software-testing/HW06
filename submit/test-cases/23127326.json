@@ -21,7 +21,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-002",
@@ -45,7 +45,7 @@
     "Observed status": "401",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-003",
@@ -69,7 +69,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-004",
@@ -93,7 +93,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-005",
@@ -117,7 +117,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-006",
@@ -141,7 +141,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-007",
@@ -165,7 +165,7 @@
     "Observed status": "401",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-008",
@@ -189,7 +189,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-009",
@@ -213,7 +213,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-010",
@@ -237,7 +237,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-02",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-010"
+    "Evidence": "newman-full-report.html#fr04-010"
   },
   {
     "Test ID": "FR04-011",
@@ -261,7 +261,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-012",
@@ -285,7 +285,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-013",
@@ -309,7 +309,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-014",
@@ -333,7 +333,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-014"
+    "Evidence": "newman-full-report.html#fr04-014"
   },
   {
     "Test ID": "FR04-015",
@@ -357,7 +357,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-015"
+    "Evidence": "newman-full-report.html#fr04-015"
   },
   {
     "Test ID": "FR04-016",
@@ -381,7 +381,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-016"
+    "Evidence": "newman-full-report.html#fr04-016"
   },
   {
     "Test ID": "FR04-017",
@@ -405,7 +405,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-017"
+    "Evidence": "newman-full-report.html#fr04-017"
   },
   {
     "Test ID": "FR04-018",
@@ -429,7 +429,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-018"
+    "Evidence": "newman-full-report.html#fr04-018"
   },
   {
     "Test ID": "FR04-019",
@@ -453,7 +453,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-019"
+    "Evidence": "newman-full-report.html#fr04-019"
   },
   {
     "Test ID": "FR04-020",
@@ -477,7 +477,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-020"
+    "Evidence": "newman-full-report.html#fr04-020"
   },
   {
     "Test ID": "FR04-021",
@@ -501,7 +501,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-021"
+    "Evidence": "newman-full-report.html#fr04-021"
   },
   {
     "Test ID": "FR04-022",
@@ -525,7 +525,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-023",
@@ -549,7 +549,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-024",
@@ -573,7 +573,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-025",
@@ -597,7 +597,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-026",
@@ -621,7 +621,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-027",
@@ -645,7 +645,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-028",
@@ -669,7 +669,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-04",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-028"
+    "Evidence": "newman-full-report.html#fr04-028"
   },
   {
     "Test ID": "FR04-029",
@@ -693,7 +693,7 @@
     "Observed status": "400",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-04",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-029"
+    "Evidence": "newman-full-report.html#fr04-029"
   },
   {
     "Test ID": "FR04-030",
@@ -717,7 +717,7 @@
     "Observed status": "401",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-031",
@@ -741,7 +741,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-032",
@@ -765,7 +765,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-033",
@@ -789,7 +789,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-033"
+    "Evidence": "newman-full-report.html#fr04-033"
   },
   {
     "Test ID": "FR04-034",
@@ -813,7 +813,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-034"
+    "Evidence": "newman-full-report.html#fr04-034"
   },
   {
     "Test ID": "FR04-035",
@@ -837,7 +837,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-036",
@@ -861,7 +861,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-037",
@@ -885,7 +885,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-038",
@@ -909,7 +909,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-039",
@@ -933,7 +933,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-040",
@@ -957,7 +957,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-041",
@@ -981,7 +981,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-04",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-041"
+    "Evidence": "newman-full-report.html#fr04-041"
   },
   {
     "Test ID": "FR04-042",
@@ -1005,7 +1005,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-043",
@@ -1029,7 +1029,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-044",
@@ -1053,7 +1053,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR04-045",
@@ -1077,7 +1077,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR04-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr04-045"
+    "Evidence": "newman-full-report.html#fr04-045"
   },
   {
     "Test ID": "FR10-001",
@@ -1101,7 +1101,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-002",
@@ -1125,7 +1125,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-003",
@@ -1149,7 +1149,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-004",
@@ -1173,7 +1173,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-005",
@@ -1197,7 +1197,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-006",
@@ -1221,7 +1221,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-007",
@@ -1245,7 +1245,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-008",
@@ -1269,7 +1269,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-009",
@@ -1293,7 +1293,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-010",
@@ -1317,7 +1317,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-011",
@@ -1341,7 +1341,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-012",
@@ -1365,7 +1365,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-013",
@@ -1389,7 +1389,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-014",
@@ -1413,7 +1413,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-015",
@@ -1437,7 +1437,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-016",
@@ -1461,7 +1461,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-017",
@@ -1485,7 +1485,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-018",
@@ -1509,7 +1509,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-019",
@@ -1533,7 +1533,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-020",
@@ -1557,7 +1557,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-021",
@@ -1581,7 +1581,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-022",
@@ -1605,7 +1605,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-023",
@@ -1629,7 +1629,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-024",
@@ -1653,7 +1653,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR10-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr10-024"
+    "Evidence": "newman-full-report.html#fr10-024"
   },
   {
     "Test ID": "FR10-025",
@@ -1677,7 +1677,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-026",
@@ -1701,7 +1701,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-027",
@@ -1725,7 +1725,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-028",
@@ -1749,7 +1749,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR10-02",
-    "Evidence": "newman/member-4/newman-full-report.html#fr10-028"
+    "Evidence": "newman-full-report.html#fr10-028"
   },
   {
     "Test ID": "FR10-029",
@@ -1773,7 +1773,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-030",
@@ -1797,7 +1797,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-031",
@@ -1821,7 +1821,7 @@
     "Observed status": "404",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-032",
@@ -1845,7 +1845,7 @@
     "Observed status": "401",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-033",
@@ -1869,7 +1869,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-034",
@@ -1893,7 +1893,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR12-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr10-034"
+    "Evidence": "newman-full-report.html#fr10-034"
   },
   {
     "Test ID": "FR10-035",
@@ -1917,7 +1917,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-036",
@@ -1941,7 +1941,7 @@
     "Observed status": "404",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-037",
@@ -1965,7 +1965,7 @@
     "Observed status": "404",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-038",
@@ -1989,7 +1989,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-039",
@@ -2013,7 +2013,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-040",
@@ -2037,7 +2037,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-041",
@@ -2061,7 +2061,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-042",
@@ -2085,7 +2085,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-043",
@@ -2109,7 +2109,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-044",
@@ -2133,7 +2133,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-045",
@@ -2157,7 +2157,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-046",
@@ -2181,7 +2181,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-047",
@@ -2205,7 +2205,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR12-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr10-047"
+    "Evidence": "newman-full-report.html#fr10-047"
   },
   {
     "Test ID": "FR10-048",
@@ -2229,7 +2229,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-049",
@@ -2253,7 +2253,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR10-050",
@@ -2277,7 +2277,7 @@
     "Observed status": "400",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-001",
@@ -2301,7 +2301,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-002",
@@ -2325,7 +2325,7 @@
     "Observed status": "401",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-003",
@@ -2349,7 +2349,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-004",
@@ -2373,7 +2373,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR12-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-004"
+    "Evidence": "newman-full-report.html#fr19-004"
   },
   {
     "Test ID": "FR19-005",
@@ -2397,7 +2397,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-006",
@@ -2421,7 +2421,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-007",
@@ -2445,7 +2445,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-008",
@@ -2469,7 +2469,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-009",
@@ -2493,7 +2493,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-010",
@@ -2517,7 +2517,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-011",
@@ -2541,7 +2541,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-012",
@@ -2565,7 +2565,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-013",
@@ -2589,7 +2589,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-014",
@@ -2613,7 +2613,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-015",
@@ -2637,7 +2637,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-016",
@@ -2661,7 +2661,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-017",
@@ -2685,7 +2685,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-017"
+    "Evidence": "newman-full-report.html#fr19-017"
   },
   {
     "Test ID": "FR19-018",
@@ -2709,7 +2709,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-018"
+    "Evidence": "newman-full-report.html#fr19-018"
   },
   {
     "Test ID": "FR19-019",
@@ -2733,7 +2733,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-019"
+    "Evidence": "newman-full-report.html#fr19-019"
   },
   {
     "Test ID": "FR19-020",
@@ -2757,7 +2757,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-020"
+    "Evidence": "newman-full-report.html#fr19-020"
   },
   {
     "Test ID": "FR19-021",
@@ -2781,7 +2781,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-021"
+    "Evidence": "newman-full-report.html#fr19-021"
   },
   {
     "Test ID": "FR19-022",
@@ -2805,7 +2805,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-022"
+    "Evidence": "newman-full-report.html#fr19-022"
   },
   {
     "Test ID": "FR19-023",
@@ -2829,7 +2829,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-023"
+    "Evidence": "newman-full-report.html#fr19-023"
   },
   {
     "Test ID": "FR19-024",
@@ -2853,7 +2853,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-024"
+    "Evidence": "newman-full-report.html#fr19-024"
   },
   {
     "Test ID": "FR19-025",
@@ -2877,7 +2877,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-025"
+    "Evidence": "newman-full-report.html#fr19-025"
   },
   {
     "Test ID": "FR19-026",
@@ -2901,7 +2901,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-026"
+    "Evidence": "newman-full-report.html#fr19-026"
   },
   {
     "Test ID": "FR19-027",
@@ -2925,7 +2925,7 @@
     "Observed status": "401",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-028",
@@ -2949,7 +2949,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-029",
@@ -2973,7 +2973,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR12-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-029"
+    "Evidence": "newman-full-report.html#fr19-029"
   },
   {
     "Test ID": "FR19-030",
@@ -2997,7 +2997,7 @@
     "Observed status": "403",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-031",
@@ -3021,7 +3021,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR12-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-031"
+    "Evidence": "newman-full-report.html#fr19-031"
   },
   {
     "Test ID": "FR19-032",
@@ -3045,7 +3045,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-033",
@@ -3069,7 +3069,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-033"
+    "Evidence": "newman-full-report.html#fr19-033"
   },
   {
     "Test ID": "FR19-034",
@@ -3093,7 +3093,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-035",
@@ -3117,7 +3117,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-035"
+    "Evidence": "newman-full-report.html#fr19-035"
   },
   {
     "Test ID": "FR19-036",
@@ -3141,7 +3141,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-036"
+    "Evidence": "newman-full-report.html#fr19-036"
   },
   {
     "Test ID": "FR19-037",
@@ -3165,7 +3165,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-037"
+    "Evidence": "newman-full-report.html#fr19-037"
   },
   {
     "Test ID": "FR19-038",
@@ -3189,7 +3189,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-038"
+    "Evidence": "newman-full-report.html#fr19-038"
   },
   {
     "Test ID": "FR19-039",
@@ -3213,7 +3213,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-040",
@@ -3237,7 +3237,7 @@
     "Observed status": "200",
     "Classification": "PASS",
     "Bug ID": "",
-    "Evidence": "newman/member-4/newman-full-report.html"
+    "Evidence": "newman-full-report.html"
   },
   {
     "Test ID": "FR19-041",
@@ -3261,7 +3261,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR12-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-041"
+    "Evidence": "newman-full-report.html#fr19-041"
   },
   {
     "Test ID": "FR19-042",
@@ -3285,7 +3285,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-042"
+    "Evidence": "newman-full-report.html#fr19-042"
   },
   {
     "Test ID": "FR19-043",
@@ -3309,7 +3309,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-01",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-043"
+    "Evidence": "newman-full-report.html#fr19-043"
   },
   {
     "Test ID": "FR19-044",
@@ -3333,7 +3333,7 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-02",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-044"
+    "Evidence": "newman-full-report.html#fr19-044"
   },
   {
     "Test ID": "FR19-045",
@@ -3357,6 +3357,6 @@
     "Observed status": "200",
     "Classification": "PRODUCT DEFECT",
     "Bug ID": "BUG-FR19-03",
-    "Evidence": "newman/member-4/newman-full-report.html#fr19-045"
+    "Evidence": "newman-full-report.html#fr19-045"
   }
 ]

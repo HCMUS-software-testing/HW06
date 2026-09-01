@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "HW06 Member 4 — deterministic CI demonstration",
+    "name": "HW06 23127326 — deterministic CI demonstration",
     "description": "Stable three-feature gate. forceFailure=true changes exactly one named control assertion; it is not a product-defect claim.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
