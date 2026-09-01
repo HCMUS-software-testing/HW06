@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 """
 =============================================================================
-Agent Skill Tool: 100% PDF.js & VS Code Compatible PDF Generator
+Agent Skill Tool: 100% PDF.js Compatible PDF Generator with Mermaid Rendering
 Author: Lam Huu Khanh (Student ID: 23127205)
 Course: Software Testing (HCMUS) - HW06: API Testing
 
 Description:
-  Generates clean, 100% standard PDF documents compatible with all PDF viewers
-  (VS Code Office PDF viewer, Adobe Reader, Chrome, Foxit, PDF.js).
-  
-  Key Fixes:
-  - Sanitizes color emojis into clean standard Unicode to prevent Chromium
-    Type3 Pattern Stream crashes in PDF.js (v3.1.81).
+  Generates clean, 100% standard PDF documents compatible with all PDF viewers.
+  - Automatically renders Mermaid flowcharts into crisp vector SVG diagrams.
+  - Sanitizes color emojis to prevent Type3 font pattern errors in PDF.js.
   - Embeds local images as Base64 Data URIs.
-  - Solid flat colors with zero gradient patterns.
+  - Formatted tables, code blocks, alerts, and A4 print layout.
 =============================================================================
 """
 
@@ -213,6 +210,23 @@ hr {
     margin: 14px 0;
 }
 
+.mermaid {
+    text-align: center;
+    margin: 14px auto;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    page-break-inside: avoid !important;
+}
+
+.mermaid svg {
+    max-width: 100% !important;
+    height: auto !important;
+    display: inline-block;
+    margin: 0 auto;
+}
+
 .doc-header-banner {
     display: flex;
     justify-content: space-between;
@@ -235,7 +249,6 @@ hr {
 }
 """
 
-# Map emojis to clean text/standard symbols to prevent Type3 font pattern errors in PDF.js
 EMOJI_REPLACEMENTS = {
     '🔹': '[+] ',
     '📌': '[Lưu ý] ',
@@ -271,6 +284,16 @@ def sanitize_markdown(md_text: str) -> str:
     # Clean local file links
     clean_text = re.sub(r'\[([^\]]+)\]\(file:///[^\)]+\)', r'<strong>\1</strong>', clean_text)
     return clean_text
+
+
+def preprocess_mermaid_blocks(html_content: str) -> str:
+    """Transform <pre><code class="language-mermaid">...</code></pre> into <div class="mermaid">...</div>"""
+    return re.sub(
+        r'<pre><code class="language-mermaid">(.*?)</code></pre>',
+        r'<div class="mermaid">\1</div>',
+        html_content,
+        flags=re.DOTALL
+    )
 
 
 def embed_images_as_base64(html_content: str, base_dir: Path) -> str:
@@ -314,7 +337,7 @@ def embed_images_as_base64(html_content: str, base_dir: Path) -> str:
 
 
 def md_to_html(md_path: Path) -> str:
-    """Convert Markdown file to styled HTML 100% compatible with PDF.js."""
+    """Convert Markdown file to styled HTML 100% compatible with PDF.js & Mermaid."""
     with open(md_path, "r", encoding="utf-8") as f:
         raw_text = f.read()
 
@@ -322,6 +345,7 @@ def md_to_html(md_path: Path) -> str:
 
     # Convert to HTML with tables and fenced code extensions
     html_body = markdown.markdown(sanitized_md, extensions=['tables', 'fenced_code', 'nl2br', 'toc'])
+    html_body = preprocess_mermaid_blocks(html_body)
     html_body = embed_images_as_base64(html_body, md_path.parent)
 
     title = md_path.stem.replace('-', ' ').title()
@@ -332,6 +356,7 @@ def md_to_html(md_path: Path) -> str:
     <meta charset="UTF-8">
     <title>{title}</title>
     <style>{CSS_TEMPLATE}</style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
 <body>
     <div class="doc-header-banner">
@@ -348,7 +373,7 @@ def md_to_html(md_path: Path) -> str:
 
 
 def convert_single_file(playwright_browser, md_file: Path, pdf_file: Path = None) -> bool:
-    """Convert a single Markdown file to PDF cleanly without PDF.js pattern errors."""
+    """Convert a single Markdown file to PDF cleanly with Mermaid rendering."""
     if not md_file.exists():
         print(f"[-] File not found: {md_file}")
         return False
@@ -362,7 +387,22 @@ def convert_single_file(playwright_browser, md_file: Path, pdf_file: Path = None
     page = playwright_browser.new_page()
     try:
         page.set_content(html_content, wait_until="networkidle")
-        
+
+        # Initialize and render Mermaid diagrams if present
+        page.evaluate("""async () => {
+            if (window.mermaid && document.querySelector('.mermaid')) {
+                mermaid.initialize({
+                    startOnLoad: false,
+                    theme: 'neutral',
+                    fontFamily: 'Arial, sans-serif'
+                });
+                await mermaid.run();
+            }
+        }""")
+
+        # Brief wait for SVG layout stability
+        page.wait_for_timeout(500)
+
         # Pure standard PDF without Chromium Type3 header/footer patterns
         page.pdf(
             path=str(pdf_file),
@@ -395,16 +435,16 @@ def find_reports_dir() -> Path:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="100% PDF.js Compatible Markdown to PDF Generator")
+    parser = argparse.ArgumentParser(description="100% PDF.js Compatible PDF Generator with Mermaid Rendering")
     parser.add_argument("--input", "-i", type=str, help="Input Markdown file path")
     parser.add_argument("--output", "-o", type=str, help="Output PDF file path")
     parser.add_argument("--all", "-a", action="store_true", help="Convert all markdown files in reports/")
 
     args = parser.parse_args()
 
-    print("=" * 65)
-    print("  100% PDF.JS COMPATIBLE PLAYWRIGHT PDF GENERATOR")
-    print("=" * 65)
+    print("=" * 70)
+    print("  PDF.JS COMPATIBLE PDF GENERATOR (WITH VECTOR MERMAID RENDERING)")
+    print("=" * 70)
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
