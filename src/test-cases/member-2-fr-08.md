@@ -3,18 +3,13 @@
 **Thành viên:** Lê Trung Kiên (MSSV: 23127075)  
 **API Endpoint:** `POST /api/checkout` (api_specification.md §4.3)  
 **Header bắt buộc:** `Authorization: Bearer <userToken>`, `X-Student-Id: 23127075`  
-**Nguồn đặc tả:** `eshop-sut/api_specification.md` §4.3 & `eshop-sut/README.md` FR-08, FR-09, FR-10
+**Nguồn đặc tả:** `eshop-sut/api_specification.md` §4.3 & `eshop-sut/README.md` FR-08, FR-09, FR-10, SEC-02, SEC-03, SEC-04
 
 ---
 
-## 1. Danh Sách Test Cases AI Sinh & Kiểm Toán Audit
+## 1. Danh Sách Test Cases AI Sinh (35 Test Cases) & Kiểm Toán Audit
 
 ### Batch 1: Nghiệp vụ Thanh toán, Giỏ hàng & Mã giảm giá (18 test cases)
-
-> **Phạm vi kiểm thử:**
-> - **Checkout chuẩn & Địa chỉ giao hàng:** Địa chỉ hợp lệ, địa chỉ rỗng, địa chỉ chỉ chứa khoảng trắng, thiếu thông tin chi tiết, sđt không hợp lệ, địa chỉ quá dài.
-> - **Giỏ hàng & Tồn kho:** Giỏ hàng rỗng, số lượng vượt tồn kho (out of stock), kiểm tra tự động xóa giỏ hàng sau thanh toán (Cart clearing), trạng thái đơn ban đầu là `pending` (FR-10).
-> - **Tính toán số tiền & Mã giảm giá (FR-09):** Chống gian lận sửa `total_amount` từ client, áp dụng mã `SAVE10` (percent), `BIGBUY` (fixed), mã hết hạn `EXPIRED`, mã không đủ min_order_amount, mã dùng hết lượt `max_uses_per_user`, mã không tồn tại.
 
 | STT | Test Case Name | Method | Endpoint | Request Header / Body | Expected Status | Expected Body / Response Behavior |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -39,7 +34,35 @@
 
 ---
 
-### Bảng Kiểm Toán Audit — Batch 1 (18 Test Cases)
+### Batch 2: Bảo mật Authentication/IDOR & Response Schema (17 test cases)
+
+> **Phạm vi kiểm thử:**
+> - **Bảo mật & Xác thực (SEC-02, SEC-03, IDOR):** Checkout không truyền Authorization header (401), Token sai/hết hạn (401), Bearer token rỗng (401), dùng token của User A để checkout (không thể checkout giỏ của User B - IDOR), SQLi payload trong địa chỉ, Reflected XSS trong địa chỉ, HTTP Method không hợp lệ.
+> - **Response Schema & Boundary:** JSON Payload sai cú pháp (400), Payload chứa trường lạ/dư thừa (`role="admin"`), `total_amount` âm (400), `total_amount` dạng string (400), Schema validation (`id`, `status='pending'`, `total_amount > 0`), Content-Type `application/json`.
+
+| STT | Test Case Name | Method | Endpoint | Request Header / Body | Expected Status | Expected Body / Response Behavior |
+| --- | --- | --- | --- | --- | --- | --- |
+| 19 | Checkout khi chưa đăng nhập (Thiếu Authorization Header) | POST | `/api/checkout` | Header: *(Không gửi Authorization)*<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 401 Unauthorized | Thông báo yêu cầu đăng nhập để thanh toán (SEC-02) |
+| 20 | Checkout với JWT Token không hợp lệ / Bị sửa đổi signature | POST | `/api/checkout` | Header: `Bearer invalid_jwt_token_123`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 401 Unauthorized | Từ chối truy cập do Token không hợp lệ |
+| 21 | Checkout với JWT Token đã hết hạn (Expired Token) | POST | `/api/checkout` | Header: `Bearer <expiredToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 401 Unauthorized | Thông báo phiên đăng nhập đã hết hạn |
+| 22 | Checkout với Authorization Header có Bearer rỗng | POST | `/api/checkout` | Header: `Bearer `<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 401 Unauthorized | Từ chối truy cập do thiếu Bearer token |
+| 23 | Kiểm tra IDOR — Thanh toán không thể can thiệp vào giỏ hàng của User khác | POST | `/api/checkout` | Header: `Bearer <userA_Token>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 200 OK / 400 | Backend chỉ checkout sản phẩm trong giỏ của User A; KHÔNG tạo đơn từ giỏ của User B |
+| 24 | Bảo mật SQL Injection trong trường `shipping_address` | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi' OR '1'='1"}` | 200 OK / 400 | Xử lý an toàn Parameterized Query; lưu chuỗi literal, KHÔNG bị lỗi SQL Syntax |
+| 25 | Bảo mật Reflected XSS trong trường `shipping_address` | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "<script>alert('xss')</script>"}` | 200 OK | Địa chỉ được sanitize/escape an toàn, KHÔNG thi hành script khi render UI (SEC-04) |
+| 26 | Gửi request Checkout với phương thức HTTP không hợp lệ (GET /api/checkout) | GET | `/api/checkout` | Header: `Bearer <userToken>` | 405 Method Not Allowed | Server từ chối phương thức GET cho endpoint checkout |
+| 27 | JSON Payload bị lỗi cú pháp (Syntax Error / Invalid JSON) | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"` *(thiếu dấu đóng `}`)* | 400 Bad Request | Thông báo lỗi cú pháp JSON payload |
+| 28 | Payload chứa trường dư thừa cố ý leo thang quyền hạn (`"role": "admin"`) | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi", "role": "admin"}` | 200 OK / 400 | Server bỏ qua trường `role` dư thừa; tài khoản người dùng KHÔNG bị đổi thành admin |
+| 29 | Payload có `total_amount` là số âm (`-200000`) | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": -200000, "shipping_address": "123 Le Loi"}` | 400 Bad Request / 200 OK | Backend từ chối giá trị âm hoặc tự động tính lại tổng tiền chính xác từ giỏ hàng |
+| 30 | Payload có `total_amount` là dạng chuỗi ký tự (Non-numeric `"abc"`) | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": "abc", "shipping_address": "123 Le Loi"}` | 400 Bad Request / 200 OK | Thông báo lỗi kiểu dữ liệu hoặc tự tính lại tiền từ DB |
+| 31 | Schema Validation — Kiểm tra sự tồn tại của thuộc tính `id` / `order_id` | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 200 OK | Response JSON chứa thuộc tính `id` (hoặc `order_id`) kiểu `Integer` dương |
+| 32 | Schema Validation — Kiểm tra giá trị thuộc tính `status` | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 200 OK | Response JSON chứa `status === "pending"` (tuân thủ State Machine FR-10) |
+| 33 | Schema Validation — Kiểm tra kiểu dữ liệu & giá trị `total_amount` trả về | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 200 OK | Response JSON chứa `typeof total_amount === 'number'` và `total_amount > 0` |
+| 34 | Response Header Validation — Content-Type | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 200000, "shipping_address": "123 Le Loi"}` | 200 OK | Response Header chứa `Content-Type: application/json` |
+| 35 | Boundary — `total_amount` = 0 khi giỏ hàng có sản phẩm | POST | `/api/checkout` | Header: `Bearer <userToken>`<br>Body: `{"total_amount": 0, "shipping_address": "123 Le Loi"}` *(Giỏ có hàng 200k)* | 200 OK | Backend bỏ qua `total_amount = 0` do Client truyền và tự tính lại đúng 200,000đ |
+
+---
+
+### Bảng Kiểm Toán Audit (35 Test Cases AI Sinh - FR-08)
 
 | STT | Test Case ID | Trạng thái Audit | Lý do Audit & Hướng sửa đổi |
 | --- | --- | --- | --- |
@@ -61,10 +84,23 @@
 | 16 | TC-FR08-AI-016 | [Manual by user] | [Manual by user] |
 | 17 | TC-FR08-AI-017 | [Manual by user] | [Manual by user] |
 | 18 | TC-FR08-AI-018 | [Manual by user] | [Manual by user] |
-
----
-
-*(Batch 2: Bảo mật Authentication/IDOR & Response Schema — 17 test cases sẽ được bổ sung ở prompt tiếp theo)*
+| 19 | TC-FR08-AI-019 | [Manual by user] | [Manual by user] |
+| 20 | TC-FR08-AI-020 | [Manual by user] | [Manual by user] |
+| 21 | TC-FR08-AI-021 | [Manual by user] | [Manual by user] |
+| 22 | TC-FR08-AI-022 | [Manual by user] | [Manual by user] |
+| 23 | TC-FR08-AI-023 | [Manual by user] | [Manual by user] |
+| 24 | TC-FR08-AI-024 | [Manual by user] | [Manual by user] |
+| 25 | TC-FR08-AI-025 | [Manual by user] | [Manual by user] |
+| 26 | TC-FR08-AI-026 | [Manual by user] | [Manual by user] |
+| 27 | TC-FR08-AI-027 | [Manual by user] | [Manual by user] |
+| 28 | TC-FR08-AI-028 | [Manual by user] | [Manual by user] |
+| 29 | TC-FR08-AI-029 | [Manual by user] | [Manual by user] |
+| 30 | TC-FR08-AI-030 | [Manual by user] | [Manual by user] |
+| 31 | TC-FR08-AI-031 | [Manual by user] | [Manual by user] |
+| 32 | TC-FR08-AI-032 | [Manual by user] | [Manual by user] |
+| 33 | TC-FR08-AI-033 | [Manual by user] | [Manual by user] |
+| 34 | TC-FR08-AI-034 | [Manual by user] | [Manual by user] |
+| 35 | TC-FR08-AI-035 | [Manual by user] | [Manual by user] |
 
 ---
 
@@ -72,4 +108,8 @@
 
 | Test Case ID | Tên kịch bản | Loại (Bảo mật / Chuyển trạng thái / Biên) | Input Parameters & Steps | Expected Result | Lý do AI bỏ sót |
 | --- | --- | --- | --- | --- | --- |
-| *(Sẽ được bổ sung sau khi hoàn thành kiểm toán audit batch 1 + batch 2)* | | | | | |
+| TC-FR08-HUMAN-001 | Race condition — Checkout khi giỏ hàng vừa bị xóa/thay đổi ở tab khác | Concurrent State | 1. Mở 2 tab trình duyệt cùng giỏ hàng<br>2. Tab 2 xóa sạch giỏ hàng<br>3. Tab 1 bấm Checkout | Trả về 400 Bad Request ("Giỏ hàng rỗng"), không tạo đơn hàng rỗng | AI thiếu khả năng mô phỏng hành vi đa tab/đa phiên của người dùng thực tế |
+| TC-FR08-HUMAN-002 | Race condition — Tồn kho bị giảm về 0 ngay trước thời điểm nhấn checkout | Concurrent Inventory | 1. User A chuẩn bị checkout sản phẩm X (còn 1 item trong kho)<br>2. User B checkout sản phẩm X thành công trước 1 giây<br>3. User A gửi request checkout | User A nhận lỗi 400/409 Conflict ("Sản phẩm hết hàng"), transaction rollback an toàn | AI không tự tạo được ngữ cảnh tranh chấp tài nguyên (Concurrency Race Condition) giữa 2 user |
+| TC-FR08-HUMAN-003 | Double-click / Concurrent submission (Idempotency) | Idempotency | Gửi 2 request `POST /api/checkout` đồng thời trong khoảng thời gian < 50ms với cùng token | Chỉ có đúng 1 đơn hàng được tạo (200 OK), request thứ 2 bị chặn hoặc báo 400 (do giỏ đã bị xóa sau request 1) | AI chỉ sinh các request độc lập đơn lẻ, không kiểm thử tần suất gửi trùng lặp tức thời |
+| TC-FR08-HUMAN-004 | Coupon stack attack — Cố gắng truyền mảng mã coupon | Security / Validation | Body: `{"shipping_address": "123 Le Loi", "coupon_code": ["SAVE10", "BIGBUY"]}` | Backend chỉ nhận 1 string coupon duy nhất hoặc từ chối 400 Bad Request, không cộng dồn mã | AI bỏ sót kiểm thử kiểu dữ liệu mảng (Array injection) trên trường coupon |
+| TC-FR08-HUMAN-005 | Sửa đổi giá sản phẩm giữa lúc thêm vào giỏ và lúc checkout | Stale Price / Integrity | 1. User thêm SP A (giá 100k) vào giỏ<br>2. Admin sửa giá SP A lên 200k trong CSDL<br>3. User thực hiện Checkout | Total amount đơn hàng được tính theo giá hiện tại trong DB (200k), không bị dùng giá cũ stale price | AI không tự xây dựng kịch bản kiểm thử tích hợp (Integration) liên vết giữa Admin CRUD và User Checkout |
