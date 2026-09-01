@@ -8,7 +8,7 @@ Quy ước status: 2xx cho thao tác hợp lệ; 400 cho input/business transiti
 
 ## 2. Sinh test bằng AI, kiểm toán và mở rộng
 
-AI được điều khiển theo năm prompt tách biệt: trích contract; FR-04 domain/security/schema; FR-10 state graph; FR-19 authorization/delete; audit/deduplicate/extension. AI tạo 125 case (40/45/40). Sinh viên audit từng dòng, sửa oracle/fixture/mapping và bổ sung 15 case HUMAN (5 mỗi feature). Catalogue cuối cùng có 140/140 nhãn `VALID`; các cột `Audit reason`, `Corrected version`, `Why AI missed` giữ vết quyết định.
+AI được điều khiển theo bốn interaction tạo ứng viên, tập trung lần lượt vào contract, FR-04, FR-10 và FR-19. AI tạo 125 case (40/45/40). Sinh viên tự audit từng dòng, sửa oracle/fixture/mapping và tự bổ sung 15 case HUMAN (5 mỗi feature). Catalogue cuối cùng có 140/140 nhãn `VALID`; các cột `Audit reason`, `Corrected version`, `Why AI missed` giữ vết quyết định.
 
 Chi tiết audit và mapping Postman nằm trong `test-cases/23127326.csv` và JSON tương đương.
 
@@ -30,7 +30,7 @@ Suite bao phủ ma trận 5×5 giữa `pending`, `confirmed`, `shipping`, `deliv
 
 SEC-01 được quan sát qua việc API làm lộ plaintext password; SEC-02 qua token missing/invalid/stale; SEC-03 qua admin role; SEC-04 qua XSS payload được lưu/round-trip dưới dạng data (UI escaping nằm ngoài phạm vi API); SEC-05 qua injection payload và state invariants; SEC-06 qua protected `role`. SEC-07 chỉ áp dụng OTP reset-password FR-03 nên được ghi `N/A` cho ba API đã chọn, không bịa test OTP ngoài phạm vi.
 
-## 4. Hiện thực trên Postman
+## 4. Triển khai bộ kiểm thử trên Postman - MSSV 23127326
 
 Full collection gồm hai setup login và 140 catalogue item. Collection-level pre-request script bắt buộc `studentId`, upsert header `X-Student-Id` và log request. Fixture cô lập, cleanup và postcondition được thực hiện bằng `pm.sendRequest`. Assertions kiểm tra exact status, JSON content type, body shape, identity/state và không có 5xx không xử lý.
 
@@ -62,12 +62,54 @@ Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động dat
 
 ## 8. Thiết kế Agent Skill
 
-Thiết kế reusable generator có contract normalizer, bốn planner domain/state/security/schema, candidate critic/deduplicator, human approval gate, exporter và execution feedback loop. Pseudocode trong `agent-skill/pseudocode.md`. Theo ràng buộc chống gian lận, sơ đồ nộp cuối phải do sinh viên tự vẽ; AI chỉ cung cấp checklist nút/cạnh trong `agent-skill/skill-design.md`.
+Thiết kế reusable generator có contract normalizer, bốn planner domain/state/security/schema, candidate critic/deduplicator, human approval gate, exporter và execution feedback loop. Skill thực thi được mô tả tại `agent-skill/api-test-generator/SKILL.md`, schema catalogue tại `agent-skill/api-test-generator/references/test-case-schema.md`, pseudocode tại `agent-skill/pseudocode.md`. Theo ràng buộc chống gian lận, sơ đồ nộp cuối phải do sinh viên tự vẽ; AI chỉ cung cấp checklist nút/cạnh trong `agent-skill/skill-design.md`.
 
-## 9. Phụ lục kiểm toán AI
+## 9. Phụ lục A - Báo cáo kiểm toán AI
 
-Toàn bộ khai báo công cụ, thời gian, prompt, output và human decision được đính kèm trong `ai-audit-report.md`. Row-level AI output được giữ nguyên trong JSON test catalogue; 15 row HUMAN không bị trộn vào output AI.
+### A.1. Khai báo sử dụng AI
+
+Tôi sử dụng Codex cho các công việc: trích xuất yêu cầu, phân tích contract và rủi ro, soạn test case, hỗ trợ audit từng dòng, triển khai fixture/Postman/CI, đối soát kết quả và cấu trúc tài liệu. Sinh viên chịu trách nhiệm về oracle cuối, bản sửa, thực thi và quyết định lỗi.
+
+### A.2. Nhật ký tương tác
+
+**AI-001 - 2026-08-31 23:31:15 +07:00**
+
+- Tên công cụ AI: Codex.
+- Prompt: Trích xuất contract endpoint FR-04, FR-10 và FR-19 từ `api_specification.md` và SRS chuẩn tắc. Liệt kê actor, input, output, role, đồ thị trạng thái và quy tắc SEC liên quan. Đánh dấu giả định schema/status chưa được quy định.
+- Output: Danh mục chuẩn hóa cho các endpoint đã chọn, actor, giả định status và ánh xạ SEC-01-SEC-07; xác định SEC-07 thuộc FR-03 và FR-19 không có endpoint cập nhật role.
+- Quyết định sinh viên: Chấp nhận danh mục endpoint, ghi SEC-07 là N/A và không bịa endpoint.
+
+**AI-002 - 2026-08-31 23:31:15 +07:00**
+
+- Tên công cụ AI: Codex.
+- Prompt: Với FR-04, tạo ít nhất 40 API test case khác nhau; phân hoạch phone/name/address; bao phủ xác thực, identity binding, mass assignment, trường nhạy cảm, XSS và schema; gồm precondition, data, expected result, cleanup và traceability.
+- Output: 40 ứng viên FR-04, được lưu và truy vết bằng `AI-001`-`AI-002` trong catalogue JSON.
+- Quyết định sinh viên: Viết lại fixture cô lập, status chính xác và postcondition; giữ 40 case sau audit.
+
+**AI-003 - 2026-08-31 23:31:15 +07:00**
+
+- Tên công cụ AI: Codex.
+- Prompt: Với FR-10, tạo ma trận chuyển trạng thái 5x5, cùng case hủy, ownership, role, replay, status sai, terminal state và schema; không bịa endpoint.
+- Output: 45 ứng viên FR-10 bao phủ transition và biến thể bảo mật/schema.
+- Quyết định sinh viên: Gắn từng transition với fixture order riêng, xác minh state graph và thêm GET postcondition.
+
+**AI-004 - 2026-08-31 23:31:15 +07:00**
+
+- Tên công cụ AI: Codex.
+- Prompt: Với FR-19, tạo ít nhất 40 case chỉ cho list/delete; bao phủ phân quyền Admin, IDOR, self-delete, ID sai, SQL injection, privacy và schema; loại ý tưởng cập nhật role ngoài contract.
+- Output: 40 ứng viên FR-19 cho list/delete.
+- Quyết định sinh viên: Dùng user một lần cho ca phá hủy, đặt self-delete cuối và loại endpoint không tồn tại.
+
+Phần audit từng dòng, sửa test case và bổ sung 15 case HUMAN được sinh viên thực hiện thủ công sau các interaction trên. Kết quả execution, bug classification, CI evidence và việc hoàn thiện package cũng được sinh viên tự kiểm tra và ghi nhận.
+
+### A.3. Kết quả audit và trách nhiệm con người
+
+125 case AI tạo được audit theo từng dòng; 15 case HUMAN được bổ sung riêng. Catalogue cuối có 140/140 case mang nhãn `VALID`, với các trường `Audit reason`, `Corrected version`, `Why AI missed`, `Execution status` và `Evidence`. Output có cấu trúc đầy đủ được lưu tại `test-cases/23127326.json`; báo cáo riêng `ai-audit-report.md` là bản sao thuận tiện để kiểm tra.
+
+### A.4. Hạn chế AI và nguyên tắc rút ra
+
+AI thường nhầm một ý tưởng kiểm thử hợp lý với một test case có thể thực thi, dùng fixture seed không cô lập, đưa ra status thay thế mơ hồ và đôi khi nhầm token User với token Admin. Ma trận state cũng có thể trông đầy đủ nhưng thiếu cách tạo trạng thái ban đầu đáng tin cậy. Vì vậy mọi case phải được người học xác minh bằng contract, fixture, oracle exact, postcondition và kết quả Newman trước khi chấp nhận.
 
 ## 10. Tính xác thực của minh chứng và phần bàn giao thủ công
 
-Không dùng console/Issue card dựng. Ảnh GitHub Issues và Actions phải chụp trực tiếp trang thật; Postman Console và Newman hostname phải chụp từ run thật. Danh sách tên file/URL cần chụp nằm trong `evidence/README.md`. Sinh viên export PDF/XLSX, tự vẽ diagram, quay video tùy chọn và đóng ZIP sau cùng.
+Không dùng console/Issue card dựng. Ảnh GitHub Issues và Actions phải chụp trực tiếp trang thật; Postman Console và Newman hostname phải chụp từ run thật. Danh sách tên file/URL cần chụp nằm trong `evidence/README.md`. Video demo Agent Skill là tùy chọn theo đề; hiện package không khai báo video. Sinh viên export PDF/XLSX và đóng ZIP sau cùng.

@@ -2,6 +2,8 @@
 
 Sinh viên phải tự vẽ sơ đồ gốc bằng tay. `diagram.png` nộp vào cần thể hiện: đầu vào (API spec, SRS, feature đã chọn), bộ phân tích/chuẩn hóa, bốn planner coverage song song (domain/state/security/schema), bộ sinh candidate, bộ loại trùng/critic, cổng duyệt của người, các exporter (Excel/Markdown/Postman), engine thực thi, minh chứng lỗi và vòng phản hồi từ audit/execution về prompt/rule.
 
+![Sơ đồ thiết kế Agent Skill](diagram.png)
+
 Tiêu chí đạt: mũi tên phải thể hiện luồng dữ liệu; duyệt của người là cổng bắt buộc; execution và bug evidence nằm sau bước duyệt; không dùng AI để tạo ảnh/sơ đồ.
 
 ## Các cạnh bắt buộc trong bản sinh viên tự vẽ

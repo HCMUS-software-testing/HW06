@@ -25,10 +25,10 @@ Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 a
 
 - Test catalogue: `test-cases/23127326.csv`, `test-cases/23127326.json`; file XLSX cần export lại từ CSV sau thay đổi cuối.
 - Postman: full collection, environment, data-driven collection + CSV và deterministic CI-demo collection trong `postman/`.
-- Newman: `newman-full-report.html`, `newman-report.html` và `newman-report-readme.md`.
+- Newman: `newman-full-report.html` và `newman-report.html`.
 - Bug register: `bug-reports-23127326.md`; 10 GitHub Issues công khai.
 - Main report, AI Audit, AI Critique, CI/CD report và failure classification nằm trực tiếp trong `submit/`.
-- Agent Skill: pseudocode và design notes trong `agent-skill/`.
+- Agent Skill: `agent-skill/api-test-generator/SKILL.md`, schema, pseudocode và design notes trong `agent-skill/`.
 
 ## Tính năng Postman đã dùng
 
@@ -46,9 +46,28 @@ Collection/folder, environment variables, collection variables, collection-level
 
 Hai điểm Agent Skill chưa tự chấm vì sơ đồ bắt buộc phải do sinh viên tự vẽ và video là tùy chọn.
 
+## Checklist bàn giao
+
+| Hạng mục bắt buộc | Trạng thái / vị trí |
+|---|---|
+| Báo cáo chính gồm kiểm thử API + phụ lục AI Audit | `main-report.md`, `main-report.pdf` |
+| Public GitHub repository | Link ở đầu file này |
+| Postman collections, environment và Newman HTML/JSON | `postman/`, `newman-full-report.html`, `newman-report.html` |
+| Danh sách tính năng Postman | Mục “Tính năng Postman đã dùng” bên dưới |
+| CI/CD report, run pass, run đúng một failure, ảnh và link | `cicd-report.md`, `evidence/` |
+| Excel test cases + test summary | `23127326_test-cases.xlsx` gồm 2 sheet |
+| Agent Skill, sơ đồ và pseudocode | `agent-skill/` |
+| Bug report + GitHub Issue screenshots | `bug-reports-23127326.md`, `evidence/` |
+| AI Audit và AI Critique Markdown + PDF | `ai-audit-report.*`, `ai-critique.*` |
+| Git commit log | `git-commit-log.txt` |
+
+Video demo Agent Skill là tùy chọn theo đề; package này hiện chưa có video URL.
+
 ## Việc sinh viên hoàn tất thủ công trước khi ZIP
 
 1. Tự vẽ sơ đồ Agent Skill theo `agent-skill/skill-design.md` và lưu thành `agent-skill/diagram.png`; không nộp diagram do AI tạo.
-2. Export XLSX từ `test-cases/23127326.csv` và PDF từ các Markdown report cuối cùng.
-3. Thêm video URL nếu muốn minh họa (video là tùy chọn theo đề).
+
+![Sơ đồ thiết kế Agent Skill](agent-skill/diagram.png)
+2. Export XLSX từ `test-cases/23127326.csv` sau mọi thay đổi cuối.
+3. Xuất `main-report.pdf`, `ai-audit-report.pdf` và `ai-critique.pdf` từ các Markdown cuối cùng.
 4. Đóng gói toàn bộ thư mục theo tên `23127326_HW06_AI_API_095.zip`.

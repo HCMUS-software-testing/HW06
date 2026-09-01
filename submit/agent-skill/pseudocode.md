@@ -2,7 +2,7 @@
 
 ```text
 function generate_tests(api_spec, requirements, feature):
-    contract = parse_endpoints(api_spec, feature)
+    contract = normalize_contract(api_spec, feature)
     rules = select_requirements(requirements, feature)
     assert contract is not empty
 
@@ -23,8 +23,18 @@ function generate_tests(api_spec, requirements, feature):
     candidates = attach_setup_data_cleanup(candidates)
     candidates = critic_review(candidates)
 
-    return export(candidates, formats=["csv", "xlsx", "postman-ready"]),
-           human_review_queue(candidates)
+    reviewed = human_review_gate(candidates,
+        labels=["VALID", "INVALID", "INCOMPLETE"],
+        required=["audit_reason", "corrected_version", "oracle"])
+    approved = reviewed.filter(label="VALID")
+    human_added = add_student_cases(feature, rules,
+        focus=["security", "state", "schema", "boundary"])
+    approved = critic_review(deduplicate(approved + human_added))
+
+    exports = export(approved, formats=["csv", "xlsx", "postman-ready"])
+    results = run_newman_with_fixtures(exports.postman, required_student_header=True)
+    defects = classify_root_failures(results)
+    return exports, reviewed.audit_log, results, defects
 ```
 
 Cổng duyệt của người là bắt buộc trước execution: gắn nhãn VALID/INVALID/INCOMPLETE, nêu chỉnh sửa, oracle đã duyệt và ánh xạ minh chứng.
