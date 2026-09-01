@@ -79,7 +79,8 @@ Bài làm đã khai thác tối đa và hiệu quả các tính năng nâng cao 
 
 1. **Workspaces & Collections:** Tổ chức collection chuẩn mực `HW06_Member3.postman_collection.json` chia folder theo từng Feature API và chia Suite (Sanity vs Bug Discovery).
 2. **Environments & Variables:** Sử dụng `HW06_Local.postman_environment.json` và `HW06_Mock.postman_environment.json` chứa các biến `base_url`, `student_id`, `admin_token`, `user_token`, `expired_coupon_code`,...
-3. **Collection-Level Pre-request Scripts:** Tự động bắt mọi request truyền header `X-Student-Id: 23127185` và ghi log `console.log("Sending X-Student-Id:", studentId)`.
+3. **Collection-Level Pre-request Scripts:** Tự động bắt mọi request truyền header `X-Student-Id: 23127185` và ghi log `console.log("Request Sent with X-Student-Id:", studentId)`.
+   ![Postman Console Log X-Student-Id](screenshots/postman-console-student-id.png)
 4. **Data-driven Testing (DDT CSV):** Sử dụng các file dữ liệu `postman/data/fr01-register-data.csv` và `postman/data/fr09-coupon-data.csv` để chạy lặp Collection Runner với hàng loạt biên dữ liệu (EP/BVA).
 5. **Postman Mock Server:** Xây dựng mock environment để kiểm thử offline các schema response chuẩn.
 6. **Console Logging & Assertion Scripts:** Viết test scripts kiểm tra cả HTTP Status Code, Response Time (< 2000ms), JSON Schema, và exact business values (`discount_amount`, `final_amount`).
