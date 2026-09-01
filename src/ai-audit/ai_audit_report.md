@@ -19,6 +19,7 @@
 | 5 | Time: `2026-09-01 23:08 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-05 (GET /api/products?search=keyword), hãy sinh 20 test cases tập trung vào 2 khía cạnh: 1. Bảo mật (SEC-01 đến SEC-07): SQL Injection trong tham số tìm kiếm 'search' (ví dụ: ' OR '1'='1, UNION SELECT), XSS payload (<script>alert(1)</script>), tham số quá dài (>255 chars), ký tự đặc biệt UTF-8/Unicode. 2. Response Schema Validation: Kiểm tra cấu trúc JSON trả về khớp với eshop-sut (danh sách sản phẩm chứa id, name, price, description, imageUrl, category_id), kiểm tra type của từng thuộc tính (id: integer, price: number > 0). Định dạng dạng bảng chi tiết. | [Manual by user] |
 | 6 | Time: `2026-09-01 23:11 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Dựa vào đặc tả API FR-08 POST /api/checkout trong eshop-sut/api_specification.md, hãy sinh 18 test cases kiểm thử các luồng nghiệp vụ tạo đơn hàng: checkout hợp lệ với JSON body {"total_amount": 200000, "shipping_address": "123 Le Loi, TP.HCM"}, checkout khi giỏ hàng rỗng, checkout với số lượng sản phẩm vượt quá tồn kho (out of stock), checkout với thông tin địa chỉ giao hàng không hợp lệ (thiếu street, phone sai định dạng, name rỗng), và checkout khi áp dụng mã giảm giá coupon. Output dạng bảng với thông tin chi tiết request body và expected result. | [Manual by user] |
 | 7 | Time: `2026-09-01 23:15 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-08 POST /api/checkout, hãy sinh 17 test cases kiểm thử: 1. Bảo mật & Xác thực: Checkout khi chưa đăng nhập (không gửi Authorization: Bearer <token> header), checkout với Token hết hạn / không hợp lệ, checkout sử dụng Token của user khác (IDOR trên giỏ hàng). 2. Response Schema & Boundary: Payload JSON bị lỗi cú pháp, dư thừa trường không xác định, kiểm tra response JSON trả về chứa order_id, order_status='pending', total_amount khớp tính toán. Format kết quả dạng bảng. | [Manual by user] |
+| 8 | Time: `2026-09-01 23:17 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Dựa vào đặc tả API FR-18 trong eshop-sut cho Admin (GET /api/admin/orders và PUT /api/admin/orders/:id/status), hãy sinh 18 test cases kiểm thử: 1. Quyền truy cập Admin: Truy cập GET /api/admin/orders với Admin Token hợp lệ (role='admin'), kiểm tra danh sách tất cả đơn hàng hệ thống. 2. Kiểm soát truy cập RBAC (SEC-04): Cố gắng truy cập endpoint Admin bằng User Token (role user thường) -> Kỳ vọng 403 Forbidden; truy cập không có token -> 401 Unauthorized. Format bảng chi tiết. | [Manual by user] |
 
 ### 2.2. Chi tiết audit
 
@@ -135,6 +136,25 @@ Prompt:
 Format kết quả dạng bảng.
 
 **AI Output:** Đã bổ sung 17 test cases Batch 2 (Bảo mật/Xác thực/Response Schema Validation, hoàn thành 35 AI cases cho FR-08) và 5 test cases do con người thiết kế (Human-designed) vào file src/test-cases/member-2-fr-08.md. Các case bảo mật gồm: Checkout chưa đăng nhập (401), Token sai/hết hạn/Bearer rỗng (401), IDOR checkout giỏ người dùng khác, SQLi/XSS trong shipping_address, HTTP Method sai (GET). Các case schema gồm: JSON syntax error (400), dư thừa trường (role="admin"), total_amount âm/chuỗi, schema validation (id, status='pending', total_amount > 0), Content-Type application/json, boundary total_amount=0. 5 Human cases gồm: Race condition giỏ bị xóa ở tab khác, Concurrency kho hàng 2 user, Double-click Idempotency, Coupon stack array attack, và Stale Price integrity.
+
+**Verdict:** [Manual by user]
+
+**Reasoning:** [Manual by user]
+
+**Student Fix:** [Manual by user]
+
+### 2.2.8 Entry 8
+
+**Prompt + Tool:**
+Time: `2026-09-01 23:17 +07`
+Tool: `Gemini 3.6 Flash / Antigravity`
+Prompt:
+/using-superpowers Dựa vào đặc tả API FR-18 trong eshop-sut cho Admin (GET /api/admin/orders và PUT /api/admin/orders/:id/status), hãy sinh 18 test cases kiểm thử:
+1. Quyền truy cập Admin: Truy cập GET /api/admin/orders với Admin Token hợp lệ (role='admin'), kiểm tra danh sách tất cả đơn hàng hệ thống.
+2. Kiểm soát truy cập RBAC (SEC-04): Cố gắng truy cập endpoint Admin bằng User Token (role user thường) -> Kỳ vọng 403 Forbidden; truy cập không có token -> 401 Unauthorized.
+Format bảng chi tiết.
+
+**AI Output:** Đã sinh 18 test cases Batch 1 kiểm thử Quyền truy cập Admin & Phân quyền RBAC cho FR-18 (GET /api/admin/orders & PUT /api/admin/orders/:id/status) vào file src/test-cases/member-2-fr-18.md. Các case gồm: Admin xem toàn bộ đơn hàng hệ thống (200 OK), Admin chuyển trạng thái đơn sang confirmed, shipping, delivered, canceled; User thường gọi API Admin -> 403 Forbidden (SEC-03); Truy cập thiếu Token / Token rỗng / Token sai chữ ký / Token hết hạn -> 401 Unauthorized; Giả mạo Header X-Role: admin -> 403 Forbidden; User tự nâng quyền role trong profile -> 200/400 (role không đổi); Tampered JWT payload -> 401; và an toàn hiển thị địa chỉ giao hàng chứa HTML/XSS (README FR-18).
 
 **Verdict:** [Manual by user]
 
