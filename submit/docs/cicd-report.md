@@ -12,10 +12,11 @@ Manual `workflow_dispatch` exposes `conformance`, which runs the full 140-case c
 
 ## Recorded runs
 
-The current pass/fail demonstration commit and Actions URLs will be filled after pushing the two controlled commits. Required screenshots must be captured from the actual GitHub Actions pages; generated status cards are not accepted.
+All links below are public GitHub Actions runs. Required screenshots must be captured from these actual pages; generated status cards are not accepted.
 
 | Evidence | Commit | Actions run | Expected result | Screenshot |
 |---|---|---|---|---|
-| CI demo pass | `PENDING_PUSH` | `PENDING_RUN_URL` | 22/22 assertions pass | `../evidence/github-actions-pass.png` |
-| CI demo exact-one-fail | `PENDING_PUSH` | `PENDING_RUN_URL` | 21 pass, exactly 1 controlled assertion fail | `../evidence/github-actions-one-fail.png` |
-| Restored green branch | `PENDING_PUSH` | `PENDING_RUN_URL` | 22/22 assertions pass | same live run page |
+| CI demo pass | [`90c2b7e`](https://github.com/HCMUS-software-testing/HW06/commit/90c2b7e6ff1cadd24f9d72300de34b646050cdba) | [33498533231](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498533231) | 22/22 assertions pass | `../evidence/github-actions-pass.png` |
+| CI demo exact-one-fail | [`10e32d8`](https://github.com/HCMUS-software-testing/HW06/commit/10e32d8) | [33498587297](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498587297) | 21 pass, exactly 1 controlled assertion fail | `../evidence/github-actions-one-fail.png` |
+| Restored green branch | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498661968](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498661968) | 22/22 assertions pass | same live run page |
+| Full conformance | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665) | 467 requests; 839 assertions; 63 product assertions fail | `../evidence/github-actions-full-conformance.png` |

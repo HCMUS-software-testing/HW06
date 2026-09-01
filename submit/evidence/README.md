@@ -23,5 +23,6 @@ Không dùng ảnh console/Issue/Actions do AI hoặc HTML card dựng. Chỉ ch
 - [ ] `newman-full-localhost.png`: Newman HTML thật hiển thị `localhost`, 467 requests, 839 assertions.
 - [ ] `github-actions-pass.png`: trang Actions run pass của commit demo xanh.
 - [ ] `github-actions-one-fail.png`: trang Actions run đỏ hiển thị đúng `CI-DEMO-001 controlled assertion`.
+- [ ] `github-actions-full-conformance.png`: run [33498724665](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498724665) hiển thị 467 requests / 839 assertions / 63 fail.
 
 Ảnh GitHub chưa thể chụp tự động trong phiên hiện tại vì chưa có Browser được kết nối. Kết nối trong **Settings → Computer use**, sau đó chụp trực tiếp các URL trên.
