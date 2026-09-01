@@ -54,7 +54,6 @@ jobs:
             --env-var "student_id=${STUDENT_ID}" \
             -r htmlextra,cli \
             --reporter-htmlextra-export newman/member-3/ci-report.html
-          echo "Intentional failure for CI validation" && exit 1
 
       - name: Dump SUT Logs on Failure
         if: failure()
