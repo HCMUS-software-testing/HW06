@@ -60,7 +60,7 @@ Data-driven FR-04 phone run: 6 iterations, 12 requests, 18 assertions, 4 fail. H
 
 ## 7. Tích hợp CI/CD
 
-Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report; workflow được đóng gói cả trong ZIP tại `.github/workflows/`. CI-demo có ba stable case đại diện FR-04/FR-10/FR-19 cùng một controlled assertion: `false` cho 22/22 pass; `true` tạo đúng 1 assertion fail. Chế độ `workflow_dispatch: conformance` chạy toàn bộ 140 case và giữ các product defect hiển thị màu đỏ. CI-demo failure được ghi rõ là pipeline-control evidence, không phải bug sản phẩm.
+Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report. Chế độ mặc định `full-pass` áp dụng `submit/ci/sut-conformance-fixes.patch` vào clone SUT tạm thời rồi chạy **chính full collection 140 case**; lần xác nhận cục bộ đạt 467 request, 839 assertion và 0 assertion fail. Chế độ `workflow_dispatch: conformance` chạy cùng full collection trên SUT upstream nguyên bản và giữ 42 catalogue case/63 assertion product defect hiển thị màu đỏ. `ci-demo` chỉ là pipeline-control evidence: 22/22 pass hoặc đúng 1 controlled failure, không dùng để đại diện cho full suite.
 
 ## 8. Thiết kế Agent Skill
 

@@ -6,9 +6,11 @@ Workflow: `.github/workflows/hw06-23127326.yml`.
 
 GitHub Actions kiểm tra secret `STUDENT_ID=23127326`, checkout bài nộp, clone SUT tại commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`, cài dependency backend, khởi động server SQLite sạch, chờ `GET /api/products`, chạy Newman và upload minh chứng JSON/HTML kể cả khi bước test fail.
 
-Các lần chạy khi push dùng `HW06_23127326_ci_demo_collection.json`. Bộ này gồm các case đại diện đã duyệt cho FR-04, FR-10, FR-19 và một assertion điều khiển pipeline có tên rõ ràng. Khi `ci-force-failure.txt=false`, cả 22 assertion đều pass. Khi đặt `true`, chỉ `CI-DEMO-001 controlled assertion` fail; điều đó chứng minh pipeline phát hiện test đỏ và không quy nhầm thành lỗi SUT.
+Chế độ mặc định khi push là `full-pass`. Workflow áp dụng artifact `ci/sut-conformance-fixes.patch` vào clone SUT tạm thời, sau đó chạy **chính full collection 140 catalogue case**, không chạy collection demo. Lần xác nhận cục bộ: 467 HTTP request, 839 assertion, 0 assertion fail; report được xuất thành `ci-full-pass-report.json` và `ci-full-pass-report.html`.
 
-`workflow_dispatch` thủ công có lựa chọn `conformance`, chạy toàn bộ catalogue 140 case. Run này cố ý đỏ trên SUT lỗi đã pin (42 catalogue case fail); che các failure để CI xanh sẽ làm sai kết quả conformance.
+`workflow_dispatch` có ba lựa chọn: `full-pass`, `ci-demo` và `conformance`. `ci-demo` vẫn giữ collection nhỏ để chứng minh một run pass và một run đúng một controlled failure (22 assertion), nhưng không còn được dùng làm minh chứng “toàn bộ API test cases pass”. `conformance` chạy full collection 140 case trên SUT upstream nguyên bản đã pin; run này vẫn đỏ với 42 catalogue case/63 assertion fail do 10 product defect đã ghi nhận. Tách hai baseline này giúp CI full-pass là regression gate có thể tái lập, còn conformance vẫn trung thực với SUT được giao.
+
+Artifact dùng cho full-pass nằm tại `submit/ci/sut-conformance-fixes.patch`; patch chỉ được áp dụng trong clone `/tmp/eshop-sut` của job và không thay đổi source SUT upstream trong repository bài nộp.
 
 ## Các lần chạy đã ghi nhận
 
@@ -18,6 +20,7 @@ Lưu ý về tên lịch sử: các run và ảnh minh chứng được ghi nh�
 
 | Minh chứng | Commit | Lần chạy Actions | Kết quả mong đợi | Ảnh chụp |
 |---|---|---|---|---|
+| Full 140-case pass gate | commit chứa workflow hiện tại | chạy `workflow_dispatch → full-pass` sau khi push thay đổi này | 467 request; 839 assertion; **0 assertion fail** | `ci-full-pass-report.html` + Actions artifact |
 | CI demo pass | [`90c2b7e`](https://github.com/HCMUS-software-testing/HW06/commit/90c2b7e6ff1cadd24f9d72300de34b646050cdba) | [33498533231](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498533231) | 22/22 assertion pass | ![CI demo pass](evidence/github-actions-pass.png) |
 | CI demo đúng một failure | [`10e32d8`](https://github.com/HCMUS-software-testing/HW06/commit/10e32d8) | [33498587297](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498587297) | 21 pass, đúng 1 controlled assertion fail | ![CI demo failure](evidence/github-actions-one-fail.png) |
 | Nhánh xanh khôi phục | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498661968](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498661968) | 22/22 assertion pass | cùng trang run trực tiếp |

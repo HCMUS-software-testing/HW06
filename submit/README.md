@@ -23,12 +23,14 @@ Phạm vi đếm: mỗi feature được xem là một API nghiệp vụ gồm c
 
 Full Newman run tạo **467 HTTP requests** (gồm setup/postcondition), **839 assertions**, 63 assertion fail và **0 fixture/request error**. 42 catalogue case fail được quy về **10 root defects**. Data-driven phone run có 6 partition, 12 requests, 18 assertions; bốn invalid partition làm lộ `BUG-FR04-03`.
 
+CI full-pass gate chạy lại chính collection 140 case trên corrected SUT baseline: 467 requests, 839 assertions, 0 assertion fail. `ci-demo` chỉ là minh chứng điều khiển pipeline 22 assertions; `conformance` trên SUT upstream nguyên bản vẫn ghi nhận 42 case fail.
+
 ## Tài liệu chính
 
 - Test catalogue: `test-cases/23127326.csv`, `test-cases/23127326.json`; file XLSX đã được đồng bộ với catalogue cuối và có summary tính bằng công thức.
 - AI traceability: `AI-001` chuẩn hóa contract; `AI-002` sinh FR-04 (40 case), `AI-003` sinh FR-10 (45 case), `AI-004` sinh FR-19 (40 case); 15 case mở rộng có nguồn `HUMAN-001`.
 - Postman: full collection, environment, data-driven collection + CSV và deterministic CI-demo collection trong `postman/`.
-- Newman: `newman-full-report.html` và `newman-report.html`.
+- Newman: `newman-full-report.html`, `newman-report.html` và full-pass CI evidence `ci-full-pass-report.html`/`.json`.
 - Bug register: `bug-reports.md`; 10 GitHub Issues công khai.
 - Main report, AI Audit, AI Critique, CI/CD report và failure classification nằm trực tiếp trong `submit/`.
 - Agent Skill: `agent-skill/api-test-generator/SKILL.md`, schema, pseudocode và design notes trong `agent-skill/`.
@@ -60,7 +62,7 @@ Ghi chú minh chứng lịch sử: `newman-full-localhost.png` và các ảnh Gi
 | Public GitHub repository                                  | Link ở đầu file này                                         |
 | Postman collections, environment và Newman HTML/JSON      | `postman/`, `newman-full-report.html`, `newman-report.html` |
 | Danh sách tính năng Postman                               | Mục “Tính năng Postman đã dùng” bên dưới                    |
-| CI/CD report, run pass, run đúng một failure, ảnh và link | `cicd-report.md`, `evidence/`                               |
+| CI/CD report, full-suite pass, run đúng một failure, ảnh và link | `cicd-report.md`, `evidence/`, `ci/`                 |
 | Workflow CI/CD                                             | `.github/workflows/hw06-23127326.yml`                       |
 | Excel test cases + test summary                           | `23127326_test-cases.xlsx` gồm 2 sheet                      |
 | Agent Skill, sơ đồ và pseudocode                          | `agent-skill/`                                              |

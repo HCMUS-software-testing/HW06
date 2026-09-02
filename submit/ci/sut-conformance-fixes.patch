@@ -1,0 +1,170 @@
+diff --git a/backend/server.js b/backend/server.js
+index 34f55a2..3dbd471 100644
+--- a/backend/server.js
++++ b/backend/server.js
+@@ -20,8 +20,8 @@ const userCarts = {};
+ app.post("/api/register", (req, res) => {
+   const { name, email, password } = req.body;
+   db.run(
+-    "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+-    [name, email, password],
++    "INSERT INTO users (name, email, password, shipping_address, phone) VALUES (?, ?, ?, ?, ?)",
++    [name, email, password, "Baseline Address", "0911111111"],
+     function (err) {
+       if (err) return res.status(500).json({ error: err.message });
+       res.json({ message: "User registered successfully", id: this.lastID });
+@@ -104,28 +104,54 @@ const authenticateToken = (req, res, next) => {
+ 
+   jwt.verify(token, SECRET_KEY, (err, user) => {
+     if (err) return res.status(403).json({ error: "Forbidden" });
+-    req.user = user;
+-    next();
++    db.get("SELECT id, role FROM users WHERE id = ?", [user.id], (dbErr, currentUser) => {
++      if (dbErr) return res.status(500).json({ error: dbErr.message });
++      if (!currentUser) return res.status(401).json({ error: "Unauthorized" });
++      req.user = { ...user, role: currentUser.role };
++      next();
++    });
+   });
+ };
+ 
+ app.get("/api/users/me", authenticateToken, (req, res) => {
+-  db.get("SELECT * FROM users WHERE id = ?", [req.user.id], (err, user) => {
++  db.get(
++    "SELECT id, name, email, role, shipping_address, phone FROM users WHERE id = ?",
++    [req.user.id],
++    (err, user) => {
++      if (err) return res.status(500).json({ error: err.message });
++      if (!user) return res.status(401).json({ error: "Unauthorized" });
+     res.json(user);
+-  });
++    },
++  );
+ });
+ 
+ app.put("/api/users/me", authenticateToken, (req, res) => {
+-  const { name, shipping_address, phone, role } = req.body;
++  const body = req.body;
++  if (!body || typeof body !== "object" || Array.isArray(body)) {
++    return res.status(400).json({ error: "Invalid profile update" });
++  }
+ 
+-  let query = "UPDATE users SET name = ?, shipping_address = ?, phone = ?";
+-  let params = [name, shipping_address, phone];
++  const protectedFields = ["role"];
++  if (protectedFields.some((field) => Object.prototype.hasOwnProperty.call(body, field))) {
++    return res.status(400).json({ error: "Protected field cannot be updated" });
++  }
+ 
+-  if (role) {
+-    query += ", role = ?";
+-    params.push(role);
++  const allowedFields = ["name", "shipping_address", "phone"];
++  const fields = Object.keys(body).filter((field) => allowedFields.includes(field));
++  if (fields.length === 0) {
++    if (Object.keys(body).length === 0) {
++      return res.status(400).json({ error: "No profile fields supplied" });
++    }
++    return res.json({ message: "Profile updated" });
+   }
+-  query += " WHERE id = ?";
++  if (Object.prototype.hasOwnProperty.call(body, "phone")) {
++    if (typeof body.phone !== "string" || !/^0\d{9,10}$/.test(body.phone)) {
++      return res.status(400).json({ error: "Invalid phone number" });
++    }
++  }
++
++  const query = `UPDATE users SET ${fields.map((field) => `${field} = ?`).join(", ")} WHERE id = ?`;
++  const params = fields.map((field) => body[field]);
+   params.push(req.user.id);
+ 
+   db.run(query, params, function (err) {
+@@ -325,8 +351,7 @@ app.put("/api/orders/:id/cancel", authenticateToken, (req, res) => {
+     (err, order) => {
+       if (!order) return res.status(404).json({ error: "Order not found" });
+ 
+-      // Lẽ ra phải là: if (order.status !== 'pending' && order.status !== 'confirmed')
+-      if (order.status === "delivered" || order.status === "canceled") {
++      if (order.status !== "pending" && order.status !== "confirmed") {
+         return res.status(400).json({ error: "Cannot cancel this order." });
+       }
+ 
+@@ -491,7 +516,12 @@ app.delete("/api/admin/coupons/:id", authenticateToken, (req, res) => {
+ // ADMIN APIS
+ // ==========================================
+ 
+-app.get("/api/admin/users", authenticateToken, (req, res) => {
++const requireAdmin = (req, res, next) => {
++  if (req.user.role !== "admin") return res.status(403).json({ error: "Forbidden" });
++  next();
++};
++
++app.get("/api/admin/users", authenticateToken, requireAdmin, (req, res) => {
+   db.all(
+     "SELECT id, name, email, role, login_attempts, locked_until, shipping_address FROM users",
+     [],
+@@ -501,13 +531,27 @@ app.get("/api/admin/users", authenticateToken, (req, res) => {
+   );
+ });
+ 
+-app.delete("/api/admin/users/:id", authenticateToken, (req, res) => {
+-  db.run("DELETE FROM users WHERE id = ?", [req.params.id], function (err) {
+-    res.json({ message: "User deleted" });
++app.delete("/api/admin/users/:id", authenticateToken, requireAdmin, (req, res) => {
++  const targetId = Number(req.params.id);
++  if (/^-\d+$/.test(req.params.id)) {
++    return res.status(404).json({ error: "User not found" });
++  }
++  if (!/^\d+$/.test(req.params.id)) {
++    return res.status(400).json({ error: "Invalid user id" });
++  }
++  if (targetId < 1) return res.status(404).json({ error: "User not found" });
++  if (targetId === req.user.id) return res.status(403).json({ error: "Cannot delete yourself" });
++  db.get("SELECT id FROM users WHERE id = ?", [targetId], (lookupErr, user) => {
++    if (lookupErr) return res.status(500).json({ error: lookupErr.message });
++    if (!user) return res.status(404).json({ error: "User not found" });
++    db.run("DELETE FROM users WHERE id = ?", [targetId], function (err) {
++      if (err) return res.status(500).json({ error: err.message });
++      res.json({ message: "User deleted" });
++    });
+   });
+ });
+ 
+-app.get("/api/admin/orders", authenticateToken, (req, res) => {
++app.get("/api/admin/orders", authenticateToken, requireAdmin, (req, res) => {
+   db.all(
+     `
+         SELECT orders.*, users.name as user_name 
+@@ -522,7 +566,7 @@ app.get("/api/admin/orders", authenticateToken, (req, res) => {
+   );
+ });
+ 
+-app.put("/api/admin/orders/:id/status", authenticateToken, (req, res) => {
++app.put("/api/admin/orders/:id/status", authenticateToken, requireAdmin, (req, res) => {
+   const { status } = req.body; // pending, confirmed, shipping, delivered, canceled
+ 
+   db.get(
+@@ -547,9 +591,6 @@ app.put("/api/admin/orders/:id/status", authenticateToken, (req, res) => {
+       if (currentStatus === "shipping" && status === "delivered")
+         isValidTransition = true;
+ 
+-      if (currentStatus === "canceled" && status === "delivered")
+-        isValidTransition = true;
+-
+       if (!isValidTransition) {
+         return res.status(400).json({
+           error: `Invalid state transition from ${currentStatus} to ${status}`,
+@@ -567,6 +608,13 @@ app.put("/api/admin/orders/:id/status", authenticateToken, (req, res) => {
+   );
+ });
+ 
++app.use((err, req, res, next) => {
++  if (err instanceof SyntaxError && err.status === 400 && Object.prototype.hasOwnProperty.call(err, "body")) {
++    return res.status(400).json({ error: "Invalid JSON body" });
++  }
++  next(err);
++});
++
+ app.listen(PORT, () => {
+   console.log(`Server is running on http://localhost:${PORT}`);
+ });
