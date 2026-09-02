@@ -60,7 +60,7 @@ Data-driven FR-04 phone run: 6 iterations, 12 requests, 18 assertions, 4 fail. H
 
 ## 7. Tích hợp CI/CD
 
-Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report. Chế độ mặc định `full-pass` áp dụng `submit/ci/sut-conformance-fixes.patch` vào clone SUT tạm thời rồi chạy **chính full collection 140 case**; lần xác nhận cục bộ và [Actions run 33604168558](https://github.com/HCMUS-software-testing/HW06/actions/runs/33604168558) đạt 467 request, 839 assertion và 0 assertion fail. Chế độ `workflow_dispatch: conformance` chạy cùng full collection trên SUT upstream nguyên bản và giữ 42 catalogue case/63 assertion product defect hiển thị màu đỏ. `ci-demo` chỉ là pipeline-control evidence: 22/22 pass hoặc đúng 1 controlled failure, không dùng để đại diện cho full suite.
+Workflow `.github/workflows/hw06-23127326.yml` clone/pin SUT, khởi động database sạch, validate secret MSSV, chạy Newman và upload report. Chế độ mặc định `full-pass` áp dụng `submit/ci/sut-conformance-fixes.patch` vào clone SUT tạm thời rồi chạy **chính full collection 140 case**; [Actions run 33604446982](https://github.com/HCMUS-software-testing/HW06/actions/runs/33604446982) đạt 467 request, 839 assertion và 0 assertion fail. Chế độ `workflow_dispatch: conformance` chạy cùng full collection trên SUT upstream nguyên bản và giữ 42 catalogue case/63 assertion product defect hiển thị màu đỏ. `ci-demo` chỉ là pipeline-control evidence: 22/22 pass hoặc đúng 1 controlled failure, không dùng để đại diện cho full suite.
 
 ## 8. Thiết kế Agent Skill
 

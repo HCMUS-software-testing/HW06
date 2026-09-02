@@ -20,7 +20,7 @@ Lưu ý về tên lịch sử: các run và ảnh minh chứng được ghi nh�
 
 | Minh chứng | Commit | Lần chạy Actions | Kết quả mong đợi | Ảnh chụp |
 |---|---|---|---|---|
-| Full 140-case pass gate | [`9958697`](https://github.com/HCMUS-software-testing/HW06/commit/9958697d6bc7a77583ad95513000d8bfed76dbe6) | [33604168558](https://github.com/HCMUS-software-testing/HW06/actions/runs/33604168558) | 467 request; 839 assertion; **0 assertion fail** | Actions run + `ci-full-pass-report.html` |
+| Full 140-case pass gate | [`359841a`](https://github.com/HCMUS-software-testing/HW06/commit/359841a49691af2049fb8ca4a043ce473dce5d62) | [33604446982](https://github.com/HCMUS-software-testing/HW06/actions/runs/33604446982) | 467 request; 839 assertion; **0 assertion fail** | ![CI full-pass](evidence/github-actions-full-pass.png) + `ci-full-pass-report.html` |
 | CI demo pass | [`90c2b7e`](https://github.com/HCMUS-software-testing/HW06/commit/90c2b7e6ff1cadd24f9d72300de34b646050cdba) | [33498533231](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498533231) | 22/22 assertion pass | ![CI demo pass](evidence/github-actions-pass.png) |
 | CI demo đúng một failure | [`10e32d8`](https://github.com/HCMUS-software-testing/HW06/commit/10e32d8) | [33498587297](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498587297) | 21 pass, đúng 1 controlled assertion fail | ![CI demo failure](evidence/github-actions-one-fail.png) |
 | Nhánh xanh khôi phục | [`b0b3764`](https://github.com/HCMUS-software-testing/HW06/commit/b0b3764) | [33498661968](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498661968) | 22/22 assertion pass | cùng trang run trực tiếp |
