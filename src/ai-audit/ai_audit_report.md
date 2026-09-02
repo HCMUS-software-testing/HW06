@@ -1,7 +1,6 @@
 # AI Audit Report
 
 ## 1. Thông tin nhóm
-
 - Họ tên: `Lê Trung Kiên`
 - MSSV: `23127075`
 - Nhóm/Lớp: `[TODO]`
@@ -16,17 +15,19 @@
 | 2 | Time: `2026-09-01 22:00 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Đọc folder req (đề) để setup folder src (chỉ cần template thôi, chưa cần làm). Sau đó tạo spec và plan để tôi hoàn thành 10 điểm bài tập này. | [Manual by user] |
 | 3 | Time: `2026-09-01 23:01 +07`<br>Tool: `Claude Opus 4.6 / Antigravity`<br>Prompt:<br>/using-superpowers Đọc đề trong folder req, eshop-sut/README.md và eshop-sut/api_specification.md, hãy giúp tôi viết Pre-request Script cho Postman Collection HW06_API_Testing. Mục tiêu là tự động chèn header 'X-Student-Id: 23127075' vào mọi HTTP request trước khi gửi đi. Đồng thời hãy tạo cấu trúc JSON cho Postman Environment file với các biến chính thức từ eshop-sut: baseUrl (http://localhost:3000), studentId (23127075), userToken, adminToken. | [Manual by user] |
 | 4 | Time: `2026-09-01 23:04 +07`<br>Tool: `Claude Opus 4.6 / Antigravity`<br>Prompt:<br>/using-superpowers Dựa vào đặc tả API FR-05 trong eshop-sut/api_specification.md cho các endpoint GET /api/products và GET /api/products?search=keyword, hãy sinh 15 test cases bao phủ kỹ thuật Phân hoạch miền (Domain Partitioning) trên các tham số: query search (tìm từ khóa hợp lệ, từ khóa không tồn tại, từ khóa rỗng, ký tự đặc biệt), phân trang (nếu có), và lấy chi tiết sản phẩm GET /api/products/:id (id tồn tại, id=0, id âm, id chuỗi). Định dạng output dạng bảng gồm: STT, Test Case Name, Method, Endpoint, Query/Path Params, Expected Status, Expected Schema/Body. | [Manual by user] |
-| 5 | Time: `2026-09-01 23:08 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-05 (GET /api/products?search=keyword), hãy sinh 20 test cases tập trung vào 2 khía cạnh: 1. Bảo mật (SEC-01 đến SEC-07): SQL Injection trong tham số tìm kiếm 'search' (ví dụ: ' OR '1'='1, UNION SELECT), XSS payload (<script>alert(1)</script>), tham số quá dài (>255 chars), ký tự đặc biệt UTF-8/Unicode. 2. Response Schema Validation: Kiểm tra cấu trúc JSON trả về khớp với eshop-sut (danh sách sản phẩm chứa id, name, price, description, imageUrl, category_id), kiểm tra type của từng thuộc tính (id: integer, price: number > 0). Định dạng dạng bảng chi tiết. | [Manual by user] |
+| 5 | Time: `2026-09-01 23:08 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-05 (GET /api/products?search=keyword), hãy sinh 20 test cases tập trung vào 2 khía cạnh:<br>1. Bảo mật (SEC-01 đến SEC-07): SQL Injection trong tham số tìm kiếm 'search' (ví dụ: ' OR '1'='1, UNION SELECT), XSS payload (<script>alert(1)</script>), tham số quá dài (>255 chars), ký tự đặc biệt UTF-8/Unicode.<br>2. Response Schema Validation: Kiểm tra cấu trúc JSON trả về khớp với eshop-sut (danh sách sản phẩm chứa id, name, price, description, imageUrl, category_id), kiểm tra type của từng thuộc tính (id: integer, price: number > 0).<br>Định dạng dạng bảng chi tiết. | [Manual by user] |
 | 6 | Time: `2026-09-01 23:11 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Dựa vào đặc tả API FR-08 POST /api/checkout trong eshop-sut/api_specification.md, hãy sinh 18 test cases kiểm thử các luồng nghiệp vụ tạo đơn hàng: checkout hợp lệ với JSON body {"total_amount": 200000, "shipping_address": "123 Le Loi, TP.HCM"}, checkout khi giỏ hàng rỗng, checkout với số lượng sản phẩm vượt quá tồn kho (out of stock), checkout với thông tin địa chỉ giao hàng không hợp lệ (thiếu street, phone sai định dạng, name rỗng), và checkout khi áp dụng mã giảm giá coupon. Output dạng bảng với thông tin chi tiết request body và expected result. | [Manual by user] |
-| 7 | Time: `2026-09-01 23:15 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-08 POST /api/checkout, hãy sinh 17 test cases kiểm thử: 1. Bảo mật & Xác thực: Checkout khi chưa đăng nhập (không gửi Authorization: Bearer <token> header), checkout với Token hết hạn / không hợp lệ, checkout sử dụng Token của user khác (IDOR trên giỏ hàng). 2. Response Schema & Boundary: Payload JSON bị lỗi cú pháp, dư thừa trường không xác định, kiểm tra response JSON trả về chứa order_id, order_status='pending', total_amount khớp tính toán. Format kết quả dạng bảng. | [Manual by user] |
-| 8 | Time: `2026-09-01 23:17 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Dựa vào đặc tả API FR-18 trong eshop-sut cho Admin (GET /api/admin/orders và PUT /api/admin/orders/:id/status), hãy sinh 18 test cases kiểm thử: 1. Quyền truy cập Admin: Truy cập GET /api/admin/orders với Admin Token hợp lệ (role='admin'), kiểm tra danh sách tất cả đơn hàng hệ thống. 2. Kiểm soát truy cập RBAC (SEC-04): Cố gắng truy cập endpoint Admin bằng User Token (role user thường) -> Kỳ vọng 403 Forbidden; truy cập không có token -> 401 Unauthorized. Format bảng chi tiết. | [Manual by user] |
-| 9 | Time: `2026-09-01 23:19 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-18 PUT /api/admin/orders/:id/status (Body: {"status": "confirmed"}), hãy sinh 17 test cases kiểm thử Máy trạng thái đơn hàng (State Machine FR-10): 1. Chuyển trạng thái hợp lệ: pending -> confirmed -> shipping -> delivered. 2. Chuyển trạng thái KHÔNG hợp lệ (Invalid transitions): delivered -> pending, canceled -> shipping, delivered -> canceled (vì delivered và canceled là các trạng thái kết thúc final states). 3. IDOR & Path Parameter: Update status cho order_id không tồn tại (404), order_id âm hoặc chuỗi ký tự (400), IDOR vào đơn hàng thuộc tenant khác. Format bảng chi tiết. | [Manual by user] |
+| 7 | Time: `2026-09-01 23:15 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-08 POST /api/checkout, hãy sinh 17 test cases kiểm thử:<br>1. Bảo mật & Xác thực: Checkout khi chưa đăng nhập (không gửi Authorization: Bearer <token> header), checkout với Token hết hạn / không hợp lệ, checkout sử dụng Token của user khác (IDOR trên giỏ hàng).<br>2. Response Schema & Boundary: Payload JSON bị lỗi cú pháp, dư thừa trường không xác định, kiểm tra response JSON trả về chứa order_id, order_status='pending', total_amount khớp tính toán.<br>Format kết quả dạng bảng. | [Manual by user] |
+| 8 | Time: `2026-09-01 23:17 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Dựa vào đặc tả API FR-18 trong eshop-sut cho Admin (GET /api/admin/orders và PUT /api/admin/orders/:id/status), hãy sinh 18 test cases kiểm thử:<br>1. Quyền truy cập Admin: Truy cập GET /api/admin/orders với Admin Token hợp lệ (role='admin'), kiểm tra danh sách tất cả đơn hàng hệ thống.<br>2. Kiểm soát truy cập RBAC (SEC-04): Cố gắng truy cập endpoint Admin bằng User Token (role user thường) -> Kỳ vọng 403 Forbidden; truy cập không có token -> 401 Unauthorized.<br>Format bảng chi tiết. | [Manual by user] |
+| 9 | Time: `2026-09-01 23:19 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-18 PUT /api/admin/orders/:id/status (Body: {"status": "confirmed"}), hãy sinh 17 test cases kiểm thử Máy trạng thái đơn hàng (State Machine FR-10):<br>1. Chuyển trạng thái hợp lệ: pending -> confirmed -> shipping -> delivered.<br>2. Chuyển trạng thái KHÔNG hợp lệ (Invalid transitions): delivered -> pending, canceled -> shipping, delivered -> canceled (vì delivered và canceled là các trạng thái kết thúc final states).<br>3. IDOR & Path Parameter: Update status cho order_id không tồn tại (404), order_id âm hoặc chuỗi ký tự (400), IDOR vào đơn hàng thuộc tenant khác.<br>Format bảng chi tiết. | [Manual by user] |
+| 10 | Time: `2026-09-02 15:34 +07`<br>Tool: `Codex / GPT-5`<br>Prompt:<br>Thực hiện đồng thời 3 task sau:\\n1. Tôi có bộ 35 test cases FR-05 do AI sinh. Hãy giúp tôi đánh giá và gán nhãn từng test case là VALID, INVALID hoặc INCOMPLETE kèm lý do kỹ thuật. Sau đó, gợi ý 5 test cases do con người tự thiết kế (Human-designed) mà AI thường bỏ sót cho API FR-05 (đặc biệt là các case kết hợp giữa tìm kiếm rỗng + SQLi + HTML rendering safety) và giải thích tại sao AI bỏ sót chúng.\\n2. Hãy giúp tôi kiểm toán toàn bộ 35 test cases FR-08 do AI sinh ra (gán nhãn VALID/INVALID/INCOMPLETE kèm lý do). Sau đó, hãy gợi ý 5 test cases quan trọng về Race Condition và Thay đổi Trạng thái Đa phiên (ví dụ: checkout đúng lúc giỏ hàng bị rỗng ở tab khác, tồn kho bị giảm về 0 ngay trước thời điểm bấm thanh toán) mà AI thường bỏ sót và giải thích nguyên nhân AI bỏ sót.\\n3. Hãy kiểm toán 35 test cases FR-18 do AI sinh (VALID/INVALID/INCOMPLETE + lý do). Gợi ý 5 test cases do con người tự bổ sung tập trung vào Privilege Escalation (người dùng tự sửa role để gọi API Admin status) và Rollback trạng thái khi gặp sự cố hệ thống mà AI bỏ sót, giải thích nguyên nhân.\\nCó ghi audit cho lần prompt này. | [Manual by user] |
 
 ### 2.2. Chi tiết audit
 
 ### 2.2.1 Entry 1
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 21:58 +07`
 Tool: `Gemini 3.6 Flash / Antigravity`
 Prompt:
@@ -45,6 +46,7 @@ Prompt:
 ### 2.2.2 Entry 2
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 22:00 +07`
 Tool: `Gemini 3.6 Flash / Antigravity`
 Prompt:
@@ -61,6 +63,7 @@ Prompt:
 ### 2.2.3 Entry 3
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 23:01 +07`
 Tool: `Claude Opus 4.6 / Antigravity`
 Prompt:
@@ -77,6 +80,7 @@ Prompt:
 ### 2.2.4 Entry 4
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 23:04 +07`
 Tool: `Claude Opus 4.6 / Antigravity`
 Prompt:
@@ -93,6 +97,7 @@ Prompt:
 ### 2.2.5 Entry 5
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 23:08 +07`
 Tool: `Gemini 3.6 Flash / Antigravity`
 Prompt:
@@ -112,6 +117,7 @@ Prompt:
 ### 2.2.6 Entry 6
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 23:11 +07`
 Tool: `Gemini 3.6 Flash / Antigravity`
 Prompt:
@@ -128,6 +134,7 @@ Prompt:
 ### 2.2.7 Entry 7
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 23:15 +07`
 Tool: `Gemini 3.6 Flash / Antigravity`
 Prompt:
@@ -147,6 +154,7 @@ Format kết quả dạng bảng.
 ### 2.2.8 Entry 8
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 23:17 +07`
 Tool: `Gemini 3.6 Flash / Antigravity`
 Prompt:
@@ -166,6 +174,7 @@ Format bảng chi tiết.
 ### 2.2.9 Entry 9
 
 **Prompt + Tool:**
+
 Time: `2026-09-01 23:19 +07`
 Tool: `Gemini 3.6 Flash / Antigravity`
 Prompt:
@@ -183,16 +192,30 @@ Format bảng chi tiết.
 
 **Student Fix:** [Manual by user]
 
-## 3. Tổng kết độ chính xác AI
+### 2.2.10 Entry 10
 
+**Prompt + Tool:**
+
+Time: `2026-09-02 15:34 +07`
+Tool: `Codex / GPT-5`
+Prompt:
+Thực hiện đồng thời 3 task sau:\n1. Tôi có bộ 35 test cases FR-05 do AI sinh. Hãy giúp tôi đánh giá và gán nhãn từng test case là VALID, INVALID hoặc INCOMPLETE kèm lý do kỹ thuật. Sau đó, gợi ý 5 test cases do con người tự thiết kế (Human-designed) mà AI thường bỏ sót cho API FR-05 (đặc biệt là các case kết hợp giữa tìm kiếm rỗng + SQLi + HTML rendering safety) và giải thích tại sao AI bỏ sót chúng.\n2. Hãy giúp tôi kiểm toán toàn bộ 35 test cases FR-08 do AI sinh ra (gán nhãn VALID/INVALID/INCOMPLETE kèm lý do). Sau đó, hãy gợi ý 5 test cases quan trọng về Race Condition và Thay đổi Trạng thái Đa phiên (ví dụ: checkout đúng lúc giỏ hàng bị rỗng ở tab khác, tồn kho bị giảm về 0 ngay trước thời điểm bấm thanh toán) mà AI thường bỏ sót và giải thích nguyên nhân AI bỏ sót.\n3. Hãy kiểm toán 35 test cases FR-18 do AI sinh (VALID/INVALID/INCOMPLETE + lý do). Gợi ý 5 test cases do con người tự bổ sung tập trung vào Privilege Escalation (người dùng tự sửa role để gọi API Admin status) và Rollback trạng thái khi gặp sự cố hệ thống mà AI bỏ sót, giải thích nguyên nhân.\nCó ghi audit cho lần prompt này.
+
+**AI Output:** Đã cập nhật src/test-cases/member-2-fr-05.md, src/test-cases/member-2-fr-08.md và src/test-cases/member-2-fr-18.md với verdict kỹ thuật cho toàn bộ 35 AI cases ở mỗi bộ, cùng 5 case human-designed tương ứng.
+
+**Verdict:** [Manual by user]
+
+**Reasoning:** [Manual by user]
+
+**Student Fix:** [Manual by user]
+
+## 3. Tổng kết độ chính xác AI
 - Các nội dung AI tạo đã được rà soát với yêu cầu bài làm: `[TODO]`
 - Mức độ chính xác/độ hữu ích tổng quan: `[TODO]`
 - Giới hạn hoặc rủi ro còn lại: `[TODO]`
 
 ## 4. Kết luận
-
 `[TODO]`
 
 ## 5. Disclosure
-
 `[TODO]`

@@ -113,6 +113,48 @@
 
 ---
 
+### Audit kết luận chi tiết
+
+> Quy ước: **VALID** = mục tiêu và oracle kiểm thử được; **INCOMPLETE** = có ý đúng nhưng oracle, dữ liệu hoặc phạm vi chưa đủ; **INVALID** = không phù hợp đặc tả hoặc khẳng định sai.
+
+| STT | Nhãn | Lý do kỹ thuật |
+|---:|---|---|
+| 1 | VALID | Baseline đúng endpoint; cần xác nhận schema theo đặc tả. |
+| 2 | INCOMPLETE | Không chứng minh DB có `phone`; cần fixture sản phẩm chứa từ khóa và quy tắc match chính thức. |
+| 3 | VALID | Empty result là hành vi hợp lệ; UI empty-state cần kiểm ở lớp frontend riêng. |
+| 4 | INCOMPLETE | Cho phép đồng thời toàn bộ hoặc `[]` nên không có oracle duy nhất; phải chốt contract. |
+| 5 | INCOMPLETE | Status 200 hợp lý nhưng “sản phẩm phù hợp” chưa định nghĩa; cần kiểm không crash và `[]` nếu không match. |
+| 6 | INCOMPLETE | Cần fixture tên tiếng Việt và quy tắc accent/case; nếu không, không thể kết luận kết quả. |
+| 7 | INCOMPLETE | Cho phép 200/400 nhưng thiếu giới hạn chính thức, status/body lỗi và đo không crash. |
+| 8 | INCOMPLETE | Chưa chốt trim hay exact-match; cần contract rõ và kiểm query đã decode đúng. |
+| 9 | INCOMPLETE | 200/`[]` hợp lệ nhưng thiếu oracle khi tên sản phẩm là số và quy tắc tìm kiếm. |
+| 10 | VALID | ID fixture tồn tại, response object và các field bắt buộc là oracle kiểm thử được. |
+| 11 | VALID | ID 0 không hợp lệ/không tồn tại; 404 phù hợp resource lookup. |
+| 12 | INCOMPLETE | 400 hoặc 404 đều được chấp nhận; cần chốt validation contract. |
+| 13 | INCOMPLETE | 400 hoặc 404 không đủ nhất quán để kiểm tự động; phải chọn một mã lỗi. |
+| 14 | VALID | ID lớn không tồn tại có oracle 404 rõ ràng. |
+| 15 | INCOMPLETE | 400/404 đều được chấp nhận; cần quy định integer validation. |
+| 16 | VALID | Payload phải không biến thành tautology; kiểm thêm số lượng/kết quả baseline để phát hiện rò DB. |
+| 17 | VALID | Union payload phải không truy xuất cột/bảng khác; 200 an toàn hoặc 400 đều có thể chấp nhận. |
+| 18 | INCOMPLETE | Ngưỡng `<1s` phụ thuộc môi trường; cần baseline/timeout và xác nhận DB PostgreSQL trước khi dùng `pg_sleep`. |
+| 19 | VALID | Kiểm đúng chống phá câu SQL và không 500; nên kiểm response schema nữa. |
+| 20 | INCOMPLETE | API JSON không tự render HTML; phải kiểm UI sink/DOM, không chỉ yêu cầu `[]`. |
+| 21 | INCOMPLETE | Tương tự TC20; sanitize thuộc response không được định nghĩa và XSS cần kiểm ở consumer. |
+| 22 | INCOMPLETE | `javascript:` không phải XSS nếu chỉ là query; cần kiểm URL/DOM sink cụ thể. |
+| 23 | INCOMPLETE | 200/400 quá rộng; thiếu giới hạn, timeout, body lỗi và giới hạn tài nguyên. |
+| 24 | INCOMPLETE | Null byte trong query không lộ file là oracle lệch ngữ cảnh; cần xác định expected search/error và không 500. |
+| 25 | VALID | Kiểm UTF-8, status 200, JSON hợp lệ và không crash; kết quả `[]` cần fixture xác nhận. |
+| 26 | VALID | Kiểm integer JSON là assertion schema rõ ràng trên danh sách. |
+| 27 | VALID | Kiểm string không rỗng là assertion hợp lệ nếu đặc tả bắt buộc name. |
+| 28 | VALID | Kiểm number dương phù hợp invariant giá sản phẩm. |
+| 29 | VALID | Kiểm kiểu string đúng theo schema. |
+| 30 | VALID | Kiểm kiểu string đúng theo schema; nên bổ sung URL format nếu contract yêu cầu. |
+| 31 | VALID | Kiểm integer category_id đúng schema; cần xử lý sản phẩm không có category nếu được phép. |
+| 32 | INCOMPLETE | “Chính xác 6 thuộc tính” quá cứng nếu API cho phép metadata; cần phân biệt required và additional fields. |
+| 33 | VALID | Content-Type JSON là header contract kiểm tự động được. |
+| 34 | VALID | Empty state array và length 0 là oracle rõ với keyword fixture không tồn tại. |
+| 35 | INCOMPLETE | Danh sách field nhạy cảm chưa theo data contract; cần allowlist/denylist chính thức và kiểm đệ quy. |
+
 ## 2. Test Cases Tự Bổ Sung (Human-designed >= 5 cases)
 
 | Test Case ID | Tên kịch bản | Loại (Bảo mật / Chuyển trạng thái / Biên) | Input Parameters & Steps | Expected Result | Lý do AI bỏ sót |
@@ -122,3 +164,13 @@
 | TC-FR05-HUMAN-003 | Parameter Pollution (HPP) trên query `search` | Edge / Security | `GET /api/products?search=phone&search=laptop` | Server xử lý tham số đầu tiên hoặc ghép nối hợp lý, không ném ngoại lệ 500 | AI ít khi kiểm thử việc truyền trùng lặp tên query parameter (HTTP Parameter Pollution) |
 | TC-FR05-HUMAN-004 | Lấy sản phẩm với ID dạng Hexadecimal / Path Traversal | Bảo mật / Path | `GET /api/products/0x1` hoặc `GET /api/products/..%2f1` | Trả về 400 Bad Request hoặc 404 Not Found | AI bỏ sót kết hợp giữa mã hóa URL Hexadecimal và Path Traversal trong đường dẫn URL |
 | TC-FR05-HUMAN-005 | Kiểm tra tính nhất quán giữa danh sách và chi tiết sản phẩm | Data Integrity | 1. Gọi `GET /api/products`<br>2. Lấy `price`, `name` của product ID=1<br>3. Gọi `GET /api/products/1` và so sánh | Thông tin `name`, `price`, `category_id` khớp chính xác 100% giữa 2 endpoint | AI sinh testcase đơn lẻ cho từng endpoint mà không kết hợp liên kết dữ liệu giữa 2 API trong cùng FR |
+
+### Bổ sung human-designed tập trung vào kết hợp search rỗng, SQLi và HTML safety
+
+| ID | Kịch bản và cách thực hiện | Expected result | Vì sao AI thường bỏ sót |
+|---|---|---|---|
+| TC-FR05-HUMAN-006 | Gửi `search=` rồi render empty state; lặp với `search=' OR '1'='1` | Không mở rộng kết quả; UI escape text, không tạo HTML/script; không 500 | AI tách security khỏi UI và không theo dõi dữ liệu qua nhiều lớp. |
+| TC-FR05-HUMAN-007 | Gửi `search=   <img src=x onerror=alert(1)>   ` sau trim | Kết quả/empty state nhất quán; payload chỉ là text, không event thực thi | AI thường kiểm payload nguyên dạng, bỏ qua biến thể whitespace + normalization. |
+| TC-FR05-HUMAN-008 | Gửi đồng thời `search=&search=<svg/onload=alert(1)>` | Server có quy tắc duplicate rõ; không SQLi/XSS và không phản hồi 500 | AI ít sinh HPP kết hợp payload với empty value. |
+| TC-FR05-HUMAN-009 | Gửi `search=%27%20OR%201%3D1--%3Cscript%3E` rồi đưa response vào template HTML | Không trả toàn bộ DB; DOM không có node script/event handler | AI dừng ở HTTP response, không kiểm tra sink và URL decoding. |
+| TC-FR05-HUMAN-010 | So sánh `/products?search=` với `/products` và kiểm escape chuỗi tìm kiếm trong empty-state | Semantics đã chốt (thường cùng baseline); không phản xạ raw query vào HTML | AI cho phép nhiều expected result nên bỏ sót regression giữa baseline và rendering. |

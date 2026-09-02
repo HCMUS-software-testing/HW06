@@ -104,6 +104,48 @@
 
 ---
 
+### Audit kết luận chi tiết
+
+> **VALID**: oracle phù hợp contract; **INCOMPLETE**: hướng kiểm thử đúng nhưng còn thiếu fixture/oracle/điều kiện; **INVALID**: kỳ vọng trái đặc tả hoặc kiểm sai phạm vi API.
+
+| STT | Nhãn | Lý do kỹ thuật |
+|---:|---|---|
+| 1 | VALID | Happy path có auth, body và trạng thái pending; cần fixture cart trị giá 200k. |
+| 2 | VALID | Cart rỗng phải không tạo order; 400 là oracle hợp lý. |
+| 3 | INCOMPLETE | Body không mô tả sản phẩm/số lượng vượt kho; cần fixture và chốt 400 hay 409. |
+| 4 | VALID | Required shipping address rỗng phải bị từ chối. |
+| 5 | VALID | Whitespace-only phải được trim/validate và trả lỗi. |
+| 6 | INCOMPLETE | Đặc tả chỉ nhận chuỗi address; “đủ chi tiết” và 200/400 chưa có contract rõ. |
+| 7 | INVALID | `phone` không thuộc schema body đã nêu; không thể yêu cầu validation riêng nếu đặc tả không hỗ trợ field này. |
+| 8 | INCOMPLETE | Có thể là giới hạn hợp lệ nhưng thiếu max length chính thức và response oracle. |
+| 9 | VALID | Không tin total từ client; phải tính từ cart/DB và so sánh chính xác. |
+| 10 | INVALID | `SAVE10`, min value và coupon schema không được chứng minh trong FR-08; test phụ thuộc fixture/đặc tả ngoài. |
+| 11 | INVALID | Tương tự TC10; mã `BIGBUY` và mức giảm không thuộc contract đã cung cấp. |
+| 12 | INVALID | `EXPIRED` và C2 không có trong FR-08 contract; đây là giả định dữ liệu. |
+| 13 | INVALID | Min-order coupon rule không được đặc tả; expected 400 không có cơ sở. |
+| 14 | INVALID | max_uses_per_user/C5 không được nêu trong API contract. |
+| 15 | INVALID | Coupon code không thuộc body chuẩn đã nêu; cần tài liệu coupon riêng trước khi test. |
+| 16 | INCOMPLETE | Có thể là invariant nghiệp vụ nhưng cần xác nhận GET cart và atomic transaction trong đặc tả. |
+| 17 | VALID | Order mới phải bắt đầu `pending` theo FR-10; cần kiểm cả DB side effect. |
+| 18 | INCOMPLETE | “Ghi chú đơn hàng” chưa có field/contract; cần nêu body và expected persistence. |
+| 19 | VALID | Thiếu Authorization phải trả 401 và không tạo order. |
+| 20 | VALID | Token sai/hết hạn/bearer rỗng là boundary auth; cần tách case để oracle rõ. |
+| 21 | INCOMPLETE | IDOR chưa có hai user/cart fixture và tiêu chí không tạo order; cần bổ sung. |
+| 22 | INVALID | SQLi trong `shipping_address` không chứng minh field được dùng SQL; nên test input handling riêng với contract rõ. |
+| 23 | INCOMPLETE | XSS chỉ có ý nghĩa khi address được render; API JSON không tự thực thi HTML, cần kiểm consumer UI. |
+| 24 | VALID | Unsupported method phải không tạo side effect; 405 cần phù hợp routing contract. |
+| 25 | INCOMPLETE | Thiếu Content-Type chưa nêu expected parser behavior; cần chốt 400/415 và header request. |
+| 26 | VALID | GET tới POST-only endpoint là method contract kiểm được. |
+| 27 | VALID | JSON syntax lỗi phải bị parser từ chối trước nghiệp vụ, thường 400. |
+| 28 | VALID | Mass-assignment field phải bị bỏ qua hoặc từ chối; không đổi quyền. |
+| 29 | INCOMPLETE | Nếu server tính lại total thì 200 có thể đúng, nhưng cần chốt validation và kiểm side effect. |
+| 30 | INCOMPLETE | Tương tự TC29; cần phân biệt reject type với ignore client total. |
+| 31 | VALID | Response phải có ID order dương và kiểu integer theo schema. |
+| 32 | VALID | `pending` là invariant trạng thái khởi tạo. |
+| 33 | VALID | Kiểu/giá trị total response phải phản ánh total đã tính; cần fixture cart. |
+| 34 | VALID | Content-Type `application/json` là header assertion rõ. |
+| 35 | INCOMPLETE | Cho phép 200 vì server bỏ qua total là hợp lý, nhưng phải xác nhận cart có hàng và không tạo duplicate. |
+
 ## 2. Test Cases Tự Bổ Sung (Human-designed >= 5 cases)
 
 | Test Case ID | Tên kịch bản | Loại (Bảo mật / Chuyển trạng thái / Biên) | Input Parameters & Steps | Expected Result | Lý do AI bỏ sót |
@@ -113,3 +155,13 @@
 | TC-FR08-HUMAN-003 | Double-click / Concurrent submission (Idempotency) | Idempotency | Gửi 2 request `POST /api/checkout` đồng thời trong khoảng thời gian < 50ms với cùng token | Chỉ có đúng 1 đơn hàng được tạo (200 OK), request thứ 2 bị chặn hoặc báo 400 (do giỏ đã bị xóa sau request 1) | AI chỉ sinh các request độc lập đơn lẻ, không kiểm thử tần suất gửi trùng lặp tức thời |
 | TC-FR08-HUMAN-004 | Coupon stack attack — Cố gắng truyền mảng mã coupon | Security / Validation | Body: `{"shipping_address": "123 Le Loi", "coupon_code": ["SAVE10", "BIGBUY"]}` | Backend chỉ nhận 1 string coupon duy nhất hoặc từ chối 400 Bad Request, không cộng dồn mã | AI bỏ sót kiểm thử kiểu dữ liệu mảng (Array injection) trên trường coupon |
 | TC-FR08-HUMAN-005 | Sửa đổi giá sản phẩm giữa lúc thêm vào giỏ và lúc checkout | Stale Price / Integrity | 1. User thêm SP A (giá 100k) vào giỏ<br>2. Admin sửa giá SP A lên 200k trong CSDL<br>3. User thực hiện Checkout | Total amount đơn hàng được tính theo giá hiện tại trong DB (200k), không bị dùng giá cũ stale price | AI không tự xây dựng kịch bản kiểm thử tích hợp (Integration) liên vết giữa Admin CRUD và User Checkout |
+
+### Bổ sung human-designed về race condition và trạng thái đa phiên
+
+| ID | Kịch bản và cách thực hiện | Expected result | Vì sao AI thường bỏ sót |
+|---|---|---|---|
+| TC-FR08-HUMAN-006 | Tab A đọc cart có hàng; tab B xóa cart; ngay sau đó tab A POST checkout | 400, không tạo order, không trừ kho; transaction thấy state mới nhất | AI thường mô hình hóa request độc lập, không có timeline giữa các tab. |
+| TC-FR08-HUMAN-007 | User A giữ cart có 1 sản phẩm; User B mua item cuối cùng trước khi A checkout | A nhận 400/409; không tạo order một phần và không âm kho | AI bỏ qua tranh chấp tài nguyên liên user và atomic stock check. |
+| TC-FR08-HUMAN-008 | Hai POST checkout cùng user/token trong <50ms | Tối đa một order thành công; request còn lại lỗi idempotency/cart-empty; không double charge | AI thiên về happy path và không sinh cùng một mutation đồng thời. |
+| TC-FR08-HUMAN-009 | Tab A chuẩn bị checkout; tab B đổi quantity từ 1 xuống 0 rồi A gửi request | Server dùng cart tại commit time, trả lỗi rỗng/invalid; không dùng snapshot cũ | AI hiếm khi kiểm state thay đổi giữa đọc và ghi. |
+| TC-FR08-HUMAN-010 | Tab A checkout; tab B đổi coupon/địa chỉ trong lúc transaction A đang xử lý | Order dùng một snapshot nhất quán; không trộn giá/coupon/address giữa hai phiên | AI thường không kiểm consistency giữa nhiều field cập nhật cạnh tranh. |

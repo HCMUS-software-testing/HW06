@@ -70,41 +70,41 @@
 
 | STT | Test Case ID | Trạng thái Audit | Lý do Audit & Hướng sửa đổi |
 | --- | --- | --- | --- |
-| 1 | TC-FR18-AI-001 | [Manual by user] | [Manual by user] |
-| 2 | TC-FR18-AI-002 | [Manual by user] | [Manual by user] |
-| 3 | TC-FR18-AI-003 | [Manual by user] | [Manual by user] |
-| 4 | TC-FR18-AI-004 | [Manual by user] | [Manual by user] |
-| 5 | TC-FR18-AI-005 | [Manual by user] | [Manual by user] |
-| 6 | TC-FR18-AI-006 | [Manual by user] | [Manual by user] |
-| 7 | TC-FR18-AI-007 | [Manual by user] | [Manual by user] |
-| 8 | TC-FR18-AI-008 | [Manual by user] | [Manual by user] |
-| 9 | TC-FR18-AI-009 | [Manual by user] | [Manual by user] |
-| 10 | TC-FR18-AI-010 | [Manual by user] | [Manual by user] |
-| 11 | TC-FR18-AI-011 | [Manual by user] | [Manual by user] |
-| 12 | TC-FR18-AI-012 | [Manual by user] | [Manual by user] |
-| 13 | TC-FR18-AI-013 | [Manual by user] | [Manual by user] |
-| 14 | TC-FR18-AI-014 | [Manual by user] | [Manual by user] |
-| 15 | TC-FR18-AI-015 | [Manual by user] | [Manual by user] |
-| 16 | TC-FR18-AI-016 | [Manual by user] | [Manual by user] |
-| 17 | TC-FR18-AI-017 | [Manual by user] | [Manual by user] |
-| 18 | TC-FR18-AI-018 | [Manual by user] | [Manual by user] |
-| 19 | TC-FR18-AI-019 | [Manual by user] | [Manual by user] |
-| 20 | TC-FR18-AI-020 | [Manual by user] | [Manual by user] |
-| 21 | TC-FR18-AI-021 | [Manual by user] | [Manual by user] |
-| 22 | TC-FR18-AI-022 | [Manual by user] | [Manual by user] |
-| 23 | TC-FR18-AI-023 | [Manual by user] | [Manual by user] |
-| 24 | TC-FR18-AI-024 | [Manual by user] | [Manual by user] |
-| 25 | TC-FR18-AI-025 | [Manual by user] | [Manual by user] |
-| 26 | TC-FR18-AI-026 | [Manual by user] | [Manual by user] |
-| 27 | TC-FR18-AI-027 | [Manual by user] | [Manual by user] |
-| 28 | TC-FR18-AI-028 | [Manual by user] | [Manual by user] |
-| 29 | TC-FR18-AI-029 | [Manual by user] | [Manual by user] |
-| 30 | TC-FR18-AI-030 | [Manual by user] | [Manual by user] |
-| 31 | TC-FR18-AI-031 | [Manual by user] | [Manual by user] |
-| 32 | TC-FR18-AI-032 | [Manual by user] | [Manual by user] |
-| 33 | TC-FR18-AI-033 | [Manual by user] | [Manual by user] |
-| 34 | TC-FR18-AI-034 | [Manual by user] | [Manual by user] |
-| 35 | TC-FR18-AI-035 | [Manual by user] | [Manual by user] |
+| 1 | TC-FR18-AI-001 | VALID | Admin token và 200/list response là oracle rõ; cần fixture có tối thiểu hai users để chứng minh phạm vi toàn hệ thống. |
+| 2 | TC-FR18-AI-002 | VALID | User token phải bị RBAC chặn 403, đồng thời xác nhận không lộ dữ liệu đơn hàng. |
+| 3 | TC-FR18-AI-003 | VALID | Thiếu Authorization phải trả 401 trước khi truy cập tài nguyên. |
+| 4 | TC-FR18-AI-004 | VALID | JWT sai cấu trúc/chữ ký phải bị từ chối bằng 401. |
+| 5 | TC-FR18-AI-005 | VALID | JWT hết hạn phải trả 401; dùng token đã kiểm soát được thời gian hết hạn. |
+| 6 | TC-FR18-AI-006 | INCOMPLETE | Thiếu precondition order đang `pending`; nếu ID=1 ở trạng thái khác thì 200 không còn đúng. |
+| 7 | TC-FR18-AI-007 | VALID | User thường gọi mutation admin phải 403 và trạng thái DB phải không đổi. |
+| 8 | TC-FR18-AI-008 | VALID | Thiếu token trên endpoint mutation phải 401, không phát sinh side effect. |
+| 9 | TC-FR18-AI-009 | VALID | Bearer rỗng là credentials không hợp lệ; phải bị từ chối 401. |
+| 10 | TC-FR18-AI-010 | INCOMPLETE | Query `status` chưa được xác nhận trong endpoint §6.2; cần contract filter, enum và behavior với status invalid. |
+| 11 | TC-FR18-AI-011 | VALID | Role phải lấy từ JWT/server-side identity, không tin custom header; 403 là oracle phù hợp. |
+| 12 | TC-FR18-AI-012 | INVALID | Gọi endpoint list nhưng kỳ vọng chi tiết một đơn; phải có `GET /api/admin/orders/:id` nếu đặc tả cung cấp. |
+| 13 | TC-FR18-AI-013 | INCOMPLETE | API JSON không tự render HTML; cần fixture address chứa payload và kiểm UI/DOM sink riêng. |
+| 14 | TC-FR18-AI-014 | INVALID | Endpoint `/api/users/me` nằm ngoài FR-18 và cho phép 200/400 không tạo oracle xác định; chuyển thành test riêng của user profile. |
+| 15 | TC-FR18-AI-015 | VALID | Payload JWT sửa nhưng không re-sign phải fail verification và trả 401. |
+| 16 | TC-FR18-AI-016 | INCOMPLETE | `shipping` chỉ hợp lệ từ `confirmed`; cần state precondition và kiểm transition. |
+| 17 | TC-FR18-AI-017 | INCOMPLETE | `delivered` chỉ hợp lệ từ `shipping`; cần fixture và side-effect audit. |
+| 18 | TC-FR18-AI-018 | INCOMPLETE | Cancel chỉ hợp lệ từ state cho phép; cần nêu `pending`/`confirmed` và quy tắc hoàn kho. |
+| 19 | TC-FR18-AI-019 | VALID | Có precondition pending và transition hợp lệ với response 200 rõ ràng. |
+| 20 | TC-FR18-AI-020 | VALID | Có precondition confirmed và transition hợp lệ với response 200 rõ ràng. |
+| 21 | TC-FR18-AI-021 | VALID | Có precondition shipping và transition hợp lệ với response 200 rõ ràng. |
+| 22 | TC-FR18-AI-022 | VALID | Pending sang canceled là transition hợp lệ theo FR-10. |
+| 23 | TC-FR18-AI-023 | VALID | Confirmed sang canceled là transition hợp lệ theo FR-10. |
+| 24 | TC-FR18-AI-024 | VALID | Final state delivered không được quay về pending; 400 và trạng thái không đổi là oracle đúng. |
+| 25 | TC-FR18-AI-025 | VALID | Delivered không được chuyển sang canceled; cần kiểm không hoàn kho/không đổi dữ liệu. |
+| 26 | TC-FR18-AI-026 | VALID | Canceled là final state, không được chuyển shipping. |
+| 27 | TC-FR18-AI-027 | VALID | Canceled là final state, không được chuyển delivered. |
+| 28 | TC-FR18-AI-028 | VALID | Delivered sang confirmed vi phạm state machine; 400 là phù hợp. |
+| 29 | TC-FR18-AI-029 | VALID | Value ngoài enum phải bị validation từ chối và không đổi state. |
+| 30 | TC-FR18-AI-030 | VALID | Order không tồn tại với ID hợp lệ phải trả 404. |
+| 31 | TC-FR18-AI-031 | INCOMPLETE | Chấp nhận cả 400/404 khiến assertion mơ hồ; chốt contract validation path ID. |
+| 32 | TC-FR18-AI-032 | INCOMPLETE | Tương tự TC31: phải chọn một status code và error schema cụ thể. |
+| 33 | TC-FR18-AI-033 | VALID | ID 0 không tồn tại có 404 rõ ràng, nếu router nhận ID số. |
+| 34 | TC-FR18-AI-034 | VALID | Missing required `status` phải trả 400 trước state transition. |
+| 35 | TC-FR18-AI-035 | INCOMPLETE | `null` hợp lệ JSON còn malformed JSON là lỗi parser khác; tách thành hai test có Content-Type/oracle riêng. |
 
 ---
 
@@ -117,3 +117,13 @@
 | TC-FR18-HUMAN-003 | Khôi phục tồn kho sản phẩm khi Admin hủy đơn từ `confirmed` sang `canceled` | Inventory Restoration | 1. Đơn hàng có SP A (quantity=2) ở trạng thái `confirmed`<br>2. Admin gọi `PUT /api/admin/orders/1/status` body `{"status": "canceled"}` | Đơn chuyển sang `canceled`, số lượng tồn kho SP A tự động tăng thêm +2 trong CSDL | AI sinh testcase đơn lẻ kiểm tra HTTP response mà không verify side-effect trên cơ sở dữ liệu |
 | TC-FR18-HUMAN-004 | Thử nghiệm Mass Assignment qua endpoint cập nhật status | Security / Mass Assignment | Admin gửi `PUT /api/admin/orders/1/status` với body `{"status": "confirmed", "total_amount": 0, "user_id": 999}` | Chỉ trường `status` được cập nhật sang `confirmed`, các trường `total_amount` và `user_id` không bị ghi đè | AI bỏ sót kiểm thử lỗi Mass Assignment làm thay đổi dữ liệu nhạy cảm qua API partial update |
 | TC-FR18-HUMAN-005 | Phân quyền Admin đa chi nhánh / Multi-tenant Admin IDOR | Security / Authorization | Admin thuộc Store A gọi `PUT /api/admin/orders/99/status` cập nhật đơn hàng thuộc Store B | Trả về 403 Forbidden / 404 Not Found, không cho phép Admin vùng này can thiệp đơn của vùng khác | AI mặc định coi tất cả Admin có quyền ngang nhau mà không tính tới phân quyền mô hình Multi-tenant |
+
+### Bổ sung human-designed: Privilege Escalation và rollback khi lỗi hệ thống
+
+| Test Case ID | Tên kịch bản | Loại | Input Parameters & Steps | Expected Result | Lý do AI bỏ sót |
+| --- | --- | --- | --- | --- | --- |
+| TC-FR18-HUMAN-006 | Sửa `role` qua profile rồi dùng token cũ gọi status API | Privilege Escalation | User gửi `PUT /api/users/me` với `{"role":"admin"}`; dùng chính access token cũ gọi `PUT /api/admin/orders/1/status` | Profile không đổi role; request status trả 403; state order không đổi | AI hay kiểm từng endpoint tách rời, bỏ qua chuỗi escalation có token/session thật. |
+| TC-FR18-HUMAN-007 | Forged JWT `role=admin` ký bằng `alg:none` hoặc đổi `kid` | JWT Authorization | Tạo token payload user nhưng `role=admin`, bỏ chữ ký hoặc dùng key-id không hợp lệ; gọi status API | Trả 401, không chấp nhận thuật toán/key ngoài allowlist, không đổi state | AI thường chỉ kiểm token hỏng chung chung, không kiểm bypass xác minh JWT cụ thể. |
+| TC-FR18-HUMAN-008 | Mass assignment kết hợp user token và role/body giả mạo | Privilege Escalation | User token gọi status API với `{"status":"confirmed","role":"admin","isAdmin":true}` | Trả 403 trước body processing; không có field nào được ghi | AI có thể chỉ kiểm role header hoặc body riêng lẻ, bỏ thứ tự authz-before-mutation. |
+| TC-FR18-HUMAN-009 | Rollback khi lỗi sau cập nhật state nhưng trước khi ghi audit/event | Transaction Rollback | Dùng fault injection làm audit-log/message publish lỗi khi admin chuyển `confirmed` → `shipping`; đọc lại order và tồn kho | Response 5xx phù hợp; order, audit/event và side effect cùng rollback, không state "shipping" một phần | AI thường giả định request hoàn tất nguyên tử và không đưa failure injection vào oracle. |
+| TC-FR18-HUMAN-010 | Rollback khi hủy đơn gặp lỗi hoàn kho | Transaction Rollback | Đơn `confirmed` có quantity=2; inject lỗi DB khi tăng tồn kho trong `→ canceled`; đọc lại order/kho | Không chuyển canceled nếu hoàn kho thất bại; status và stock giữ giá trị trước transaction | AI hay chỉ kiểm HTTP status, không kiểm atomicity giữa state order và inventory. |
