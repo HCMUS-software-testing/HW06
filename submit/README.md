@@ -51,23 +51,6 @@ Ghi chú minh chứng lịch sử: `newman-full-localhost.png` và các ảnh Gi
 |    3 | API 3 — full pipeline FR-19 |      30 |          30 |
 |    4 | Agent Skill                 |      10 |          10 |
 |      | **Tổng**                    | **100** |     **100** |
-
-Điểm Agent Skill được tự chấm đủ 10/10 nhờ có skill reusable, schema, pseudocode, sơ đồ tự thiết kế/tự vẽ và video demo.
-
-## Checklist bàn giao
-
-| Hạng mục bắt buộc                                         | Trạng thái / vị trí                                         |
-| --------------------------------------------------------- | ----------------------------------------------------------- |
-| Báo cáo chính gồm kiểm thử API + phụ lục AI Audit         | `main-report.md`, `main-report.pdf`                         |
-| Public GitHub repository                                  | Link ở đầu file này                                         |
-| Postman collections, environment và Newman HTML/JSON      | `postman/`, `newman-full-report.html`, `newman-report.html` |
-| Danh sách tính năng Postman                               | Mục “Tính năng Postman đã dùng” bên dưới                    |
-| CI/CD report, full-suite pass, run đúng một failure, ảnh và link | `cicd-report.md`, `evidence/`, `ci/`                 |
-| Workflow CI/CD                                             | `.github/workflows/hw06-23127326.yml`                       |
-| Excel test cases + test summary                           | `23127326_test-cases.xlsx` gồm 2 sheet                      |
-| Agent Skill, sơ đồ và pseudocode                          | `agent-skill/`                                              |
-| Bug report + GitHub Issue screenshots                     | `bug-reports.md`, `evidence/`                               |
-| AI Audit và AI Critique Markdown + PDF                    | `ai-audit-report.*`, `ai-critique.*`                        |
-| Git commit log                                            | `git_commit_log.txt`                                        |
+|      |
 
 Video demo Agent Skill: [https://youtu.be/1X8fNBIZYV0](https://youtu.be/1X8fNBIZYV0).
