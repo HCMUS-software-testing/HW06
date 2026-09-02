@@ -4,7 +4,8 @@
 **API Endpoints:**
 - `GET /api/products` — Lấy danh sách sản phẩm (api_specification.md §3.1)
 - `GET /api/products?search=keyword` — Tìm kiếm sản phẩm theo tên (api_specification.md §3.1)
-- `GET /api/products/:id` — Xem chi tiết một sản phẩm (api_specification.md §3.2)
+
+> **Phạm vi cuối cùng:** chỉ FR-05 `GET /api/products[?search=...]`. Nội dung AI gốc ở các dòng 10–15 và 32 bên dưới vẫn được giữ nguyên làm provenance lịch sử FR-06; phần sửa cuối trong bảng audit mới là intent có hiệu lực và không tự động hóa `GET /api/products/:id` dưới FR-05.
 
 **Kỹ thuật:** Phân hoạch miền (Domain Partitioning), Kiểm thử Bảo mật (SEC-01..SEC-07), Kiểm tra Response Schema  
 **Nguồn đặc tả:** `eshop-sut/api_specification.md` §3.1–§3.2 & `eshop-sut/README.md` FR-05, FR-06, SEC-04, SEC-05
@@ -71,106 +72,61 @@
 
 ---
 
-### Bảng Kiểm Toán Audit (35 Test Cases AI Sinh)
+### Authoritative audit and final AI inventory
 
-| STT | Test Case ID | Trạng thái Audit | Lý do Audit & Hướng sửa đổi |
+> `Verdict` đánh giá **nội dung AI gốc**; `Final correction` là oracle có hiệu lực cho Task 3. Trường hợp contract không quy định chuẩn hóa/giới hạn cụ thể dùng invariant duy nhất: không 500, body là JSON array và GET không làm đổi dữ liệu. SEC-04 ở lớp DOM không được suy ra từ JSON.
+
+| ID | Verdict | Technical reason | Final correction | Execution class |
+| --- | --- | --- | --- | --- |
+| TC-FR05-AI-001 | VALID | Đúng endpoint list và có schema quan sát được. | Gọi không query; yêu cầu 200, `application/json`, body là array; mọi phần tử có `id`, `name`, `price`, `description`, `imageUrl`, `category_id`. | NEWMAN |
+| TC-FR05-AI-002 | INCOMPLETE | Từ khóa `phone` không được gắn với fixture nên `≥1` không ổn định. | Lấy một `name` từ baseline làm keyword; 200 và mọi kết quả có tên chứa keyword đã chọn, đồng thời chứa ít nhất fixture nguồn. | NEWMAN |
+| TC-FR05-AI-003 | VALID | Search tên không tồn tại có empty-array oracle rõ. | Dùng sentinel duy nhất theo run; 200, JSON array và length bằng 0; kiểm empty-state UI tách riêng. | NEWMAN |
+| TC-FR05-AI-004 | INCOMPLETE | AI cho phép hai kết quả trái nhau cho `search=`. | So sánh `search=` với request không query; cả hai 200 và có cùng dãy product ID. | NEWMAN |
+| TC-FR05-AI-005 | INCOMPLETE | “Sản phẩm phù hợp nếu có” không xác định fixture. | Dùng sentinel ASCII đặc biệt không có trong baseline; status không phải 500, body JSON array, không rò SQL/HTML error và dữ liệu baseline không đổi. | NEWMAN |
+| TC-FR05-AI-006 | INCOMPLETE | Không có fixture tên tiếng Việt hay quy tắc accent-folding. | Search sentinel Unicode duy nhất không có trong baseline; 200, JSON array rỗng và UTF-8 hợp lệ. | NEWMAN |
+| TC-FR05-AI-007 | INCOMPLETE | Contract không nêu max length và AI cho 200/400. | Gửi 256 ký tự; chỉ assert invariant contract-safe: status không phải 500, body JSON, GET không đổi baseline; ghi status quan sát riêng khi chạy. | NEWMAN |
+| TC-FR05-AI-008 | INCOMPLETE | Contract không chốt trim spaces. | Gửi spaces-only; status không phải 500, body JSON array, không error leakage và baseline không đổi. | NEWMAN |
+| TC-FR05-AI-009 | INCOMPLETE | Thiếu fixture tên số và điều kiện match. | Dùng sentinel chữ số không có trong baseline; 200, array rỗng và không 500. | NEWMAN |
+| TC-FR05-AI-010 | INVALID | Original dùng product-detail FR-06 ngoài FR-05. | Replacement FR-05: `search=` và query bị bỏ trống phải trả cùng dãy ID, 200 JSON array. | NEWMAN |
+| TC-FR05-AI-011 | INVALID | Original dùng product-detail FR-06 ngoài FR-05. | Replacement FR-05: gửi hai `search` values; status không phải 500, body JSON array, không error leakage và GET không đổi baseline. | NEWMAN |
+| TC-FR05-AI-012 | INVALID | Original dùng product-detail FR-06 ngoài FR-05 và có multi-status oracle. | Replacement FR-05: `search=%70hone` và `search=phone` phải trả cùng status 200 và cùng dãy ID sau percent-decoding. | NEWMAN |
+| TC-FR05-AI-013 | INVALID | Original dùng product-detail FR-06 ngoài FR-05 và có multi-status oracle. | Replacement FR-05: hai sentinel SQLi boolean true/false phải cùng 200, cùng array, không mở rộng tới baseline và không lộ lỗi DB. | NEWMAN |
+| TC-FR05-AI-014 | INVALID | Original là product detail FR-06. | Replacement FR-05: search response phải 200 và `Content-Type` chứa `application/json`. | NEWMAN |
+| TC-FR05-AI-015 | INVALID | Original là product detail FR-06 và có multi-status oracle. | Replacement FR-05: unique raw HTML sentinel không xuất hiện trong serialized product JSON; 200 array và cardinality không vượt baseline. | NEWMAN |
+| TC-FR05-AI-016 | VALID | Tautology payload là black-box SEC-05 probe phù hợp. | So với baseline và sentinel literal; 200 array, không mở rộng tới toàn bộ baseline, không có SQL error token. | NEWMAN |
+| TC-FR05-AI-017 | INCOMPLETE | Original cho phép 200/400 và không chốt body. | Chốt 200 JSON array; union payload không làm cardinality vượt baseline và body không lộ schema/SQL error. | NEWMAN |
+| TC-FR05-AI-018 | INCOMPLETE | `pg_sleep` phụ thuộc DB và ngưỡng 1 giây phụ thuộc môi trường. | Giữ như thiết kế nghiên cứu timing, không có oracle black-box ổn định khi contract không xác nhận PostgreSQL hay latency budget. | EXCLUDED |
+| TC-FR05-AI-019 | VALID | Comment syntax có thể kiểm bằng cardinality và error leakage. | 200 JSON array, không nhiều hơn baseline, không chứa SQL syntax/stack trace. | NEWMAN |
+| TC-FR05-AI-020 | INCOMPLETE | JSON không chứng minh script có thực thi trong DOM. | Phần API duy nhất: 200 array, unique script sentinel không bị phản chiếu và không mở rộng kết quả; DOM được tách sang manual rows. | NEWMAN |
+| TC-FR05-AI-021 | INCOMPLETE | Escape/sanitize là thuộc tính của consumer HTML, không phải array JSON. | Mở trang search với event-handler sentinel; payload chỉ là text, không tạo element/event handler, chỉ một `h1`, empty state xuất hiện. | BROWSER-MANUAL |
+| TC-FR05-AI-022 | INCOMPLETE | `javascript:` chỉ nguy hiểm tại DOM/URL sink. | Mở browser với unique `javascript:` keyword; loading xuất hiện trước response, sau đó empty state, một `h1`, không navigation/script execution. | BROWSER-MANUAL |
+| TC-FR05-AI-023 | INCOMPLETE | Contract không nêu giới hạn 5000 ký tự và AI cho hai status. | Status không phải 500, body JSON, không error leakage và GET không đổi baseline; status thực tế ghi sau execution. | NEWMAN |
+| TC-FR05-AI-024 | INCOMPLETE | “Không lộ file” lệch data flow của search. | Percent-decode null byte safely: status không phải 500, body JSON array, không stack trace/path leakage và baseline không đổi. | NEWMAN |
+| TC-FR05-AI-025 | VALID | UTF-8 JSON là oracle trực tiếp. | Unique emoji sentinel: 200, valid UTF-8 JSON array, length 0. | NEWMAN |
+| TC-FR05-AI-026 | VALID | Integer ID là schema assertion ổn định. | Baseline 200; từng `id` là positive integer. | NEWMAN |
+| TC-FR05-AI-027 | VALID | Non-empty product name là schema invariant. | Baseline 200; từng `name` là non-empty string. | NEWMAN |
+| TC-FR05-AI-028 | VALID | Positive numeric price là schema invariant. | Baseline 200; từng `price` là finite number lớn hơn 0. | NEWMAN |
+| TC-FR05-AI-029 | VALID | Description type có thể kiểm trực tiếp. | Baseline 200; từng `description` là string. | NEWMAN |
+| TC-FR05-AI-030 | VALID | `imageUrl` string có thể kiểm trực tiếp; format URL không được contract yêu cầu. | Baseline 200; từng `imageUrl` là string, không thêm URL-format oracle. | NEWMAN |
+| TC-FR05-AI-031 | VALID | `category_id` integer là schema assertion. | Baseline 200; từng `category_id` là integer. | NEWMAN |
+| TC-FR05-AI-032 | INVALID | Original kiểm object detail FR-06 và “exactly six fields” quá cứng. | Replacement FR-05: list là array; mỗi item chứa ít nhất sáu required fields, cho phép metadata bổ sung. | NEWMAN |
+| TC-FR05-AI-033 | VALID | Content-Type là response contract trực tiếp. | Baseline 200 và media type chuẩn hóa bằng `application/json`. | NEWMAN |
+| TC-FR05-AI-034 | VALID | Sentinel không tồn tại tạo empty-array oracle xác định. | Unique no-match sentinel trả 200 và đúng `[]`. | NEWMAN |
+| TC-FR05-AI-035 | INCOMPLETE | Denylist gốc chưa gắn data contract và chưa nói nested fields. | Recursively kiểm response không có key case-insensitive `password`, `secret`, `token`, `internal_id`; 200 JSON array. | NEWMAN |
+
+## 2. Authoritative human-designed inventory (10 cases)
+
+> Với case kết hợp API/UI, cột oracle ghi rõ nửa API được NEWMAN nào đảm nhiệm; ID của dòng này chỉ đại diện một execution class.
+
+| ID | Final corrected scenario and deterministic oracle | Execution class | Why AI missed it |
 | --- | --- | --- | --- |
-| 1 | TC-FR05-AI-001 | [Manual by user] | [Manual by user] |
-| 2 | TC-FR05-AI-002 | [Manual by user] | [Manual by user] |
-| 3 | TC-FR05-AI-003 | [Manual by user] | [Manual by user] |
-| 4 | TC-FR05-AI-004 | [Manual by user] | [Manual by user] |
-| 5 | TC-FR05-AI-005 | [Manual by user] | [Manual by user] |
-| 6 | TC-FR05-AI-006 | [Manual by user] | [Manual by user] |
-| 7 | TC-FR05-AI-007 | [Manual by user] | [Manual by user] |
-| 8 | TC-FR05-AI-008 | [Manual by user] | [Manual by user] |
-| 9 | TC-FR05-AI-009 | [Manual by user] | [Manual by user] |
-| 10 | TC-FR05-AI-010 | [Manual by user] | [Manual by user] |
-| 11 | TC-FR05-AI-011 | [Manual by user] | [Manual by user] |
-| 12 | TC-FR05-AI-012 | [Manual by user] | [Manual by user] |
-| 13 | TC-FR05-AI-013 | [Manual by user] | [Manual by user] |
-| 14 | TC-FR05-AI-014 | [Manual by user] | [Manual by user] |
-| 15 | TC-FR05-AI-015 | [Manual by user] | [Manual by user] |
-| 16 | TC-FR05-AI-016 | [Manual by user] | [Manual by user] |
-| 17 | TC-FR05-AI-017 | [Manual by user] | [Manual by user] |
-| 18 | TC-FR05-AI-018 | [Manual by user] | [Manual by user] |
-| 19 | TC-FR05-AI-019 | [Manual by user] | [Manual by user] |
-| 20 | TC-FR05-AI-020 | [Manual by user] | [Manual by user] |
-| 21 | TC-FR05-AI-021 | [Manual by user] | [Manual by user] |
-| 22 | TC-FR05-AI-022 | [Manual by user] | [Manual by user] |
-| 23 | TC-FR05-AI-023 | [Manual by user] | [Manual by user] |
-| 24 | TC-FR05-AI-024 | [Manual by user] | [Manual by user] |
-| 25 | TC-FR05-AI-025 | [Manual by user] | [Manual by user] |
-| 26 | TC-FR05-AI-026 | [Manual by user] | [Manual by user] |
-| 27 | TC-FR05-AI-027 | [Manual by user] | [Manual by user] |
-| 28 | TC-FR05-AI-028 | [Manual by user] | [Manual by user] |
-| 29 | TC-FR05-AI-029 | [Manual by user] | [Manual by user] |
-| 30 | TC-FR05-AI-030 | [Manual by user] | [Manual by user] |
-| 31 | TC-FR05-AI-031 | [Manual by user] | [Manual by user] |
-| 32 | TC-FR05-AI-032 | [Manual by user] | [Manual by user] |
-| 33 | TC-FR05-AI-033 | [Manual by user] | [Manual by user] |
-| 34 | TC-FR05-AI-034 | [Manual by user] | [Manual by user] |
-| 35 | TC-FR05-AI-035 | [Manual by user] | [Manual by user] |
-
----
-
-### Audit kết luận chi tiết
-
-> Quy ước: **VALID** = mục tiêu và oracle kiểm thử được; **INCOMPLETE** = có ý đúng nhưng oracle, dữ liệu hoặc phạm vi chưa đủ; **INVALID** = không phù hợp đặc tả hoặc khẳng định sai.
-
-| STT | Nhãn | Lý do kỹ thuật |
-|---:|---|---|
-| 1 | VALID | Baseline đúng endpoint; cần xác nhận schema theo đặc tả. |
-| 2 | INCOMPLETE | Không chứng minh DB có `phone`; cần fixture sản phẩm chứa từ khóa và quy tắc match chính thức. |
-| 3 | VALID | Empty result là hành vi hợp lệ; UI empty-state cần kiểm ở lớp frontend riêng. |
-| 4 | INCOMPLETE | Cho phép đồng thời toàn bộ hoặc `[]` nên không có oracle duy nhất; phải chốt contract. |
-| 5 | INCOMPLETE | Status 200 hợp lý nhưng “sản phẩm phù hợp” chưa định nghĩa; cần kiểm không crash và `[]` nếu không match. |
-| 6 | INCOMPLETE | Cần fixture tên tiếng Việt và quy tắc accent/case; nếu không, không thể kết luận kết quả. |
-| 7 | INCOMPLETE | Cho phép 200/400 nhưng thiếu giới hạn chính thức, status/body lỗi và đo không crash. |
-| 8 | INCOMPLETE | Chưa chốt trim hay exact-match; cần contract rõ và kiểm query đã decode đúng. |
-| 9 | INCOMPLETE | 200/`[]` hợp lệ nhưng thiếu oracle khi tên sản phẩm là số và quy tắc tìm kiếm. |
-| 10 | VALID | ID fixture tồn tại, response object và các field bắt buộc là oracle kiểm thử được. |
-| 11 | VALID | ID 0 không hợp lệ/không tồn tại; 404 phù hợp resource lookup. |
-| 12 | INCOMPLETE | 400 hoặc 404 đều được chấp nhận; cần chốt validation contract. |
-| 13 | INCOMPLETE | 400 hoặc 404 không đủ nhất quán để kiểm tự động; phải chọn một mã lỗi. |
-| 14 | VALID | ID lớn không tồn tại có oracle 404 rõ ràng. |
-| 15 | INCOMPLETE | 400/404 đều được chấp nhận; cần quy định integer validation. |
-| 16 | VALID | Payload phải không biến thành tautology; kiểm thêm số lượng/kết quả baseline để phát hiện rò DB. |
-| 17 | VALID | Union payload phải không truy xuất cột/bảng khác; 200 an toàn hoặc 400 đều có thể chấp nhận. |
-| 18 | INCOMPLETE | Ngưỡng `<1s` phụ thuộc môi trường; cần baseline/timeout và xác nhận DB PostgreSQL trước khi dùng `pg_sleep`. |
-| 19 | VALID | Kiểm đúng chống phá câu SQL và không 500; nên kiểm response schema nữa. |
-| 20 | INCOMPLETE | API JSON không tự render HTML; phải kiểm UI sink/DOM, không chỉ yêu cầu `[]`. |
-| 21 | INCOMPLETE | Tương tự TC20; sanitize thuộc response không được định nghĩa và XSS cần kiểm ở consumer. |
-| 22 | INCOMPLETE | `javascript:` không phải XSS nếu chỉ là query; cần kiểm URL/DOM sink cụ thể. |
-| 23 | INCOMPLETE | 200/400 quá rộng; thiếu giới hạn, timeout, body lỗi và giới hạn tài nguyên. |
-| 24 | INCOMPLETE | Null byte trong query không lộ file là oracle lệch ngữ cảnh; cần xác định expected search/error và không 500. |
-| 25 | VALID | Kiểm UTF-8, status 200, JSON hợp lệ và không crash; kết quả `[]` cần fixture xác nhận. |
-| 26 | VALID | Kiểm integer JSON là assertion schema rõ ràng trên danh sách. |
-| 27 | VALID | Kiểm string không rỗng là assertion hợp lệ nếu đặc tả bắt buộc name. |
-| 28 | VALID | Kiểm number dương phù hợp invariant giá sản phẩm. |
-| 29 | VALID | Kiểm kiểu string đúng theo schema. |
-| 30 | VALID | Kiểm kiểu string đúng theo schema; nên bổ sung URL format nếu contract yêu cầu. |
-| 31 | VALID | Kiểm integer category_id đúng schema; cần xử lý sản phẩm không có category nếu được phép. |
-| 32 | INCOMPLETE | “Chính xác 6 thuộc tính” quá cứng nếu API cho phép metadata; cần phân biệt required và additional fields. |
-| 33 | VALID | Content-Type JSON là header contract kiểm tự động được. |
-| 34 | VALID | Empty state array và length 0 là oracle rõ với keyword fixture không tồn tại. |
-| 35 | INCOMPLETE | Danh sách field nhạy cảm chưa theo data contract; cần allowlist/denylist chính thức và kiểm đệ quy. |
-
-## 2. Test Cases Tự Bổ Sung (Human-designed >= 5 cases)
-
-| Test Case ID | Tên kịch bản | Loại (Bảo mật / Chuyển trạng thái / Biên) | Input Parameters & Steps | Expected Result | Lý do AI bỏ sót |
-| --- | --- | --- | --- | --- | --- |
-| TC-FR05-HUMAN-001 | SQLi Blind Boolean-based qua tham số search | Bảo mật (SEC-05) | `GET /api/products?search=phone' AND 1=1--` vs `search=phone' AND 1=2--` | Cả 2 request đều trả về kết quả giống nhau (không rò rỉ boolean SQL injection) | AI thường bỏ sót các kỹ thuật Blind SQLi phức tạp cần so sánh 2 kết quả phản hồi |
-| TC-FR05-HUMAN-002 | Reflected XSS trong thẻ H1/Empty State UI rendering | Bảo mật (SEC-04) | `GET /api/products?search=<svg/onload=alert(1)>` | Response JSON được escape an toàn; UI khi nhận JSON không thi hành SVG script | AI chỉ chú ý đến JSON response mà không đánh giá ngữ cảnh render UI của empty state (README FR-05) |
-| TC-FR05-HUMAN-003 | Parameter Pollution (HPP) trên query `search` | Edge / Security | `GET /api/products?search=phone&search=laptop` | Server xử lý tham số đầu tiên hoặc ghép nối hợp lý, không ném ngoại lệ 500 | AI ít khi kiểm thử việc truyền trùng lặp tên query parameter (HTTP Parameter Pollution) |
-| TC-FR05-HUMAN-004 | Lấy sản phẩm với ID dạng Hexadecimal / Path Traversal | Bảo mật / Path | `GET /api/products/0x1` hoặc `GET /api/products/..%2f1` | Trả về 400 Bad Request hoặc 404 Not Found | AI bỏ sót kết hợp giữa mã hóa URL Hexadecimal và Path Traversal trong đường dẫn URL |
-| TC-FR05-HUMAN-005 | Kiểm tra tính nhất quán giữa danh sách và chi tiết sản phẩm | Data Integrity | 1. Gọi `GET /api/products`<br>2. Lấy `price`, `name` của product ID=1<br>3. Gọi `GET /api/products/1` và so sánh | Thông tin `name`, `price`, `category_id` khớp chính xác 100% giữa 2 endpoint | AI sinh testcase đơn lẻ cho từng endpoint mà không kết hợp liên kết dữ liệu giữa 2 API trong cùng FR |
-
-### Bổ sung human-designed tập trung vào kết hợp search rỗng, SQLi và HTML safety
-
-| ID | Kịch bản và cách thực hiện | Expected result | Vì sao AI thường bỏ sót |
-|---|---|---|---|
-| TC-FR05-HUMAN-006 | Gửi `search=` rồi render empty state; lặp với `search=' OR '1'='1` | Không mở rộng kết quả; UI escape text, không tạo HTML/script; không 500 | AI tách security khỏi UI và không theo dõi dữ liệu qua nhiều lớp. |
-| TC-FR05-HUMAN-007 | Gửi `search=   <img src=x onerror=alert(1)>   ` sau trim | Kết quả/empty state nhất quán; payload chỉ là text, không event thực thi | AI thường kiểm payload nguyên dạng, bỏ qua biến thể whitespace + normalization. |
-| TC-FR05-HUMAN-008 | Gửi đồng thời `search=&search=<svg/onload=alert(1)>` | Server có quy tắc duplicate rõ; không SQLi/XSS và không phản hồi 500 | AI ít sinh HPP kết hợp payload với empty value. |
-| TC-FR05-HUMAN-009 | Gửi `search=%27%20OR%201%3D1--%3Cscript%3E` rồi đưa response vào template HTML | Không trả toàn bộ DB; DOM không có node script/event handler | AI dừng ở HTTP response, không kiểm tra sink và URL decoding. |
-| TC-FR05-HUMAN-010 | So sánh `/products?search=` với `/products` và kiểm escape chuỗi tìm kiếm trong empty-state | Semantics đã chốt (thường cùng baseline); không phản xạ raw query vào HTML | AI cho phép nhiều expected result nên bỏ sót regression giữa baseline và rendering. |
+| TC-FR05-HUMAN-001 | Gửi hai sentinel blind-SQLi chỉ khác `1=1`/`1=2`; cả hai 200, cùng JSON array, không lớn hơn baseline, không SQL error. | NEWMAN | Cần so sánh vi sai nhiều response. |
+| TC-FR05-HUMAN-002 | Browser search unique SVG sentinel: hiển thị nguyên văn như text, không có `svg`/event node, đúng một `h1`, loading rồi empty state. Nửa API non-reflection do AI-015 kiểm. | BROWSER-MANUAL | AI thường dừng ở JSON và không kiểm DOM sink. |
+| TC-FR05-HUMAN-003 | Duplicate `search=known&search=other`: status không phải 500, body JSON array, không error leakage và GET không đổi baseline. | NEWMAN | HTTP parameter pollution thường bị bỏ sót. |
+| TC-FR05-HUMAN-004 | Original gọi product-detail/path traversal FR-06; giữ làm provenance nhưng không thuộc endpoint FR-05 được chọn. | EXCLUDED | AI mở rộng nhầm sang path endpoint lân cận. |
+| TC-FR05-HUMAN-005 | Original so sánh list với product detail FR-06; không được tính hay chạy dưới FR-05. | EXCLUDED | AI gộp hai FR thành một data-flow case. |
+| TC-FR05-HUMAN-006 | Browser lần lượt search empty và SQLi sentinel; keyword chỉ là text, một `h1`, loading/empty state đúng, không script. Nửa API empty normalization do AI-010 và SQLi cardinality do AI-016 kiểm. | BROWSER-MANUAL | Kết hợp nhiều lớp và nhiều request. |
+| TC-FR05-HUMAN-007 | Browser search whitespace + image event sentinel; text được giữ an toàn, không image/event handler, đúng một `h1`, kết thúc ở empty state. Nửa API invariant do AI-008 kiểm. | BROWSER-MANUAL | Normalization trước DOM sink khó được sinh tự động. |
+| TC-FR05-HUMAN-008 | Duplicate `search=` và SVG sentinel: status không phải 500, JSON array không phản chiếu raw sentinel, không mở rộng hơn baseline. | NEWMAN | Kết hợp HPP với security payload. |
+| TC-FR05-HUMAN-009 | Browser dùng percent-encoded SQLi + script sentinel; decoded keyword chỉ là text, không script/event node, một `h1`. Nửa API decoding/differential/non-reflection do AI-012/013/015 kiểm. | BROWSER-MANUAL | Cần theo data flow từ URL decoder tới template. |
+| TC-FR05-HUMAN-010 | Browser so sánh empty query và omitted query: cùng product state, keyword không phản xạ raw HTML, loading ổn định và đúng một `h1`. Nửa API equality do AI-010 kiểm. | BROWSER-MANUAL | AI gốc để semantics rỗng mơ hồ. |

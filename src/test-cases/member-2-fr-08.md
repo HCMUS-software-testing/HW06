@@ -62,106 +62,61 @@
 
 ---
 
-### Bảng Kiểm Toán Audit (35 Test Cases AI Sinh - FR-08)
+### Authoritative audit and final AI inventory
 
-| STT | Test Case ID | Trạng thái Audit | Lý do Audit & Hướng sửa đổi |
+> **Fixture contract cho mọi dòng NEWMAN:** tạo user/session mới `u08-<case>-<runId>` và cart riêng; tính `serverTotal = Σ(current price × quantity)` từ fixture ngay trước checkout. Success oracle là 200 JSON, đúng một order mới `pending` có `total_amount = serverTotal`, rồi cart rỗng. Rejection oracle nêu status cụ thể, JSON error, không order mới và cart giữ nguyên. Không dùng fixed user/cart/order ID.
+
+| ID | Verdict | Technical reason | Final correction | Execution class |
+| --- | --- | --- | --- | --- |
+| TC-FR08-AI-001 | VALID | Happy path đúng contract nhưng thiếu isolated fixture. | Fresh populated cart; body `total_amount=serverTotal`, unique valid address; áp dụng success oracle chung. | NEWMAN |
+| TC-FR08-AI-002 | VALID | Empty-cart rejection có state oracle rõ. | Fresh user có cart rỗng; body xác định; 400 JSON, zero new order, cart vẫn rỗng. | NEWMAN |
+| TC-FR08-AI-003 | INCOMPLETE | Contract không có stock field, stock mutation endpoint hay fixture tạo out-of-stock. | Giữ thiết kế stock race nhưng không chạy/không chọn 400 hay 409 khi SUT không có black-box stock hook. | EXCLUDED |
+| TC-FR08-AI-004 | VALID | Empty required address có deterministic rejection. | Fresh populated cart; `shipping_address=""`; 400, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-005 | VALID | Whitespace-only phải không tạo địa chỉ giao hàng hữu dụng. | Fresh populated cart; address ba spaces; 400, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-006 | INCOMPLETE | “Thiếu chi tiết đường” không được contract định nghĩa và AI cho hai status. | Replacement: bỏ hẳn `shipping_address`; 400, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-007 | INVALID | `phone` không thuộc checkout body đã document. | Replacement: `shipping_address:null`; 400, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-008 | INCOMPLETE | Không có max length 500 trong contract. | Replacement type boundary: `shipping_address` là object; 400, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-009 | VALID | Server bắt buộc không tin client total. | Fresh cart có known `serverTotal`; gửi `total_amount=1`; 200, order total đúng `serverTotal`, cart rỗng. | NEWMAN |
+| TC-FR08-AI-010 | INVALID | Coupon `SAVE10` là FR-09, không có trong selected contract. | Không sửa thành giả định coupon khác; giữ provenance và loại khỏi FR-08 execution. | EXCLUDED |
+| TC-FR08-AI-011 | INVALID | `BIGBUY` và fixed discount không được document. | Loại khỏi selected FR-08 execution; không tuyên bố kết quả. | EXCLUDED |
+| TC-FR08-AI-012 | INVALID | Coupon expiry/C2 không thuộc contract đã xác minh. | Loại khỏi selected FR-08 execution; cần FR-09 contract riêng. | EXCLUDED |
+| TC-FR08-AI-013 | INVALID | Coupon minimum/C3 không thuộc contract đã xác minh. | Loại khỏi selected FR-08 execution; cần FR-09 fixture/rule riêng. | EXCLUDED |
+| TC-FR08-AI-014 | INVALID | `max_uses_per_user`/C5 không thuộc contract. | Loại khỏi selected FR-08 execution; không fabricate coupon fixture. | EXCLUDED |
+| TC-FR08-AI-015 | INVALID | `coupon_code` không nằm trong documented body. | Loại khỏi selected FR-08 execution; không đặt multi-status oracle cho hành vi ngoài contract. | EXCLUDED |
+| TC-FR08-AI-016 | INCOMPLETE | Original đúng cart-clear rule nhưng thiếu isolated pre/postcondition. | Fresh populated cart; checkout 200; exactly one order với `serverTotal`; follow-up cart read là empty. | NEWMAN |
+| TC-FR08-AI-017 | VALID | Initial `pending` là FR-10 invariant. | Fresh populated cart; 200; newly created order được xác định bằng run marker có status đúng `pending`, cart rỗng. | NEWMAN |
+| TC-FR08-AI-018 | INVALID | `notes` không thuộc documented body/persistence contract. | Giữ provenance và loại khỏi execution tới khi có field contract. | EXCLUDED |
+| TC-FR08-AI-019 | VALID | Missing auth phải bị chặn trước mutation. | Fresh populated cart; không Authorization; 401 JSON, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-020 | VALID | Invalid JWT có 401 oracle. | Fresh populated cart; malformed/signed-invalid token; 401, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-021 | VALID | Expired JWT là auth boundary riêng. | Fresh populated cart; controlled expired token; 401, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-022 | VALID | Empty bearer là credentials không hợp lệ. | Fresh populated cart; `Authorization: Bearer `; 401, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-023 | INCOMPLETE | Original thiếu hai user/cart fixtures nên chưa chứng minh ownership. | Fresh users A/B có totals khác nhau; token A checkout; 200 order chỉ chứa A cart/`serverTotalA`, A cart empty, B cart/order unchanged. | NEWMAN |
+| TC-FR08-AI-024 | INCOMPLETE | Original cho 200/400 và không có persistence oracle. | Fresh cart; unique quote/SQL sentinel trong address; 200, exactly one order, literal address round-trips, total đúng server, không SQL error. | NEWMAN |
+| TC-FR08-AI-025 | INCOMPLETE | API response không chứng minh HTML rendering an toàn. | Checkout fixture address chứa unique script sentinel, sau đó browser admin/order view phải render text, không script/event node; API setup không được tính là DOM proof. | BROWSER-MANUAL |
+| TC-FR08-AI-026 | INVALID | GET không thuộc selected `POST /api/checkout` execution scope. | Giữ unsupported-method idea làm provenance nhưng không tạo NEWMAN assertion ngoài allowed method. | EXCLUDED |
+| TC-FR08-AI-027 | VALID | Malformed JSON phải bị parser chặn. | Fresh populated cart; `Content-Type: application/json`, raw body thiếu closing brace; 400 JSON, zero order, cart unchanged. | NEWMAN |
+| TC-FR08-AI-028 | INCOMPLETE | Unknown-field policy không được contract chốt; 200/400 là mơ hồ. | Không tự đặt ignore/reject policy cho `role`; loại khỏi execution, privilege escalation được kiểm contract-grounded ở FR-18. | EXCLUDED |
+| TC-FR08-AI-029 | INCOMPLETE | Original cho reject hoặc ignore, trái server-recalculation rule. | Fresh cart; client total âm; 200, order total đúng positive `serverTotal`, exactly one order, cart empty. | NEWMAN |
+| TC-FR08-AI-030 | INCOMPLETE | Original cho hai outcome và thiếu state oracle. | Fresh cart; client total string `"abc"`; 200, server ignores it, order total đúng `serverTotal`, cart empty. | NEWMAN |
+| TC-FR08-AI-031 | INCOMPLETE | `id` hoặc `order_id` là field-name oracle mơ hồ. | Fresh cart; 200 JSON; postcondition tìm đúng một new order bằng unique address/run marker và positive integer server-side ID, không phụ thuộc response alias. | NEWMAN |
+| TC-FR08-AI-032 | VALID | `pending` là deterministic state oracle. | Fresh cart; 200; exactly one order, status `pending`, total server-calculated, cart empty. | NEWMAN |
+| TC-FR08-AI-033 | VALID | Total response cần gắn exact cart fixture. | Fresh cart; 200; persisted `total_amount` là finite positive number bằng `serverTotal`, cart empty. | NEWMAN |
+| TC-FR08-AI-034 | VALID | JSON media type là header assertion trực tiếp. | Fresh cart; success oracle chung và response `Content-Type` chứa `application/json`. | NEWMAN |
+| TC-FR08-AI-035 | INCOMPLETE | Cart precondition chưa được cô lập nhưng recalculation rule rõ. | Fresh non-empty cart; client total 0; 200, exactly one order total bằng nonzero `serverTotal`, cart empty. | NEWMAN |
+
+## 2. Authoritative human-designed inventory (10 cases)
+
+> Barrier notation: `READY-A/B` means both sessions have completed setup; `RELEASE-X` permits the named mutation; checkout starts only after the stated barrier. Each runnable case uses a fresh user/cart and verifies order count, final cart, and exact server-calculated total. Stock rows are excluded because the public SUT exposes neither stock state nor a stock mutation hook.
+
+| ID | Final corrected scenario and deterministic oracle | Execution class | Why AI missed it |
 | --- | --- | --- | --- |
-| 1 | TC-FR08-AI-001 | [Manual by user] | [Manual by user] |
-| 2 | TC-FR08-AI-002 | [Manual by user] | [Manual by user] |
-| 3 | TC-FR08-AI-003 | [Manual by user] | [Manual by user] |
-| 4 | TC-FR08-AI-004 | [Manual by user] | [Manual by user] |
-| 5 | TC-FR08-AI-005 | [Manual by user] | [Manual by user] |
-| 6 | TC-FR08-AI-006 | [Manual by user] | [Manual by user] |
-| 7 | TC-FR08-AI-007 | [Manual by user] | [Manual by user] |
-| 8 | TC-FR08-AI-008 | [Manual by user] | [Manual by user] |
-| 9 | TC-FR08-AI-009 | [Manual by user] | [Manual by user] |
-| 10 | TC-FR08-AI-010 | [Manual by user] | [Manual by user] |
-| 11 | TC-FR08-AI-011 | [Manual by user] | [Manual by user] |
-| 12 | TC-FR08-AI-012 | [Manual by user] | [Manual by user] |
-| 13 | TC-FR08-AI-013 | [Manual by user] | [Manual by user] |
-| 14 | TC-FR08-AI-014 | [Manual by user] | [Manual by user] |
-| 15 | TC-FR08-AI-015 | [Manual by user] | [Manual by user] |
-| 16 | TC-FR08-AI-016 | [Manual by user] | [Manual by user] |
-| 17 | TC-FR08-AI-017 | [Manual by user] | [Manual by user] |
-| 18 | TC-FR08-AI-018 | [Manual by user] | [Manual by user] |
-| 19 | TC-FR08-AI-019 | [Manual by user] | [Manual by user] |
-| 20 | TC-FR08-AI-020 | [Manual by user] | [Manual by user] |
-| 21 | TC-FR08-AI-021 | [Manual by user] | [Manual by user] |
-| 22 | TC-FR08-AI-022 | [Manual by user] | [Manual by user] |
-| 23 | TC-FR08-AI-023 | [Manual by user] | [Manual by user] |
-| 24 | TC-FR08-AI-024 | [Manual by user] | [Manual by user] |
-| 25 | TC-FR08-AI-025 | [Manual by user] | [Manual by user] |
-| 26 | TC-FR08-AI-026 | [Manual by user] | [Manual by user] |
-| 27 | TC-FR08-AI-027 | [Manual by user] | [Manual by user] |
-| 28 | TC-FR08-AI-028 | [Manual by user] | [Manual by user] |
-| 29 | TC-FR08-AI-029 | [Manual by user] | [Manual by user] |
-| 30 | TC-FR08-AI-030 | [Manual by user] | [Manual by user] |
-| 31 | TC-FR08-AI-031 | [Manual by user] | [Manual by user] |
-| 32 | TC-FR08-AI-032 | [Manual by user] | [Manual by user] |
-| 33 | TC-FR08-AI-033 | [Manual by user] | [Manual by user] |
-| 34 | TC-FR08-AI-034 | [Manual by user] | [Manual by user] |
-| 35 | TC-FR08-AI-035 | [Manual by user] | [Manual by user] |
-
----
-
-### Audit kết luận chi tiết
-
-> **VALID**: oracle phù hợp contract; **INCOMPLETE**: hướng kiểm thử đúng nhưng còn thiếu fixture/oracle/điều kiện; **INVALID**: kỳ vọng trái đặc tả hoặc kiểm sai phạm vi API.
-
-| STT | Nhãn | Lý do kỹ thuật |
-|---:|---|---|
-| 1 | VALID | Happy path có auth, body và trạng thái pending; cần fixture cart trị giá 200k. |
-| 2 | VALID | Cart rỗng phải không tạo order; 400 là oracle hợp lý. |
-| 3 | INCOMPLETE | Body không mô tả sản phẩm/số lượng vượt kho; cần fixture và chốt 400 hay 409. |
-| 4 | VALID | Required shipping address rỗng phải bị từ chối. |
-| 5 | VALID | Whitespace-only phải được trim/validate và trả lỗi. |
-| 6 | INCOMPLETE | Đặc tả chỉ nhận chuỗi address; “đủ chi tiết” và 200/400 chưa có contract rõ. |
-| 7 | INVALID | `phone` không thuộc schema body đã nêu; không thể yêu cầu validation riêng nếu đặc tả không hỗ trợ field này. |
-| 8 | INCOMPLETE | Có thể là giới hạn hợp lệ nhưng thiếu max length chính thức và response oracle. |
-| 9 | VALID | Không tin total từ client; phải tính từ cart/DB và so sánh chính xác. |
-| 10 | INVALID | `SAVE10`, min value và coupon schema không được chứng minh trong FR-08; test phụ thuộc fixture/đặc tả ngoài. |
-| 11 | INVALID | Tương tự TC10; mã `BIGBUY` và mức giảm không thuộc contract đã cung cấp. |
-| 12 | INVALID | `EXPIRED` và C2 không có trong FR-08 contract; đây là giả định dữ liệu. |
-| 13 | INVALID | Min-order coupon rule không được đặc tả; expected 400 không có cơ sở. |
-| 14 | INVALID | max_uses_per_user/C5 không được nêu trong API contract. |
-| 15 | INVALID | Coupon code không thuộc body chuẩn đã nêu; cần tài liệu coupon riêng trước khi test. |
-| 16 | INCOMPLETE | Có thể là invariant nghiệp vụ nhưng cần xác nhận GET cart và atomic transaction trong đặc tả. |
-| 17 | VALID | Order mới phải bắt đầu `pending` theo FR-10; cần kiểm cả DB side effect. |
-| 18 | INCOMPLETE | “Ghi chú đơn hàng” chưa có field/contract; cần nêu body và expected persistence. |
-| 19 | VALID | Thiếu Authorization phải trả 401 và không tạo order. |
-| 20 | VALID | Token sai/hết hạn/bearer rỗng là boundary auth; cần tách case để oracle rõ. |
-| 21 | INCOMPLETE | IDOR chưa có hai user/cart fixture và tiêu chí không tạo order; cần bổ sung. |
-| 22 | INVALID | SQLi trong `shipping_address` không chứng minh field được dùng SQL; nên test input handling riêng với contract rõ. |
-| 23 | INCOMPLETE | XSS chỉ có ý nghĩa khi address được render; API JSON không tự thực thi HTML, cần kiểm consumer UI. |
-| 24 | VALID | Unsupported method phải không tạo side effect; 405 cần phù hợp routing contract. |
-| 25 | INCOMPLETE | Thiếu Content-Type chưa nêu expected parser behavior; cần chốt 400/415 và header request. |
-| 26 | VALID | GET tới POST-only endpoint là method contract kiểm được. |
-| 27 | VALID | JSON syntax lỗi phải bị parser từ chối trước nghiệp vụ, thường 400. |
-| 28 | VALID | Mass-assignment field phải bị bỏ qua hoặc từ chối; không đổi quyền. |
-| 29 | INCOMPLETE | Nếu server tính lại total thì 200 có thể đúng, nhưng cần chốt validation và kiểm side effect. |
-| 30 | INCOMPLETE | Tương tự TC29; cần phân biệt reject type với ignore client total. |
-| 31 | VALID | Response phải có ID order dương và kiểu integer theo schema. |
-| 32 | VALID | `pending` là invariant trạng thái khởi tạo. |
-| 33 | VALID | Kiểu/giá trị total response phải phản ánh total đã tính; cần fixture cart. |
-| 34 | VALID | Content-Type `application/json` là header assertion rõ. |
-| 35 | INCOMPLETE | Cho phép 200 vì server bỏ qua total là hợp lý, nhưng phải xác nhận cart có hàng và không tạo duplicate. |
-
-## 2. Test Cases Tự Bổ Sung (Human-designed >= 5 cases)
-
-| Test Case ID | Tên kịch bản | Loại (Bảo mật / Chuyển trạng thái / Biên) | Input Parameters & Steps | Expected Result | Lý do AI bỏ sót |
-| --- | --- | --- | --- | --- | --- |
-| TC-FR08-HUMAN-001 | Race condition — Checkout khi giỏ hàng vừa bị xóa/thay đổi ở tab khác | Concurrent State | 1. Mở 2 tab trình duyệt cùng giỏ hàng<br>2. Tab 2 xóa sạch giỏ hàng<br>3. Tab 1 bấm Checkout | Trả về 400 Bad Request ("Giỏ hàng rỗng"), không tạo đơn hàng rỗng | AI thiếu khả năng mô phỏng hành vi đa tab/đa phiên của người dùng thực tế |
-| TC-FR08-HUMAN-002 | Race condition — Tồn kho bị giảm về 0 ngay trước thời điểm nhấn checkout | Concurrent Inventory | 1. User A chuẩn bị checkout sản phẩm X (còn 1 item trong kho)<br>2. User B checkout sản phẩm X thành công trước 1 giây<br>3. User A gửi request checkout | User A nhận lỗi 400/409 Conflict ("Sản phẩm hết hàng"), transaction rollback an toàn | AI không tự tạo được ngữ cảnh tranh chấp tài nguyên (Concurrency Race Condition) giữa 2 user |
-| TC-FR08-HUMAN-003 | Double-click / Concurrent submission (Idempotency) | Idempotency | Gửi 2 request `POST /api/checkout` đồng thời trong khoảng thời gian < 50ms với cùng token | Chỉ có đúng 1 đơn hàng được tạo (200 OK), request thứ 2 bị chặn hoặc báo 400 (do giỏ đã bị xóa sau request 1) | AI chỉ sinh các request độc lập đơn lẻ, không kiểm thử tần suất gửi trùng lặp tức thời |
-| TC-FR08-HUMAN-004 | Coupon stack attack — Cố gắng truyền mảng mã coupon | Security / Validation | Body: `{"shipping_address": "123 Le Loi", "coupon_code": ["SAVE10", "BIGBUY"]}` | Backend chỉ nhận 1 string coupon duy nhất hoặc từ chối 400 Bad Request, không cộng dồn mã | AI bỏ sót kiểm thử kiểu dữ liệu mảng (Array injection) trên trường coupon |
-| TC-FR08-HUMAN-005 | Sửa đổi giá sản phẩm giữa lúc thêm vào giỏ và lúc checkout | Stale Price / Integrity | 1. User thêm SP A (giá 100k) vào giỏ<br>2. Admin sửa giá SP A lên 200k trong CSDL<br>3. User thực hiện Checkout | Total amount đơn hàng được tính theo giá hiện tại trong DB (200k), không bị dùng giá cũ stale price | AI không tự xây dựng kịch bản kiểm thử tích hợp (Integration) liên vết giữa Admin CRUD và User Checkout |
-
-### Bổ sung human-designed về race condition và trạng thái đa phiên
-
-| ID | Kịch bản và cách thực hiện | Expected result | Vì sao AI thường bỏ sót |
-|---|---|---|---|
-| TC-FR08-HUMAN-006 | Tab A đọc cart có hàng; tab B xóa cart; ngay sau đó tab A POST checkout | 400, không tạo order, không trừ kho; transaction thấy state mới nhất | AI thường mô hình hóa request độc lập, không có timeline giữa các tab. |
-| TC-FR08-HUMAN-007 | User A giữ cart có 1 sản phẩm; User B mua item cuối cùng trước khi A checkout | A nhận 400/409; không tạo order một phần và không âm kho | AI bỏ qua tranh chấp tài nguyên liên user và atomic stock check. |
-| TC-FR08-HUMAN-008 | Hai POST checkout cùng user/token trong <50ms | Tối đa một order thành công; request còn lại lỗi idempotency/cart-empty; không double charge | AI thiên về happy path và không sinh cùng một mutation đồng thời. |
-| TC-FR08-HUMAN-009 | Tab A chuẩn bị checkout; tab B đổi quantity từ 1 xuống 0 rồi A gửi request | Server dùng cart tại commit time, trả lỗi rỗng/invalid; không dùng snapshot cũ | AI hiếm khi kiểm state thay đổi giữa đọc và ghi. |
-| TC-FR08-HUMAN-010 | Tab A checkout; tab B đổi coupon/địa chỉ trong lúc transaction A đang xử lý | Order dùng một snapshot nhất quán; không trộn giá/coupon/address giữa hai phiên | AI thường không kiểm consistency giữa nhiều field cập nhật cạnh tranh. |
+| TC-FR08-HUMAN-001 | Browser sessions A/B share one fresh user. At `READY-A/B`, B empties cart and confirms empty, then `RELEASE-A`; A clicks checkout. UI/API shows 400, zero order, cart remains empty. | BROWSER-MANUAL | Requires observable multi-tab ordering. |
+| TC-FR08-HUMAN-002 | Original requires stock=1 then another user consumes it. No documented stock field/mutation endpoint can establish or observe the barrier; no 400/409 is claimed. | EXCLUDED | Requires unavailable inventory control. |
+| TC-FR08-HUMAN-003 | Browser double-click after `READY-A`; capture both network requests. Exactly one is 200 and one is 400 cart-empty, exactly one order has `serverTotal`, final cart empty. | BROWSER-MANUAL | UI event and concurrent network observation. |
+| TC-FR08-HUMAN-004 | Coupon-array attack belongs to FR-09 and `coupon_code` is absent from the verified checkout body; no execution result is claimed. | EXCLUDED | Cross-feature schema assumption. |
+| TC-FR08-HUMAN-005 | Session A records old client total; session B changes cart quantity and confirms new `serverTotal`, then `RELEASE-A`. A submits stale total; 200 order uses new server total, exactly one order, cart empty. | NEWMAN | Requires state change between read and write. |
+| TC-FR08-HUMAN-006 | API sessions A/B: after `READY-A/B`, B deletes every cart item and verifies empty, then releases A checkout; 400, zero order, empty cart. | NEWMAN | Explicit callback barrier is uncommon in generated cases. |
+| TC-FR08-HUMAN-007 | Last-stock race remains valuable but no black-box stock hook/field exists; retain design without selecting 400 or 409 and without run claim. | EXCLUDED | Requires atomic inventory fixture. |
+| TC-FR08-HUMAN-008 | Two POSTs for one fresh cart are released together after `READY-A/B`; at most one 200, exactly one persisted order with `serverTotal`, final cart empty, no duplicate amount/order marker. | NEWMAN | Same-mutation concurrency needs synchronization. |
+| TC-FR08-HUMAN-009 | Session B removes the last cart item and verifies empty before releasing A POST; 400, zero order, cart empty. | NEWMAN | Tests commit-time state rather than stale UI state. |
+| TC-FR08-HUMAN-010 | A captures total/address, B changes cart quantity before `RELEASE-A`; A sends fixed documented address plus stale client total. 200 order uses one current cart snapshot and exact new `serverTotal`, cart empty; coupon behavior is intentionally removed. | NEWMAN | Multi-field snapshot consistency is rarely generated. |
