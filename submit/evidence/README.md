@@ -30,3 +30,5 @@ Không dùng ảnh console/Issue/Actions do AI hoặc HTML card dựng. Chỉ ch
 - [x] [DemoAgentSkill-HW06](https://youtu.be/1X8fNBIZYV0): video minh họa Agent Skill sinh test cho API.
 
 Mười ảnh GitHub Issue trong bảng đã được chụp trực tiếp bằng trình duyệt từ đúng các URL công khai; không dùng ảnh dựng hoặc thẻ HTML giả.
+
+Ghi chú: ảnh Newman/Actions là minh chứng lịch sử từ trước khi đổi tên workflow và collection sang MSSV `23127326`; vì vậy một số ảnh hiển thị “Member 4”. Không chỉnh sửa nội dung ảnh. Report/collection/workflow hiện tại đã dùng tên `23127326`.

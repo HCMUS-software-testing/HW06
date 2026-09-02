@@ -14,6 +14,8 @@ Các lần chạy khi push dùng `HW06_23127326_ci_demo_collection.json`. Bộ n
 
 Các liên kết dưới đây là run GitHub Actions công khai. Ảnh bắt buộc phải chụp từ đúng các trang này; không dùng thẻ trạng thái dựng sẵn.
 
+Lưu ý về tên lịch sử: các run và ảnh minh chứng được ghi nhận trước khi workflow được đổi tên từ `hw06-member4.yml` sang `.github/workflows/hw06-23127326.yml`, nên giao diện cũ có thể hiển thị “HW06 Member 4 Newman”. Đây là cùng branch/bài nộp và ảnh được giữ nguyên để bảo toàn bằng chứng gốc; workflow hiện tại dùng MSSV `23127326`.
+
 | Minh chứng | Commit | Lần chạy Actions | Kết quả mong đợi | Ảnh chụp |
 |---|---|---|---|---|
 | CI demo pass | [`90c2b7e`](https://github.com/HCMUS-software-testing/HW06/commit/90c2b7e6ff1cadd24f9d72300de34b646050cdba) | [33498533231](https://github.com/HCMUS-software-testing/HW06/actions/runs/33498533231) | 22/22 assertion pass | ![CI demo pass](evidence/github-actions-pass.png) |

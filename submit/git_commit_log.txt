@@ -1,0 +1,662 @@
+* commit 41388d66c4fcf082e9916b2c9d95c0d1aefd0a1e
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Wed Sep 2 00:58:23 2026 +0700
+| 
+|     docs: update PDF reports with latest changes
+| 
+|  submit/README.pdf                 | Bin 279924 -> 245408 bytes
+|  submit/ai-audit-report.pdf        | Bin 275659 -> 250948 bytes
+|  submit/ai-critique.pdf            | Bin 81520 -> 81520 bytes
+|  submit/bug-reports.pdf            | Bin 171404 -> 171404 bytes
+|  submit/cicd-report.pdf            | Bin 368576 -> 368576 bytes
+|  submit/failure-classification.pdf | Bin 169850 -> 169850 bytes
+|  submit/main-report.pdf            | Bin 351132 -> 327025 bytes
+|  7 files changed, 0 insertions(+), 0 deletions(-)
+| 
+* commit b0f11193fae1a044cf926a94b882e02f6d4c6163
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Wed Sep 2 00:53:40 2026 +0700
+| 
+|     docs: add comprehensive commit log for submission artifacts and updates
+|     
+|     - Added PDF versions of various reports including README, AI audit, critique, bug reports, CI/CD, and main report.
+|     - Reconciled submission artifacts with spreadsheet summary, updating test cases and documentation.
+|     - Updated README and reports, added video demo, and bug report.
+|     - Introduced CI configuration for submission.
+|     - Finalized API testing submission package, including updates to commit logs and documentation.
+|     - Renamed submission artifacts to include student ID for clarity.
+|     - Moved reports to the root of the submission directory for better accessibility.
+|     - Documented evidence of CI runs and linked verified GitHub bug issues.
+|     - Added screenshots and evidence for CI and Newman executions.
+|     - Recorded final commit log and ensured all documentation is up to date.
+| 
+|  submit/23127326_test-cases.xlsx | Bin 23699 -> 23730 bytes
+|  submit/README.md                |   6 +-
+|  submit/README.pdf               | Bin 234533 -> 279924 bytes
+|  submit/ai-audit-report.md       |  20 ++-
+|  submit/ai-audit-report.pdf      | Bin 232359 -> 275659 bytes
+|  submit/git-commit-log.txt       |  28 ----
+|  submit/main-report.md           |   8 +-
+|  submit/main-report.pdf          | Bin 322970 -> 351132 bytes
+|  submit/test-cases/23127326.csv  | 282 +++++++++++++++++++-------------------
+|  submit/test-cases/23127326.json | 252 +++++++++++++++++-----------------
+|  10 files changed, 293 insertions(+), 303 deletions(-)
+| 
+* commit 7e0f3cf80ca1b1b6334530b50d253a6072d121f5
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Wed Sep 2 00:39:58 2026 +0700
+| 
+|     docs: add pdf version
+| 
+|  submit/README.pdf                 | Bin 0 -> 234533 bytes
+|  submit/ai-audit-report.pdf        | Bin 0 -> 232359 bytes
+|  submit/ai-critique.pdf            | Bin 0 -> 81520 bytes
+|  submit/bug-reports.pdf            | Bin 0 -> 171404 bytes
+|  submit/cicd-report.pdf            | Bin 0 -> 368576 bytes
+|  submit/failure-classification.pdf | Bin 0 -> 169850 bytes
+|  submit/main-report.pdf            | Bin 0 -> 322970 bytes
+|  7 files changed, 0 insertions(+), 0 deletions(-)
+| 
+* commit 7185bbf7661709d27e99ea3387c7507a59bb7a3a
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Wed Sep 2 00:34:21 2026 +0700
+| 
+|     docs: reconcile submission artifacts and spreadsheet summary
+| 
+|  submit/23127326_test-cases.xlsx | Bin 24436 -> 23699 bytes
+|  submit/README.md                |   6 +++---
+|  submit/ai-audit-report.md       |  10 +++++-----
+|  submit/main-report.md           |  12 ++++++------
+|  4 files changed, 14 insertions(+), 14 deletions(-)
+| 
+* commit 653e9dc13096ca342fb3c6ed619afd40a2e48ca3
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Wed Sep 2 00:25:18 2026 +0700
+| 
+|     docs: update README and reports; add video demo and bug report
+| 
+|  .DS_Store                                         | Bin 0 -> 8196 bytes
+|  submit/README.md                                  |  76 +++++++++-----------
+|  .../{bug-reports-23127326.md => bug-reports.md}   |   0
+|  submit/evidence/README.md                         |   4 ++
+|  submit/main-report.md                             |   4 +-
+|  5 files changed, 41 insertions(+), 43 deletions(-)
+| 
+* commit 24e600e081af85de09202378a30411a14e0837a0
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Wed Sep 2 00:14:09 2026 +0700
+| 
+|     docs: add ci for submit
+| 
+|  submit/.github/workflows/hw06-23127326.yml | 85 ++++++++++++++++++++++++++++
+|  1 file changed, 85 insertions(+)
+| 
+* commit d547deb44d71720ef011c781b38ff40dc6ae2b08
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Wed Sep 2 00:12:34 2026 +0700
+| 
+|     docs(23127326): update submission commit log
+| 
+|  submit/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit ddc77c984f756b2e05d3cd14900dc6a128966e0c
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Wed Sep 2 00:12:11 2026 +0700
+| 
+|     docs(23127326): finalize API testing submission package
+| 
+|  submit/23127326_test-cases.xlsx                   |    Bin 0 -> 24436 bytes
+|  submit/README.md                                  |     27 +-
+|  submit/agent-skill/api-test-generator/SKILL.md    |     49 +
+|  .../references/test-case-schema.md                |     18 +
+|  submit/agent-skill/diagram.md                     |     37 +
+|  submit/agent-skill/diagram.png                    |    Bin 0 -> 138721 bytes
+|  submit/agent-skill/pseudocode.md                  |     16 +-
+|  submit/agent-skill/skill-design.md                |      2 +
+|  submit/ai-audit-report.md                         |     52 +-
+|  submit/cicd-report.md                             |      6 +-
+|  submit/evidence/README.md                         |     30 +-
+|  submit/main-report.md                             |     54 +-
+|  submit/newman-full-report.json                    | 404481 -----------------
+|  submit/newman-report-readme.md                    |     22 -
+|  submit/tools/build_executable_suite.py            |    765 -
+|  submit/tools/pdf.css                              |     12 -
+|  submit/tools/reconcile_newman_results.py          |    207 -
+|  17 files changed, 236 insertions(+), 405542 deletions(-)
+| 
+* commit 06426e6ef8f0202b43df4fa7fd97227c260a00db
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 19:26:19 2026 +0700
+| 
+|     docs(23127326): record deliverable checklist update
+| 
+|  submit/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit bdf5c161a993764a4362ccb4bfcb3b2adbbb5f16
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 19:26:07 2026 +0700
+| 
+|     docs(23127326): clarify remaining manual deliverables
+| 
+|  submit/README.md | 9 ++++-----
+|  1 file changed, 4 insertions(+), 5 deletions(-)
+| 
+* commit 522e49167e7e183fae3ad48f4ebff195797c9578
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 19:20:15 2026 +0700
+| 
+|     docs(23127326): update commit log
+| 
+|  submit/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit ab050f718382dff4c2c73c7ae363af7fd754c5f9
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 19:19:30 2026 +0700
+| 
+|     chore(23127326): rename submission artifacts to student id
+| 
+|  .../{hw06-member4.yml => hw06-23127326.yml}       |  26 +-
+|  submit/README.md                                  |   4 +-
+|  submit/ai-audit-report.md                         |   4 +-
+|  ...eports-member-4.md => bug-reports-23127326.md} |   2 +-
+|  submit/cicd-report.md                             |   4 +-
+|  submit/failure-classification.md                  |   2 +-
+|  submit/git-commit-log.txt                         |  12 +-
+|  submit/main-report.md                             |   8 +-
+|  submit/newman-full-report.html                    |   6 +-
+|  submit/newman-full-report.json                    |   6 +-
+|  submit/newman-report.html                         |  12 +-
+|  submit/newman-report.json                         |  14 +-
+|  ...json => HW06_23127326_ci_demo_collection.json} |   2 +-
+|  ...lection.json => HW06_23127326_collection.json} |   2 +-
+|  ... => HW06_23127326_data_driven_collection.json} |   2 +-
+|  ...onment.json => HW06_23127326_environment.json} |   4 +-
+|  submit/test-cases/{member-4.csv => 23127326.csv}  | 280 ++++++++++----------
+|  .../test-cases/{member-4.json => 23127326.json}   | 280 ++++++++++----------
+|  submit/tools/build_executable_suite.py            |  16 +-
+|  submit/tools/reconcile_newman_results.py          |  12 +-
+|  20 files changed, 349 insertions(+), 349 deletions(-)
+| 
+* commit 0dfe7c430d19e2ee4275ba0205314d629e5791eb
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 19:14:50 2026 +0700
+| 
+|     docs(member-4): record report relocation
+| 
+|  submit/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit 09c5405143a525a1576849b2a9454b2b02a2a12a
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 19:14:35 2026 +0700
+| 
+|     docs(member-4): move reports to submit root
+| 
+|  submit/README.md                                             |  6 +++---
+|  submit/{docs => }/ai-audit-report.md                         |  2 +-
+|  submit/{docs => }/ai-critique.md                             |  0
+|  submit/{bug-reports/member-4.md => bug-reports-member-4.md}  |  4 ++--
+|  submit/{docs => }/cicd-report.md                             |  6 +++---
+|  submit/{docs => }/failure-classification.md                  |  0
+|  submit/{docs => }/git-commit-log.txt                         |  0
+|  submit/{docs => }/main-report.md                             | 10 +++++-----
+|  submit/{newman/member-4 => }/newman-full-report.html         |  0
+|  submit/{newman/member-4 => }/newman-full-report.json         |  0
+|  .../{newman/member-4/README.md => newman-report-readme.md}   |  2 +-
+|  submit/{newman/member-4 => }/newman-report.html              |  0
+|  submit/{newman/member-4 => }/newman-report.json              |  0
+|  13 files changed, 15 insertions(+), 15 deletions(-)
+| 
+* commit a1ffa6d51ee0d5d94d51ac2ba4dcb92f343f7c1a
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 18:46:38 2026 +0700
+| 
+|     docs(member-4): record heading translation
+| 
+|  submit/docs/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit 70feed4a62fd96734cc3ddf55b4c066384b21805
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 18:46:25 2026 +0700
+| 
+|     docs(member-4): translate remaining headings
+| 
+|  submit/README.md                      | 2 +-
+|  submit/docs/failure-classification.md | 2 +-
+|  2 files changed, 2 insertions(+), 2 deletions(-)
+| 
+* commit fd05d103269a00ffedd1f33a44dd4d29a77fed19
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 18:45:08 2026 +0700
+| 
+|     docs(member-4): record evidence screenshot commit
+| 
+|  submit/docs/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit ab7d49bb4a98328f94d811acbdd6cd18410b0a6b
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 18:43:58 2026 +0700
+| 
+|     evidence(member-4): add authentic issue CI and Newman screenshots
+| 
+|  submit/evidence/README.md                           |  10 +++++-----
+|  submit/evidence/github-actions-full-conformance.png | Bin 0 -> 80369 bytes
+|  submit/evidence/github-actions-one-fail.png         | Bin 0 -> 82814 bytes
+|  submit/evidence/github-actions-pass.png             | Bin 0 -> 83228 bytes
+|  submit/evidence/github-issue-01.png                 | Bin 0 -> 124990 bytes
+|  submit/evidence/github-issue-02.png                 | Bin 0 -> 122970 bytes
+|  submit/evidence/github-issue-03.png                 | Bin 0 -> 133455 bytes
+|  submit/evidence/github-issue-04.png                 | Bin 0 -> 123211 bytes
+|  submit/evidence/github-issue-35.png                 | Bin 0 -> 123257 bytes
+|  submit/evidence/github-issue-36.png                 | Bin 0 -> 130641 bytes
+|  submit/evidence/github-issue-37.png                 | Bin 0 -> 127385 bytes
+|  submit/evidence/github-issue-38.png                 | Bin 0 -> 124291 bytes
+|  submit/evidence/github-issue-39.png                 | Bin 0 -> 123375 bytes
+|  submit/evidence/github-issue-40.png                 | Bin 0 -> 125607 bytes
+|  submit/evidence/newman-full-localhost.png           | Bin 0 -> 143655 bytes
+|  15 files changed, 5 insertions(+), 5 deletions(-)
+| 
+* commit 05e679af619f3bb8c5840e21d932840d5a5aaffe
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 18:39:07 2026 +0700
+| 
+|     docs(member-4): sync final commit log
+| 
+|  submit/docs/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit d0bb5d857ca8b37dc88fedc65456b354701c63b8
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 18:38:54 2026 +0700
+| 
+|     docs(member-4): finalize Vietnamese evidence package
+| 
+|  submit/README.md                               |   2 +-
+|  submit/agent-skill/pseudocode.md               |   5 +-
+|  submit/agent-skill/skill-design.md             |  10 +--
+|  submit/bug-reports/member-4.md                 |  28 ++++----
+|  submit/docs/ai-audit-report.md                 |  58 ++++++++--------
+|  submit/docs/ai-critique.md                     |   8 +--
+|  submit/docs/cicd-report.md                     |  24 +++----
+|  submit/docs/failure-classification.md          |  22 +++---
+|  submit/docs/git-commit-log.txt                 |  32 ++++++---
+|  submit/docs/main-report.md                     |  44 ++++++------
+|  submit/evidence/README.md                      |  10 +--
+|  submit/evidence/postman-console-student-id.png | Bin 0 -> 193814 bytes
+|  submit/newman/member-4/README.md               |  32 ++++-----
+|  submit/test-cases/member-4.csv                 |  84 +++++++++++------------
+|  submit/test-cases/member-4.json                |  84 +++++++++++------------
+|  submit/tools/reconcile_newman_results.py       |  42 ++++++------
+|  16 files changed, 247 insertions(+), 238 deletions(-)
+| 
+* commit 56f206bbfaccead97eb1c94b4cc5199ad6cedb95
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 17:42:58 2026 +0700
+| 
+|     docs(ci): record verified pass fail and conformance runs
+| 
+|  submit/docs/cicd-report.md | 9 +++++----
+|  submit/evidence/README.md  | 1 +
+|  2 files changed, 6 insertions(+), 4 deletions(-)
+| 
+* commit b0b376402b5a84f822d9cbeca5f5e9bd59872959
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 17:40:58 2026 +0700
+| 
+|     test(ci): restore passing API gate
+| 
+|  submit/postman/ci-force-failure.txt | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+| 
+* commit 10e32d85d31bd17f948f24b832c3c1c38be329f7
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 17:40:07 2026 +0700
+| 
+|     test(ci): demonstrate exactly one controlled failure
+| 
+|  submit/postman/ci-force-failure.txt | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+| 
+* commit 90c2b7e6ff1cadd24f9d72300de34b646050cdba
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 17:39:22 2026 +0700
+| 
+|     docs(member-4): align reports issues and authentic evidence
+| 
+|  .github/workflows/hw06-member4.yml           |  78 +++++++++++++++----
+|  submit/README.md                             | 101 ++++++++++---------------
+|  submit/agent-skill/diagram.md                |  18 -----
+|  submit/agent-skill/diagram.png               | Bin 109040 -> 0 bytes
+|  submit/agent-skill/diagram.svg               |  24 ------
+|  submit/agent-skill/skill-design.md           |  13 +++-
+|  submit/bug-reports/member-4.md               |  26 ++++---
+|  submit/docs/ai-audit-report.md               |  78 +++++++++++++------
+|  submit/docs/ai-critique.md                   |   5 +-
+|  submit/docs/cicd-report.md                   |  20 ++---
+|  submit/docs/failure-classification.md        |  96 +++++------------------
+|  submit/docs/main-report.md                   |  72 ++++++++++++------
+|  submit/evidence/BUG-04-001.html              |   1 -
+|  submit/evidence/BUG-04-001.png               | Bin 49803 -> 0 bytes
+|  submit/evidence/BUG-04-002.html              |   1 -
+|  submit/evidence/BUG-04-002.png               | Bin 61016 -> 0 bytes
+|  submit/evidence/BUG-04-005.html              |   1 -
+|  submit/evidence/BUG-04-005.png               | Bin 61995 -> 0 bytes
+|  submit/evidence/BUG-04-006.html              |   1 -
+|  submit/evidence/BUG-04-006.png               | Bin 49912 -> 0 bytes
+|  submit/evidence/CI-fail-run-33414685928.html |   3 -
+|  submit/evidence/CI-fail-run-33414685928.png  | Bin 73814 -> 0 bytes
+|  submit/evidence/CI-pass-run-33415727552.html |   3 -
+|  submit/evidence/CI-pass-run-33415727552.png  | Bin 59955 -> 0 bytes
+|  submit/evidence/README.md                    |  40 ++++++----
+|  submit/pdf/ai-audit-report.pdf               | Bin 85574 -> 0 bytes
+|  submit/pdf/ai-critique.pdf                   | Bin 31912 -> 0 bytes
+|  submit/pdf/cicd-report.pdf                   | Bin 60738 -> 0 bytes
+|  submit/pdf/main-report.pdf                   | Bin 90332 -> 0 bytes
+|  submit/postman/ci-force-failure.txt          |   1 +
+|  30 files changed, 295 insertions(+), 287 deletions(-)
+| 
+* commit 8ff2d289ce055f71243ce11e55df925199800ffc
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 17:39:15 2026 +0700
+| 
+|     test(member-4): rebuild audited executable API suite
+| 
+|  .gitignore                                        |      3 +
+|  submit/newman/member-4/README.md                  |     23 +-
+|  submit/newman/member-4/newman-full-report.html    |  20203 +-
+|  submit/newman/member-4/newman-full-report.json    | 649777 +++++++----------
+|  submit/newman/member-4/newman-report.html         |   1588 +-
+|  submit/newman/member-4/newman-report.json         |  36703 +-
+|  .../postman/HW06_member4_ci_demo_collection.json  |    295 +
+|  submit/postman/HW06_member4_collection.json       |  14710 +-
+|  .../HW06_member4_data_driven_collection.json      |    101 +
+|  submit/postman/data/fr04-phone-partitions.csv     |      7 +
+|  submit/test-cases/member-4.csv                    |    282 +-
+|  submit/test-cases/member-4.json                   |   3474 +-
+|  submit/test-cases/member-4.xlsx                   |    Bin 16663 -> 0 bytes
+|  submit/tools/build_artifacts.py                   |     67 -
+|  submit/tools/build_executable_suite.py            |    765 +
+|  submit/tools/classify_failures.py                 |     14 -
+|  submit/tools/csv_to_xlsx.py                       |     24 -
+|  submit/tools/finalize_case_results.py             |     46 -
+|  submit/tools/reconcile_newman_results.py          |    207 +
+|  19 files changed, 289479 insertions(+), 438810 deletions(-)
+| 
+* commit 0ab25bbf15f8df334a4c74eb9a6e635e14678db8
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 15:08:32 2026 +0700
+| 
+|     docs: record final commit log
+| 
+|  submit/docs/git-commit-log.txt | 40 +++++++++++-----------------------------
+|  1 file changed, 11 insertions(+), 29 deletions(-)
+| 
+* commit 20d5daf5b9c486be32fe7e348f590546d2bed481
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Tue Sep 1 15:08:22 2026 +0700
+| 
+|     docs: finalize API testing submission artifacts
+| 
+|  submit/README.md                             |  52 +-
+|  submit/agent-skill/diagram.md                |  18 +
+|  submit/agent-skill/diagram.png               | Bin 0 -> 109040 bytes
+|  submit/agent-skill/diagram.svg               |  24 +
+|  submit/bug-reports/member-4.md               |   4 +-
+|  submit/docs/ai-audit-report.md               |  13 +-
+|  submit/docs/cicd-report.md                   |   9 +-
+|  submit/docs/failure-classification.md        |   2 +-
+|  submit/docs/git-commit-log.txt               |   3 +-
+|  submit/docs/main-report.md                   |  12 +-
+|  submit/evidence/CI-fail-run-33414685928.html |   3 +
+|  submit/evidence/CI-fail-run-33414685928.png  | Bin 0 -> 73814 bytes
+|  submit/evidence/CI-pass-run-33415727552.html |   3 +
+|  submit/evidence/CI-pass-run-33415727552.png  | Bin 0 -> 59955 bytes
+|  submit/evidence/README.md                    |   6 +-
+|  submit/newman/member-4/README.md             |   2 +-
+|  submit/pdf/ai-audit-report.pdf               | Bin 85669 -> 85574 bytes
+|  submit/pdf/ai-critique.pdf                   | Bin 43511 -> 31912 bytes
+|  submit/pdf/cicd-report.pdf                   | Bin 54442 -> 60738 bytes
+|  submit/pdf/main-report.pdf                   | Bin 98176 -> 90332 bytes
+|  submit/test-cases/member-4.csv               | 282 ++++-----
+|  submit/test-cases/member-4.json              | 846 ++++++++++++-------------
+|  submit/test-cases/member-4.xlsx              | Bin 16107 -> 16663 bytes
+|  submit/tools/finalize_case_results.py        |  46 ++
+|  submit/tools/pdf.css                         |  12 +
+|  25 files changed, 745 insertions(+), 592 deletions(-)
+| 
+* commit a910c56f4d5a614e058f160e5ce4bc74460bab41
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Mon Aug 31 23:43:58 2026 +0700
+| 
+|     docs: sync rewritten commit links
+| 
+|  submit/docs/cicd-report.md     |  4 ++--
+|  submit/docs/git-commit-log.txt | 13 +++++++------
+|  2 files changed, 9 insertions(+), 8 deletions(-)
+| 
+* commit 127c6a4391c3b84d0cfa95bcd1270d2044f7e796
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Mon Aug 31 23:35:11 2026 +0700
+| 
+|     docs: sync final commit log
+| 
+|  submit/docs/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit 492fb252fcc9cb05c11e4ac0ef5ca885c4790de8
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Mon Aug 31 23:34:30 2026 +0700
+| 
+|     docs: record CI runs and commit evidence
+| 
+|  submit/docs/cicd-report.md     | 5 +++++
+|  submit/docs/git-commit-log.txt | 8 ++++++++
+|  2 files changed, 13 insertions(+)
+| 
+* commit fd28de2b169f4cec2df2d5ed2a2e9e40a8f12fe4
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Mon Aug 31 23:33:38 2026 +0700
+| 
+|     ci: add green smoke gate and retain conformance failures
+| 
+|  .github/workflows/hw06-member4.yml | 4 ++--
+|  submit/docs/cicd-report.md         | 7 +++----
+|  2 files changed, 5 insertions(+), 6 deletions(-)
+| 
+* commit 5cbc0a8d81c34f69f4ea3d2d9e80382f1cd7a0ef
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Mon Aug 31 23:32:35 2026 +0700
+| 
+|     docs: link verified GitHub bug issues
+| 
+|  submit/bug-reports/member-4.md | 8 ++++----
+|  submit/evidence/README.md      | 3 +--
+|  2 files changed, 5 insertions(+), 6 deletions(-)
+| 
+* commit 7f014c4c5feb7b5c9e17c06c788e88834d6de117
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Mon Aug 31 23:31:48 2026 +0700
+| 
+|     docs: add reports bug evidence and CI workflow
+| 
+|  .github/workflows/hw06-member4.yml |  33 +++++++++++++++++++++++++
+|  submit/README.md                   |  46 +++++++++++++++++++++++++++++++++++
+|  submit/bug-reports/member-4.md     |  14 +++++++++++
+|  submit/docs/cicd-report.md         |  14 +++++++++++
+|  submit/docs/git-commit-log.txt     |  18 ++++++++++++++
+|  submit/evidence/BUG-04-001.html    |   1 +
+|  submit/evidence/BUG-04-001.png     | Bin 0 -> 49803 bytes
+|  submit/evidence/BUG-04-002.html    |   1 +
+|  submit/evidence/BUG-04-002.png     | Bin 0 -> 61016 bytes
+|  submit/evidence/BUG-04-005.html    |   1 +
+|  submit/evidence/BUG-04-005.png     | Bin 0 -> 61995 bytes
+|  submit/evidence/BUG-04-006.html    |   1 +
+|  submit/evidence/BUG-04-006.png     | Bin 0 -> 49912 bytes
+|  submit/evidence/README.md          |  14 +++++++++++
+|  submit/pdf/ai-audit-report.pdf     | Bin 0 -> 85669 bytes
+|  submit/pdf/ai-critique.pdf         | Bin 0 -> 43511 bytes
+|  submit/pdf/cicd-report.pdf         | Bin 0 -> 54442 bytes
+|  submit/pdf/main-report.pdf         | Bin 0 -> 98176 bytes
+|  18 files changed, 143 insertions(+)
+| 
+* commit 9ead1d9d4a666535dfb0c2db7ab383278c78fc94
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Mon Aug 31 23:31:31 2026 +0700
+| 
+|     test: add Postman Newman execution and failure classification
+| 
+|  submit/docs/failure-classification.md          |     80 +
+|  submit/newman/member-4/README.md               |      7 +
+|  submit/newman/member-4/newman-full-report.html |  40531 ++
+|  submit/newman/member-4/newman-full-report.json | 532016 ++++++++++++++++++++
+|  submit/newman/member-4/newman-report.html      |   3592 +
+|  submit/newman/member-4/newman-report.json      |  32416 ++
+|  submit/postman/HW06_member4_collection.json    |   6115 +
+|  submit/postman/HW06_member4_environment.json   |     42 +
+|  submit/tools/classify_failures.py              |     14 +
+|  9 files changed, 614813 insertions(+)
+| 
+* commit fface29a5468c1f8767687914f6e0853ccab7a74
+| Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| Date:   Mon Aug 31 23:31:15 2026 +0700
+| 
+|     test: add generated and audited API cases
+| 
+|  submit/agent-skill/pseudocode.md   |   31 +
+|  submit/agent-skill/skill-design.md |    6 +
+|  submit/docs/ai-audit-report.md     |   28 +
+|  submit/docs/ai-critique.md         |    4 +
+|  submit/docs/main-report.md         |   47 +
+|  submit/test-cases/member-4.csv     |  141 ++
+|  submit/test-cases/member-4.json    | 2942 ++++++++++++++++++++++++++++++++++
+|  submit/test-cases/member-4.xlsx    |  Bin 0 -> 16107 bytes
+|  submit/tools/build_artifacts.py    |   67 +
+|  submit/tools/csv_to_xlsx.py        |   24 +
+|  10 files changed, 3290 insertions(+)
+|   
+| * commit 9c7da8d68452eb98ac553639cdcc3aac676f8c6a
+| | Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| | Date:   Mon Aug 31 23:35:11 2026 +0700
+| | 
+| |     docs(member-4): sync final commit log
+| | 
+| |  submit/docs/git-commit-log.txt | 1 +
+| |  1 file changed, 1 insertion(+)
+| | 
+| * commit 9db643a3aff8765e69ebfeef28e17a152bd6f1a9
+| | Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| | Date:   Mon Aug 31 23:34:30 2026 +0700
+| | 
+| |     docs(member-4): record CI runs and commit evidence
+| | 
+| |  submit/docs/cicd-report.md     | 5 +++++
+| |  submit/docs/git-commit-log.txt | 8 ++++++++
+| |  2 files changed, 13 insertions(+)
+| | 
+| * commit 61b709ff8c896a6aeb789fd06c9c1e4199defb6a
+| | Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| | Date:   Mon Aug 31 23:33:38 2026 +0700
+| | 
+| |     ci(member-4): add green smoke gate and retain conformance failures
+| | 
+| |  .github/workflows/hw06-member4.yml | 4 ++--
+| |  submit/docs/cicd-report.md         | 7 +++----
+| |  2 files changed, 5 insertions(+), 6 deletions(-)
+| | 
+| * commit 5670868a620b17c2f444fff595f51b2335b7829c
+| | Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| | Date:   Mon Aug 31 23:32:35 2026 +0700
+| | 
+| |     docs(member-4): link verified GitHub bug issues
+| | 
+| |  submit/bug-reports/member-4.md | 8 ++++----
+| |  submit/evidence/README.md      | 3 +--
+| |  2 files changed, 5 insertions(+), 6 deletions(-)
+| | 
+| * commit 5d0f70d8510a5dd8ab396850bcf6db8eaa4ae84b
+| | Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| | Date:   Mon Aug 31 23:31:48 2026 +0700
+| | 
+| |     docs(member-4): add reports bug evidence and CI workflow
+| | 
+| |  .github/workflows/hw06-member4.yml |  33 +++++++++++++++++++++++
+| |  submit/README.md                   |  46 +++++++++++++++++++++++++++++++++
+| |  submit/bug-reports/member-4.md     |  14 ++++++++++
+| |  submit/docs/cicd-report.md         |  14 ++++++++++
+| |  submit/docs/git-commit-log.txt     |  18 +++++++++++++
+| |  submit/evidence/BUG-04-001.html    |   1 +
+| |  submit/evidence/BUG-04-001.png     | Bin 0 -> 49803 bytes
+| |  submit/evidence/BUG-04-002.html    |   1 +
+| |  submit/evidence/BUG-04-002.png     | Bin 0 -> 61016 bytes
+| |  submit/evidence/BUG-04-005.html    |   1 +
+| |  submit/evidence/BUG-04-005.png     | Bin 0 -> 61995 bytes
+| |  submit/evidence/BUG-04-006.html    |   1 +
+| |  submit/evidence/BUG-04-006.png     | Bin 0 -> 49912 bytes
+| |  submit/evidence/README.md          |  14 ++++++++++
+| |  submit/pdf/ai-audit-report.pdf     | Bin 0 -> 85669 bytes
+| |  submit/pdf/ai-critique.pdf         | Bin 0 -> 43511 bytes
+| |  submit/pdf/cicd-report.pdf         | Bin 0 -> 54442 bytes
+| |  submit/pdf/main-report.pdf         | Bin 0 -> 98176 bytes
+| |  18 files changed, 143 insertions(+)
+| | 
+| * commit 6116e39d11caa368a24be78ffb3a8f5285a50588
+| | Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+| | Date:   Mon Aug 31 23:31:31 2026 +0700
+| | 
+| |     test(member-4): add Postman Newman execution and failure classification
+| | 
+| |  submit/docs/failure-classification.md          |     80 +
+| |  submit/newman/member-4/README.md               |      7 +
+| |  submit/newman/member-4/newman-full-report.html |  40531 ++
+| |  submit/newman/member-4/newman-full-report.json | 532016 ++++++++++++++++++
+| |  submit/newman/member-4/newman-report.html      |   3592 +
+| |  submit/newman/member-4/newman-report.json      |  32416 ++
+| |  submit/postman/HW06_member4_collection.json    |   6115 +
+| |  submit/postman/HW06_member4_environment.json   |     42 +
+| |  submit/tools/classify_failures.py              |     14 +
+| |  9 files changed, 614813 insertions(+)
+| | 
+| * commit ef3ce6ece3a2baea22b57a3138beae6ccab5c0cc
+|/  Author: LE MAI HOAI BAO <152853155+HB4305@users.noreply.github.com>
+|   Date:   Mon Aug 31 23:31:15 2026 +0700
+|   
+|       test(member-4): add generated and audited API cases
+|   
+|    submit/agent-skill/pseudocode.md   |   31 +
+|    submit/agent-skill/skill-design.md |    6 +
+|    submit/docs/ai-audit-report.md     |   28 +
+|    submit/docs/ai-critique.md         |    4 +
+|    submit/docs/main-report.md         |   47 +
+|    submit/test-cases/member-4.csv     |  141 ++
+|    submit/test-cases/member-4.json    | 2942 ++++++++++++++++++++++++++++++++
+|    submit/test-cases/member-4.xlsx    |  Bin 0 -> 16107 bytes
+|    submit/tools/build_artifacts.py    |   67 +
+|    submit/tools/csv_to_xlsx.py        |   24 +
+|    10 files changed, 3290 insertions(+)
+| 
+* commit 433e954e72bf1127db95487d0fc6962c14e3f869
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Sun Aug 16 22:15:21 2026 +0700
+| 
+|     add requirements and feature division
+| 
+|  docs/hw06-phan-cong-cong-viec-nhom.md | 156 +++++++++++++++++++++++++
+|  docs/hw06-team-task-allocation.md     | 155 +++++++++++++++++++++++++
+|  req/2026.HW06.API Testing_En.md       | 198 ++++++++++++++++++++++++++++++++
+|  req/2026.HW06.API Testing_En.pdf      | Bin 0 -> 455391 bytes
+|  req/2026.HW06.API Testing_Vi.md       | 198 ++++++++++++++++++++++++++++++++
+|  5 files changed, 707 insertions(+)
+| 
+* commit 54607b062b9055fd71f1a1272cffb980bcdb4f6a
+  Author: TKin <letrungkienthd@gmail.com>
+  Date:   Sun Aug 16 15:48:47 2026 +0700
+  
+      first commit
+  
+   README.md | 1 +
+   1 file changed, 1 insertion(+)
