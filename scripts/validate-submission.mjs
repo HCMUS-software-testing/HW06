@@ -35,33 +35,19 @@ export function countAuditLabels(markdown) {
 }
 
 export function collectAssertionIds(collection) {
-  const ids = new Set();
-
-  const visit = (item) => {
-    if (!item || typeof item !== 'object') return;
-
-    for (const event of item.event ?? []) {
-      if (event.listen !== 'test') continue;
-      for (const line of event.script?.exec ?? []) {
-        for (const id of extractCaseIds(line)) ids.add(id);
-      }
-    }
-
-    for (const child of item.item ?? []) visit(child);
-  };
-
-  visit(collection);
-  return ids;
+  return new Set(collectCollectionAssertions(collection).map((assertion) => assertion.id));
 }
 
 export function loadNewmanTotals(paths) {
   const totals = {
     reports: 0,
-    assertions: { total: 0, executed: 0, passed: 0, failed: 0 },
-    requests: { total: 0, executed: 0, passed: 0, failed: 0 },
+    assertions: { total: 0, executed: 0, passed: 0, failed: 0, pending: 0 },
+    requests: { total: 0, executed: 0, passed: 0, failed: 0, pending: 0 },
+    total: 0,
     executed: 0,
     passed: 0,
     failed: 0,
+    pending: 0,
   };
 
   for (const path of paths) {
@@ -70,21 +56,27 @@ export function loadNewmanTotals(paths) {
     totals.reports += 1;
     const assertions = Number(stats.assertions?.total ?? 0);
     const failedAssertions = Number(stats.assertions?.failed ?? 0);
+    const pendingAssertions = Number(stats.assertions?.pending ?? 0) + Number(stats.assertions?.skipped ?? 0);
     const requests = Number(stats.requests?.total ?? 0);
     const failedRequests = Number(stats.requests?.failed ?? 0);
+    const pendingRequests = Number(stats.requests?.pending ?? 0) + Number(stats.requests?.skipped ?? 0);
     totals.assertions.total += assertions;
-    totals.assertions.executed += assertions;
-    totals.assertions.passed += assertions - failedAssertions;
+    totals.assertions.executed += Math.max(0, assertions - pendingAssertions);
+    totals.assertions.passed += Math.max(0, assertions - pendingAssertions - failedAssertions);
     totals.assertions.failed += failedAssertions;
+    totals.assertions.pending += pendingAssertions;
     totals.requests.total += requests;
-    totals.requests.executed += requests;
-    totals.requests.passed += requests - failedRequests;
+    totals.requests.executed += Math.max(0, requests - pendingRequests);
+    totals.requests.passed += Math.max(0, requests - pendingRequests - failedRequests);
     totals.requests.failed += failedRequests;
+    totals.requests.pending += pendingRequests;
   }
 
+  totals.total = totals.assertions.total;
   totals.executed = totals.assertions.executed;
   totals.passed = totals.assertions.passed;
   totals.failed = totals.assertions.failed;
+  totals.pending = totals.assertions.pending;
 
   return totals;
 }
@@ -162,32 +154,43 @@ function routeIsAllowed(fr, method, route) {
   return FR_SCOPES[fr]?.some((allowed) => allowed.method === method && allowed.route === route) ?? false;
 }
 
-function collectCollectionRequests(collection) {
-  const requests = [];
+function collectCollectionAssertions(collection) {
+  const assertions = [];
 
-  const visit = (item, inheritedFr = null) => {
+  const visit = (item, inheritedRequest = null) => {
     if (!item || typeof item !== 'object') return;
-    const fr = String(item.name ?? '').match(/FR[-\s]?(05|08|18)/i)?.[1] ?? inheritedFr;
-    if (item.request) {
-      requests.push({
-        fr,
+    const request = item.request
+      ? {
         method: String(item.request.method ?? '').toUpperCase(),
         route: normalizeRoute(item.request.url),
-      });
+      }
+      : inheritedRequest;
+    for (const event of item.event ?? []) {
+      if (event.listen !== 'test') continue;
+      for (const line of event.script?.exec ?? []) {
+        for (const id of extractCaseIds(line)) assertions.push({ id, ...request });
+      }
     }
-    for (const child of item.item ?? []) visit(child, fr);
+    for (const child of item.item ?? []) visit(child, request);
   };
 
   visit(collection);
-  return requests;
+  return assertions;
 }
 
-function parseTraceabilityRows(markdown) {
+function markdownCells(line) {
+  const trimmed = String(line).trim();
+  const values = trimmed.replace(/^\|/, '').split('|');
+  if (trimmed.endsWith('|')) values.pop();
+  return values.map((cell) => cell.trim());
+}
+
+export function parseTraceabilityRows(markdown) {
   const rows = [];
 
   for (const line of String(markdown).split('\n')) {
     if (!line.trim().startsWith('|') || /^\|\s*:?-{3,}/.test(line)) continue;
-    const cells = line.split('|').slice(1, -1).map((cell) => cell.trim());
+    const cells = markdownCells(line);
     const caseId = cells[0]?.match(/^TC-FR(?:05|08|18)-(?:AI|HUMAN)-\d{3}$/)?.[0];
     if (!caseId) continue;
     const executionClass = cells[2]?.toUpperCase();
@@ -206,32 +209,55 @@ function parseTraceabilityRows(markdown) {
   return rows;
 }
 
-function documentedNewmanTotals(markdown) {
+function reportMetricName(label) {
+  const normalized = String(label).toLowerCase();
+  if (/\bauthored\b/.test(normalized)) return 'authored';
+  if (/do ai sinh|ai-generated/.test(normalized)) return 'generated';
+  if (/tự bổ sung|human-designed/.test(normalized)) return 'human';
+  if (/\bautomated\b|tự động/.test(normalized)) return 'automated';
+  if (/\brequests?\b|yêu cầu/.test(normalized)) return 'requests';
+  if (/\bexecuted\b|thực thi/.test(normalized)) return 'executed';
+  if (/\bpass\b|đạt/.test(normalized)) return 'passed';
+  if (/\bfail\b|thất bại/.test(normalized)) return 'failed';
+  if (/\bpending\b|\bskipped\b|chưa chạy/.test(normalized)) return 'pending';
+  if (/\btotal\b|tổng số test cases/.test(normalized)) return 'total';
+  return null;
+}
+
+function documentedReportMetrics(markdown) {
   const lines = String(markdown).split('\n');
-  const keyValue = /\b(requests?|executed|passed|failed|failures?)\b\s*[:=]\s*(\d+)/gi;
+  const metrics = {};
 
   for (const line of lines) {
-    if (!/newman/i.test(line)) continue;
-    const values = {};
-    for (const [, key, value] of line.matchAll(keyValue)) {
-      const normalized = key.toLowerCase().startsWith('request') ? 'requests'
-        : key.toLowerCase().startsWith('fail') ? 'failed'
-          : key.toLowerCase();
-      values[normalized] = Number(value);
+    const keyValue = /([^:=|]+)\s*[:=]\s*(\d+)/g;
+    for (const [, label, value] of line.matchAll(keyValue)) {
+      const metric = reportMetricName(label);
+      if (metric) metrics[metric] = Number(value);
     }
-    if (['requests', 'executed', 'passed', 'failed'].every((key) => Number.isInteger(values[key]))) return values;
+
+    if (!line.trim().startsWith('|')) continue;
+    const cells = markdownCells(line);
+    const metric = reportMetricName(cells[0]);
+    const numbers = cells.slice(1).filter((cell) => /^\d+$/.test(cell)).map(Number);
+    if (metric && numbers.length > 0) metrics[metric] = numbers.at(-1);
   }
 
   for (let index = 0; index < lines.length - 2; index += 1) {
-    const header = lines[index].toLowerCase();
-    if (!/newman/.test(lines[index - 1] ?? '') || !['requests', 'executed', 'passed', 'failed'].every((key) => header.includes(key))) continue;
-    const labels = lines[index].split('|').slice(1, -1).map((cell) => cell.trim().toLowerCase());
-    const values = lines[index + 2].split('|').slice(1, -1).map((cell) => Number(cell.trim()));
-    const totals = Object.fromEntries(labels.map((label, position) => [label, values[position]]));
-    if (['requests', 'executed', 'passed', 'failed'].every((key) => Number.isInteger(totals[key]))) return totals;
+    const headers = markdownCells(lines[index]);
+    if (headers.length < 2) continue;
+    const metricNames = headers.map(reportMetricName);
+    if (metricNames.filter(Boolean).length < 2) continue;
+    const values = markdownCells(lines[index + 2]);
+    for (const [position, metric] of metricNames.entries()) {
+      if (metric && /^\d+$/.test(values[position] ?? '')) metrics[metric] = Number(values[position]);
+    }
   }
 
-  return null;
+  if (!Number.isInteger(metrics.authored) && (Number.isInteger(metrics.generated) || Number.isInteger(metrics.human))) {
+    metrics.authored = Number(metrics.generated ?? 0) + Number(metrics.human ?? 0);
+  }
+
+  return metrics;
 }
 
 function addFinding(findings, level, message) {
@@ -261,6 +287,7 @@ export function validateSubmission(options = {}) {
   const allCaseIds = [];
   const caseIdsByFr = new Map();
   const auditVerdicts = new Map();
+  let automatedCount = null;
 
   for (const spec of caseFiles) {
     const path = resolve(rootDir, spec.path);
@@ -297,17 +324,26 @@ export function validateSubmission(options = {}) {
   }
 
   let assertionIds = new Set();
-  let collection = null;
+  let assertionRecords = [];
   if (collectionPath) {
-    collection = parseJson(resolve(rootDir, collectionPath), 'Postman collection', findings.errors);
+    const collection = parseJson(resolve(rootDir, collectionPath), 'Postman collection', findings.errors);
     if (collection) {
-      assertionIds = collectAssertionIds(collection);
+      assertionRecords = collectCollectionAssertions(collection);
+      assertionIds = new Set(assertionRecords.map((assertion) => assertion.id));
       if (assertionIds.size === 0) addFinding(findings, 'ERROR', 'Postman collection has no case assertion IDs');
       else addFinding(findings, 'OK', `Postman collection registers ${assertionIds.size} case assertion IDs`);
-      for (const request of collectCollectionRequests(collection)) {
-        if (request.fr && request.route && !routeIsAllowed(request.fr, request.method, request.route)) {
-          addFinding(findings, 'ERROR', `Postman FR-${request.fr} request ${request.method} ${request.route} is outside allowed scope`);
+      const assertionsById = new Map();
+      for (const assertion of assertionRecords) {
+        assertionsById.set(assertion.id, [...(assertionsById.get(assertion.id) ?? []), assertion]);
+        const fr = assertion.id.slice(5, 7);
+        if (!assertion.method || !assertion.route) {
+          addFinding(findings, 'ERROR', `collection assertion ${assertion.id} has missing or unparseable method/route`);
+        } else if (!routeIsAllowed(fr, assertion.method, assertion.route)) {
+          addFinding(findings, 'ERROR', `collection assertion ${assertion.id} uses method ${assertion.method} ${assertion.route} outside FR-${fr} scope`);
         }
+      }
+      for (const [id, records] of assertionsById) {
+        if (records.length !== 1) addFinding(findings, 'ERROR', `collection assertion ${id} must appear exactly once; found ${records.length}`);
       }
     }
   }
@@ -322,6 +358,10 @@ export function validateSubmission(options = {}) {
     if (traceability !== null) {
       const rows = parseTraceabilityRows(traceability);
       const authoredIds = new Set(allCaseIds);
+      const assertionsById = new Map();
+      for (const assertion of assertionRecords) {
+        assertionsById.set(assertion.id, [...(assertionsById.get(assertion.id) ?? []), assertion]);
+      }
       const rowsByCaseId = new Map();
       const rowsByAssertionId = new Map();
       for (const row of rows) {
@@ -336,19 +376,25 @@ export function validateSubmission(options = {}) {
       }
       for (const id of assertionIds) {
         const mappedRows = rowsByAssertionId.get(id) ?? [];
-        if (mappedRows.length !== 1 || mappedRows[0].executionClass !== 'NEWMAN') {
+        if (mappedRows.length !== 1 || mappedRows[0].executionClass !== 'NEWMAN' || mappedRows[0].caseId !== id) {
           addFinding(findings, 'ERROR', `automated assertion ${id} must appear exactly once in NEWMAN traceability`);
         }
       }
       const newmanRows = rows.filter((row) => row.executionClass === 'NEWMAN');
+      automatedCount = newmanRows.length;
       for (const row of newmanRows) {
-        if (!row.assertionId || !assertionIds.has(row.assertionId)) {
+        if (row.assertionId !== row.caseId) {
+          addFinding(findings, 'ERROR', `traceability NEWMAN ID ${row.caseId} must reference assertion ${row.caseId}; found ${row.assertionId ?? '(missing)'}`);
+        }
+        if (!row.assertionId || assertionsById.get(row.assertionId)?.length !== 1) {
           addFinding(findings, 'ERROR', `traceability NEWMAN ID ${row.caseId} is missing from collection assertions`);
         }
         if (row.resultTarget !== `src/newman/member-2/fr-${row.fr}.json`) {
           addFinding(findings, 'ERROR', `traceability NEWMAN ID ${row.caseId} must target src/newman/member-2/fr-${row.fr}.json`);
         }
-        if (row.route && !routeIsAllowed(row.fr, row.method, row.route)) {
+        if (!row.method || !row.route) {
+          addFinding(findings, 'ERROR', `traceability NEWMAN ID ${row.caseId} must declare method and normalized route`);
+        } else if (!routeIsAllowed(row.fr, row.method, row.route)) {
           addFinding(findings, 'ERROR', `traceability NEWMAN ID ${row.caseId} uses method ${row.method ?? '(missing)'} ${row.route} outside FR-${row.fr} scope`);
         }
       }
@@ -371,15 +417,24 @@ export function validateSubmission(options = {}) {
     try {
       const totals = loadNewmanTotals(newmanPaths);
       addFinding(findings, 'OK', `loaded ${totals.reports} Newman JSON report(s)`);
+      const authoritative = {
+        authored: new Set(allCaseIds).size,
+        automated: automatedCount,
+        total: totals.total,
+        requests: totals.requests.total,
+        executed: totals.executed,
+        passed: totals.passed,
+        failed: totals.failed,
+        pending: totals.pending,
+      };
       for (const reportPath of reportPaths) {
         const report = safeRead(resolve(rootDir, reportPath), findings.errors);
         if (report === null) continue;
-        const documented = documentedNewmanTotals(report);
-        if (documented && (documented.requests !== totals.requests.total
-          || documented.executed !== totals.executed
-          || documented.passed !== totals.passed
-          || documented.failed !== totals.failed)) {
-          addFinding(findings, 'ERROR', `${reportPath} Newman totals (requests=${documented.requests}; executed=${documented.executed}; passed=${documented.passed}; failed=${documented.failed}) do not match JSON (requests=${totals.requests.total}; executed=${totals.executed}; passed=${totals.passed}; failed=${totals.failed})`);
+        const documented = documentedReportMetrics(report);
+        for (const [metric, reported] of Object.entries(documented)) {
+          if (authoritative[metric] !== undefined && reported !== authoritative[metric]) {
+            addFinding(findings, 'ERROR', `${reportPath} reported ${metric}=${reported} does not match authoritative value ${authoritative[metric]}`);
+          }
         }
       }
     } catch (error) {
