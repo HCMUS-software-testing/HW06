@@ -51,6 +51,5 @@ Ghi chú minh chứng lịch sử: `newman-full-localhost.png` và các ảnh Gi
 |    3 | API 3 — full pipeline FR-19 |      30 |          30 |
 |    4 | Agent Skill                 |      10 |          10 |
 |      | **Tổng**                    | **100** |     **100** |
-|      |
 
 Video demo Agent Skill: [https://youtu.be/1X8fNBIZYV0](https://youtu.be/1X8fNBIZYV0).
