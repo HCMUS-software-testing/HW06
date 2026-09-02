@@ -1,2 +1,7 @@
 eshop-sut
 .worktrees/
+node_modules/
+*.tmp.html
+*.temp.html
+src/postman/*_Local.unredacted.postman_environment.json
+src/postman/*_Local.private.postman_environment.json
