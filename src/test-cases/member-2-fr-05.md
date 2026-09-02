@@ -87,7 +87,7 @@
 | TC-FR05-AI-007 | INCOMPLETE | Contract không nêu max length và AI cho 200/400. | Gửi 256 ký tự; chỉ assert invariant contract-safe: status không phải 500, body JSON, GET không đổi baseline; ghi status quan sát riêng khi chạy. | NEWMAN |
 | TC-FR05-AI-008 | INCOMPLETE | Contract không chốt trim spaces. | Gửi spaces-only; status không phải 500, body JSON array, không error leakage và baseline không đổi. | NEWMAN |
 | TC-FR05-AI-009 | INCOMPLETE | Thiếu fixture tên số và điều kiện match. | Dùng sentinel chữ số không có trong baseline; 200, array rỗng và không 500. | NEWMAN |
-| TC-FR05-AI-010 | INVALID | Original dùng product-detail FR-06 ngoài FR-05. | Replacement FR-05: `search=` và query bị bỏ trống phải trả cùng dãy ID, 200 JSON array. | NEWMAN |
+| TC-FR05-AI-010 | INVALID | Original dùng product-detail FR-06 ngoài FR-05; replacement normalization trùng AI-004. | EXCLUDED duplicate of authoritative AI-004: cùng so sánh `search=` với omitted query và cùng status/body/ID-sequence oracle; giữ provenance, không đếm NEWMAN lần hai. | EXCLUDED |
 | TC-FR05-AI-011 | INVALID | Original dùng product-detail FR-06 ngoài FR-05. | Replacement FR-05: gửi hai `search` values; status không phải 500, body JSON array, không error leakage và GET không đổi baseline. | NEWMAN |
 | TC-FR05-AI-012 | INVALID | Original dùng product-detail FR-06 ngoài FR-05 và có multi-status oracle. | Replacement FR-05: `search=%70hone` và `search=phone` phải trả cùng status 200 và cùng dãy ID sau percent-decoding. | NEWMAN |
 | TC-FR05-AI-013 | INVALID | Original dùng product-detail FR-06 ngoài FR-05 và có multi-status oracle. | Replacement FR-05: hai sentinel SQLi boolean true/false phải cùng 200, cùng array, không mở rộng tới baseline và không lộ lỗi DB. | NEWMAN |
@@ -109,9 +109,9 @@
 | TC-FR05-AI-029 | VALID | Description type có thể kiểm trực tiếp. | Baseline 200; từng `description` là string. | NEWMAN |
 | TC-FR05-AI-030 | VALID | `imageUrl` string có thể kiểm trực tiếp; format URL không được contract yêu cầu. | Baseline 200; từng `imageUrl` là string, không thêm URL-format oracle. | NEWMAN |
 | TC-FR05-AI-031 | VALID | `category_id` integer là schema assertion. | Baseline 200; từng `category_id` là integer. | NEWMAN |
-| TC-FR05-AI-032 | INVALID | Original kiểm object detail FR-06 và “exactly six fields” quá cứng. | Replacement FR-05: list là array; mỗi item chứa ít nhất sáu required fields, cho phép metadata bổ sung. | NEWMAN |
+| TC-FR05-AI-032 | INVALID | Original kiểm object detail FR-06; replacement required-field check trùng baseline schema AI-001. | EXCLUDED duplicate of authoritative AI-001: cùng baseline list-array và required product-field presence oracle; field-type partitions AI-026–031 vẫn độc lập. | EXCLUDED |
 | TC-FR05-AI-033 | VALID | Content-Type là response contract trực tiếp. | Baseline 200 và media type chuẩn hóa bằng `application/json`. | NEWMAN |
-| TC-FR05-AI-034 | VALID | Sentinel không tồn tại tạo empty-array oracle xác định. | Unique no-match sentinel trả 200 và đúng `[]`. | NEWMAN |
+| TC-FR05-AI-034 | VALID | Original empty-array schema intent đúng nhưng final no-match partition trùng AI-003. | EXCLUDED duplicate of authoritative AI-003: cùng unique no-match sentinel, 200 và exact empty-array oracle; giữ ID làm provenance. | EXCLUDED |
 | TC-FR05-AI-035 | INCOMPLETE | Denylist gốc chưa gắn data contract và chưa nói nested fields. | Recursively kiểm response không có key case-insensitive `password`, `secret`, `token`, `internal_id`; 200 JSON array. | NEWMAN |
 
 ## 2. Authoritative human-designed inventory (10 cases)

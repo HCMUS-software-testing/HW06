@@ -76,8 +76,8 @@
 | TC-FR18-AI-002 | VALID | User role phải bị chặn ở admin list. | Fresh user token GET; 403 JSON và body không lộ captured admin-order fixtures. | NEWMAN |
 | TC-FR18-AI-003 | VALID | Missing Authorization có 401 oracle. | GET không Authorization; 401 JSON, không order data. | NEWMAN |
 | TC-FR18-AI-004 | VALID | Invalid JWT phải fail authentication. | GET với malformed/signed-invalid token; 401 JSON, không order data. | NEWMAN |
-| TC-FR18-AI-005 | VALID | Expired token là deterministic auth boundary. | GET với controlled expired admin token; 401 JSON, không order data. | NEWMAN |
-| TC-FR18-AI-006 | INCOMPLETE | Original không thiết lập starting state. | Fresh order `pending`; admin PUT `confirmed`; 200 và final state exactly `confirmed`. | NEWMAN |
+| TC-FR18-AI-005 | INCOMPLETE | Expired JWT intent đúng nhưng SUT không có TTL/clock control, signing key hay deterministic expired-token fixture. | Giữ original expiry intent nhưng loại khỏi execution; sửa claim `exp` mà không re-sign chỉ tạo invalid-signature evidence, không phải expired-token evidence. | EXCLUDED |
+| TC-FR18-AI-006 | INCOMPLETE | Original không thiết lập starting state; final corrected scenario trùng hoàn toàn transition của AI-019. | EXCLUDED duplicate of authoritative AI-019: cùng fresh `pending` order, PUT `confirmed`, response và persisted-state oracle; giữ provenance, không đếm NEWMAN lần hai. | EXCLUDED |
 | TC-FR18-AI-007 | VALID | User mutation phải 403 và không side effect. | Fresh order `pending`; user token PUT `confirmed`; 403, full order snapshot unchanged. | NEWMAN |
 | TC-FR18-AI-008 | VALID | Missing auth phải bị chặn trước mutation. | Fresh `pending` order; no Authorization PUT; 401, snapshot unchanged. | NEWMAN |
 | TC-FR18-AI-009 | VALID | Empty bearer là invalid credentials. | Fresh `pending` order; empty bearer PUT; 401, snapshot unchanged. | NEWMAN |
@@ -87,9 +87,9 @@
 | TC-FR18-AI-013 | INCOMPLETE | JSON cannot prove admin DOM escaping. | Seed order address with unique HTML/event sentinel; admin browser list renders it as text, no executable node/event, one order row for captured ID. | BROWSER-MANUAL |
 | TC-FR18-AI-014 | INVALID | Profile endpoint nằm ngoài FR-18 và original cho 200/400. | Privilege chain: user attempts profile `role=admin`, then same token GET admin list; assertion on GET is 403, role remains user, no order data. | NEWMAN |
 | TC-FR18-AI-015 | VALID | Tampered payload with old signature must fail verification. | GET with user JWT payload changed to admin but not re-signed; 401 JSON, no order data. | NEWMAN |
-| TC-FR18-AI-016 | INCOMPLETE | Shipping only valid from confirmed. | Fresh order advanced to `confirmed`; PUT `shipping`; 200 and final state `shipping`. | NEWMAN |
-| TC-FR18-AI-017 | INCOMPLETE | Delivered only valid from shipping. | Fresh order advanced to `shipping`; PUT `delivered`; 200 and final state `delivered`. | NEWMAN |
-| TC-FR18-AI-018 | INCOMPLETE | Cancel starting state was unspecified and stock restoration is undocumented. | Fresh order `pending`; PUT `canceled`; 200 and final state `canceled`; no stock oracle is added. | NEWMAN |
+| TC-FR18-AI-016 | INCOMPLETE | Starting state correction makes this identical to accepted transition AI-020. | EXCLUDED duplicate of authoritative AI-020: cùng fresh `confirmed` order, PUT `shipping` và exact final-state oracle. | EXCLUDED |
+| TC-FR18-AI-017 | INCOMPLETE | Starting state correction makes this identical to accepted transition AI-021. | EXCLUDED duplicate of authoritative AI-021: cùng fresh `shipping` order, PUT `delivered` và exact final-state oracle. | EXCLUDED |
+| TC-FR18-AI-018 | INCOMPLETE | Chốt starting state `pending` và bỏ stock oracle làm scenario trùng AI-022. | EXCLUDED duplicate of authoritative AI-022: cùng fresh `pending` order, PUT `canceled` và exact final-state oracle. | EXCLUDED |
 | TC-FR18-AI-019 | VALID | Pending to confirmed is allowed. | Fresh `pending` order; PUT `confirmed`; 200 and exact final state `confirmed`. | NEWMAN |
 | TC-FR18-AI-020 | VALID | Confirmed to shipping is allowed. | Fresh order advanced to `confirmed`; PUT `shipping`; 200 and exact final state `shipping`. | NEWMAN |
 | TC-FR18-AI-021 | VALID | Shipping to delivered is allowed. | Fresh order advanced to `shipping`; PUT `delivered`; 200 and exact final state `delivered`. | NEWMAN |
@@ -104,7 +104,7 @@
 | TC-FR18-AI-030 | VALID | Valid numeric missing ID has 404 oracle. | Reserve/calculate nonexistent positive ID; PUT `confirmed`; 404 JSON and all control orders unchanged. | NEWMAN |
 | TC-FR18-AI-031 | INCOMPLETE | Original 400/404 is ambiguous and path validation is unspecified. | PUT ID `-1`; assert contract-safe invariant status not 500, JSON error and known control order snapshot unchanged; record observed status later. | NEWMAN |
 | TC-FR18-AI-032 | INCOMPLETE | Original 400/404 is ambiguous and path coercion unspecified. | PUT ID `abc`; assert status not 500, JSON error and control order unchanged; record observed status later. | NEWMAN |
-| TC-FR18-AI-033 | VALID | ID 0 is a deterministic nonexistent resource. | PUT ID `0`; 404 JSON and all control orders unchanged. | NEWMAN |
+| TC-FR18-AI-033 | INCOMPLETE | Contract không quy định ID phải dương hoặc status riêng cho ID zero. | Admin GET snapshot trước, rồi PUT ID `0` sang `confirmed`; status không phải 500 và body JSON. Nếu pre-snapshot có order ID 0 ở `pending` và request accepted: chỉ status của order đó thành `confirmed`. Nếu rejected hoặc không có ID 0: toàn bộ order snapshot unchanged và không tạo order mới. Mọi mutation khác fail. | NEWMAN |
 | TC-FR18-AI-034 | VALID | Missing required status must be rejected. | Fresh `pending` order; body `{}`; 400 JSON and full snapshot unchanged. | NEWMAN |
 | TC-FR18-AI-035 | INCOMPLETE | Original conflated valid JSON null with malformed JSON. | JSON-null half only: fresh `pending` order; body `null` with JSON content type; 400 JSON and full snapshot unchanged. Malformed half is AI-010. | NEWMAN |
 
@@ -117,7 +117,7 @@
 | TC-FR18-HUMAN-001 | Original user-cancel route is outside selected scope. Replacement: fresh order advanced to `shipping`; user token calls admin status PUT `canceled`; 403 and full snapshot remains `shipping`. | NEWMAN | Combines state and authorization-before-mutation. |
 | TC-FR18-HUMAN-002 | Fresh order advanced to `confirmed`; admin requests `confirmed` again. Same-state edge is not an allowed transition, so 400 and full snapshot remains `confirmed`. | NEWMAN | AI assumed idempotence without state-machine evidence. |
 | TC-FR18-HUMAN-003 | Inventory restoration on cancellation cannot be observed: public contract has no stock field/mutation endpoint. Keep design, claim no run/result. | EXCLUDED | Needs inventory side-effect visibility. |
-| TC-FR18-HUMAN-004 | Fresh `pending` order; admin PUT includes `status=confirmed`, `total_amount=0`, `user_id=999`; 200, status becomes confirmed, every non-status field equals pre-snapshot. | NEWMAN | Requires mass-assignment differential snapshot. |
+| TC-FR18-HUMAN-004 | Fresh `pending` order và full snapshot; admin PUT gồm `status=confirmed`, `total_amount=0`, `user_id=999`; status không phải 500 và body JSON. Nếu accepted: chỉ status thành `confirmed`, mọi non-status field giữ snapshot và client-sensitive values không persisted. Nếu rejected: full snapshot unchanged. Mọi partial/other mutation fail. | NEWMAN | Requires a branch-safe mass-assignment differential instead of assuming unknown-field acceptance. |
 | TC-FR18-HUMAN-005 | Multi-tenant stores/admin scopes are absent from verified contract; do not invent Store A/B fixture or 403/404 result. | EXCLUDED | Assumed tenancy model not present in SUT contract. |
 | TC-FR18-HUMAN-006 | User attempts profile role assignment; verify role remains user, then same token calls admin PUT on fresh `pending` order; 403 and order snapshot unchanged. | NEWMAN | Cross-endpoint escalation chain. |
 | TC-FR18-HUMAN-007 | For fresh `pending` order, send both `alg:none` and invalid-`kid` forged admin JWT probes; each 401 and order snapshot unchanged. One assertion aggregates both controlled probes. | NEWMAN | Requires concrete JWT bypass variants. |
