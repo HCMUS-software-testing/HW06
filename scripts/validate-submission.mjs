@@ -10,6 +10,15 @@ const CASE_SPECS = [
 
 const CASE_ID_PATTERN = /TC-FR(?:05|08|18)-(?:AI|HUMAN)-\d{3}/g;
 const AUDIT_ROW_PATTERN = /^\|(?:\s*\d+\s*\|)?\s*(TC-FR(?:05|08|18)-AI-\d{3})\s*\|\s*(VALID|INVALID|INCOMPLETE)\s*\|/gmi;
+const EXECUTION_CLASSES = new Set(['NEWMAN', 'BROWSER-MANUAL', 'FAULT-INJECTION', 'EXCLUDED']);
+const FR_SCOPES = {
+  '05': [{ method: 'GET', route: '/api/products' }],
+  '08': [{ method: 'POST', route: '/api/checkout' }],
+  '18': [
+    { method: 'GET', route: '/api/admin/orders' },
+    { method: 'PUT', route: '/api/admin/orders/:id/status' },
+  ],
+};
 
 export function extractCaseIds(markdown) {
   return [...String(markdown).matchAll(CASE_ID_PATTERN)].map(([id]) => id);
@@ -48,19 +57,34 @@ export function collectAssertionIds(collection) {
 export function loadNewmanTotals(paths) {
   const totals = {
     reports: 0,
-    assertions: { total: 0, failed: 0 },
-    requests: { total: 0, failed: 0 },
+    assertions: { total: 0, executed: 0, passed: 0, failed: 0 },
+    requests: { total: 0, executed: 0, passed: 0, failed: 0 },
+    executed: 0,
+    passed: 0,
+    failed: 0,
   };
 
   for (const path of paths) {
     const report = JSON.parse(readFileSync(path, 'utf8'));
     const stats = report.run?.stats ?? {};
     totals.reports += 1;
-    totals.assertions.total += Number(stats.assertions?.total ?? 0);
-    totals.assertions.failed += Number(stats.assertions?.failed ?? 0);
-    totals.requests.total += Number(stats.requests?.total ?? 0);
-    totals.requests.failed += Number(stats.requests?.failed ?? 0);
+    const assertions = Number(stats.assertions?.total ?? 0);
+    const failedAssertions = Number(stats.assertions?.failed ?? 0);
+    const requests = Number(stats.requests?.total ?? 0);
+    const failedRequests = Number(stats.requests?.failed ?? 0);
+    totals.assertions.total += assertions;
+    totals.assertions.executed += assertions;
+    totals.assertions.passed += assertions - failedAssertions;
+    totals.assertions.failed += failedAssertions;
+    totals.requests.total += requests;
+    totals.requests.executed += requests;
+    totals.requests.passed += requests - failedRequests;
+    totals.requests.failed += failedRequests;
   }
+
+  totals.executed = totals.assertions.executed;
+  totals.passed = totals.assertions.passed;
+  totals.failed = totals.assertions.failed;
 
   return totals;
 }
@@ -123,20 +147,91 @@ function parseJson(path, label, errors) {
   }
 }
 
-function documentedNewmanTotals(markdown) {
-  const assertions = markdown.match(/Newman assertions?\s*[:=-]\s*(\d+)/i);
-  const failures = markdown.match(/Newman (?:failures?|failed)\s*[:=-]\s*(\d+)/i);
-  if (!assertions || !failures) return null;
-  return { assertions: Number(assertions[1]), failures: Number(failures[1]) };
+function normalizeRoute(value) {
+  const text = typeof value === 'string' ? value : value?.raw;
+  if (!text) return null;
+  const match = String(text).match(/\/api\/[^\s?#]*/);
+  if (!match) return null;
+  return match[0]
+    .replace(/\{\{[^}]+\}\}/g, ':id')
+    .replace(/\/\{[^}]+\}/g, '/:id')
+    .replace(/\/+/g, '/');
 }
 
-function findTraceabilityNewmanIds(markdown) {
-  const ids = new Set();
+function routeIsAllowed(fr, method, route) {
+  return FR_SCOPES[fr]?.some((allowed) => allowed.method === method && allowed.route === route) ?? false;
+}
+
+function collectCollectionRequests(collection) {
+  const requests = [];
+
+  const visit = (item, inheritedFr = null) => {
+    if (!item || typeof item !== 'object') return;
+    const fr = String(item.name ?? '').match(/FR[-\s]?(05|08|18)/i)?.[1] ?? inheritedFr;
+    if (item.request) {
+      requests.push({
+        fr,
+        method: String(item.request.method ?? '').toUpperCase(),
+        route: normalizeRoute(item.request.url),
+      });
+    }
+    for (const child of item.item ?? []) visit(child, fr);
+  };
+
+  visit(collection);
+  return requests;
+}
+
+function parseTraceabilityRows(markdown) {
+  const rows = [];
+
   for (const line of String(markdown).split('\n')) {
-    if (!/\|\s*NEWMAN\s*\|/i.test(line)) continue;
-    for (const id of extractCaseIds(line)) ids.add(id);
+    if (!line.trim().startsWith('|') || /^\|\s*:?-{3,}/.test(line)) continue;
+    const cells = line.split('|').slice(1, -1).map((cell) => cell.trim());
+    const caseId = cells[0]?.match(/^TC-FR(?:05|08|18)-(?:AI|HUMAN)-\d{3}$/)?.[0];
+    if (!caseId) continue;
+    const executionClass = cells[2]?.toUpperCase();
+    const assertionId = cells[4]?.match(CASE_ID_PATTERN)?.[0] ?? null;
+    rows.push({
+      caseId,
+      fr: caseId.slice(5, 7),
+      executionClass,
+      assertionId,
+      method: cells[3]?.match(/\b(GET|POST|PUT)\b/i)?.[1]?.toUpperCase() ?? null,
+      route: normalizeRoute(cells[3]),
+      resultTarget: cells[5] ?? '',
+    });
   }
-  return ids;
+
+  return rows;
+}
+
+function documentedNewmanTotals(markdown) {
+  const lines = String(markdown).split('\n');
+  const keyValue = /\b(requests?|executed|passed|failed|failures?)\b\s*[:=]\s*(\d+)/gi;
+
+  for (const line of lines) {
+    if (!/newman/i.test(line)) continue;
+    const values = {};
+    for (const [, key, value] of line.matchAll(keyValue)) {
+      const normalized = key.toLowerCase().startsWith('request') ? 'requests'
+        : key.toLowerCase().startsWith('fail') ? 'failed'
+          : key.toLowerCase();
+      values[normalized] = Number(value);
+    }
+    if (['requests', 'executed', 'passed', 'failed'].every((key) => Number.isInteger(values[key]))) return values;
+  }
+
+  for (let index = 0; index < lines.length - 2; index += 1) {
+    const header = lines[index].toLowerCase();
+    if (!/newman/.test(lines[index - 1] ?? '') || !['requests', 'executed', 'passed', 'failed'].every((key) => header.includes(key))) continue;
+    const labels = lines[index].split('|').slice(1, -1).map((cell) => cell.trim().toLowerCase());
+    const values = lines[index + 2].split('|').slice(1, -1).map((cell) => Number(cell.trim()));
+    const totals = Object.fromEntries(labels.map((label, position) => [label, values[position]]));
+    if (['requests', 'executed', 'passed', 'failed'].every((key) => Number.isInteger(totals[key]))) return totals;
+  }
+
+  return null;
 }
 
 function addFinding(findings, level, message) {
@@ -156,6 +251,7 @@ export function validateSubmission(options = {}) {
   const auditPath = options.auditPath === undefined ? 'src/ai-audit/ai_audit_report.md' : options.auditPath;
   const traceabilityPath = options.traceabilityPath === undefined ? 'src/test-cases/member-2-traceability.md' : options.traceabilityPath;
   const reportPaths = options.reportPaths ?? [
+    'src/README.md',
     'src/docs/main-report.md',
     'src/docs/cicd-report.md',
   ];
@@ -201,12 +297,18 @@ export function validateSubmission(options = {}) {
   }
 
   let assertionIds = new Set();
+  let collection = null;
   if (collectionPath) {
-    const collection = parseJson(resolve(rootDir, collectionPath), 'Postman collection', findings.errors);
+    collection = parseJson(resolve(rootDir, collectionPath), 'Postman collection', findings.errors);
     if (collection) {
       assertionIds = collectAssertionIds(collection);
       if (assertionIds.size === 0) addFinding(findings, 'ERROR', 'Postman collection has no case assertion IDs');
       else addFinding(findings, 'OK', `Postman collection registers ${assertionIds.size} case assertion IDs`);
+      for (const request of collectCollectionRequests(collection)) {
+        if (request.fr && request.route && !routeIsAllowed(request.fr, request.method, request.route)) {
+          addFinding(findings, 'ERROR', `Postman FR-${request.fr} request ${request.method} ${request.route} is outside allowed scope`);
+        }
+      }
     }
   }
   if (environmentPath) parseJson(resolve(rootDir, environmentPath), 'Postman environment', findings.errors);
@@ -218,26 +320,44 @@ export function validateSubmission(options = {}) {
   if (traceabilityPath) {
     const traceability = safeRead(resolve(rootDir, traceabilityPath), findings.errors);
     if (traceability !== null) {
-      const traceabilityIds = new Set(extractCaseIds(traceability));
-      const newmanIds = findTraceabilityNewmanIds(traceability);
+      const rows = parseTraceabilityRows(traceability);
+      const authoredIds = new Set(allCaseIds);
+      const rowsByCaseId = new Map();
+      const rowsByAssertionId = new Map();
+      for (const row of rows) {
+        rowsByCaseId.set(row.caseId, [...(rowsByCaseId.get(row.caseId) ?? []), row]);
+        if (row.assertionId) rowsByAssertionId.set(row.assertionId, [...(rowsByAssertionId.get(row.assertionId) ?? []), row]);
+        if (!authoredIds.has(row.caseId)) addFinding(findings, 'ERROR', `traceability contains unknown case ID ${row.caseId}`);
+        if (!EXECUTION_CLASSES.has(row.executionClass)) addFinding(findings, 'ERROR', `traceability case ${row.caseId} has invalid execution class ${row.executionClass ?? '(missing)'}`);
+      }
+      for (const id of authoredIds) {
+        const count = rowsByCaseId.get(id)?.length ?? 0;
+        if (count !== 1) addFinding(findings, 'ERROR', `authored case ID ${id} must appear exactly once in traceability; found ${count}`);
+      }
       for (const id of assertionIds) {
-        if (!traceabilityIds.has(id)) addFinding(findings, 'ERROR', `automated assertion ${id} is missing from traceability`);
+        const mappedRows = rowsByAssertionId.get(id) ?? [];
+        if (mappedRows.length !== 1 || mappedRows[0].executionClass !== 'NEWMAN') {
+          addFinding(findings, 'ERROR', `automated assertion ${id} must appear exactly once in NEWMAN traceability`);
+        }
       }
-      for (const id of newmanIds) {
-        if (!assertionIds.has(id)) addFinding(findings, 'ERROR', `traceability NEWMAN ID ${id} is missing from collection assertions`);
+      const newmanRows = rows.filter((row) => row.executionClass === 'NEWMAN');
+      for (const row of newmanRows) {
+        if (!row.assertionId || !assertionIds.has(row.assertionId)) {
+          addFinding(findings, 'ERROR', `traceability NEWMAN ID ${row.caseId} is missing from collection assertions`);
+        }
+        if (row.resultTarget !== `src/newman/member-2/fr-${row.fr}.json`) {
+          addFinding(findings, 'ERROR', `traceability NEWMAN ID ${row.caseId} must target src/newman/member-2/fr-${row.fr}.json`);
+        }
+        if (row.route && !routeIsAllowed(row.fr, row.method, row.route)) {
+          addFinding(findings, 'ERROR', `traceability NEWMAN ID ${row.caseId} uses method ${row.method ?? '(missing)'} ${row.route} outside FR-${row.fr} scope`);
+        }
       }
-      if (newmanIds.size === 0) addFinding(findings, 'WARNING', 'traceability has no NEWMAN rows yet');
+      if (newmanRows.length === 0) addFinding(findings, 'WARNING', 'traceability has no NEWMAN rows yet');
     }
   }
 
-  const evidenceDirectories = [
-    'src/test-cases',
-    'src/postman',
-    'src/newman',
-    'src/docs',
-    'src/bug-reports',
-  ];
-  for (const path of evidenceDirectories.flatMap((directory) => listFiles(resolve(rootDir, directory)))) {
+  const evidencePaths = options.evidencePaths ?? listFiles(resolve(rootDir, 'src'));
+  for (const path of evidencePaths) {
     const text = safeRead(path, findings.errors);
     if (text === null) continue;
     for (const violation of findForbiddenEvidence(text)) {
@@ -251,13 +371,16 @@ export function validateSubmission(options = {}) {
     try {
       const totals = loadNewmanTotals(newmanPaths);
       addFinding(findings, 'OK', `loaded ${totals.reports} Newman JSON report(s)`);
-      const reportMarkdown = reportPaths
-        .map((path) => safeRead(resolve(rootDir, path), findings.errors))
-        .filter((text) => text !== null)
-        .join('\n');
-      const documented = documentedNewmanTotals(reportMarkdown);
-      if (documented && (documented.assertions !== totals.assertions.total || documented.failures !== totals.assertions.failed)) {
-        addFinding(findings, 'ERROR', `documented Newman totals (${documented.assertions}/${documented.failures}) do not match JSON (${totals.assertions.total}/${totals.assertions.failed})`);
+      for (const reportPath of reportPaths) {
+        const report = safeRead(resolve(rootDir, reportPath), findings.errors);
+        if (report === null) continue;
+        const documented = documentedNewmanTotals(report);
+        if (documented && (documented.requests !== totals.requests.total
+          || documented.executed !== totals.executed
+          || documented.passed !== totals.passed
+          || documented.failed !== totals.failed)) {
+          addFinding(findings, 'ERROR', `${reportPath} Newman totals (requests=${documented.requests}; executed=${documented.executed}; passed=${documented.passed}; failed=${documented.failed}) do not match JSON (requests=${totals.requests.total}; executed=${totals.executed}; passed=${totals.passed}; failed=${totals.failed})`);
+        }
       }
     } catch (error) {
       addFinding(findings, 'ERROR', `cannot load Newman totals: ${error.message}`);
