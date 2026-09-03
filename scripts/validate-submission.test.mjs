@@ -12,6 +12,7 @@ import {
   loadNewmanTotals,
   main,
   parseTraceabilityRows,
+  validateWorkflowText,
   validateSubmission,
 } from './validate-submission.mjs';
 
@@ -102,13 +103,56 @@ function runFixture(options, assertion) {
   try {
     writeSubmissionFixture(root, options);
     console.log = (message) => output.push(message);
-    const exitCode = main({ rootDir: root });
+    const exitCode = main({ rootDir: root, workflowPath: null });
     assertion({ exitCode, output });
   } finally {
     console.log = originalLog;
     rmSync(root, { recursive: true, force: true });
   }
 }
+
+test('validateWorkflowText requires both repository checkouts, bounded startup, execution, and artifacts', () => {
+  const workflow = [
+    'name: Newman API tests',
+    'on:',
+    '  push:',
+    '  pull_request:',
+    '  workflow_dispatch:',
+    'concurrency:',
+    '  cancel-in-progress: true',
+    'jobs:',
+    '  test:',
+    '    timeout-minutes: 10',
+    '    steps:',
+    '      - uses: actions/checkout@v4',
+    '      - uses: actions/checkout@v4',
+    '        with:',
+    '          repository: ttbhanh/eshop-sut',
+    '          path: eshop-sut',
+    '      - uses: actions/setup-node@v4',
+    '        with:',
+    '          node-version: 22',
+    '      - run: npm ci',
+    '        working-directory: eshop-sut/backend',
+    '      - run: npm ci',
+    '      - run: node server.js',
+    '      - run: curl http://127.0.0.1:3000/api/products',
+    '      - run: npm run test:api',
+    '        env:',
+    '          X-Student-Id: 23127075',
+    '          ESHOP_USER_EMAIL: ${{ secrets.ESHOP_USER_EMAIL }}',
+    '          ESHOP_USER_PASSWORD: ${{ secrets.ESHOP_USER_PASSWORD }}',
+    '          ESHOP_ADMIN_EMAIL: ${{ secrets.ESHOP_ADMIN_EMAIL }}',
+    '          ESHOP_ADMIN_PASSWORD: ${{ secrets.ESHOP_ADMIN_PASSWORD }}',
+    '      - uses: actions/upload-artifact@v4',
+    '        if: always()',
+    '        with:',
+    '          path: src/newman/member-2/',
+  ].join('\n');
+
+  assert.deepEqual(validateWorkflowText(workflow), []);
+  assert.ok(validateWorkflowText(workflow.replace('npm run test:api', 'node scripts/run-newman.mjs')).includes('API test command'));
+});
 
 test('extractCaseIds returns every case ID so duplicate inventory rows are visible', () => {
   const markdown = [

@@ -11,6 +11,30 @@ const CASE_SPECS = [
 const CASE_ID_PATTERN = /TC-FR(?:05|08|18)-(?:AI|HUMAN)-\d{3}/g;
 const AUDIT_ROW_PATTERN = /^\|(?:\s*\d+\s*\|)?\s*(TC-FR(?:05|08|18)-AI-\d{3})\s*\|\s*(VALID|INVALID|INCOMPLETE)\s*\|/gmi;
 const EXECUTION_CLASSES = new Set(['NEWMAN', 'BROWSER-MANUAL', 'FAULT-INJECTION', 'EXCLUDED']);
+const WORKFLOW_PATH = '.github/workflows/newman-api-tests.yml';
+const WORKFLOW_REQUIREMENTS = [
+  ['workflow name', /^name:\s*Newman API tests\s*$/m],
+  ['push trigger', /(?:^|\n)\s*push:\s*(?:#.*)?$/m],
+  ['pull request trigger', /(?:^|\n)\s*pull_request:\s*(?:#.*)?$/m],
+  ['manual trigger', /(?:^|\n)\s*workflow_dispatch:\s*(?:#.*)?$/m],
+  ['submission checkout', /uses:\s*actions\/checkout@v4/g, { minimum: 1 }],
+  ['EShop SUT checkout', /repository:\s*ttbhanh\/eshop-sut\s*\n\s+path:\s*eshop-sut/m],
+  ['Node 22 setup', /uses:\s*actions\/setup-node@v4[\s\S]*?node-version:\s*22/m],
+  ['two locked dependency installs', /npm ci/g, { minimum: 2 }],
+  ['SUT working directory', /working-directory:\s*eshop-sut\/backend/m],
+  ['SUT startup', /node server\.js/m],
+  ['bounded product health check', /https?:\/\/127\.0\.0\.1:3000\/api\/products/m],
+  ['API test command', /npm run test:api/m],
+  ['Newman artifact path', /path:\s*src\/newman\/member-2\//m],
+  ['unconditional artifact upload', /if:\s*always\(\)/m],
+  ['ten-minute timeout', /timeout-minutes:\s*10/m],
+  ['concurrency cancellation', /cancel-in-progress:\s*true/m],
+  ['student header', /(?:X-Student-Id|X_STUDENT_ID):\s*23127075/m],
+  ['user fixture secret', /secrets\.ESHOP_USER_EMAIL/m],
+  ['user password secret', /secrets\.ESHOP_USER_PASSWORD/m],
+  ['admin fixture secret', /secrets\.ESHOP_ADMIN_EMAIL/m],
+  ['admin password secret', /secrets\.ESHOP_ADMIN_PASSWORD/m],
+];
 const FR_SCOPES = {
   '05': [{ method: 'GET', route: '/api/products' }],
   '08': [{ method: 'POST', route: '/api/checkout' }],
@@ -100,6 +124,18 @@ export function findForbiddenEvidence(text) {
   }
 
   return violations;
+}
+
+export function validateWorkflowText(text) {
+  const source = String(text);
+  const missing = [];
+
+  for (const [label, pattern, options = {}] of WORKFLOW_REQUIREMENTS) {
+    const matches = source.match(pattern) ?? [];
+    if (matches.length < (options.minimum ?? 1)) missing.push(label);
+  }
+
+  return missing;
 }
 
 function extractAuditVerdicts(markdown) {
@@ -276,6 +312,7 @@ export function validateSubmission(options = {}) {
     : options.environmentPath;
   const auditPath = options.auditPath === undefined ? 'src/ai-audit/ai_audit_report.md' : options.auditPath;
   const traceabilityPath = options.traceabilityPath === undefined ? 'src/test-cases/member-2-traceability.md' : options.traceabilityPath;
+  const workflowPath = options.workflowPath === undefined ? WORKFLOW_PATH : options.workflowPath;
   const reportPaths = options.reportPaths ?? [
     'src/README.md',
     'src/docs/main-report.md',
@@ -348,6 +385,15 @@ export function validateSubmission(options = {}) {
     }
   }
   if (environmentPath) parseJson(resolve(rootDir, environmentPath), 'Postman environment', findings.errors);
+
+  if (workflowPath) {
+    const workflow = safeRead(resolve(rootDir, workflowPath), findings.errors);
+    if (workflow !== null) {
+      const missing = validateWorkflowText(workflow);
+      if (missing.length > 0) addFinding(findings, 'ERROR', `workflow is missing required configuration: ${missing.join(', ')}`);
+      else addFinding(findings, 'OK', `workflow contains the required Newman CI configuration`);
+    }
+  }
 
   if (auditPath && !existsSync(resolve(rootDir, auditPath))) {
     addFinding(findings, 'ERROR', `audit report is missing: ${auditPath}`);

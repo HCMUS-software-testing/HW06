@@ -1,0 +1,98 @@
+name: Newman API tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: newman-api-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      X_STUDENT_ID: 23127075
+    steps:
+      - name: Check out submission
+        uses: actions/checkout@v4
+
+      - name: Check out public EShop SUT
+        uses: actions/checkout@v4
+        with:
+          repository: ttbhanh/eshop-sut
+          path: eshop-sut
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install SUT dependencies
+        working-directory: eshop-sut/backend
+        run: npm ci
+
+      - name: Install submission dependencies
+        run: npm ci
+
+      - name: Start EShop backend
+        working-directory: eshop-sut/backend
+        run: |
+          nohup node server.js > "$GITHUB_WORKSPACE/eshop-sut/backend/server.log" 2>&1 &
+          echo $! > "$GITHUB_WORKSPACE/eshop-sut/backend/server.pid"
+
+      - name: Wait for products endpoint
+        run: |
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent --show-error http://127.0.0.1:3000/api/products > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo 'EShop SUT did not become healthy within 120 seconds.'
+          exit 1
+
+      - name: Prepare documented demo fixture credentials
+        env:
+          ESHOP_USER_EMAIL: ${{ secrets.ESHOP_USER_EMAIL }}
+          ESHOP_USER_PASSWORD: ${{ secrets.ESHOP_USER_PASSWORD }}
+          ESHOP_ADMIN_EMAIL: ${{ secrets.ESHOP_ADMIN_EMAIL }}
+          ESHOP_ADMIN_PASSWORD: ${{ secrets.ESHOP_ADMIN_PASSWORD }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+
+          const path = 'src/postman/HW06_Local.postman_environment.json';
+          const environment = JSON.parse(readFileSync(path, 'utf8'));
+          const replacements = new Map([
+            ['studentId', process.env.X_STUDENT_ID],
+            ['userEmail', process.env.ESHOP_USER_EMAIL],
+            ['userPassword', process.env.ESHOP_USER_PASSWORD],
+            ['adminEmail', process.env.ESHOP_ADMIN_EMAIL],
+            ['adminPassword', process.env.ESHOP_ADMIN_PASSWORD],
+          ]);
+          for (const [key, value] of replacements) {
+            if (!value) throw new Error(`Missing Actions secret for ${key}`);
+            const entry = environment.values.find((item) => item.key === key);
+            if (!entry) throw new Error(`Missing Postman environment variable ${key}`);
+            entry.value = value;
+          }
+          writeFileSync(path, `${JSON.stringify(environment, null, 2)}\n`);
+          NODE
+
+      - name: Run Newman API suites
+        run: npm run test:api
+
+      - name: Upload Newman reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-api-reports
+          path: src/newman/member-2/
+          if-no-files-found: warn
