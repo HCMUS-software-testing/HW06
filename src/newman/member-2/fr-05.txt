@@ -382,7 +382,7 @@ Attempting to set next request to TC-FR05-AI-024 - null byte
   │ 'CASE_ID=TC-FR05-AI-024 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products?search=null bytemtkx6wmb-syjj2tfm [500 Internal Server Error, 351B, 4ms]
+  GET http://localhost:3000/api/products?search=null\u0000bytemtkx6wmb-syjj2tfm [500 Internal Server Error, 351B, 4ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   3. TC-FR05-AI-024 | null byte
 

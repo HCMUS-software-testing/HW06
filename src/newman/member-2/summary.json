@@ -20,9 +20,9 @@
       "failures": 4,
       "error": null,
       "outputs": {
-        "json": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-05.json",
-        "html": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-05.html",
-        "txt": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-05.txt"
+        "json": "src/newman/member-2/fr-05.json",
+        "html": "src/newman/member-2/fr-05.html",
+        "txt": "src/newman/member-2/fr-05.txt"
       }
     },
     {
@@ -35,18 +35,18 @@
         "pending": 0
       },
       "requests": {
-        "total": 264,
-        "executed": 264,
-        "passed": 264,
+        "total": 262,
+        "executed": 262,
+        "passed": 260,
         "failed": 0,
-        "pending": 0
+        "pending": 2
       },
       "failures": 21,
       "error": null,
       "outputs": {
-        "json": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-08.json",
-        "html": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-08.html",
-        "txt": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-08.txt"
+        "json": "src/newman/member-2/fr-08.json",
+        "html": "src/newman/member-2/fr-08.html",
+        "txt": "src/newman/member-2/fr-08.txt"
       }
     },
     {
@@ -68,9 +68,9 @@
       "failures": 13,
       "error": null,
       "outputs": {
-        "json": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-18.json",
-        "html": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-18.html",
-        "txt": "/home/tkin/Documents/hcmus/software-testing/HW06/.worktrees/hw06-submission-completion/src/newman/member-2/fr-18.txt"
+        "json": "src/newman/member-2/fr-18.json",
+        "html": "src/newman/member-2/fr-18.html",
+        "txt": "src/newman/member-2/fr-18.txt"
       }
     }
   ],
@@ -82,11 +82,11 @@
     "pending": 0
   },
   "requests": {
-    "total": 794,
-    "executed": 794,
-    "passed": 794,
+    "total": 792,
+    "executed": 792,
+    "passed": 790,
     "failed": 0,
-    "pending": 0
+    "pending": 2
   },
   "failures": 38,
   "errors": 0,

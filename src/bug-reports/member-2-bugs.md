@@ -5,7 +5,7 @@
 - SUT: `http://localhost:3000`; health check `GET /api/products` trả `200 OK`.
 - Newman command: `npm run test:api` (exit code `1` vì assertion failures).
 - Execution time: `2026-09-03T02:43:08Z` (timestamp trong `summary.json`).
-- Kết quả: 90 assertions, 52 passed, 38 failed; 794/794 HTTP requests completed; 0 runner errors.
+- Kết quả authoritative từ các Newman JSON: 90 assertions, 52 passed, 38 failed; 792 recorded requests, 790 non-pending passes, 2 pending, 0 request failures; 0 runner errors. FR-08 riêng có 262 total, 262 recorded executions, 2 pending.
 - Runtime credentials were supplied through an untracked `/tmp` environment and are not included here or in the reports.
 
 The records below include only deviations reproduced by the live SUT. Assertion/status expectations that were not explicitly required by the cited contract (for example, `401` versus `403` for an invalid JWT, or JSON media type for Express parser errors) are not recorded as SUT bugs.
@@ -20,6 +20,12 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 | BUG-004 | Admin order APIs do not enforce `role = 'admin'` | `/api/admin/orders`; FR-12 / SEC-03 | Critical |
 | BUG-005 | Profile update accepts client-supplied `role` and elevates the account | `PUT /api/users/me`; SEC-06 | Critical |
 | BUG-006 | Admin state machine permits terminal `canceled -> delivered` | `PUT /api/admin/orders/:id/status`; FR-10 / FR-18 | High |
+| BUG-007 | Empty cart is accepted by checkout | `POST /api/checkout`; FR-08 | High |
+| BUG-008 | Empty shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
+| BUG-009 | Whitespace-only shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
+| BUG-010 | Missing shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
+| BUG-011 | Null shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
+| BUG-012 | Object shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
 
 ## 3. Chi tiết các lỗi
 
@@ -70,11 +76,11 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Preconditions:** Fresh ordinary user with an otherwise valid JWT (`role=user`); an existing pending order for the mutation check.
 - **Requests:**
   - `GET /api/admin/orders` with the ordinary user JWT.
-  - `PUT /api/admin/orders/58/status` with the ordinary user JWT and `{"status":"confirmed"}`.
+  - `PUT /api/admin/orders/<captured-order-id>/status` with the ordinary user JWT and `{"status":"confirmed"}`. The order ID is captured from the fresh setup fixture; no fixed ID is used.
 - **Expected:** Both requests return `403`; the order remains unchanged.
 - **Actual:** Direct reproduction returned `200` for both; the list response was an array and the mutation response was `{"message":"Order status updated"}`.
 - **Side effects:** Any authenticated user can read all orders and change order state.
-- **Newman evidence:** `src/newman/member-2/fr-18.json`, assertions `TC-FR18-AI-002`, `TC-FR18-AI-007`, `TC-FR18-AI-011`, `TC-FR18-AI-014`, `TC-FR18-HUMAN-001`, `TC-FR18-HUMAN-006`, and `TC-FR18-HUMAN-008`; CLI detail: `src/newman/member-2/fr-18.txt`.
+- **Newman evidence:** `src/newman/member-2/fr-18.json`, assertions `TC-FR18-AI-002`, `TC-FR18-AI-007`, `TC-FR18-AI-011`, `TC-FR18-HUMAN-001`, and `TC-FR18-HUMAN-008`; CLI detail: `src/newman/member-2/fr-18.txt`.
 - **External issue:** MANUAL-EVIDENCE-REQUIRED
 - **Screenshot:** MANUAL-EVIDENCE-REQUIRED
 
@@ -101,6 +107,72 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Actual:** Both requests returned `200`; the final order state was `delivered`.
 - **Side effects:** A canceled order can be marked as delivered, violating the order state machine.
 - **Newman evidence:** `src/newman/member-2/fr-18.json`, assertion `TC-FR18-AI-027`; CLI detail: `src/newman/member-2/fr-18.txt`.
+- **External issue:** MANUAL-EVIDENCE-REQUIRED
+- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+
+### BUG-007 — Empty cart is accepted by checkout
+
+- **Requirement:** The retained FR-08 traceability oracle requires an empty cart to return `400`, create no order, and leave the cart unchanged.
+- **Preconditions:** Fresh registered user with an authenticated empty cart.
+- **Request:** `POST /api/checkout` with `{"total_amount":0,"shipping_address":"123 HW06 Street"}` and the fresh user JWT.
+- **Expected:** `400` JSON error, zero new orders, and an empty cart.
+- **Actual:** The disposable direct reproduction returned `200` with `{"message":"Checkout successful","orderId":117}`, created one order, and left the cart empty.
+- **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-002`; CLI detail: `src/newman/member-2/fr-08.txt`.
+- **External issue:** MANUAL-EVIDENCE-REQUIRED
+- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+
+### BUG-008 — Empty shipping address is accepted by checkout
+
+- **Requirement:** The retained FR-08 traceability oracle requires an empty `shipping_address` to return `400`, create no order, and preserve the cart.
+- **Preconditions:** Fresh registered user with one product in the cart.
+- **Request:** `POST /api/checkout` with `{"total_amount":30000000,"shipping_address":""}` and the fresh user JWT.
+- **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
+- **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
+- **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-004`; CLI detail: `src/newman/member-2/fr-08.txt`.
+- **External issue:** MANUAL-EVIDENCE-REQUIRED
+- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+
+### BUG-009 — Whitespace-only shipping address is accepted by checkout
+
+- **Requirement:** The retained FR-08 traceability oracle requires a whitespace-only `shipping_address` to return `400`, create no order, and preserve the cart.
+- **Preconditions:** Fresh registered user with one product in the cart.
+- **Request:** `POST /api/checkout` with `{"total_amount":30000000,"shipping_address":"   "}` and the fresh user JWT.
+- **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
+- **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
+- **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-005`; CLI detail: `src/newman/member-2/fr-08.txt`.
+- **External issue:** MANUAL-EVIDENCE-REQUIRED
+- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+
+### BUG-010 — Missing shipping address is accepted by checkout
+
+- **Requirement:** The retained FR-08 traceability oracle requires a missing `shipping_address` to return `400`, create no order, and preserve the cart.
+- **Preconditions:** Fresh registered user with one product in the cart.
+- **Request:** `POST /api/checkout` with `{"total_amount":30000000}` and the fresh user JWT.
+- **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
+- **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
+- **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-006`; CLI detail: `src/newman/member-2/fr-08.txt`.
+- **External issue:** MANUAL-EVIDENCE-REQUIRED
+- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+
+### BUG-011 — Null shipping address is accepted by checkout
+
+- **Requirement:** The retained FR-08 traceability oracle requires a `null` `shipping_address` to return `400`, create no order, and preserve the cart.
+- **Preconditions:** Fresh registered user with one product in the cart.
+- **Request:** `POST /api/checkout` with `{"total_amount":30000000,"shipping_address":null}` and the fresh user JWT.
+- **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
+- **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
+- **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-007`; CLI detail: `src/newman/member-2/fr-08.txt`.
+- **External issue:** MANUAL-EVIDENCE-REQUIRED
+- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+
+### BUG-012 — Object shipping address is accepted by checkout
+
+- **Requirement:** The retained FR-08 traceability oracle requires a non-string object `shipping_address` to return `400`, create no order, and preserve the cart.
+- **Preconditions:** Fresh registered user with one product in the cart.
+- **Request:** `POST /api/checkout` with `{"total_amount":30000000,"shipping_address":{"street":"123 HW06 Street"}}` and the fresh user JWT.
+- **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
+- **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
+- **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-008`; CLI detail: `src/newman/member-2/fr-08.txt`.
 - **External issue:** MANUAL-EVIDENCE-REQUIRED
 - **Screenshot:** MANUAL-EVIDENCE-REQUIRED
 
