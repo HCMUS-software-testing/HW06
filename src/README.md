@@ -78,7 +78,7 @@ src/
 │   ├── member-2-fr-18.md
 │   ├── member-2-traceability.md
 │   └── 23127075-hw06-test-cases.xlsx
-├── bug-reports/member-2-bugs.md
+├── bug-reports/bug-report.md
 ├── agent-skill/
 │   ├── diagram.mermaid
 │   ├── pseudocode.md
@@ -101,5 +101,11 @@ src/
 ## 6. Bằng chứng chạy và lỗi
 
 - Newman: `src/newman/member-2/fr-05.{json,html,txt}`, `fr-08.*`, `fr-18.*`, `summary.json`.
-- Bugs: `src/bug-reports/member-2-bugs.md` (BUG-001 … BUG-012).
+- Bugs: `src/bug-reports/bug-report.md` (BUG-001 … BUG-012).
 - Issue GitHub/screenshot: xem marker trong bug report.
+
+### Bằng chứng header bắt buộc
+
+Postman Console xác nhận mọi request được thêm header `X-Student-Id: 23127075`:
+
+![Postman Console showing X-Student-Id](evidence/evidence-x-student-id.png)

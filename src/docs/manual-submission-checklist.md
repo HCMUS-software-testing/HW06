@@ -6,7 +6,7 @@ Các việc sau vẫn mở trong repo local. Marker thủ công nằm ở cột/
 | --- | --- |
 | Confirm/redraw and export Agent Skill diagram | `src/agent-skill/diagram.png` (source remains `src/agent-skill/diagram.mermaid`; do not let AI regenerate the mermaid) |
 | Capture Postman console showing `X-Student-Id` | screenshot path referenced from `src/docs/main-report.md` or `src/README.md` |
-| Create public GitHub issues and screenshots for confirmed bugs | each record in `src/bug-reports/member-2-bugs.md` (`External issue`, `Screenshot`) |
+| Create public GitHub issues and screenshots for confirmed bugs | each record in `src/bug-reports/bug-report.md` (`External issue`, `Screenshot`) |
 | Run and link one passing CI commit | `src/docs/cicd-report.md` and `src/docs/ci-manual-evidence.md` |
 | Run and link one intentionally failing CI commit | `src/docs/cicd-report.md` and `src/docs/ci-manual-evidence.md` |
 | Record optional Agent Skill video | `src/agent-skill/skill-demo-notes.md` (`Video URL`) |

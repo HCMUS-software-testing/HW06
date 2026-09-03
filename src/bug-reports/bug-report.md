@@ -12,20 +12,20 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 
 ## 2. Danh sách lỗi đã xác nhận
 
-| Bug ID | Tóm tắt lỗi | API / yêu cầu | Severity |
-| --- | --- | --- | --- |
-| BUG-001 | Product search concatenates input into SQL and leaks SQLite errors | `GET /api/products`; SEC-05 | High |
-| BUG-002 | Checkout persists the client-supplied `total_amount` | `POST /api/checkout`; FR-08 | High |
-| BUG-003 | Successful checkout does not clear the user cart | `POST /api/checkout`; FR-08 | High |
-| BUG-004 | Admin order APIs do not enforce `role = 'admin'` | `/api/admin/orders`; FR-12 / SEC-03 | Critical |
-| BUG-005 | Profile update accepts client-supplied `role` and elevates the account | `PUT /api/users/me`; SEC-06 | Critical |
-| BUG-006 | Admin state machine permits terminal `canceled -> delivered` | `PUT /api/admin/orders/:id/status`; FR-10 / FR-18 | High |
-| BUG-007 | Empty cart is accepted by checkout | `POST /api/checkout`; FR-08 | High |
-| BUG-008 | Empty shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
-| BUG-009 | Whitespace-only shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
-| BUG-010 | Missing shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
-| BUG-011 | Null shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
-| BUG-012 | Object shipping address is accepted by checkout | `POST /api/checkout`; FR-08 | High |
+| Bug ID  | Tóm tắt lỗi                                                          | API / yêu cầu                                     | Severity |
+| ------- | ----------------------------------------------------------------------- | --------------------------------------------------- | -------- |
+| BUG-001 | Product search concatenates input into SQL and leaks SQLite errors      | `GET /api/products`; SEC-05                       | High     |
+| BUG-002 | Checkout persists the client-supplied`total_amount`                   | `POST /api/checkout`; FR-08                       | High     |
+| BUG-003 | Successful checkout does not clear the user cart                        | `POST /api/checkout`; FR-08                       | High     |
+| BUG-004 | Admin order APIs do not enforce`role = 'admin'`                       | `/api/admin/orders`; FR-12 / SEC-03               | Critical |
+| BUG-005 | Profile update accepts client-supplied`role` and elevates the account | `PUT /api/users/me`; SEC-06                       | Critical |
+| BUG-006 | Admin state machine permits terminal`canceled -> delivered`           | `PUT /api/admin/orders/:id/status`; FR-10 / FR-18 | High     |
+| BUG-007 | Empty cart is accepted by checkout                                      | `POST /api/checkout`; FR-08                       | High     |
+| BUG-008 | Empty shipping address is accepted by checkout                          | `POST /api/checkout`; FR-08                       | High     |
+| BUG-009 | Whitespace-only shipping address is accepted by checkout                | `POST /api/checkout`; FR-08                       | High     |
+| BUG-010 | Missing shipping address is accepted by checkout                        | `POST /api/checkout`; FR-08                       | High     |
+| BUG-011 | Null shipping address is accepted by checkout                           | `POST /api/checkout`; FR-08                       | High     |
+| BUG-012 | Object shipping address is accepted by checkout                         | `POST /api/checkout`; FR-08                       | High     |
 
 ## 3. Chi tiết các lỗi
 
@@ -43,8 +43,8 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Actual:** The `1=1` probe returned all five products while `1=2` returned `[]`. UNION, script, and null-byte inputs returned `500 text/html` responses containing SQLite errors.
 - **Side effects:** SQL predicates can alter result cardinality and backend SQL error text is disclosed to the client.
 - **Newman evidence:** `src/newman/member-2/fr-05.json`, assertions `TC-FR05-AI-017`, `TC-FR05-AI-020`, `TC-FR05-AI-024`, and `TC-FR05-HUMAN-001`; CLI detail: `src/newman/member-2/fr-05.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/41
+  ![BUG-001 screenshot](../evidence/bug-reports/1788439763638.png)
 
 ### BUG-002 — Checkout trusts client-controlled total
 
@@ -55,8 +55,8 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Actual:** Response was `200`; the created order had `total_amount: 1` and status `pending`.
 - **Side effects:** A user can create an order with an arbitrary underpayment (including negative, zero, or non-numeric values observed by Newman).
 - **Newman evidence:** `src/newman/member-2/fr-08.json`, assertions `TC-FR08-AI-009`, `TC-FR08-AI-029`, `TC-FR08-AI-030`, and `TC-FR08-AI-035`; CLI detail: `src/newman/member-2/fr-08.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/43
+  ![1788440078838](../evidence/bug-reports/1788440078838.png)
 
 ### BUG-003 — Cart remains populated after successful checkout
 
@@ -67,8 +67,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Actual:** Checkout returned `200` and created the order, but the follow-up cart still contained the product (`cartCountAfter: 1`).
 - **Side effects:** Repeated checkout can reuse the retained cart item and the client sees stale purchase state.
 - **Newman evidence:** `src/newman/member-2/fr-08.json`, assertions `TC-FR08-AI-001`, `TC-FR08-AI-016`, `TC-FR08-AI-017`, `TC-FR08-AI-023`, `TC-FR08-AI-024`, `TC-FR08-AI-031`, `TC-FR08-AI-032`, `TC-FR08-AI-033`, and `TC-FR08-AI-034`; CLI detail: `src/newman/member-2/fr-08.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/45
+
+![1788440664155](../evidence/bug-reports/1788440664155.png)
 
 ### BUG-004 — Admin order endpoints omit role authorization
 
@@ -81,8 +82,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Actual:** Direct reproduction returned `200` for both; the list response was an array and the mutation response was `{"message":"Order status updated"}`.
 - **Side effects:** Any authenticated user can read all orders and change order state.
 - **Newman evidence:** `src/newman/member-2/fr-18.json`, assertions `TC-FR18-AI-002`, `TC-FR18-AI-007`, `TC-FR18-AI-011`, `TC-FR18-HUMAN-001`, and `TC-FR18-HUMAN-008`; CLI detail: `src/newman/member-2/fr-18.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/52
+
+![1788441431533](../evidence/bug-reports/1788441431533.png)
 
 ### BUG-005 — Profile role mass assignment enables privilege escalation
 
@@ -93,8 +95,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Actual:** Response was `200`; subsequent `GET /api/users/me` reported `role: "admin"`. The same JWT then accessed `GET /api/admin/orders` with `200`.
 - **Side effects:** A user can persist an admin role and combine this with BUG-004 to gain administrator access.
 - **Newman evidence:** `src/newman/member-2/fr-18.json`, assertion `TC-FR18-AI-014` and `TC-FR18-HUMAN-006`; CLI detail: `src/newman/member-2/fr-18.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/44
+
+![1788442826922](../evidence/bug-reports/1788442826922.png)
 
 ### BUG-006 — Terminal canceled order can transition to delivered
 
@@ -107,8 +110,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Actual:** Both requests returned `200`; the final order state was `delivered`.
 - **Side effects:** A canceled order can be marked as delivered, violating the order state machine.
 - **Newman evidence:** `src/newman/member-2/fr-18.json`, assertion `TC-FR18-AI-027`; CLI detail: `src/newman/member-2/fr-18.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/42
+
+![1788442876353](../evidence/bug-reports/1788442876353.png)
 
 ### BUG-007 — Empty cart is accepted by checkout
 
@@ -118,8 +122,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Expected:** `400` JSON error, zero new orders, and an empty cart.
 - **Actual:** The disposable direct reproduction returned `200` with `{"message":"Checkout successful","orderId":117}`, created one order, and left the cart empty.
 - **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-002`; CLI detail: `src/newman/member-2/fr-08.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/47
+
+![1788442973012](../evidence/bug-reports/1788442973012.png)
 
 ### BUG-008 — Empty shipping address is accepted by checkout
 
@@ -129,8 +134,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
 - **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
 - **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-004`; CLI detail: `src/newman/member-2/fr-08.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/46
+
+![1788443003405](../evidence/bug-reports/1788443003405.png)
 
 ### BUG-009 — Whitespace-only shipping address is accepted by checkout
 
@@ -140,8 +146,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
 - **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
 - **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-005`; CLI detail: `src/newman/member-2/fr-08.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/50
+
+![1788443029060](../evidence/bug-reports/1788443029060.png)
 
 ### BUG-010 — Missing shipping address is accepted by checkout
 
@@ -151,8 +158,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
 - **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
 - **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-006`; CLI detail: `src/newman/member-2/fr-08.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/48
+
+![1788443065824](../evidence/bug-reports/1788443065824.png)
 
 ### BUG-011 — Null shipping address is accepted by checkout
 
@@ -162,8 +170,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
 - **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
 - **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-007`; CLI detail: `src/newman/member-2/fr-08.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/49
+
+![1788443101276](../evidence/bug-reports/1788443101276.png)
 
 ### BUG-012 — Object shipping address is accepted by checkout
 
@@ -173,8 +182,9 @@ The records below include only deviations reproduced by the live SUT. Assertion/
 - **Expected:** `400` JSON error, zero new orders, and the original cart unchanged.
 - **Actual:** The disposable direct reproduction returned `200` with a successful-checkout response, created one order, and left one cart item.
 - **Newman evidence:** `src/newman/member-2/fr-08.json`, failed assertion `TC-FR08-AI-008`; CLI detail: `src/newman/member-2/fr-08.txt`.
-- **External issue:** MANUAL-EVIDENCE-REQUIRED
-- **Screenshot:** MANUAL-EVIDENCE-REQUIRED
+- **External issue:** https://github.com/HCMUS-software-testing/HW06/issues/51
+
+![1788443120760](../evidence/bug-reports/1788443120760.png)
 
 ## 4. Không ghi nhận là SUT defect
 

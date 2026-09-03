@@ -9,7 +9,7 @@ Iteration 1/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-001 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 47ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 43ms]
 
 Attempting to set next request to TC-FR05-AI-001 - baseline list
 
@@ -18,8 +18,8 @@ Attempting to set next request to TC-FR05-AI-001 - baseline list
   │ 'CASE_ID=TC-FR05-AI-001 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 7ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 8ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 6ms]
   ✓  TC-FR05-AI-001 | baseline list
 
 Iteration 2/32
@@ -28,7 +28,7 @@ Iteration 2/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-002 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 6ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
 
 Attempting to set next request to TC-FR05-AI-002 - fixture keyword
 
@@ -36,9 +36,9 @@ Attempting to set next request to TC-FR05-AI-002 - fixture keyword
   ┌
   │ 'CASE_ID=TC-FR05-AI-002 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 10ms]
-  GET http://localhost:3000/api/products?search=iPhone 15 Pro Max [200 OK, 453B, 6ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 6ms]
+  GET http://localhost:3000/api/products?search=iPhone 15 Pro Max [200 OK, 453B, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
   ✓  TC-FR05-AI-002 | fixture keyword
 
 Iteration 3/32
@@ -47,7 +47,7 @@ Iteration 3/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-003 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 9ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 7ms]
 
 Attempting to set next request to TC-FR05-AI-003 - no match
 
@@ -56,8 +56,8 @@ Attempting to set next request to TC-FR05-AI-003 - no match
   │ 'CASE_ID=TC-FR05-AI-003 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
-  GET http://localhost:3000/api/products?search=__hw06_no_match_mtkx6wmb-syjj2tfm__ [200 OK, 267B, 4ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=__hw06_no_match_mtlkfw2o-6w4u9t12__ [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-003 | no match
 
 Iteration 4/32
@@ -75,9 +75,9 @@ Attempting to set next request to TC-FR05-AI-004 - empty normalization
   │ 'CASE_ID=TC-FR05-AI-004 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   GET http://localhost:3000/api/products?search= [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
   ✓  TC-FR05-AI-004 | empty normalization
 
 Iteration 5/32
@@ -94,7 +94,7 @@ Attempting to set next request to TC-FR05-AI-005 - special ASCII
   ┌
   │ 'CASE_ID=TC-FR05-AI-005 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   GET http://localhost:3000/api/products?search=!@#$%^&*()_+-=[]{}|;:,.<>? [200 OK, 267B, 4ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-005 | special ASCII
@@ -113,8 +113,8 @@ Attempting to set next request to TC-FR05-AI-006 - Vietnamese UTF-8
   ┌
   │ 'CASE_ID=TC-FR05-AI-006 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products?search=không-tồn-tại-mtkx6wmb-syjj2tfm [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products?search=không-tồn-tại-mtlkfw2o-6w4u9t12 [200 OK, 267B, 5ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   ✓  TC-FR05-AI-006 | Vietnamese UTF-8
 
@@ -133,8 +133,8 @@ Attempting to set next request to TC-FR05-AI-007 - long search
   │ 'CASE_ID=TC-FR05-AI-007 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products?search=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa [200 OK, 267B, 6ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
   ✓  TC-FR05-AI-007 | long search
 
 Iteration 8/32
@@ -143,7 +143,7 @@ Iteration 8/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-008 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
 
 Attempting to set next request to TC-FR05-AI-008 - spaces only
 
@@ -151,7 +151,7 @@ Attempting to set next request to TC-FR05-AI-008 - spaces only
   ┌
   │ 'CASE_ID=TC-FR05-AI-008 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
   GET http://localhost:3000/api/products?search=    [200 OK, 267B, 4ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   ✓  TC-FR05-AI-008 | spaces only
@@ -162,7 +162,7 @@ Iteration 9/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-009 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
 
 Attempting to set next request to TC-FR05-AI-009 - numeric sentinel
 
@@ -170,9 +170,9 @@ Attempting to set next request to TC-FR05-AI-009 - numeric sentinel
   ┌
   │ 'CASE_ID=TC-FR05-AI-009 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products?search=987654321mtkx6wmb-syjj2tfm [200 OK, 267B, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products?search=987654321mtlkfw2o-6w4u9t12 [200 OK, 267B, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
   ✓  TC-FR05-AI-009 | numeric sentinel
 
 Iteration 10/32
@@ -181,7 +181,7 @@ Iteration 10/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-011 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
 
 Attempting to set next request to TC-FR05-AI-011 - duplicate query
 
@@ -189,9 +189,9 @@ Attempting to set next request to TC-FR05-AI-011 - duplicate query
   ┌
   │ 'CASE_ID=TC-FR05-AI-011 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products?search=iPhone&search=iPhone [200 OK, 267B, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products?search=iPhone&search=iPhone [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
   ✓  TC-FR05-AI-011 | duplicate query
 
 Iteration 11/32
@@ -200,7 +200,7 @@ Iteration 11/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-012 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
 
 Attempting to set next request to TC-FR05-AI-012 - percent decoding
 
@@ -208,9 +208,9 @@ Attempting to set next request to TC-FR05-AI-012 - percent decoding
   ┌
   │ 'CASE_ID=TC-FR05-AI-012 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products?search=iPhone [200 OK, 453B, 3ms]
-  GET http://localhost:3000/api/products?search=%69Phone [200 OK, 453B, 2ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=iPhone [200 OK, 453B, 5ms]
+  GET http://localhost:3000/api/products?search=%69Phone [200 OK, 453B, 4ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-012 | percent decoding
 
@@ -220,7 +220,7 @@ Iteration 12/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-013 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
 
 Attempting to set next request to TC-FR05-AI-013 - SQLi differential
 
@@ -229,7 +229,7 @@ Attempting to set next request to TC-FR05-AI-013 - SQLi differential
   │ 'CASE_ID=TC-FR05-AI-013 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products?search='%20OR%20'1'%3D'2 [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search='%20OR%20'1'%3D'2 [200 OK, 1.24kB, 4ms]
   GET http://localhost:3000/api/products?search=' OR '1'='1 [200 OK, 1.24kB, 3ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-013 | SQLi differential
@@ -259,7 +259,7 @@ Iteration 14/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-015 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
 
 Attempting to set next request to TC-FR05-AI-015 - raw non-reflection
 
@@ -267,9 +267,9 @@ Attempting to set next request to TC-FR05-AI-015 - raw non-reflection
   ┌
   │ 'CASE_ID=TC-FR05-AI-015 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 7ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   GET http://localhost:3000/api/products?search=<svg/onload=alert(1)> [200 OK, 267B, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   ✓  TC-FR05-AI-015 | raw non-reflection
 
 Iteration 15/32
@@ -278,7 +278,7 @@ Iteration 15/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-016 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
 
 Attempting to set next request to TC-FR05-AI-016 - tautology cardinality
 
@@ -286,8 +286,8 @@ Attempting to set next request to TC-FR05-AI-016 - tautology cardinality
   ┌
   │ 'CASE_ID=TC-FR05-AI-016 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 2ms]
-  GET http://localhost:3000/api/products?search=' OR 1=1 -- [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products?search=' OR 1=1 -- [200 OK, 1.24kB, 5ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-016 | tautology cardinality
 
@@ -306,8 +306,8 @@ Attempting to set next request to TC-FR05-AI-017 - union payload
   │ 'CASE_ID=TC-FR05-AI-017 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products?search=' UNION SELECT 1,2,3,4,5 -- [500 Internal Server Error, 408B, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=' UNION SELECT 1,2,3,4,5 -- [500 Internal Server Error, 408B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   1. TC-FR05-AI-017 | union payload
 
 Iteration 17/32
@@ -325,8 +325,8 @@ Attempting to set next request to TC-FR05-AI-019 - SQL comment
   │ 'CASE_ID=TC-FR05-AI-019 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products?search=iPhone' -- [200 OK, 267B, 4ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=iPhone' -- [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-019 | SQL comment
 
 Iteration 18/32
@@ -335,7 +335,7 @@ Iteration 18/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-020 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
 
 Attempting to set next request to TC-FR05-AI-020 - API XSS invariant
 
@@ -343,9 +343,9 @@ Attempting to set next request to TC-FR05-AI-020 - API XSS invariant
   ┌
   │ 'CASE_ID=TC-FR05-AI-020 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   GET http://localhost:3000/api/products?search=<script>alert('hw06')</script> [500 Internal Server Error, 348B, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   2. TC-FR05-AI-020 | API XSS invariant
 
 Iteration 19/32
@@ -362,9 +362,9 @@ Attempting to set next request to TC-FR05-AI-023 - oversized search
   ┌
   │ 'CASE_ID=TC-FR05-AI-023 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products?search=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz [200 OK, 267B, 4ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz [200 OK, 267B, 6ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   ✓  TC-FR05-AI-023 | oversized search
 
 Iteration 20/32
@@ -381,9 +381,9 @@ Attempting to set next request to TC-FR05-AI-024 - null byte
   ┌
   │ 'CASE_ID=TC-FR05-AI-024 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products?search=null\u0000bytemtkx6wmb-syjj2tfm [500 Internal Server Error, 351B, 4ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=null bytemtlkfw2o-6w4u9t12 [500 Internal Server Error, 351B, 2ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   3. TC-FR05-AI-024 | null byte
 
 Iteration 21/32
@@ -400,9 +400,9 @@ Attempting to set next request to TC-FR05-AI-025 - emoji UTF-8
   ┌
   │ 'CASE_ID=TC-FR05-AI-025 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products?search=🧪-mtkx6wmb-syjj2tfm [200 OK, 267B, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=🧪-mtlkfw2o-6w4u9t12 [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   ✓  TC-FR05-AI-025 | emoji UTF-8
 
 Iteration 22/32
@@ -411,7 +411,7 @@ Iteration 22/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-026 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
 
 Attempting to set next request to TC-FR05-AI-026 - id schema
 
@@ -419,9 +419,9 @@ Attempting to set next request to TC-FR05-AI-026 - id schema
   ┌
   │ 'CASE_ID=TC-FR05-AI-026 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   ✓  TC-FR05-AI-026 | id schema
 
 Iteration 23/32
@@ -430,7 +430,7 @@ Iteration 23/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-027 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
 
 Attempting to set next request to TC-FR05-AI-027 - name schema
 
@@ -439,7 +439,7 @@ Attempting to set next request to TC-FR05-AI-027 - name schema
   │ 'CASE_ID=TC-FR05-AI-027 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   ✓  TC-FR05-AI-027 | name schema
 
@@ -457,8 +457,8 @@ Attempting to set next request to TC-FR05-AI-028 - price schema
   ┌
   │ 'CASE_ID=TC-FR05-AI-028 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 2ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-028 | price schema
 
@@ -468,7 +468,7 @@ Iteration 25/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-029 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
 
 Attempting to set next request to TC-FR05-AI-029 - description schema
 
@@ -476,8 +476,8 @@ Attempting to set next request to TC-FR05-AI-029 - description schema
   ┌
   │ 'CASE_ID=TC-FR05-AI-029 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-029 | description schema
 
@@ -487,7 +487,7 @@ Iteration 26/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-030 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
 
 Attempting to set next request to TC-FR05-AI-030 - image URL schema
 
@@ -495,8 +495,8 @@ Attempting to set next request to TC-FR05-AI-030 - image URL schema
   ┌
   │ 'CASE_ID=TC-FR05-AI-030 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-030 | image URL schema
 
@@ -506,7 +506,7 @@ Iteration 27/32
   ┌
   │ 'CASE_ID=TC-FR05-AI-031 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
 
 Attempting to set next request to TC-FR05-AI-031 - category schema
 
@@ -516,7 +516,7 @@ Attempting to set next request to TC-FR05-AI-031 - category schema
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-031 | category schema
 
 Iteration 28/32
@@ -534,7 +534,7 @@ Attempting to set next request to TC-FR05-AI-033 - baseline content type
   │ 'CASE_ID=TC-FR05-AI-033 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-033 | baseline content type
 
@@ -552,9 +552,9 @@ Attempting to set next request to TC-FR05-AI-035 - sensitive fields
   ┌
   │ 'CASE_ID=TC-FR05-AI-035 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 2ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-AI-035 | sensitive fields
 
 Iteration 30/32
@@ -563,7 +563,7 @@ Iteration 30/32
   ┌
   │ 'CASE_ID=TC-FR05-HUMAN-001 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
 
 Attempting to set next request to TC-FR05-HUMAN-001 - blind SQLi pair
 
@@ -571,7 +571,7 @@ Attempting to set next request to TC-FR05-HUMAN-001 - blind SQLi pair
   ┌
   │ 'CASE_ID=TC-FR05-HUMAN-001 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   GET http://localhost:3000/api/products?search='%20AND%201%3D2%20-- [200 OK, 267B, 3ms]
   GET http://localhost:3000/api/products?search=' AND 1=1 -- [200 OK, 1.24kB, 3ms]
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
@@ -592,8 +592,8 @@ Attempting to set next request to TC-FR05-HUMAN-003 - HPP pair
   │ 'CASE_ID=TC-FR05-HUMAN-003 X-Student-Id=23127075'
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
-  GET http://localhost:3000/api/products?search=iPhone&search=Samsung [200 OK, 267B, 5ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=iPhone&search=Samsung [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
   ✓  TC-FR05-HUMAN-003 | HPP pair
 
 Iteration 32/32
@@ -612,7 +612,7 @@ Attempting to set next request to TC-FR05-HUMAN-008 - HPP XSS pair
   └
   GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   GET http://localhost:3000/api/products?search=&search=<svg/onload=alert(1)> [200 OK, 267B, 3ms]
-  GET http://localhost:3000/api/products [200 OK, 1.24kB, 2ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
   ✓  TC-FR05-HUMAN-008 | HPP XSS pair
 
 ┌─────────────────────────┬─────────────────┬─────────────────┐
@@ -628,11 +628,11 @@ Attempting to set next request to TC-FR05-HUMAN-008 - HPP XSS pair
 ├─────────────────────────┼─────────────────┼─────────────────┤
 │              assertions │              32 │               4 │
 ├─────────────────────────┴─────────────────┴─────────────────┤
-│ total run duration: 2.5s                                    │
+│ total run duration: 2.6s                                    │
 ├─────────────────────────────────────────────────────────────┤
 │ total data received: 108.6kB (approx)                       │
 ├─────────────────────────────────────────────────────────────┤
-│ average response time: 4ms [min: 2ms, max: 47ms, s.d.: 3ms] │
+│ average response time: 4ms [min: 2ms, max: 43ms, s.d.: 3ms] │
 └─────────────────────────────────────────────────────────────┘
 
 [31m  # [39m[31m failure        [39m[31m detail                                                                [39m

@@ -9,7 +9,7 @@ Iteration 1/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-001 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
 
 Attempting to set next request to TC-FR18-AI-001 - admin list
 
@@ -17,20 +17,20 @@ Attempting to set next request to TC-FR18-AI-001 - admin list
   ┌
   │ 'CASE_ID=TC-FR18-AI-001 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 317B, 22ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 6ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
-  POST http://localhost:3000/api/register [200 OK, 317B, 9ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
-  GET http://localhost:3000/api/cart [200 OK, 341B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
   POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 13.69kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 13.69kB, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 13.69kB, 5ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 5ms]
+  GET http://localhost:3000/api/cart [200 OK, 341B, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 13ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 7.66kB, 7ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 7.66kB, 8ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 7.66kB, 7ms]
   ✓  TC-FR18-AI-001 | admin list
 
 Iteration 2/35
@@ -39,7 +39,7 @@ Iteration 2/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-002 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
 
 Attempting to set next request to TC-FR18-AI-002 - user list denied
 
@@ -47,15 +47,15 @@ Attempting to set next request to TC-FR18-AI-002 - user list denied
   ┌
   │ 'CASE_ID=TC-FR18-AI-002 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 12ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 13.86kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 13.86kB, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 13.86kB, 5ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 17ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 8ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 5ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 13ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 7.83kB, 7ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 7.83kB, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 7.83kB, 7ms]
   1. TC-FR18-AI-002 | user list denied
 
 Iteration 3/35
@@ -64,7 +64,7 @@ Iteration 3/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-003 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
 
 Attempting to set next request to TC-FR18-AI-003 - missing list auth
 
@@ -72,15 +72,15 @@ Attempting to set next request to TC-FR18-AI-003 - missing list auth
   ┌
   │ 'CASE_ID=TC-FR18-AI-003 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.03kB, 3ms]
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.03kB, 5ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 7ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 15ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 7ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 16ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8kB, 5ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8kB, 6ms]
   ✓  TC-FR18-AI-003 | missing list auth
 
 Iteration 4/35
@@ -89,7 +89,7 @@ Iteration 4/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-004 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
 
 Attempting to set next request to TC-FR18-AI-004 - invalid list JWT
 
@@ -98,14 +98,14 @@ Attempting to set next request to TC-FR18-AI-004 - invalid list JWT
   │ 'CASE_ID=TC-FR18-AI-004 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 13ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.2kB, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 15ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 15ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.17kB, 5ms]
   GET http://localhost:3000/api/admin/orders [403 Forbidden, 295B, 3ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.2kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.17kB, 4ms]
   2. TC-FR18-AI-004 | invalid list JWT
 
 Iteration 5/35
@@ -114,7 +114,7 @@ Iteration 5/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-007 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
 
 Attempting to set next request to TC-FR18-AI-007 - user mutation denied
 
@@ -122,15 +122,15 @@ Attempting to set next request to TC-FR18-AI-007 - user mutation denied
   ┌
   │ 'CASE_ID=TC-FR18-AI-007 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
-  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 3ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 8ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 15ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 6ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.37kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/86/status [200 OK, 301B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.37kB, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.34kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/51/status [200 OK, 301B, 15ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.34kB, 8ms]
   3. TC-FR18-AI-007 | user mutation denied
 
 Iteration 6/35
@@ -139,7 +139,7 @@ Iteration 6/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-008 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 6ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
 
 Attempting to set next request to TC-FR18-AI-008 - missing mutation auth
 
@@ -147,15 +147,15 @@ Attempting to set next request to TC-FR18-AI-008 - missing mutation auth
   ┌
   │ 'CASE_ID=TC-FR18-AI-008 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 317B, 9ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 3ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.54kB, 5ms]
-  PUT http://localhost:3000/api/admin/orders/87/status [401 Unauthorized, 301B, 2ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.54kB, 4ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 14ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.51kB, 6ms]
+  PUT http://localhost:3000/api/admin/orders/52/status [401 Unauthorized, 301B, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.51kB, 6ms]
   ✓  TC-FR18-AI-008 | missing mutation auth
 
 Iteration 7/35
@@ -164,7 +164,7 @@ Iteration 7/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-009 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 6ms]
 
 Attempting to set next request to TC-FR18-AI-009 - empty bearer
 
@@ -172,15 +172,15 @@ Attempting to set next request to TC-FR18-AI-009 - empty bearer
   ┌
   │ 'CASE_ID=TC-FR18-AI-009 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 7ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 15ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.71kB, 5ms]
-  PUT http://localhost:3000/api/admin/orders/88/status [401 Unauthorized, 301B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.71kB, 6ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.68kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/53/status [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.68kB, 7ms]
   ✓  TC-FR18-AI-009 | empty Bearer [REDACTED] 8/35
 
 ↳ __dispatch__
@@ -195,15 +195,15 @@ Attempting to set next request to TC-FR18-AI-010 - malformed JSON
   ┌
   │ 'CASE_ID=TC-FR18-AI-010 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
   POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
-  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.88kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/89/status [400 Bad Request, 1.53kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 14.88kB, 5ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 12ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.85kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/54/status [400 Bad Request, 1.53kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 8.85kB, 4ms]
   4. TC-FR18-AI-010 | malformed JSON
 
 Iteration 9/35
@@ -212,7 +212,7 @@ Iteration 9/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-011 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
 
 Attempting to set next request to TC-FR18-AI-011 - forged role header
 
@@ -221,14 +221,14 @@ Attempting to set next request to TC-FR18-AI-011 - forged role header
   │ 'CASE_ID=TC-FR18-AI-011 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 13ms]
-  POST http://localhost:3000/api/login [200 OK, 670B, 3ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 16ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.05kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.05kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.05kB, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.02kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.02kB, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.02kB, 5ms]
   5. TC-FR18-AI-011 | forged role header
 
 Iteration 10/35
@@ -245,15 +245,15 @@ Attempting to set next request to TC-FR18-AI-012 - list item fields
   ┌
   │ 'CASE_ID=TC-FR18-AI-012 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 11ms]
-  POST http://localhost:3000/api/login [200 OK, 670B, 3ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
   POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.22kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.22kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.22kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.19kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.19kB, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.19kB, 5ms]
   ✓  TC-FR18-AI-012 | list item fields
 
 Iteration 11/35
@@ -271,17 +271,17 @@ Attempting to set next request to TC-FR18-AI-014 - profile escalation chain
   │ 'CASE_ID=TC-FR18-AI-014 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 13ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 14ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.39kB, 7ms]
-  GET http://localhost:3000/api/users/me [200 OK, 485B, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 13ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.36kB, 4ms]
+  GET http://localhost:3000/api/users/me [200 OK, 484B, 4ms]
   PUT http://localhost:3000/api/users/me [200 OK, 296B, 10ms]
-  GET http://localhost:3000/api/users/me [200 OK, 518B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.39kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.39kB, 5ms]
+  GET http://localhost:3000/api/users/me [200 OK, 517B, 3ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.36kB, 3ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.36kB, 4ms]
   6. TC-FR18-AI-014 | profile escalation chain
 
 Iteration 12/35
@@ -299,14 +299,14 @@ Attempting to set next request to TC-FR18-AI-015 - tampered role JWT
   │ 'CASE_ID=TC-FR18-AI-015 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 12ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 3ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.57kB, 3ms]
-  GET http://localhost:3000/api/admin/orders [403 Forbidden, 295B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.57kB, 5ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.53kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [403 Forbidden, 295B, 2ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.53kB, 4ms]
   7. TC-FR18-AI-015 | tampered role JWT
 
 Iteration 13/35
@@ -324,14 +324,14 @@ Attempting to set next request to TC-FR18-AI-019 - state pending confirmed
   │ 'CASE_ID=TC-FR18-AI-019 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 14ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.74kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/94/status [200 OK, 301B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.74kB, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.7kB, 3ms]
+  PUT http://localhost:3000/api/admin/orders/59/status [200 OK, 301B, 12ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.7kB, 4ms]
   ✓  TC-FR18-AI-019 | state pending confirmed
 
 Iteration 14/35
@@ -349,16 +349,16 @@ Attempting to set next request to TC-FR18-AI-020 - state confirmed shipping
   │ 'CASE_ID=TC-FR18-AI-020 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 9ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 3ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 1ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
   POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
-  PUT http://localhost:3000/api/admin/orders/95/status [200 OK, 301B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.91kB, 3ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.91kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/95/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 15.91kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/60/status [200 OK, 301B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.88kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.88kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/60/status [200 OK, 301B, 11ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 9.88kB, 5ms]
   ✓  TC-FR18-AI-020 | state confirmed shipping
 
 Iteration 15/35
@@ -375,19 +375,19 @@ Attempting to set next request to TC-FR18-AI-021 - state shipping delivered
   ┌
   │ 'CASE_ID=TC-FR18-AI-021 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 10ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 3ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 13ms]
-  PUT http://localhost:3000/api/admin/orders/96/status [200 OK, 301B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.09kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/96/status [200 OK, 301B, 19ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.09kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.09kB, 5ms]
-  PUT http://localhost:3000/api/admin/orders/96/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.09kB, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  PUT http://localhost:3000/api/admin/orders/61/status [200 OK, 301B, 9ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.05kB, 6ms]
+  PUT http://localhost:3000/api/admin/orders/61/status [200 OK, 301B, 12ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.05kB, 3ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.05kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/61/status [200 OK, 301B, 11ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.05kB, 4ms]
   ✓  TC-FR18-AI-021 | state shipping delivered
 
 Iteration 16/35
@@ -404,15 +404,15 @@ Attempting to set next request to TC-FR18-AI-022 - state pending canceled
   ┌
   │ 'CASE_ID=TC-FR18-AI-022 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 11ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.26kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/97/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.26kB, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.22kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/62/status [200 OK, 301B, 12ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.22kB, 3ms]
   ✓  TC-FR18-AI-022 | state pending canceled
 
 Iteration 17/35
@@ -421,7 +421,7 @@ Iteration 17/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-023 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 2ms]
 
 Attempting to set next request to TC-FR18-AI-023 - state confirmed canceled
 
@@ -429,17 +429,17 @@ Attempting to set next request to TC-FR18-AI-023 - state confirmed canceled
   ┌
   │ 'CASE_ID=TC-FR18-AI-023 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 8ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 10ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 8ms]
-  PUT http://localhost:3000/api/admin/orders/98/status [200 OK, 301B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.43kB, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.43kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/98/status [200 OK, 301B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.43kB, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
+  PUT http://localhost:3000/api/admin/orders/63/status [200 OK, 301B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.39kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.39kB, 5ms]
+  PUT http://localhost:3000/api/admin/orders/63/status [200 OK, 301B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.39kB, 4ms]
   ✓  TC-FR18-AI-023 | state confirmed canceled
 
 Iteration 18/35
@@ -448,7 +448,7 @@ Iteration 18/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-024 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 2ms]
 
 Attempting to set next request to TC-FR18-AI-024 - reject delivered pending
 
@@ -457,20 +457,20 @@ Attempting to set next request to TC-FR18-AI-024 - reject delivered pending
   │ 'CASE_ID=TC-FR18-AI-024 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 9ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 9ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 3ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
-  PUT http://localhost:3000/api/admin/orders/99/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.61kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/99/status [200 OK, 301B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.61kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/99/status [200 OK, 301B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.61kB, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.61kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/99/status [400 Bad Request, 338B, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.61kB, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  PUT http://localhost:3000/api/admin/orders/64/status [200 OK, 301B, 9ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.57kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/64/status [200 OK, 301B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.57kB, 3ms]
+  PUT http://localhost:3000/api/admin/orders/64/status [200 OK, 301B, 102ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.57kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.57kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/64/status [400 Bad Request, 338B, 3ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.57kB, 3ms]
   ✓  TC-FR18-AI-024 | reject delivered pending
 
 Iteration 19/35
@@ -479,7 +479,7 @@ Iteration 19/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-025 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 2ms]
 
 Attempting to set next request to TC-FR18-AI-025 - reject delivered canceled
 
@@ -487,21 +487,21 @@ Attempting to set next request to TC-FR18-AI-025 - reject delivered canceled
   ┌
   │ 'CASE_ID=TC-FR18-AI-025 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 13ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 10ms]
-  PUT http://localhost:3000/api/admin/orders/100/status [200 OK, 301B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.78kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/100/status [200 OK, 301B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.78kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/100/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.78kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.78kB, 5ms]
-  PUT http://localhost:3000/api/admin/orders/100/status [400 Bad Request, 339B, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.78kB, 4ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
+  PUT http://localhost:3000/api/admin/orders/65/status [200 OK, 301B, 9ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.74kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/65/status [200 OK, 301B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.74kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/65/status [200 OK, 301B, 12ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.74kB, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.74kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/65/status [400 Bad Request, 339B, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.74kB, 5ms]
   ✓  TC-FR18-AI-025 | reject delivered canceled
 
 Iteration 20/35
@@ -510,7 +510,7 @@ Iteration 20/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-026 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 2ms]
 
 Attempting to set next request to TC-FR18-AI-026 - reject canceled shipping
 
@@ -518,17 +518,17 @@ Attempting to set next request to TC-FR18-AI-026 - reject canceled shipping
   ┌
   │ 'CASE_ID=TC-FR18-AI-026 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 11ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 10ms]
-  PUT http://localhost:3000/api/admin/orders/101/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.95kB, 7ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.95kB, 6ms]
-  PUT http://localhost:3000/api/admin/orders/101/status [400 Bad Request, 338B, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 16.95kB, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
+  PUT http://localhost:3000/api/admin/orders/66/status [200 OK, 301B, 9ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.91kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.91kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/66/status [400 Bad Request, 338B, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 10.91kB, 5ms]
   ✓  TC-FR18-AI-026 | reject canceled shipping
 
 Iteration 21/35
@@ -545,17 +545,17 @@ Attempting to set next request to TC-FR18-AI-027 - reject canceled delivered
   ┌
   │ 'CASE_ID=TC-FR18-AI-027 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 11ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 3ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  PUT http://localhost:3000/api/admin/orders/102/status [200 OK, 301B, 15ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.13kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.13kB, 5ms]
-  PUT http://localhost:3000/api/admin/orders/102/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.13kB, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  PUT http://localhost:3000/api/admin/orders/67/status [200 OK, 301B, 9ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.08kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.08kB, 5ms]
+  PUT http://localhost:3000/api/admin/orders/67/status [200 OK, 301B, 13ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.08kB, 5ms]
   8. TC-FR18-AI-027 | reject canceled delivered
 
 Iteration 22/35
@@ -573,20 +573,20 @@ Attempting to set next request to TC-FR18-AI-028 - reject delivered confirmed
   │ 'CASE_ID=TC-FR18-AI-028 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 9ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 3ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 8ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 3ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 14ms]
-  PUT http://localhost:3000/api/admin/orders/103/status [200 OK, 301B, 8ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.31kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/103/status [200 OK, 301B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.3kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/103/status [200 OK, 301B, 83ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.31kB, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.31kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/103/status [400 Bad Request, 340B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.31kB, 5ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  PUT http://localhost:3000/api/admin/orders/68/status [200 OK, 301B, 9ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.26kB, 3ms]
+  PUT http://localhost:3000/api/admin/orders/68/status [200 OK, 301B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.26kB, 3ms]
+  PUT http://localhost:3000/api/admin/orders/68/status [200 OK, 301B, 16ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.26kB, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.26kB, 5ms]
+  PUT http://localhost:3000/api/admin/orders/68/status [400 Bad Request, 340B, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.26kB, 4ms]
   ✓  TC-FR18-AI-028 | reject delivered confirmed
 
 Iteration 23/35
@@ -595,7 +595,7 @@ Iteration 23/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-029 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 2ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
 
 Attempting to set next request to TC-FR18-AI-029 - reject unknown status
 
@@ -603,15 +603,15 @@ Attempting to set next request to TC-FR18-AI-029 - reject unknown status
   ┌
   │ 'CASE_ID=TC-FR18-AI-029 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 11ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 5ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.48kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/104/status [400 Bad Request, 347B, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.48kB, 4ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 12ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.43kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/69/status [400 Bad Request, 347B, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.43kB, 4ms]
   ✓  TC-FR18-AI-029 | reject unknown status
 
 Iteration 24/35
@@ -629,14 +629,14 @@ Attempting to set next request to TC-FR18-AI-030 - missing order
   │ 'CASE_ID=TC-FR18-AI-030 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 11ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 3ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.65kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/1000105/status [404 Not Found, 301B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.65kB, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.6kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/1000070/status [404 Not Found, 301B, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.6kB, 4ms]
   ✓  TC-FR18-AI-030 | missing order
 
 Iteration 25/35
@@ -654,14 +654,14 @@ Attempting to set next request to TC-FR18-AI-031 - negative ID
   │ 'CASE_ID=TC-FR18-AI-031 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 11ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.82kB, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.77kB, 5ms]
   PUT http://localhost:3000/api/admin/orders/-1/status [404 Not Found, 301B, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 17.82kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.77kB, 7ms]
   ✓  TC-FR18-AI-031 | negative ID
 
 Iteration 26/35
@@ -670,7 +670,7 @@ Iteration 26/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-032 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 7ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
 
 Attempting to set next request to TC-FR18-AI-032 - alphabetic ID
 
@@ -678,15 +678,15 @@ Attempting to set next request to TC-FR18-AI-032 - alphabetic ID
   ┌
   │ 'CASE_ID=TC-FR18-AI-032 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 12ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 8ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18kB, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.94kB, 4ms]
   PUT http://localhost:3000/api/admin/orders/abc/status [404 Not Found, 301B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 11.94kB, 4ms]
   ✓  TC-FR18-AI-032 | alphabetic ID
 
 Iteration 27/35
@@ -695,7 +695,7 @@ Iteration 27/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-033 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
 
 Attempting to set next request to TC-FR18-AI-033 - zero ID invariant
 
@@ -703,15 +703,15 @@ Attempting to set next request to TC-FR18-AI-033 - zero ID invariant
   ┌
   │ 'CASE_ID=TC-FR18-AI-033 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 10ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.17kB, 3ms]
-  PUT http://localhost:3000/api/admin/orders/0/status [404 Not Found, 301B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.17kB, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.11kB, 8ms]
+  PUT http://localhost:3000/api/admin/orders/0/status [404 Not Found, 301B, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.11kB, 5ms]
   ✓  TC-FR18-AI-033 | zero ID invariant
 
 Iteration 28/35
@@ -720,7 +720,7 @@ Iteration 28/35
   ┌
   │ 'CASE_ID=TC-FR18-AI-034 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 2ms]
 
 Attempting to set next request to TC-FR18-AI-034 - missing status
 
@@ -728,15 +728,15 @@ Attempting to set next request to TC-FR18-AI-034 - missing status
   ┌
   │ 'CASE_ID=TC-FR18-AI-034 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 12ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 3ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.34kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/109/status [400 Bad Request, 338B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.34kB, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.28kB, 5ms]
+  PUT http://localhost:3000/api/admin/orders/74/status [400 Bad Request, 338B, 5ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.28kB, 5ms]
   ✓  TC-FR18-AI-034 | missing status
 
 Iteration 29/35
@@ -754,14 +754,14 @@ Attempting to set next request to TC-FR18-AI-035 - JSON null
   │ 'CASE_ID=TC-FR18-AI-035 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 10ms]
-  POST http://localhost:3000/api/login [200 OK, 671B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.52kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/110/status [400 Bad Request, 1.63kB, 3ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.52kB, 6ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.45kB, 5ms]
+  PUT http://localhost:3000/api/admin/orders/75/status [400 Bad Request, 1.63kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.45kB, 4ms]
   9. TC-FR18-AI-035 | JSON null
 
 Iteration 30/35
@@ -778,19 +778,19 @@ Attempting to set next request to TC-FR18-HUMAN-001 - user shipping cancel denie
   ┌
   │ 'CASE_ID=TC-FR18-HUMAN-001 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 9ms]
-  POST http://localhost:3000/api/login [200 OK, 674B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  PUT http://localhost:3000/api/admin/orders/111/status [200 OK, 301B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.69kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/111/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.69kB, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.69kB, 5ms]
-  PUT http://localhost:3000/api/admin/orders/111/status [400 Bad Request, 338B, 5ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.69kB, 3ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 672B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 17ms]
+  PUT http://localhost:3000/api/admin/orders/76/status [200 OK, 301B, 17ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.63kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/76/status [200 OK, 301B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.63kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.63kB, 7ms]
+  PUT http://localhost:3000/api/admin/orders/76/status [400 Bad Request, 338B, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.63kB, 4ms]
  10. TC-FR18-HUMAN-001 | user shipping cancel denied
 
 Iteration 31/35
@@ -808,16 +808,16 @@ Attempting to set next request to TC-FR18-HUMAN-002 - reject same state
   │ 'CASE_ID=TC-FR18-HUMAN-002 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 12ms]
-  POST http://localhost:3000/api/login [200 OK, 674B, 3ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 8ms]
+  POST http://localhost:3000/api/login [200 OK, 672B, 3ms]
   POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  PUT http://localhost:3000/api/admin/orders/112/status [200 OK, 301B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.86kB, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.86kB, 5ms]
-  PUT http://localhost:3000/api/admin/orders/112/status [400 Bad Request, 340B, 4ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 18.86kB, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
+  PUT http://localhost:3000/api/admin/orders/77/status [200 OK, 301B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.8kB, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.8kB, 5ms]
+  PUT http://localhost:3000/api/admin/orders/77/status [400 Bad Request, 340B, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.8kB, 4ms]
   ✓  TC-FR18-HUMAN-002 | reject same state
 
 Iteration 32/35
@@ -835,14 +835,14 @@ Attempting to set next request to TC-FR18-HUMAN-004 - status mass assignment inv
   │ 'CASE_ID=TC-FR18-HUMAN-004 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 13ms]
-  POST http://localhost:3000/api/login [200 OK, 674B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 19.04kB, 4ms]
-  PUT http://localhost:3000/api/admin/orders/113/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 19.04kB, 4ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 672B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.97kB, 4ms]
+  PUT http://localhost:3000/api/admin/orders/78/status [200 OK, 301B, 13ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 12.97kB, 5ms]
   ✓  TC-FR18-HUMAN-004 | status mass assignment invariant
 
 Iteration 33/35
@@ -859,18 +859,18 @@ Attempting to set next request to TC-FR18-HUMAN-006 - profile to mutation chain
   ┌
   │ 'CASE_ID=TC-FR18-HUMAN-006 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 5ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 10ms]
-  POST http://localhost:3000/api/login [200 OK, 674B, 3ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 6ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 672B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 9ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 19.21kB, 5ms]
-  GET http://localhost:3000/api/users/me [200 OK, 488B, 4ms]
-  PUT http://localhost:3000/api/users/me [200 OK, 296B, 10ms]
-  GET http://localhost:3000/api/users/me [200 OK, 521B, 7ms]
-  PUT http://localhost:3000/api/admin/orders/114/status [200 OK, 301B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 19.22kB, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 13.14kB, 5ms]
+  GET http://localhost:3000/api/users/me [200 OK, 487B, 7ms]
+  PUT http://localhost:3000/api/users/me [200 OK, 296B, 11ms]
+  GET http://localhost:3000/api/users/me [200 OK, 520B, 3ms]
+  PUT http://localhost:3000/api/admin/orders/79/status [200 OK, 301B, 11ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 13.15kB, 5ms]
  11. TC-FR18-HUMAN-006 | profile to mutation chain
 
 Iteration 34/35
@@ -888,15 +888,15 @@ Attempting to set next request to TC-FR18-HUMAN-007 - forged JWT variants
   │ 'CASE_ID=TC-FR18-HUMAN-007 X-Student-Id=23127075'
   └
   POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 8ms]
-  POST http://localhost:3000/api/login [200 OK, 674B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 6ms]
-  GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 12ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 19.39kB, 19ms]
-  PUT http://localhost:3000/api/admin/orders/115/status [403 Forbidden, 295B, 4ms]
-  PUT http://localhost:3000/api/admin/orders/115/status [403 Forbidden, 295B, 3ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 19.39kB, 5ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 10ms]
+  POST http://localhost:3000/api/login [200 OK, 672B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 13.32kB, 5ms]
+  PUT http://localhost:3000/api/admin/orders/80/status [403 Forbidden, 295B, 4ms]
+  PUT http://localhost:3000/api/admin/orders/80/status [403 Forbidden, 295B, 4ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 13.32kB, 4ms]
  12. TC-FR18-HUMAN-007 | forged JWT variants
 
 Iteration 35/35
@@ -905,7 +905,7 @@ Iteration 35/35
   ┌
   │ 'CASE_ID=TC-FR18-HUMAN-008 X-Student-Id=23127075'
   └
-  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/admin/orders [401 Unauthorized, 301B, 4ms]
 
 Attempting to set next request to TC-FR18-HUMAN-008 - authz before body
 
@@ -913,36 +913,36 @@ Attempting to set next request to TC-FR18-HUMAN-008 - authz before body
   ┌
   │ 'CASE_ID=TC-FR18-HUMAN-008 X-Student-Id=23127075'
   └
-  POST http://localhost:3000/api/login [200 OK, 640B, 4ms]
-  POST http://localhost:3000/api/register [200 OK, 318B, 12ms]
-  POST http://localhost:3000/api/login [200 OK, 674B, 4ms]
-  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  POST http://localhost:3000/api/login [200 OK, 640B, 8ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 672B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
   GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
-  POST http://localhost:3000/api/checkout [200 OK, 314B, 10ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 19.56kB, 3ms]
-  PUT http://localhost:3000/api/admin/orders/116/status [200 OK, 301B, 11ms]
-  GET http://localhost:3000/api/admin/orders [200 OK, 19.56kB, 4ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 13.49kB, 5ms]
+  PUT http://localhost:3000/api/admin/orders/81/status [200 OK, 301B, 13ms]
+  GET http://localhost:3000/api/admin/orders [200 OK, 13.49kB, 4ms]
  13. TC-FR18-HUMAN-008 | authz before body
 
-┌─────────────────────────┬─────────────────┬─────────────────┐
-│                         │        executed │          failed │
-├─────────────────────────┼─────────────────┼─────────────────┤
-│              iterations │              35 │               0 │
-├─────────────────────────┼─────────────────┼─────────────────┤
-│                requests │             398 │               0 │
-├─────────────────────────┼─────────────────┼─────────────────┤
-│            test-scripts │              70 │               0 │
-├─────────────────────────┼─────────────────┼─────────────────┤
-│      prerequest-scripts │             140 │               0 │
-├─────────────────────────┼─────────────────┼─────────────────┤
-│              assertions │              35 │              13 │
-├─────────────────────────┴─────────────────┴─────────────────┤
-│ total run duration: 7.1s                                    │
-├─────────────────────────────────────────────────────────────┤
-│ total data received: 1.56MB (approx)                        │
-├─────────────────────────────────────────────────────────────┤
-│ average response time: 5ms [min: 1ms, max: 83ms, s.d.: 5ms] │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────┬──────────────────┬─────────────────┐
+│                         │         executed │          failed │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│              iterations │               35 │               0 │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│                requests │              398 │               0 │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│            test-scripts │               70 │               0 │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│      prerequest-scripts │              140 │               0 │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│              assertions │               35 │              13 │
+├─────────────────────────┴──────────────────┴─────────────────┤
+│ total run duration: 6.6s                                     │
+├──────────────────────────────────────────────────────────────┤
+│ total data received: 995.91kB (approx)                       │
+├──────────────────────────────────────────────────────────────┤
+│ average response time: 6ms [min: 2ms, max: 102ms, s.d.: 6ms] │
+└──────────────────────────────────────────────────────────────┘
 
 [31m   # [39m[31m failure        [39m[31m detail                                                                          [39m
 [90m     [39m[90m                [39m[90m                                                                                 [39m

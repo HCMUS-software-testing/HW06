@@ -38,11 +38,17 @@ FR-08 có 24 hàng Newman trong traceability nhưng suite JSON chỉ ghi 23 asse
 - Data files JSON theo suite.
 - Newman reporters CLI/JSON/HTML Extra; runner redact Authorization/JWT trước khi ghi `src/newman/member-2/`.
 
+### Bằng chứng header `X-Student-Id`
+
+Postman Console xác nhận request gửi tới SUT có header bắt buộc `X-Student-Id: 23127075`.
+
+![Postman Console showing X-Student-Id](../evidence/evidence-x-student-id.png)
+
 ## 4. Kết quả và bug
 
 Local `npm run test:api` exit khác 0 vì 38 assertion failures. Không diễn giải đó thành “toàn bộ API passed”.
 
-12 defect đã tái hiện trên SUT và ghi trong `src/bug-reports/member-2-bugs.md`:
+12 defect đã tái hiện trên SUT và ghi trong `src/bug-reports/bug-report.md`:
 
 - FR-05: BUG-001 (SQLi / SQL error leakage trên search).
 - FR-08: BUG-002, BUG-003, BUG-007 … BUG-012 (client total, cart không xóa, checkout chấp nhận cart/address không hợp lệ).
