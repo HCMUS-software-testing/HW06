@@ -1,0 +1,597 @@
+* commit a73f11b8d0e4806444d51e755ec813423e47c5db
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 22:02:10 2026 +0700
+| 
+|     complete
+| 
+|  .../resources}/skill-demo-notes.md                |    21 +-
+|  23127075_HW06_AI_API_100/.agents/AGENTS.md        |     4 +
+|  .../.agents/skills/ai-audit-entry/SKILL.md        |   101 +
+|  .../skills/ai-audit-entry/agents/openai.yaml      |     4 +
+|  .../ai-audit-entry/ref/13_Performance Testing.md  |   208 +
+|  .../ai-audit-entry/ref/13_Performance Testing.pdf |   Bin 0 -> 631986 bytes
+|  .../scripts/append_ai_audit_entry.py              |   459 +
+|  .../scripts/test_append_ai_audit_entry.py         |   534 +
+|  .../.agents/skills/api-test-generator/SKILL.md    |   123 +
+|  .../examples/fr-05-sample-output.md               |    37 +
+|  .../api-test-generator/resources}/chart.png       |   Bin
+|  .../api-test-generator/resources}/diagram.mermaid |     0
+|  .../api-test-generator/resources}/pseudocode.md   |     0
+|  .../resources/skill-demo-notes.md                 |    53 +
+|  .../.github/workflows/newman-api-tests.yml        |   111 +
+|  23127075_HW06_AI_API_100/README.md                |   108 +
+|  .../ai-audit/ai_audit_report.md                   |   289 +
+|  .../ai-audit/ai_audit_report.pdf                  |   Bin 0 -> 190774 bytes
+|  .../bug-reports/bug-report.md                     |   191 +
+|  .../bug-reports/bug-report.pdf                    |   Bin 0 -> 2215567 bytes
+|  23127075_HW06_AI_API_100/docs/ai-critique.md      |    13 +
+|  23127075_HW06_AI_API_100/docs/ai-critique.pdf     |   Bin 0 -> 40457 bytes
+|  23127075_HW06_AI_API_100/docs/cicd-report.md      |    34 +
+|  23127075_HW06_AI_API_100/docs/cicd-report.pdf     |   Bin 0 -> 372985 bytes
+|  23127075_HW06_AI_API_100/docs/main-report.md      |    70 +
+|  23127075_HW06_AI_API_100/docs/main-report.pdf     |   Bin 0 -> 391177 bytes
+|  .../evidence/bug-reports/1788439763638.png        |   Bin 0 -> 292494 bytes
+|  .../evidence/bug-reports/1788440078838.png        |   Bin 0 -> 280818 bytes
+|  .../evidence/bug-reports/1788440664155.png        |   Bin 0 -> 269201 bytes
+|  .../evidence/bug-reports/1788441431533.png        |   Bin 0 -> 279676 bytes
+|  .../evidence/bug-reports/1788442826922.png        |   Bin 0 -> 186216 bytes
+|  .../evidence/bug-reports/1788442876353.png        |   Bin 0 -> 195257 bytes
+|  .../evidence/bug-reports/1788442973012.png        |   Bin 0 -> 176607 bytes
+|  .../evidence/bug-reports/1788443003405.png        |   Bin 0 -> 177634 bytes
+|  .../evidence/bug-reports/1788443029060.png        |   Bin 0 -> 191059 bytes
+|  .../evidence/bug-reports/1788443065824.png        |   Bin 0 -> 31375 bytes
+|  .../evidence/bug-reports/1788443101276.png        |   Bin 0 -> 29244 bytes
+|  .../evidence/bug-reports/1788443120760.png        |   Bin 0 -> 30602 bytes
+|  .../evidence/ci-failing-run.png                   |   Bin 0 -> 168052 bytes
+|  .../evidence/ci-passing-run.png                   |   Bin 0 -> 165951 bytes
+|  .../evidence/evidence-x-student-id.png            |   Bin 0 -> 304485 bytes
+|  .../newman/member-2/fr-05.html                    | 14812 ++++++++++++++++
+|  .../newman/member-2/fr-05.json                    |     1 +
+|  .../newman/member-2/fr-05.txt                     |   658 +
+|  .../newman/member-2/fr-08.html                    | 12804 ++++++++++++++
+|  .../newman/member-2/fr-08.json                    |     1 +
+|  .../newman/member-2/fr-08.txt                     |   752 +
+|  .../newman/member-2/fr-18.html                    | 16572 ++++++++++++++++++
+|  .../newman/member-2/fr-18.json                    |     1 +
+|  .../newman/member-2/fr-18.txt                     |  1012 ++
+|  .../newman/member-2/summary.json                  |    94 +
+|  .../HW06_API_Testing.postman_collection.json      |  3201 ++++
+|  .../postman/HW06_Local.postman_environment.json   |    44 +
+|  .../postman/data/fr-05-search.json                |   360 +
+|  .../postman/data/fr-08-checkout.json              |   600 +
+|  .../postman/data/fr-18-admin.json                 |   457 +
+|  .../test-cases/23127075-hw06-test-cases.xlsx      |   Bin 0 -> 28575 bytes
+|  .../test-cases/member-2-fr-05.md                  |   132 +
+|  .../test-cases/member-2-fr-08.md                  |   122 +
+|  .../test-cases/member-2-fr-18.md                  |   126 +
+|  .../test-cases/member-2-traceability.md           |   165 +
+|  src/.agents/AGENTS.md                             |     4 +
+|  src/.agents/skills/ai-audit-entry/SKILL.md        |   101 +
+|  .../skills/ai-audit-entry/agents/openai.yaml      |     4 +
+|  .../ai-audit-entry/ref/13_Performance Testing.md  |   208 +
+|  .../ai-audit-entry/ref/13_Performance Testing.pdf |   Bin 0 -> 631986 bytes
+|  .../scripts/append_ai_audit_entry.py              |   459 +
+|  .../scripts/test_append_ai_audit_entry.py         |   534 +
+|  src/.agents/skills/api-test-generator/SKILL.md    |   123 +
+|  .../examples/fr-05-sample-output.md               |    37 +
+|  .../skills/api-test-generator/resources/chart.png |   Bin 0 -> 146089 bytes
+|  .../api-test-generator/resources/diagram.mermaid  |    10 +
+|  .../api-test-generator/resources/pseudocode.md    |   113 +
+|  .../resources/skill-demo-notes.md                 |    53 +
+|  src/README.md                                     |    21 +-
+|  src/ai-audit/ai_audit_report.pdf                  |   Bin 0 -> 190774 bytes
+|  src/bug-reports/bug-report.pdf                    |   Bin 0 -> 2215567 bytes
+|  src/docs/ai-critique.pdf                          |   Bin 0 -> 40457 bytes
+|  src/docs/ai-prompt-sequence.md                    |   116 -
+|  src/docs/ci-manual-evidence.md                    |    31 -
+|  src/docs/cicd-report.pdf                          |   Bin 0 -> 372985 bytes
+|  src/docs/main-report.md                           |     6 +-
+|  src/docs/main-report.pdf                          |   Bin 0 -> 391177 bytes
+|  83 files changed, 55921 insertions(+), 173 deletions(-)
+| 
+* commit 18e057d04b942ca84e701560bb0fb909e5ca389f
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 21:51:46 2026 +0700
+| 
+|     run demo
+| 
+|  demo/fr-08-generated-tests.md       |  52 -----------
+|  demo/fr-18-ai-test-cases.md         | 163 ++++++++++++++++++++++++++++++++++
+|  src/agent-skill/skill-demo-notes.md |   2 +-
+|  src/docs/main-report.md             |   2 +-
+|  4 files changed, 165 insertions(+), 54 deletions(-)
+| 
+* commit c58fa107172bdbec6ec150fa0e79d3ac697e9606
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 21:44:03 2026 +0700
+| 
+|     prepare full content
+| 
+|  demo/fr-08-generated-tests.md           |  52 ++++++++++++++
+|  src/ai-audit/ai_audit_report.md         | 108 +++++++++++++++---------------
+|  src/docs/cicd-report.md                 |  16 +++--
+|  src/docs/main-report.md                 |   8 ++-
+|  src/docs/manual-submission-checklist.md |  17 -----
+|  src/evidence/ci-failing-run.png         | Bin 0 -> 168052 bytes
+|  src/evidence/ci-passing-run.png         | Bin 0 -> 165951 bytes
+|  7 files changed, 122 insertions(+), 79 deletions(-)
+| 
+* commit 0d50507fc927316b09f14b27a0453d9121f8d494
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 21:33:42 2026 +0700
+| 
+|     ci: generate passing pipeline run evidence
+| 
+|  .github/workflows/newman-api-tests.yml     | 2 +-
+|  src/.github/workflows/newman-api-tests.yml | 2 +-
+|  src/docs/cicd-report.md                    | 4 ++--
+|  3 files changed, 4 insertions(+), 4 deletions(-)
+| 
+* commit d881d574d05b8373aa8e8d74d6f081b6e4d7598a
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 21:27:49 2026 +0700
+| 
+|     fix(ci): add fallback fixture credentials for workflow
+| 
+|  .github/workflows/newman-api-tests.yml     | 10 ++++++++--
+|  src/.github/workflows/newman-api-tests.yml | 10 ++++++++--
+|  2 files changed, 16 insertions(+), 4 deletions(-)
+| 
+* commit b3de89c0df3487311336123536cd280b8f7369bf
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 21:25:53 2026 +0700
+| 
+|     complete tasks
+| 
+|  .agents/skills/api-test-generator/SKILL.md        | 123 ++++++++++++++++++++
+|  .../examples/fr-05-sample-output.md               |  37 ++++++
+|  .../api-test-generator/resources/diagram.mermaid  |  10 ++
+|  .../api-test-generator/resources/pseudocode.md    | 113 ++++++++++++++++++
+|  .github/workflows/newman-api-tests.yml            |   7 ++
+|  src/.github/workflows/newman-api-tests.yml        | 105 +++++++++++++++++
+|  src/README.md                                     |   4 +-
+|  src/agent-skill/chart.png                         | Bin 0 -> 146089 bytes
+|  src/agent-skill/skill-demo-notes.md               |  45 +++++--
+|  src/ai-audit/ai_audit_report.md                   |  10 +-
+|  src/docs/ci-manual-evidence.md                    |   8 +-
+|  src/docs/cicd-report.md                           |   3 +-
+|  src/docs/main-report.md                           |   5 +-
+|  src/docs/manual-submission-checklist.md           |  19 +--
+|  14 files changed, 454 insertions(+), 35 deletions(-)
+| 
+* commit 205fe07056ec6337fac403c65f6ed553349592de
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 20:51:54 2026 +0700
+| 
+|     docs(member-2): finalize bug evidence and reports
+| 
+|  src/README.md                                     |   10 +-
+|  src/ai-audit/ai_audit_report.md                   |   98 +-
+|  .../{member-2-bugs.md => bug-report.md}           |   86 +-
+|  src/docs/ai-prompt-sequence.md                    |   92 +-
+|  src/docs/main-report.md                           |    8 +-
+|  src/docs/manual-submission-checklist.md           |    2 +-
+|  src/evidence/bug-reports/1788439763638.png        |  Bin 0 -> 292494 bytes
+|  src/evidence/bug-reports/1788440078838.png        |  Bin 0 -> 280818 bytes
+|  src/evidence/bug-reports/1788440664155.png        |  Bin 0 -> 269201 bytes
+|  src/evidence/bug-reports/1788441431533.png        |  Bin 0 -> 279676 bytes
+|  src/evidence/bug-reports/1788442826922.png        |  Bin 0 -> 186216 bytes
+|  src/evidence/bug-reports/1788442876353.png        |  Bin 0 -> 195257 bytes
+|  src/evidence/bug-reports/1788442973012.png        |  Bin 0 -> 176607 bytes
+|  src/evidence/bug-reports/1788443003405.png        |  Bin 0 -> 177634 bytes
+|  src/evidence/bug-reports/1788443029060.png        |  Bin 0 -> 191059 bytes
+|  src/evidence/bug-reports/1788443065824.png        |  Bin 0 -> 31375 bytes
+|  src/evidence/bug-reports/1788443101276.png        |  Bin 0 -> 29244 bytes
+|  src/evidence/bug-reports/1788443120760.png        |  Bin 0 -> 30602 bytes
+|  src/evidence/evidence-x-student-id.png            |  Bin 0 -> 304485 bytes
+|  src/newman/member-2/fr-05.html                    | 3454 ++++++++--------
+|  src/newman/member-2/fr-05.json                    |    2 +-
+|  src/newman/member-2/fr-05.txt                     |  154 +-
+|  src/newman/member-2/fr-08.html                    | 2844 ++++++-------
+|  src/newman/member-2/fr-08.json                    |    2 +-
+|  src/newman/member-2/fr-08.txt                     |  354 +-
+|  src/newman/member-2/fr-18.html                    | 4100 +++++++++----------
+|  src/newman/member-2/fr-18.json                    |    2 +-
+|  src/newman/member-2/fr-18.txt                     |  694 ++--
+|  src/newman/member-2/summary.json                  |   95 +-
+|  29 files changed, 6081 insertions(+), 5916 deletions(-)
+| 
+* commit 6f99e26d091e7d6c167cbf6e9384b42bca8848bf
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 10:52:20 2026 +0700
+| 
+|     fix(member-2): compact Newman JSON reports under GitHub limit
+| 
+|  scripts/run-newman.mjs           |      7 +-
+|  scripts/run-newman.test.mjs      |     10 +
+|  src/newman/member-2/fr-05.json   | 159936 +---------------------------------
+|  src/newman/member-2/fr-08.json   |  95673 +-------------------
+|  src/newman/member-2/fr-18.json   |      1 +
+|  src/newman/member-2/summary.json |     95 +-
+|  6 files changed, 20 insertions(+), 255702 deletions(-)
+| 
+* commit 1d7dcc2adc5569a1293fca9594acd2d68663e7b0
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 10:35:47 2026 +0700
+| 
+|     docs(member-2): refresh exported git log
+| 
+|  src/docs/git-commit-log.txt | 1 +
+|  1 file changed, 1 insertion(+)
+| 
+* commit 705818ec65f2299b4a58a740473fc4412a75f283
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 10:35:47 2026 +0700
+| 
+|     docs(member-2): finalize submission evidence checklist
+| 
+|  src/docs/git-commit-log.txt             | 36 ++++++++++++++++++++++++-------
+|  src/docs/manual-submission-checklist.md | 16 ++++++++++++++
+|  2 files changed, 44 insertions(+), 8 deletions(-)
+| 
+* commit 21d873d9b60ccaa9e60de565529cc13c249af8b4
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 10:35:47 2026 +0700
+| 
+|     docs(member-2): append task 6-8 AI audit entry
+| 
+|  src/ai-audit/ai_audit_report.md | 18 ++++++++++++++++++
+|  1 file changed, 18 insertions(+)
+| 
+* commit b2df1df931340540e5ee7249c7c01b929e2b5632
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 10:35:20 2026 +0700
+| 
+|     docs(member-2): finalize agent design and AI audit
+| 
+|  src/agent-skill/pseudocode.md       | 156 ++++++++++++++++++++++------------
+|  src/agent-skill/skill-demo-notes.md |  33 +++++--
+|  src/docs/ai-prompt-sequence.md      |   9 ++
+|  3 files changed, 140 insertions(+), 58 deletions(-)
+| 
+* commit 6b1928aadb53eada43493e2e82cdc677965e4bff
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 10:35:10 2026 +0700
+| 
+|     docs(member-2): complete evidence-backed HW06 reports
+| 
+|  scripts/export-submission.mjs                | 266 +++++++++++++++++++++++++
+|  scripts/export-submission.test.mjs           | 131 ++++++++++++
+|  src/README.md                                | 108 ++++++----
+|  src/docs/main-report.md                      | 107 +++++-----
+|  src/test-cases/23127075-hw06-test-cases.xlsx | Bin 0 -> 28575 bytes
+|  5 files changed, 528 insertions(+), 84 deletions(-)
+| 
+* commit 435fb66558c28434516c32867f1d303d23ece521
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 10:17:06 2026 +0700
+| 
+|     ci(member-2): add Newman API test workflow
+| 
+|  .github/workflows/newman-api-tests.yml | 98 ++++++++++++++++++++++++++++++++
+|  scripts/validate-submission.mjs        | 46 +++++++++++++++
+|  scripts/validate-submission.test.mjs   | 46 ++++++++++++++-
+|  src/docs/ci-manual-evidence.md         | 33 +++++++++++
+|  src/docs/cicd-report.md                | 50 ++++++++--------
+|  5 files changed, 249 insertions(+), 24 deletions(-)
+| 
+* commit 8b10ccbe50cf961a238a10ccefb460d3ca52f9df
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 10:07:24 2026 +0700
+| 
+|     test(member-2): reconcile Newman evidence and defect records
+| 
+|  src/bug-reports/member-2-bugs.md | 78 ++++++++++++++++++++++++++++++++++++--
+|  src/newman/member-2/fr-05.txt    |  2 +-
+|  src/newman/member-2/summary.json | 34 ++++++++---------
+|  3 files changed, 93 insertions(+), 21 deletions(-)
+| 
+* commit 4b12423877b90634d60a569ff35e265ecb2851d8
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 09:41:59 2026 +0700
+| 
+|     test(member-2): record verified Newman execution
+| 
+|  src/bug-reports/member-2-bugs.md |    118 +-
+|  src/newman/member-2/fr-05.html   |  14812 ++++
+|  src/newman/member-2/fr-05.json   | 159935 ++++++++++++++++++++++++++++++++++
+|  src/newman/member-2/fr-05.txt    |    658 +
+|  src/newman/member-2/fr-08.html   |  12804 +++
+|  src/newman/member-2/fr-08.json   |  95672 ++++++++++++++++++++
+|  src/newman/member-2/fr-08.txt    |    752 +
+|  src/newman/member-2/fr-18.html   |  16572 ++++
+|  src/newman/member-2/fr-18.txt    |   1012 +
+|  src/newman/member-2/summary.json |     94 +
+|  10 files changed, 302414 insertions(+), 15 deletions(-)
+| 
+* commit 68243d11dad34deff9eb422f4da756bf588ff25e
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 09:23:04 2026 +0700
+| 
+|     test(member-2): normalize checkout fixture totals
+| 
+|  scripts/run-newman.test.mjs                       | 23 +++++++++++++++++++++
+|  .../HW06_API_Testing.postman_collection.json      |  2 +-
+|  src/postman/data/fr-08-checkout.json              | 14 ++++++-------
+|  3 files changed, 31 insertions(+), 8 deletions(-)
+| 
+* commit d14c00e2e4a757e5df8ef305d87ac75f4c3ea0e8
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 09:14:32 2026 +0700
+| 
+|     test(member-2): correct traceable workflow contracts
+| 
+|  scripts/run-newman.mjs                            |  46 +-
+|  scripts/run-newman.test.mjs                       |  37 ++
+|  .../HW06_API_Testing.postman_collection.json      | 445 ++------------------
+|  src/postman/data/fr-05-search.json                |   2 +-
+|  src/postman/data/fr-08-checkout.json              |  82 +---
+|  src/test-cases/member-2-fr-08.md                  |   6 +-
+|  src/test-cases/member-2-traceability.md           |   8 +-
+|  7 files changed, 120 insertions(+), 506 deletions(-)
+| 
+* commit 8e8e2f344f45e56692b5c6c4248938a6c6d7370a
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 08:44:24 2026 +0700
+| 
+|     test(member-2): add traceable Postman API workflows
+| 
+|  scripts/run-newman.mjs                            |  261 ++
+|  scripts/run-newman.test.mjs                       |  216 +
+|  .../HW06_API_Testing.postman_collection.json      | 3986 +++++++++++++++++--
+|  src/postman/HW06_Local.postman_environment.json   |  101 +-
+|  src/postman/data/fr-05-search.json                |  360 ++
+|  src/postman/data/fr-08-checkout.json              |  680 ++++
+|  src/postman/data/fr-18-admin.json                 |  457 +++
+|  7 files changed, 5568 insertions(+), 493 deletions(-)
+| 
+* commit b63841a9bfbc3794578358b5ea0d15b53c1ac819
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 01:17:29 2026 +0700
+| 
+|     test(member-2): address audited inventory review findings
+| 
+|  src/test-cases/member-2-fr-05.md        |  6 ++--
+|  src/test-cases/member-2-fr-08.md        |  8 ++---
+|  src/test-cases/member-2-fr-18.md        | 14 ++++----
+|  src/test-cases/member-2-traceability.md | 54 +++++++++++++++----------------
+|  4 files changed, 41 insertions(+), 41 deletions(-)
+| 
+* commit 6c6208f19ed61e044f70205e380e02dfaf8ea6d2
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 00:54:46 2026 +0700
+| 
+|     test(member-2): consolidate audited API case inventories
+| 
+|  src/test-cases/member-2-fr-05.md        | 162 +++++++++++------------------
+|  src/test-cases/member-2-fr-08.md        | 159 +++++++++++-----------------
+|  src/test-cases/member-2-fr-18.md        | 113 ++++++++++----------
+|  src/test-cases/member-2-traceability.md | 165 ++++++++++++++++++++++++++++++
+|  4 files changed, 336 insertions(+), 263 deletions(-)
+| 
+* commit 77ebffe7e551a63542fd958507487d0634a28793
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 00:31:07 2026 +0700
+| 
+|     fix(member-2): enforce validator assertion pairing
+| 
+|  scripts/validate-submission.mjs      | 189 +++++++++++++++++++++------------
+|  scripts/validate-submission.test.mjs | 141 ++++++++++++++++++++++--
+|  2 files changed, 253 insertions(+), 77 deletions(-)
+| 
+* commit 63f062bdf05c3b9053b0c0fb4bd137126a3f7aa8
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 00:16:06 2026 +0700
+| 
+|     fix(member-2): harden submission validator
+| 
+|  scripts/validate-submission.mjs      | 199 ++++++++++++++++++++++++++-------
+|  scripts/validate-submission.test.mjs | 162 ++++++++++++++++++++++++++-
+|  2 files changed, 320 insertions(+), 41 deletions(-)
+| 
+* commit 3b5fb78ac29676d67feeb11cc486740d97aa7720
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Thu Sep 3 00:03:24 2026 +0700
+| 
+|     chore(member-2): add submission validation tooling
+| 
+|  .gitignore                           |    5 +
+|  package-lock.json                    | 2979 ++++++++++++++++++++++++++++++++
+|  package.json                         |   18 +
+|  scripts/validate-submission.mjs      |  280 +++
+|  scripts/validate-submission.test.mjs |  132 ++
+|  5 files changed, 3414 insertions(+)
+| 
+* commit 0974727aa1f06538dbd778b7a02b0daf10a9c348
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Wed Sep 2 23:52:29 2026 +0700
+| 
+|     chore: ignore isolated worktrees
+| 
+|  .gitignore | 3 ++-
+|  1 file changed, 2 insertions(+), 1 deletion(-)
+| 
+* commit 0c0a4e1adcf66b8aa52c9857756800387e95c288
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Wed Sep 2 23:50:59 2026 +0700
+| 
+|     docs(member-2): plan HW06 submission completion
+| 
+|  .../2026-09-02-hw06-submission-completion.md      | 415 ++++++++++++++++++++
+|  1 file changed, 415 insertions(+)
+| 
+* commit 4edc82f881ed19ea0c4a46ae0695191158e85622
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Wed Sep 2 23:41:20 2026 +0700
+| 
+|     docs(member-2): design HW06 submission completion
+| 
+|  ...026-09-02-hw06-submission-completion-design.md | 77 +++++++++++++++++++++
+|  1 file changed, 77 insertions(+)
+| 
+* commit 58427ed240e8cfb85c5ee995cce971e7da445e9b
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Wed Sep 2 23:21:06 2026 +0700
+| 
+|     docs(member-2): audit API test cases
+| 
+|  AGENTS.md                        | 40 +++++++++++++++++++
+|  src/ai-audit/ai_audit_report.md  | 39 +++++++++++++++----
+|  src/test-cases/member-2-fr-05.md | 52 +++++++++++++++++++++++++
+|  src/test-cases/member-2-fr-08.md | 52 +++++++++++++++++++++++++
+|  src/test-cases/member-2-fr-18.md | 80 +++++++++++++++++++++-----------------
+|  5 files changed, 220 insertions(+), 43 deletions(-)
+| 
+* commit 8bd60c01c79c011c30154b452ac31c9f683b81f3
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Tue Sep 1 23:26:10 2026 +0700
+| 
+|     test(member-2): FR-18 complete 35 AI cases & 5 human cases
+| 
+|  src/ai-audit/ai_audit_report.md  | 21 ++++++++++++
+|  src/test-cases/member-2-fr-18.md | 65 +++++++++++++++++++++++++++++++-------
+|  2 files changed, 74 insertions(+), 12 deletions(-)
+| 
+* commit 7898fc89ce52d113cc558f7783f2c58ade95e54e
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Tue Sep 1 23:18:56 2026 +0700
+| 
+|     test(member-2): FR-18 batch 1 - 18 admin access and RBAC cases
+| 
+|  src/ai-audit/ai_audit_report.md  | 20 +++++++++++
+|  src/test-cases/member-2-fr-18.md | 72 ++++++++++++++++++++++++++++++++++----
+|  2 files changed, 85 insertions(+), 7 deletions(-)
+| 
+* commit bf914d2edacb89b8a1fa8f63152e3c1b82735fe4
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Tue Sep 1 23:16:38 2026 +0700
+| 
+|     test(member-2): FR-08 complete 35 AI cases & 5 human cases
+| 
+|  src/ai-audit/ai_audit_report.md  | 20 ++++++++++++
+|  src/test-cases/member-2-fr-08.md | 66 ++++++++++++++++++++++++++++++--------
+|  2 files changed, 73 insertions(+), 13 deletions(-)
+| 
+* commit 70562c5de39425eb7238b82e1225ddb0d82db129
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Tue Sep 1 23:15:10 2026 +0700
+| 
+|     test(member-2): add FR-08 batch 1 test cases and audit log
+| 
+|  src/ai-audit/ai_audit_report.md  | 17 +++++++++
+|  src/test-cases/member-2-fr-08.md | 71 +++++++++++++++++++++++++++++++++-----
+|  2 files changed, 80 insertions(+), 8 deletions(-)
+| 
+* commit 787f408a00a161f42e6575f4775bb8482d55eef3
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Tue Sep 1 23:10:45 2026 +0700
+| 
+|     test(member-2): FR-05 complete 35 AI cases & 5 human cases
+|     
+|     - Added 20 security (SQLi, XSS, Overflow) and Schema Validation cases
+|     - Total AI-generated cases for FR-05: 35
+|     - Added 5 human-designed test cases with rationale
+|     - Logged AI audit Entry 5 (Gemini 3.6 Flash)
+| 
+|  src/ai-audit/ai_audit_report.md  | 20 +++++++++++
+|  src/test-cases/member-2-fr-05.md | 73 ++++++++++++++++++++++++++++++++------
+|  2 files changed, 83 insertions(+), 10 deletions(-)
+| 
+* commit 3d72db98bab78f31b8f56d2e4da0a0361d5d1271
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Tue Sep 1 23:07:25 2026 +0700
+| 
+|     test(member-2): FR-05 batch 1 - 15 domain partitioning test cases
+|     
+|     - 1 case: GET /api/products (no params, full list)
+|     - 8 cases: GET /api/products?search= (valid, nonexistent, empty,
+|       special chars, Unicode, long >255, spaces, numeric)
+|     - 6 cases: GET /api/products/:id (valid, 0, negative, string,
+|       large int, float)
+|     - AI audit entry 4 logged (Claude Opus 4.6)
+| 
+|  src/ai-audit/ai_audit_report.md  | 17 ++++++++++
+|  src/test-cases/member-2-fr-05.md | 65 ++++++++++++++++++++++++++++++++++----
+|  2 files changed, 75 insertions(+), 7 deletions(-)
+| 
+* commit f70d53aec9fb59116de3324fd687174952202a2e
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Tue Sep 1 23:04:05 2026 +0700
+| 
+|     test(member-2): setup Postman pre-request script and environment infrastructure
+|     
+|     - Collection pre-request script: upsert X-Student-Id: 23127075 header
+|     - Console log method + URL for anti-fraud screenshot evidence
+|     - Collection-level test script: response time < 5s, valid JSON
+|     - 4 folders: Setup Auth (auto-save tokens), FR-05, FR-08, FR-18
+|     - Environment: 9 vars (baseUrl, studentId, tokens, credentials)
+|     - AI audit entry 3 logged (Claude Opus 4.6)
+| 
+|  .../plans/2026-09-01-hw06-api-testing-plan.md     |  27 +-
+|  .../specs/2026-09-01-hw06-api-testing-spec.md     |  58 +--
+|  src/ai-audit/ai_audit_report.md                   |  17 +
+|  src/docs/ai-prompt-sequence.md                    | 107 +++++
+|  .../HW06_API_Testing.postman_collection.json      | 414 +++++++++++++++++++-
+|  src/postman/HW06_Local.postman_environment.json   |  36 +-
+|  6 files changed, 601 insertions(+), 58 deletions(-)
+| 
+* commit 74664b15fa8108d84df7df85344847d5d9168509
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Tue Sep 1 22:08:54 2026 +0700
+| 
+|     docs(member-2): setup HW06 src templates, rules, specs, and audit log
+| 
+|  .agents/AGENTS.md                                 |    4 +
+|  .agents/skills/ai-audit-entry/SKILL.md            |  101 ++
+|  .agents/skills/ai-audit-entry/agents/openai.yaml  |    4 +
+|  .../ai-audit-entry/ref/13_Performance Testing.md  |  208 +++
+|  .../ai-audit-entry/ref/13_Performance Testing.pdf |  Bin 0 -> 631986 bytes
+|  .../scripts/append_ai_audit_entry.py              |  459 +++++
+|  .../scripts/test_append_ai_audit_entry.py         |  534 ++++++
+|  .gitignore                                        |    1 +
+|  IMPLEMENTATION_PLAN.md                            |  101 ++
+|  ai-reasoning/AGENTS.md                            |    4 +
+|  ai-reasoning/ISTQB_CT-AI_Syllabus_v1.0.md         | 1750 +++++++++++++++++++
+|  ai-reasoning/ISTQB_CT-AI_Syllabus_v1.0.pdf        |  Bin 0 -> 1712829 bytes
+|  docs/hw06-phan-cong-cong-viec-nhom.md             |   12 +-
+|  docs/hw06-team-task-allocation.md                 |   12 +-
+|  .../plans/2026-09-01-hw06-api-testing-plan.md     |  175 ++
+|  .../specs/2026-09-01-hw06-api-testing-spec.md     |   81 +
+|  src/README.md                                     |   69 +
+|  src/agent-skill/diagram.mermaid                   |   10 +
+|  src/agent-skill/pseudocode.md                     |   61 +
+|  src/agent-skill/skill-demo-notes.md               |   10 +
+|  src/ai-audit/ai_audit_report.md                   |   66 +
+|  src/bug-reports/member-2-bugs.md                  |   21 +
+|  src/docs/ai-critique.md                           |   13 +
+|  src/docs/cicd-report.md                           |   25 +
+|  src/docs/git-commit-log.txt                       |    8 +
+|  src/docs/main-report.md                           |   48 +
+|  .../HW06_API_Testing.postman_collection.json      |   34 +
+|  src/postman/HW06_Local.postman_environment.json   |   27 +
+|  src/test-cases/member-2-fr-05.md                  |   20 +
+|  src/test-cases/member-2-fr-08.md                  |   20 +
+|  src/test-cases/member-2-fr-18.md                  |   20 +
+|  31 files changed, 3886 insertions(+), 12 deletions(-)
+| 
+* commit 433e954e72bf1127db95487d0fc6962c14e3f869
+| Author: TKin <letrungkienthd@gmail.com>
+| Date:   Sun Aug 16 22:15:21 2026 +0700
+| 
+|     add requirements and feature division
+| 
+|  docs/hw06-phan-cong-cong-viec-nhom.md | 156 +++++++++++++++++++++++++
+|  docs/hw06-team-task-allocation.md     | 155 +++++++++++++++++++++++++
+|  req/2026.HW06.API Testing_En.md       | 198 ++++++++++++++++++++++++++++++++
+|  req/2026.HW06.API Testing_En.pdf      | Bin 0 -> 455391 bytes
+|  req/2026.HW06.API Testing_Vi.md       | 198 ++++++++++++++++++++++++++++++++
+|  5 files changed, 707 insertions(+)
+| 
+* commit 54607b062b9055fd71f1a1272cffb980bcdb4f6a
+  Author: TKin <letrungkienthd@gmail.com>
+  Date:   Sun Aug 16 15:48:47 2026 +0700
+  
+      first commit
+  
+   README.md | 1 +
+   1 file changed, 1 insertion(+)
