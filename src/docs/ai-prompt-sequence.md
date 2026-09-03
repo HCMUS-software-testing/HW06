@@ -105,3 +105,12 @@ Hãy viết một file GitHub Actions workflow (.github/workflows/newman-api-tes
 ```text
 Hãy viết một đoạn văn Phê bình AI (AI Critique) độ dài 200-300 từ cho báo cáo kiểm thử API bài tập HW06. Đoạn văn cần trả lời 3 câu hỏi: AI đã sai/thiếu sót ở đâu khi sinh test cases API cho EShop SUT? Vì sao AI không phát hiện được các lỗi bảo mật RBAC/IDOR và race condition trong State Machine? Sinh viên học được nguyên tắc gì về cộng tác kỷ luật với AI?
 ```
+
+---
+
+## Task 6–8: Đồng bộ báo cáo, Agent Skill, và evidence Git (session hiện tại)
+
+### Prompt 6-8.1
+```text
+Có vẻ là xong 5 task đầu rồi, làm tiếp task 6 đến 8 trong docs/superpowers/plans/2026-09-02-hw06-submission-completion.md. Bỏ qua những việc convert markdown sang pdf vì tôi làm được
+```
