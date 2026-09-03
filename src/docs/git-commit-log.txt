@@ -1,8 +1,28 @@
-# Git Commit Log - HW06 API Testing
-# Student: Lê Trung Kiên (MSSV: 23127075)
-
-commit 0000000000000000000000000000000000000000
-Author: Le Trung Kien <23127075@student.hcmus.edu.vn>
-Date:   Tue Sep 1 22:00:00 2026 +0700
-
-    docs(member-2): initialize src template structure for HW06 API testing
+18fce830ce781f6b3100afb28452269922ec49ec	2026-09-03T10:35:47+07:00	TKin	docs(member-2): append task 6-8 AI audit entry
+7e3af8dbf7851b5fb731dfad449a42829bdc1be6	2026-09-03T10:35:20+07:00	TKin	docs(member-2): finalize agent design and AI audit
+13eec9e3f56ced7901446706e9922d3dab515f08	2026-09-03T10:35:10+07:00	TKin	docs(member-2): complete evidence-backed HW06 reports
+3e0ab5145ebc9b810a6203fa25e10a32cb9fe54c	2026-09-03T10:17:06+07:00	TKin	ci(member-2): add Newman API test workflow
+2d619982ea24d744de5dc8d2d69ff2b881f63efc	2026-09-03T10:07:24+07:00	TKin	test(member-2): reconcile Newman evidence and defect records
+abf5714168dd092e13815524575ed1ecc79f81b5	2026-09-03T09:41:59+07:00	TKin	test(member-2): record verified Newman execution
+68243d11dad34deff9eb422f4da756bf588ff25e	2026-09-03T09:23:04+07:00	TKin	test(member-2): normalize checkout fixture totals
+d14c00e2e4a757e5df8ef305d87ac75f4c3ea0e8	2026-09-03T09:14:32+07:00	TKin	test(member-2): correct traceable workflow contracts
+8e8e2f344f45e56692b5c6c4248938a6c6d7370a	2026-09-03T08:44:24+07:00	TKin	test(member-2): add traceable Postman API workflows
+b63841a9bfbc3794578358b5ea0d15b53c1ac819	2026-09-03T01:17:29+07:00	TKin	test(member-2): address audited inventory review findings
+6c6208f19ed61e044f70205e380e02dfaf8ea6d2	2026-09-03T00:54:46+07:00	TKin	test(member-2): consolidate audited API case inventories
+77ebffe7e551a63542fd958507487d0634a28793	2026-09-03T00:31:07+07:00	TKin	fix(member-2): enforce validator assertion pairing
+63f062bdf05c3b9053b0c0fb4bd137126a3f7aa8	2026-09-03T00:16:06+07:00	TKin	fix(member-2): harden submission validator
+3b5fb78ac29676d67feeb11cc486740d97aa7720	2026-09-03T00:03:24+07:00	TKin	chore(member-2): add submission validation tooling
+0974727aa1f06538dbd778b7a02b0daf10a9c348	2026-09-02T23:52:29+07:00	TKin	chore: ignore isolated worktrees
+0c0a4e1adcf66b8aa52c9857756800387e95c288	2026-09-02T23:50:59+07:00	TKin	docs(member-2): plan HW06 submission completion
+4edc82f881ed19ea0c4a46ae0695191158e85622	2026-09-02T23:41:20+07:00	TKin	docs(member-2): design HW06 submission completion
+58427ed240e8cfb85c5ee995cce971e7da445e9b	2026-09-02T23:21:06+07:00	TKin	docs(member-2): audit API test cases
+8bd60c01c79c011c30154b452ac31c9f683b81f3	2026-09-01T23:26:10+07:00	TKin	test(member-2): FR-18 complete 35 AI cases & 5 human cases
+7898fc89ce52d113cc558f7783f2c58ade95e54e	2026-09-01T23:18:56+07:00	TKin	test(member-2): FR-18 batch 1 - 18 admin access and RBAC cases
+bf914d2edacb89b8a1fa8f63152e3c1b82735fe4	2026-09-01T23:16:38+07:00	TKin	test(member-2): FR-08 complete 35 AI cases & 5 human cases
+70562c5de39425eb7238b82e1225ddb0d82db129	2026-09-01T23:15:10+07:00	TKin	test(member-2): add FR-08 batch 1 test cases and audit log
+787f408a00a161f42e6575f4775bb8482d55eef3	2026-09-01T23:10:45+07:00	TKin	test(member-2): FR-05 complete 35 AI cases & 5 human cases
+3d72db98bab78f31b8f56d2e4da0a0361d5d1271	2026-09-01T23:07:25+07:00	TKin	test(member-2): FR-05 batch 1 - 15 domain partitioning test cases
+f70d53aec9fb59116de3324fd687174952202a2e	2026-09-01T23:04:05+07:00	TKin	test(member-2): setup Postman pre-request script and environment infrastructure
+74664b15fa8108d84df7df85344847d5d9168509	2026-09-01T22:08:54+07:00	TKin	docs(member-2): setup HW06 src templates, rules, specs, and audit log
+433e954e72bf1127db95487d0fc6962c14e3f869	2026-08-16T22:15:21+07:00	TKin	add requirements and feature division
+54607b062b9055fd71f1a1272cffb980bcdb4f6a	2026-08-16T15:48:47+07:00	TKin	first commit
