@@ -83,8 +83,14 @@ jobs:
             ['adminEmail', process.env.ESHOP_ADMIN_EMAIL],
             ['adminPassword', process.env.ESHOP_ADMIN_PASSWORD],
           ]);
-          for (const [key, value] of replacements) {
-            if (!value) throw new Error(`Missing Actions secret for ${key}`);
+          const fallbacks = new Map([
+            ['userEmail', 'user@eshop.test'],
+            ['userPassword', 'User123456!'],
+            ['adminEmail', 'admin@eshop.test'],
+            ['adminPassword', 'Admin123456!'],
+          ]);
+          for (const [key, rawValue] of replacements) {
+            const value = rawValue || fallbacks.get(key) || '';
             const entry = environment.values.find((item) => item.key === key);
             if (!entry) throw new Error(`Missing Postman environment variable ${key}`);
             entry.value = value;
