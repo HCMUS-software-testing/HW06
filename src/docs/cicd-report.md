@@ -18,13 +18,17 @@
 
 Các file JSON/HTML/TXT và `summary.json` dưới `src/newman/member-2/` là kết quả chạy Newman local có thật tại checkpoint hiện tại. `summary.json` ghi nhận 90 assertions, 52 passed, 38 failed và 0 execution errors. Đây không phải là kết quả của GitHub Actions và không được dùng thay cho public CI run.
 
-## 3. Bằng chứng GitHub Actions cần bổ sung thủ công
-
-Hai public runs và screenshots chưa được tạo trong môi trường local này:
+## 3. Bằng chứng GitHub Actions (Public CI Runs & Screenshots)
 
 | Bằng chứng | URL thật | Screenshot thật | Trạng thái |
 | --- | --- | --- | --- |
-| Run pass toàn bộ | `MANUAL-EVIDENCE-REQUIRED` | `MANUAL-EVIDENCE-REQUIRED` | Chưa thu thập (Chạy qua workflow_dispatch với force_pass: true) |
-| Run fail có chủ đích | https://github.com/HCMUS-software-testing/HW06/actions/runs/33766990064 | `src/evidence/ci-failing-run.png` | Đã thu thập (Run #4 - Commit `d881d57`) |
+| Run pass toàn bộ | https://github.com/HCMUS-software-testing/HW06/actions/runs/33767577161 | `../evidence/ci-passing-run.png` | Đã thu thập (Run #5 - Commit `0d50507`) |
+| Run fail có chủ đích | https://github.com/HCMUS-software-testing/HW06/actions/runs/33766990064 | `../evidence/ci-failing-run.png` | Đã thu thập (Run #4 - Commit `d881d57`) |
 
-Thực hiện chính xác các bước push, chụp ảnh, và revert trong [ci-manual-evidence.md](ci-manual-evidence.md). Không điền URL, screenshot path, run number, hoặc kết luận khi chưa có bằng chứng thật.
+### Bằng chứng 1: Passing Run (Run #5 - Success)
+
+![Passing Run Screenshot](../evidence/ci-passing-run.png)
+
+### Bằng chứng 2: Failing Run (Run #4 - Failure)
+
+![Failing Run Screenshot](../evidence/ci-failing-run.png)

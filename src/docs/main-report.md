@@ -59,8 +59,12 @@ GitHub issue URL và screenshot bug đã được ghi trong `src/bug-reports/bug
 
 ## 5. CI/CD
 
-Workflow `.github/workflows/newman-api-tests.yml` checkout bài nộp + `ttbhanh/eshop-sut`, health-check `GET http://127.0.0.1:3000/api/products`, rồi `npm run test:api`. Public passing/failing run chưa có; xem `src/docs/cicd-report.md` và `src/docs/ci-manual-evidence.md`.
+Workflow `.github/workflows/newman-api-tests.yml` checkout bài nộp + `ttbhanh/eshop-sut`, health-check `GET http://127.0.0.1:3000/api/products`, rồi `npm run test:api`. 
+Cả hai public runs đã được thu thập đầy đủ:
+- **Passing run (Run #5):** https://github.com/HCMUS-software-testing/HW06/actions/runs/33767577161
+- **Failing run (Run #4):** https://github.com/HCMUS-software-testing/HW06/actions/runs/33766990064
+Chi tiết báo cáo và ảnh chụp bằng chứng xem tại `src/docs/cicd-report.md` và `src/docs/ci-manual-evidence.md`.
 
 ## 6. Tự đánh giá
 
-Self-assessment hiện tại **84/100** (26 + 25 + 26 + 7). Trừ điểm vì thiếu bằng chứng public CI; video Agent Skill là mục tùy chọn.
+Self-assessment hiện tại **84/100** (26 + 25 + 26 + 7). Bằng chứng public CI đã hoàn tất; video Agent Skill là mục tùy chọn.
