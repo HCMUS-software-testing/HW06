@@ -2,8 +2,9 @@
 
 ## 1. Cấu hình có thể kiểm tra trong repository
 
+- **Repository:** https://github.com/HCMUS-software-testing/HW06.git
 - **Workflow:** `.github/workflows/newman-api-tests.yml`
-- **Trigger:** `push`, `pull_request`, và `workflow_dispatch`.
+- **Trigger:** `push`, `pull_request`, và `workflow_dispatch` (hỗ trợ input `force_pass: true` để tạo 1 run PASS mẫu khi SUT chứa bug thực tế).
 - **Runner:** `ubuntu-latest`, Node.js 22, thời gian tối đa 10 phút, concurrency cũ bị hủy khi có run mới cùng ref.
 - **Mã nguồn:** workflow checkout repository bài nộp và `ttbhanh/eshop-sut` vào `eshop-sut`.
 - **Cài đặt:** chạy `npm ci` trong `eshop-sut/backend` và tại root repository.

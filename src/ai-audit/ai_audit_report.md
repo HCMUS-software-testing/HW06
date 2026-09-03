@@ -276,14 +276,14 @@ Hãy giúp tôi thiết lập script chạy Newman tự động cho cả 3 bộ 
 
 ## 3. Tổng kết độ chính xác AI
 
-- Các nội dung AI tạo đã được rà soát với yêu cầu bài làm: `[TODO]`
-- Mức độ chính xác/độ hữu ích tổng quan: `[TODO]`
-- Giới hạn hoặc rủi ro còn lại: `[TODO]`
+- Các nội dung AI tạo đã được rà soát với yêu cầu bài làm: Đã rà soát 35 AI cases cho từng FR, bổ sung 10 human cases cho từng FR, đối chiếu traceability và kiểm tra bằng Newman. Các kết quả không chạy được hoặc chưa có hook SUT được đánh dấu rõ trong traceability.
+- Mức độ chính xác/độ hữu ích tổng quan: AI hữu ích trong việc tạo khung test cases, phân hoạch miền, kiểm tra schema và gợi ý security cases; kết quả cuối cùng cần được sinh viên kiểm chứng bằng contract, SUT và Newman.
+- Giới hạn hoặc rủi ro còn lại: Một số oracle AI đề xuất quá cụ thể về status/media type; AI có thể bỏ sót state transition, privilege escalation và race condition. Bằng chứng CI public và video demo vẫn phụ thuộc thao tác thủ công bên ngoài phiên làm việc này.
 
 ## 4. Kết luận
 
-`[TODO]`
+AI được sử dụng để hỗ trợ tạo, audit, mở rộng test cases, xây dựng Postman/Newman workflow, tổng hợp traceability và soạn tài liệu. Sinh viên chịu trách nhiệm rà soát, điều chỉnh oracle, thực thi test và xác nhận bug trên SUT.
 
 ## 5. Disclosure
 
-`[TODO]`
+I use AI tools for the following tasks. Các prompt và output được ghi trong các entry của báo cáo này; credential runtime không được đưa vào repository hoặc artifact nộp bài.

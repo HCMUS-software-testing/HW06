@@ -1,6 +1,7 @@
 # Báo Cáo Chi Tiết HW06 - API Testing
 
 **Sinh viên:** Lê Trung Kiên (23127075) — Thành viên 2  
+**GitHub Repository:** https://github.com/HCMUS-software-testing/HW06  
 **SUT:** EShop backend `http://localhost:3000`  
 **Nguồn thực thi:** `src/newman/member-2/summary.json` (`generatedAt: 2026-09-03T02:43:08.840Z`)
 
@@ -54,7 +55,7 @@ Local `npm run test:api` exit khác 0 vì 38 assertion failures. Không diễn g
 - FR-08: BUG-002, BUG-003, BUG-007 … BUG-012 (client total, cart không xóa, checkout chấp nhận cart/address không hợp lệ).
 - FR-18: BUG-004, BUG-005, BUG-006 (thiếu RBAC admin, mass-assignment `role`, canceled → delivered).
 
-GitHub issue URL và screenshot chưa thu thập trong repo này.
+GitHub issue URL và screenshot bug đã được ghi trong `src/bug-reports/bug-report.md`; 12 ảnh evidence nằm trong `src/evidence/bug-reports/`.
 
 ## 5. CI/CD
 
@@ -62,4 +63,4 @@ Workflow `.github/workflows/newman-api-tests.yml` checkout bài nộp + `ttbhanh
 
 ## 6. Tự đánh giá
 
-Self-assessment hiện tại **84/100** (26 + 25 + 26 + 7). Trừ điểm vì thiếu bằng chứng public CI, issue/screenshot, `diagram.png`, và video Agent Skill. Chi tiết checklist: `src/docs/manual-submission-checklist.md`.
+Self-assessment hiện tại **84/100** (26 + 25 + 26 + 7). Trừ điểm vì thiếu bằng chứng public CI; video Agent Skill là mục tùy chọn.

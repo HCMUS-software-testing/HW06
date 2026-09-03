@@ -4,6 +4,7 @@
 - **Họ và tên:** Lê Trung Kiên
 - **MSSV:** 23127075
 - **Vai trò trong nhóm:** Thành viên 2
+- **GitHub Repository:** https://github.com/HCMUS-software-testing/HW06
 - **Môi trường SUT:** Backend Express + Node.js (`http://localhost:3000`)
 - **Các API phụ trách (dựa trên `eshop-sut/api_specification.md`):**
   1. **Pool A:** FR-05 - Liệt kê và tìm kiếm sản phẩm (`GET /api/products`, `GET /api/products?search=keyword`)
@@ -66,7 +67,6 @@ src/
 │   ├── ai-prompt-sequence.md
 │   ├── git-commit-log.txt
 │   ├── ci-manual-evidence.md
-│   └── manual-submission-checklist.md
 ├── postman/
 │   ├── HW06_API_Testing.postman_collection.json
 │   ├── HW06_Local.postman_environment.json
@@ -102,7 +102,7 @@ src/
 
 - Newman: `src/newman/member-2/fr-05.{json,html,txt}`, `fr-08.*`, `fr-18.*`, `summary.json`.
 - Bugs: `src/bug-reports/bug-report.md` (BUG-001 … BUG-012).
-- Issue GitHub/screenshot: xem marker trong bug report.
+- Issue GitHub và screenshot bug: xem `bug-reports/bug-report.md` và `evidence/bug-reports/`.
 
 ### Bằng chứng header bắt buộc
 
