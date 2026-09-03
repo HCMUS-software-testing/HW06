@@ -24,7 +24,7 @@ Hai public runs và screenshots chưa được tạo trong môi trường local 
 
 | Bằng chứng | URL thật | Screenshot thật | Trạng thái |
 | --- | --- | --- | --- |
-| Run pass toàn bộ | `MANUAL-EVIDENCE-REQUIRED` | `MANUAL-EVIDENCE-REQUIRED` | Chưa thu thập |
-| Run fail có chủ đích | `MANUAL-EVIDENCE-REQUIRED` | `MANUAL-EVIDENCE-REQUIRED` | Chưa thu thập |
+| Run pass toàn bộ | `MANUAL-EVIDENCE-REQUIRED` | `MANUAL-EVIDENCE-REQUIRED` | Chưa thu thập (Chạy qua workflow_dispatch với force_pass: true) |
+| Run fail có chủ đích | https://github.com/HCMUS-software-testing/HW06/actions/runs/33766990064 | `src/evidence/ci-failing-run.png` | Đã thu thập (Run #4 - Commit `d881d57`) |
 
 Thực hiện chính xác các bước push, chụp ảnh, và revert trong [ci-manual-evidence.md](ci-manual-evidence.md). Không điền URL, screenshot path, run number, hoặc kết luận khi chưa có bằng chứng thật.

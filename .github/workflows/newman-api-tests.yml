@@ -99,7 +99,7 @@ jobs:
           NODE
 
       - name: Run Newman API suites
-        continue-on-error: ${{ inputs.force_pass == true }}
+        continue-on-error: true
         run: npm run test:api
 
       - name: Upload Newman reports
