@@ -1,0 +1,600 @@
+[
+  {
+    "caseId": "TC-FR08-AI-001",
+    "requestName": "TC-FR08-AI-001 - successful checkout",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "__SERVER_TOTAL__",
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "success",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-002",
+    "requestName": "TC-FR08-AI-002 - empty cart",
+    "setupKey": "emptyCart",
+    "authMode": "user",
+    "cartContents": [],
+    "checkoutBody": {
+      "total_amount": 0,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 400,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "emptyCartReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-004",
+    "requestName": "TC-FR08-AI-004 - empty address",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "__SERVER_TOTAL__",
+      "shipping_address": ""
+    },
+    "expectedStatus": 400,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "addressReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-005",
+    "requestName": "TC-FR08-AI-005 - whitespace address",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "__SERVER_TOTAL__",
+      "shipping_address": "   "
+    },
+    "expectedStatus": 400,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "addressReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-006",
+    "requestName": "TC-FR08-AI-006 - missing address",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "__SERVER_TOTAL__"
+    },
+    "expectedStatus": 400,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "addressReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-007",
+    "requestName": "TC-FR08-AI-007 - null address",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "__SERVER_TOTAL__",
+      "shipping_address": null
+    },
+    "expectedStatus": 400,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "addressReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-008",
+    "requestName": "TC-FR08-AI-008 - object address",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "__SERVER_TOTAL__",
+      "shipping_address": {
+        "street": "123 HW06 Street"
+      }
+    },
+    "expectedStatus": 400,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "addressReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-009",
+    "requestName": "TC-FR08-AI-009 - tampered total",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 1,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "tamperedTotal",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-016",
+    "requestName": "TC-FR08-AI-016 - cart cleared",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "cartCleared",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-017",
+    "requestName": "TC-FR08-AI-017 - initial pending",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "pending",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-019",
+    "requestName": "TC-FR08-AI-019 - missing auth",
+    "setupKey": "cart",
+    "authMode": "missing",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 401,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "authReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-020",
+    "requestName": "TC-FR08-AI-020 - invalid JWT",
+    "setupKey": "cart",
+    "authMode": "invalid",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 401,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "authReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-022",
+    "requestName": "TC-FR08-AI-022 - empty bearer",
+    "setupKey": "cart",
+    "authMode": "empty",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 401,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "authReject",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-023",
+    "requestName": "TC-FR08-AI-023 - cart ownership",
+    "setupKey": "twoUsers",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "__SERVER_TOTAL__",
+      "shipping_address": "User A HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty-a-only",
+    "expectedOrderMutation": "one-a-only",
+    "invariant": "ownership",
+    "malformedBody": null,
+    "secondaryCart": [
+      {
+        "id": 2,
+        "name": "Samsung Galaxy S24 Ultra",
+        "price": 28000000,
+        "quantity": 1
+      }
+    ],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-024",
+    "requestName": "TC-FR08-AI-024 - address literal",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street' OR '1'='1"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "addressLiteral",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-027",
+    "requestName": "TC-FR08-AI-027 - malformed JSON",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": null,
+    "expectedStatus": 400,
+    "expectedCartMutation": "unchanged",
+    "expectedOrderMutation": "none",
+    "invariant": "malformedReject",
+    "malformedBody": "{\"total_amount\":30000000,\"shipping_address\":\"123 HW06 Street\"",
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-029",
+    "requestName": "TC-FR08-AI-029 - negative client total invariant",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": -200000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": null,
+    "expectedCartMutation": "empty-or-unchanged",
+    "expectedOrderMutation": "one-or-none",
+    "invariant": "safeTotalInvariant",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-030",
+    "requestName": "TC-FR08-AI-030 - string client total invariant",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "abc",
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": null,
+    "expectedCartMutation": "empty-or-unchanged",
+    "expectedOrderMutation": "one-or-none",
+    "invariant": "safeTotalInvariant",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-031",
+    "requestName": "TC-FR08-AI-031 - persisted order ID",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "persistedId",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-032",
+    "requestName": "TC-FR08-AI-032 - pending schema",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "pending",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-033",
+    "requestName": "TC-FR08-AI-033 - total schema",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": "__SERVER_TOTAL__",
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "totalSchema",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-034",
+    "requestName": "TC-FR08-AI-034 - content type",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "contentType",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-AI-035",
+    "requestName": "TC-FR08-AI-035 - zero client total",
+    "setupKey": "cart",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 0,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": 200,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "tamperedTotal",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  },
+  {
+    "caseId": "TC-FR08-HUMAN-008",
+    "requestName": "TC-FR08-HUMAN-008 - simultaneous checkout",
+    "setupKey": "simultaneous",
+    "authMode": "user",
+    "cartContents": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "price": 30000000,
+        "quantity": 1
+      }
+    ],
+    "checkoutBody": {
+      "total_amount": 30000000,
+      "shipping_address": "123 HW06 Street"
+    },
+    "expectedStatus": null,
+    "expectedCartMutation": "empty",
+    "expectedOrderMutation": "one",
+    "invariant": "simultaneous",
+    "malformedBody": null,
+    "secondaryCart": [],
+    "staleCartAddition": null
+  }
+]

@@ -1,0 +1,752 @@
+newman
+
+HW06 API Testing - Member 2
+
+Iteration 1/24
+
+❏ FR-08 - Checkout
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-001 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 7ms]
+
+Attempting to set next request to TC-FR08-AI-001 - successful checkout
+
+↳ TC-FR08-AI-001 - successful checkout
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-001 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 20ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 6ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 7ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 4ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 407B, 5ms]
+[200 OK, 334B, 9ms]
+  1. TC-FR08-AI-001 | successful checkout
+
+Iteration 2/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-002 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-002 - empty cart
+
+↳ TC-FR08-AI-002 - empty cart
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-002 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 267B, 4ms]
+[200 OK, 400B, 6ms]
+  2. TC-FR08-AI-002 | empty cart
+
+Iteration 3/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-004 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 3ms]
+
+Attempting to set next request to TC-FR08-AI-004 - empty address
+
+↳ TC-FR08-AI-004 - empty address
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-004 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 15ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+[200 OK, 392B, 7ms]
+  3. TC-FR08-AI-004 | empty address
+
+Iteration 4/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-005 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 3ms]
+
+Attempting to set next request to TC-FR08-AI-005 - whitespace address
+
+↳ TC-FR08-AI-005 - whitespace address
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-005 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 12ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 395B, 7ms]
+  4. TC-FR08-AI-005 | whitespace address
+
+Iteration 5/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-006 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-006 - missing address
+
+↳ TC-FR08-AI-006 - missing address
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-006 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 15ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 18ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+[200 OK, 394B, 7ms]
+  5. TC-FR08-AI-006 | missing address
+
+Iteration 6/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-007 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-007 - null address
+
+↳ TC-FR08-AI-007 - null address
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-007 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 6ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 5ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 12ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+[200 OK, 394B, 8ms]
+  6. TC-FR08-AI-007 | null address
+
+Iteration 7/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-008 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-008 - object address
+
+↳ TC-FR08-AI-008 - object address
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-008 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 12ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 407B, 8ms]
+  7. TC-FR08-AI-008 | object address
+
+Iteration 8/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-009 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-009 - tampered total
+
+↳ TC-FR08-AI-009 - tampered total
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-009 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 10ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 9ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 8ms]
+[200 OK, 400B, 10ms]
+  8. TC-FR08-AI-009 | tampered total
+
+Iteration 9/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-016 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 3ms]
+
+Attempting to set next request to TC-FR08-AI-016 - cart cleared
+
+↳ TC-FR08-AI-016 - cart cleared
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-016 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 10ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 5ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+[200 OK, 407B, 7ms]
+  9. TC-FR08-AI-016 | cart cleared
+
+Iteration 10/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-017 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-017 - initial pending
+
+↳ TC-FR08-AI-017 - initial pending
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-017 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 668B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 407B, 8ms]
+ 10. TC-FR08-AI-017 | initial pending
+
+Iteration 11/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-019 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-019 - missing auth
+
+↳ TC-FR08-AI-019 - missing auth
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-019 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 2ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 267B, 7ms]
+  ✓  TC-FR08-AI-019 | missing auth
+
+Iteration 12/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-020 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-020 - invalid JWT
+
+↳ TC-FR08-AI-020 - invalid JWT
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-020 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [403 Forbidden, 295B, 2ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 267B, 7ms]
+ 11. TC-FR08-AI-020 | invalid JWT
+
+Iteration 13/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-022 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-022 - empty bearer
+
+↳ TC-FR08-AI-022 - empty bearer
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-022 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 15ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 8ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 3ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 267B, 6ms]
+  ✓  TC-FR08-AI-022 | empty Bearer [REDACTED] 14/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-023 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 2ms]
+
+Attempting to set next request to TC-FR08-AI-023 - cart ownership
+
+↳ TC-FR08-AI-023 - cart ownership
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-023 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 5ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 341B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+[200 OK, 410B, 8ms]
+[200 OK, 341B, 12ms]
+[200 OK, 267B, 14ms]
+ 12. TC-FR08-AI-023 | cart ownership
+
+Iteration 15/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-024 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 3ms]
+
+Attempting to set next request to TC-FR08-AI-024 - address literal
+
+↳ TC-FR08-AI-024 - address literal
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-024 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 10ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+[200 OK, 341B, 6ms]
+[200 OK, 418B, 10ms]
+[200 OK, 267B, 11ms]
+ 13. TC-FR08-AI-024 | address literal
+
+Iteration 16/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-027 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-027 - malformed JSON
+
+↳ TC-FR08-AI-027 - malformed JSON
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-027 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 10ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 7ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [400 Bad Request, 1.6kB, 3ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+[200 OK, 341B, 8ms]
+[200 OK, 267B, 11ms]
+[200 OK, 267B, 12ms]
+ 14. TC-FR08-AI-027 | malformed JSON
+
+Iteration 17/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-029 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-029 - negative client total invariant
+
+↳ TC-FR08-AI-029 - negative client total invariant
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-029 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 14ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 12ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 341B, 5ms]
+[200 OK, 406B, 9ms]
+[200 OK, 267B, 10ms]
+ 15. TC-FR08-AI-029 | negative client total invariant
+
+Iteration 18/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-030 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 3ms]
+
+Attempting to set next request to TC-FR08-AI-030 - string client total invariant
+
+↳ TC-FR08-AI-030 - string client total invariant
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-030 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 3ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 10ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 341B, 8ms]
+[200 OK, 404B, 11ms]
+[200 OK, 267B, 13ms]
+ 16. TC-FR08-AI-030 | string client total invariant
+
+Iteration 19/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-031 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-031 - persisted order ID
+
+↳ TC-FR08-AI-031 - persisted order ID
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-031 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 4ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 14ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 341B, 7ms]
+[200 OK, 407B, 10ms]
+[200 OK, 267B, 11ms]
+ 17. TC-FR08-AI-031 | persisted order ID
+
+Iteration 20/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-032 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-032 - pending schema
+
+↳ TC-FR08-AI-032 - pending schema
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-032 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 13ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 5ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 3ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 3ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 13ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 341B, 7ms]
+[200 OK, 407B, 10ms]
+[200 OK, 267B, 12ms]
+ 18. TC-FR08-AI-032 | pending schema
+
+Iteration 21/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-033 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-AI-033 - total schema
+
+↳ TC-FR08-AI-033 - total schema
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-033 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 5ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 1ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 12ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 4ms]
+[200 OK, 341B, 6ms]
+[200 OK, 407B, 9ms]
+[200 OK, 267B, 10ms]
+ 19. TC-FR08-AI-033 | total schema
+
+Iteration 22/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-034 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 3ms]
+
+Attempting to set next request to TC-FR08-AI-034 - content type
+
+↳ TC-FR08-AI-034 - content type
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-034 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 12ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 3ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+[200 OK, 341B, 8ms]
+[200 OK, 407B, 11ms]
+[200 OK, 267B, 13ms]
+ 20. TC-FR08-AI-034 | content type
+
+Iteration 23/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-035 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 3ms]
+
+Attempting to set next request to TC-FR08-AI-035 - zero client total
+
+↳ TC-FR08-AI-035 - zero client total
+  ┌
+  │ 'CASE_ID=TC-FR08-AI-035 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 11ms]
+  POST http://localhost:3000/api/login [200 OK, 669B, 5ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 2ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout [200 OK, 313B, 11ms]
+  GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart   GET http://localhost:3000/api/orders/my-orders   GET http://localhost:3000/api/cart [200 OK, 334B, 5ms]
+[200 OK, 341B, 7ms]
+[200 OK, 400B, 10ms]
+[200 OK, 267B, 12ms]
+ 21. TC-FR08-AI-035 | zero client total
+
+Iteration 24/24
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR08-HUMAN-008 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/checkout [401 Unauthorized, 301B, 4ms]
+
+Attempting to set next request to TC-FR08-HUMAN-008 - simultaneous checkout
+
+↳ TC-FR08-HUMAN-008 - simultaneous checkout
+  ┌
+  │ 'CASE_ID=TC-FR08-HUMAN-008 X-Student-Id=23127075'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 10ms]
+  POST http://localhost:3000/api/login [200 OK, 672B, 5ms]
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/cart [200 OK, 267B, 2ms]
+  POST http://localhost:3000/api/cart [200 OK, 294B, 3ms]
+  GET http://localhost:3000/api/cart [200 OK, 334B, 2ms]
+  POST http://localhost:3000/api/checkout   POST http://localhost:3000/api/checkout [200 OK, 313B, 148ms]
+[200 OK, 313B, 149ms]
+
+┌─────────────────────────┬──────────────────┬──────────────────┐
+│                         │         executed │           failed │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│              iterations │               24 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│                requests │              264 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│            test-scripts │               47 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│      prerequest-scripts │               97 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│              assertions │               23 │               21 │
+├─────────────────────────┴──────────────────┴──────────────────┤
+│ total run duration: 3.2s                                      │
+├───────────────────────────────────────────────────────────────┤
+│ total data received: 21.33kB (approx)                         │
+├───────────────────────────────────────────────────────────────┤
+│ average response time: 6ms [min: 1ms, max: 149ms, s.d.: 12ms] │
+└───────────────────────────────────────────────────────────────┘
+
+[31m   # [39m[31m failure        [39m[31m detail                                                                       [39m
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 01.  AssertionError  TC-FR08-AI-001 | successful checkout                                         
+      iteration: 1    expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-001 - successful checkout"             
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 02.  AssertionError  TC-FR08-AI-002 | empty cart                                                  
+      iteration: 2    expected 200 to equal 400                                                    
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-002 - empty cart"                      
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 03.  AssertionError  TC-FR08-AI-004 | empty address                                               
+      iteration: 3    expected 200 to equal 400                                                    
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-004 - empty address"                   
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 04.  AssertionError  TC-FR08-AI-005 | whitespace address                                          
+      iteration: 4    expected 200 to equal 400                                                    
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-005 - whitespace address"              
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 05.  AssertionError  TC-FR08-AI-006 | missing address                                             
+      iteration: 5    expected 200 to equal 400                                                    
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-006 - missing address"                 
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 06.  AssertionError  TC-FR08-AI-007 | null address                                                
+      iteration: 6    expected 200 to equal 400                                                    
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-007 - null address"                    
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 07.  AssertionError  TC-FR08-AI-008 | object address                                              
+      iteration: 7    expected 200 to equal 400                                                    
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-008 - object address"                  
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 08.  AssertionError  TC-FR08-AI-009 | tampered total                                              
+      iteration: 8    expected 1 to equal 30000000                                                 
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-009 - tampered total"                  
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 09.  AssertionError  TC-FR08-AI-016 | cart cleared                                                
+      iteration: 9    expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-016 - cart cleared"                    
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 10.  AssertionError  TC-FR08-AI-017 | initial pending                                             
+      iteration: 10   expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-017 - initial pending"                 
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 11.  AssertionError  TC-FR08-AI-020 | invalid JWT                                                 
+      iteration: 12   expected 403 to equal 401                                                    
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-020 - invalid JWT"                     
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 12.  AssertionError  TC-FR08-AI-023 | cart ownership                                              
+      iteration: 14   expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-023 - cart ownership"                  
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 13.  AssertionError  TC-FR08-AI-024 | address literal                                             
+      iteration: 15   expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-024 - address literal"                 
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 14.  AssertionError  TC-FR08-AI-027 | malformed JSON                                              
+      iteration: 16   expected 'text/html; charset=utf-8' to include 'application/json'            
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-027 - malformed JSON"                  
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 15.  AssertionError  TC-FR08-AI-029 | negative client total invariant                             
+      iteration: 17   expected -200000 to equal 30000000                                           
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-029 - negative client total invariant" 
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 16.  AssertionError  TC-FR08-AI-030 | string client total invariant                               
+      iteration: 18   expected NaN to equal 30000000                                               
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-030 - string client total invariant"   
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 17.  AssertionError  TC-FR08-AI-031 | persisted order ID                                          
+      iteration: 19   expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-031 - persisted order ID"              
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 18.  AssertionError  TC-FR08-AI-032 | pending schema                                              
+      iteration: 20   expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-032 - pending schema"                  
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 19.  AssertionError  TC-FR08-AI-033 | total schema                                                
+      iteration: 21   expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-033 - total schema"                    
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 20.  AssertionError  TC-FR08-AI-034 | content type                                                
+      iteration: 22   expected [ { id: 1, …(3) } ] to deeply equal []                              
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-034 - content type"                    
+[90m     [39m[90m                [39m[90m                                                                              [39m
+ 21.  AssertionError  TC-FR08-AI-035 | zero client total                                           
+      iteration: 23   expected +0 to equal 30000000                                                
+                      at assertion:0 in test-script                                                
+                      inside "FR-08 - Checkout / TC-FR08-AI-035 - zero client total"               
