@@ -1,3 +1,4 @@
+8c858f813f1c4c143a1697bed07f2fb4ccfa1a0a	2026-09-03T10:35:47+07:00	TKin	docs(member-2): finalize submission evidence checklist
 18fce830ce781f6b3100afb28452269922ec49ec	2026-09-03T10:35:47+07:00	TKin	docs(member-2): append task 6-8 AI audit entry
 7e3af8dbf7851b5fb731dfad449a42829bdc1be6	2026-09-03T10:35:20+07:00	TKin	docs(member-2): finalize agent design and AI audit
 13eec9e3f56ced7901446706e9922d3dab515f08	2026-09-03T10:35:10+07:00	TKin	docs(member-2): complete evidence-backed HW06 reports
