@@ -21,6 +21,7 @@
 | 8 | Time: `2026-09-01 23:17 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Dựa vào đặc tả API FR-18 trong eshop-sut cho Admin (GET /api/admin/orders và PUT /api/admin/orders/:id/status), hãy sinh 18 test cases kiểm thử:<br>1. Quyền truy cập Admin: Truy cập GET /api/admin/orders với Admin Token hợp lệ (role='admin'), kiểm tra danh sách tất cả đơn hàng hệ thống.<br>2. Kiểm soát truy cập RBAC (SEC-04): Cố gắng truy cập endpoint Admin bằng User Token (role user thường) -> Kỳ vọng 403 Forbidden; truy cập không có token -> 401 Unauthorized.<br>Format bảng chi tiết. | [Manual by user] |
 | 9 | Time: `2026-09-01 23:19 +07`<br>Tool: `Gemini 3.6 Flash / Antigravity`<br>Prompt:<br>/using-superpowers Tiếp tục với API FR-18 PUT /api/admin/orders/:id/status (Body: {"status": "confirmed"}), hãy sinh 17 test cases kiểm thử Máy trạng thái đơn hàng (State Machine FR-10):<br>1. Chuyển trạng thái hợp lệ: pending -> confirmed -> shipping -> delivered.<br>2. Chuyển trạng thái KHÔNG hợp lệ (Invalid transitions): delivered -> pending, canceled -> shipping, delivered -> canceled (vì delivered và canceled là các trạng thái kết thúc final states).<br>3. IDOR & Path Parameter: Update status cho order_id không tồn tại (404), order_id âm hoặc chuỗi ký tự (400), IDOR vào đơn hàng thuộc tenant khác.<br>Format bảng chi tiết. | [Manual by user] |
 | 10 | Time: `2026-09-02 15:34 +07`<br>Tool: `Codex / GPT-5`<br>Prompt:<br>Thực hiện đồng thời 3 task sau:\\n1. Tôi có bộ 35 test cases FR-05 do AI sinh. Hãy giúp tôi đánh giá và gán nhãn từng test case là VALID, INVALID hoặc INCOMPLETE kèm lý do kỹ thuật. Sau đó, gợi ý 5 test cases do con người tự thiết kế (Human-designed) mà AI thường bỏ sót cho API FR-05 (đặc biệt là các case kết hợp giữa tìm kiếm rỗng + SQLi + HTML rendering safety) và giải thích tại sao AI bỏ sót chúng.\\n2. Hãy giúp tôi kiểm toán toàn bộ 35 test cases FR-08 do AI sinh ra (gán nhãn VALID/INVALID/INCOMPLETE kèm lý do). Sau đó, hãy gợi ý 5 test cases quan trọng về Race Condition và Thay đổi Trạng thái Đa phiên (ví dụ: checkout đúng lúc giỏ hàng bị rỗng ở tab khác, tồn kho bị giảm về 0 ngay trước thời điểm bấm thanh toán) mà AI thường bỏ sót và giải thích nguyên nhân AI bỏ sót.\\n3. Hãy kiểm toán 35 test cases FR-18 do AI sinh (VALID/INVALID/INCOMPLETE + lý do). Gợi ý 5 test cases do con người tự bổ sung tập trung vào Privilege Escalation (người dùng tự sửa role để gọi API Admin status) và Rollback trạng thái khi gặp sự cố hệ thống mà AI bỏ sót, giải thích nguyên nhân.\\nCó ghi audit cho lần prompt này. | [Manual by user] |
+| 11 | Time: `2026-09-03 10:35 +07`<br>Tool: `Codex / GPT-5`<br>Prompt:<br>Có vẻ là xong 5 task đầu rồi, làm tiếp task 6 đến 8 trong docs/superpowers/plans/2026-09-02-hw06-submission-completion.md. Bỏ qua những việc convert markdown sang pdf vì tôi làm được | [Manual by user] |
 
 ### 2.2. Chi tiết audit
 
@@ -202,6 +203,23 @@ Prompt:
 Thực hiện đồng thời 3 task sau:\n1. Tôi có bộ 35 test cases FR-05 do AI sinh. Hãy giúp tôi đánh giá và gán nhãn từng test case là VALID, INVALID hoặc INCOMPLETE kèm lý do kỹ thuật. Sau đó, gợi ý 5 test cases do con người tự thiết kế (Human-designed) mà AI thường bỏ sót cho API FR-05 (đặc biệt là các case kết hợp giữa tìm kiếm rỗng + SQLi + HTML rendering safety) và giải thích tại sao AI bỏ sót chúng.\n2. Hãy giúp tôi kiểm toán toàn bộ 35 test cases FR-08 do AI sinh ra (gán nhãn VALID/INVALID/INCOMPLETE kèm lý do). Sau đó, hãy gợi ý 5 test cases quan trọng về Race Condition và Thay đổi Trạng thái Đa phiên (ví dụ: checkout đúng lúc giỏ hàng bị rỗng ở tab khác, tồn kho bị giảm về 0 ngay trước thời điểm bấm thanh toán) mà AI thường bỏ sót và giải thích nguyên nhân AI bỏ sót.\n3. Hãy kiểm toán 35 test cases FR-18 do AI sinh (VALID/INVALID/INCOMPLETE + lý do). Gợi ý 5 test cases do con người tự bổ sung tập trung vào Privilege Escalation (người dùng tự sửa role để gọi API Admin status) và Rollback trạng thái khi gặp sự cố hệ thống mà AI bỏ sót, giải thích nguyên nhân.\nCó ghi audit cho lần prompt này.
 
 **AI Output:** Đã cập nhật src/test-cases/member-2-fr-05.md, src/test-cases/member-2-fr-08.md và src/test-cases/member-2-fr-18.md với verdict kỹ thuật cho toàn bộ 35 AI cases ở mỗi bộ, cùng 5 case human-designed tương ứng.
+
+**Verdict:** [Manual by user]
+
+**Reasoning:** [Manual by user]
+
+**Student Fix:** [Manual by user]
+
+### 2.2.11 Entry 11
+
+**Prompt + Tool:**
+
+Time: `2026-09-03 10:35 +07`
+Tool: `Codex / GPT-5`
+Prompt:
+Có vẻ là xong 5 task đầu rồi, làm tiếp task 6 đến 8 trong docs/superpowers/plans/2026-09-02-hw06-submission-completion.md. Bỏ qua những việc convert markdown sang pdf vì tôi làm được
+
+**AI Output:** Đã thêm scripts/export-submission.mjs và test; xuất src/test-cases/23127075-hw06-test-cases.xlsx; cập nhật README/main-report theo summary.json (135 authored, 91 automated, 90 assertions, 52 passed, 38 failed, 792 req...
 
 **Verdict:** [Manual by user]
 
