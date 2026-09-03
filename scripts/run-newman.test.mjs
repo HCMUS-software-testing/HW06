@@ -46,6 +46,37 @@ test('the simultaneous checkout final request uses the prepared user A token', (
   assert.equal(finalAuthorization?.value, 'Bearer {{caseUserTokenA}}');
 });
 
+test('controller exclusion leaves exactly 91 executable IDs and no unsupported cart workflows', () => {
+  const collection = JSON.parse(readFileSync('src/postman/HW06_API_Testing.postman_collection.json', 'utf8'));
+  const checkoutData = JSON.parse(readFileSync('src/postman/data/fr-08-checkout.json', 'utf8'));
+  const traceability = readFileSync('src/test-cases/member-2-traceability.md', 'utf8');
+  const checkoutFolder = collection.item.find((item) => item.name === 'FR-08 - Checkout');
+  const removedIds = ['TC-FR08-HUMAN-005', 'TC-FR08-HUMAN-006', 'TC-FR08-HUMAN-009'];
+  const assertionIds = [];
+  const walk = (items) => items.forEach((item) => {
+    if (item.item) walk(item.item);
+    for (const event of item.event ?? []) {
+      if (event.listen !== 'test') continue;
+      for (const line of event.script?.exec ?? []) {
+        assertionIds.push(...String(line).match(/TC-FR(?:05|08|18)-(?:AI|HUMAN)-\d{3}/g) ?? []);
+      }
+    }
+  });
+  walk(collection.item);
+
+  assert.equal(assertionIds.length, 91);
+  assert.deepEqual(Object.fromEntries(['05', '08', '18'].map((fr) => [
+    fr,
+    assertionIds.filter((id) => id.slice(5, 7) === fr).length,
+  ])), { '05': 32, '08': 24, '18': 35 });
+  for (const id of removedIds) {
+    assert.equal(checkoutData.some((row) => row.caseId === id), false);
+    assert.equal(checkoutFolder.item.some((item) => item.name.startsWith(id)), false);
+    assert.match(traceability, new RegExp('\\| ' + id + ' \\|.*?\\| EXCLUDED \\|.*?\\| — \\| .*NOT-RUN-NO-SUT-HOOK'));
+  }
+  assert.doesNotMatch(JSON.stringify(collection), /DELETE', '\/api\/cart\//);
+});
+
 test('buildRuns pairs each selected FR folder with its deterministic data partition', () => {
   const runs = buildRuns({ rootDir: '/repo', outputDir: '/evidence' });
 
@@ -179,6 +210,8 @@ test('runSuites atomically preserves redacted evidence and returns a failing sum
         failures: failed ? [{ error: { message: `Bearer ${JWT}` } }] : [],
       },
     };
+    process.stdout.write(`CLI ${options.folder[0]} request assertion Authorization: Bearer ${JWT}\n`);
+    process.stderr.write(`CLI ${options.folder[0]} stderr Authorization: Bearer ${JWT}\n`);
     writeFileSync(options.reporter.json.export, JSON.stringify(summary));
     writeFileSync(options.reporter.htmlextra.export, `<html>Authorization: Bearer ${JWT}</html>`);
     queueMicrotask(() => callback(null, summary));
@@ -204,6 +237,10 @@ test('runSuites atomically preserves redacted evidence and returns a failing sum
         const evidence = readFileSync(path, 'utf8');
         assert.doesNotMatch(evidence, /Authorization:\s*Bearer/i);
         assert.doesNotMatch(evidence, /eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/);
+        if (extension === 'txt') {
+          assert.match(evidence, new RegExp(`CLI FR-${id.slice(3)} - .*request assertion`));
+          assert.match(evidence, /CLI .* stderr Authorization: \[REDACTED\]/);
+        }
       }
     }
 

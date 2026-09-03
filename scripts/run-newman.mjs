@@ -165,21 +165,27 @@ function runNewman(newmanRun, options) {
   });
 }
 
-function textEvidence(id, result) {
-  const stats = summarizeRuns([{ id, ...result }]);
-  const lines = [
-    `Suite: ${id}`,
-    `Assertions: total=${stats.assertions.total} executed=${stats.assertions.executed} passed=${stats.assertions.passed} failed=${stats.assertions.failed} pending=${stats.assertions.pending}`,
-    `Requests: total=${stats.requests.total} executed=${stats.requests.executed} passed=${stats.requests.passed} failed=${stats.requests.failed} pending=${stats.requests.pending}`,
-    `Failures: ${stats.failures}`,
-    `Errors: ${stats.errors}`,
-    `Outcome: ${stats.ok ? 'PASS' : 'FAIL'}`,
-  ];
-  for (const failure of result.summary?.run?.failures ?? []) {
-    lines.push(`Failure: ${redactText(failure.error?.message ?? failure.error ?? 'unknown failure')}`);
+async function captureCliOutput(run) {
+  const output = [];
+  const capture = (stream) => {
+    const original = stream.write;
+    stream.write = function captureWrite(chunk, encoding, callback) {
+      output.push(Buffer.isBuffer(chunk) ? chunk.toString('utf8') : String(chunk));
+      if (typeof encoding === 'function') encoding();
+      if (typeof callback === 'function') callback();
+      return true;
+    };
+    return () => { stream.write = original; };
+  };
+  const restoreStdout = capture(process.stdout);
+  const restoreStderr = capture(process.stderr);
+
+  try {
+    return { result: await run(), output: output.join('') };
+  } finally {
+    restoreStdout();
+    restoreStderr();
   }
-  if (result.error) lines.push(`Runner error: ${redactText(result.error.message ?? result.error)}`);
-  return `${lines.join('\n')}\n`;
 }
 
 async function persistRun(run, rawPaths, result) {
@@ -196,8 +202,9 @@ async function persistRun(run, rawPaths, result) {
   }
   const rawHtml = await readOr(
     rawPaths.html,
-    `<html><body><pre>${textEvidence(run.id, result)}</pre></body></html>`,
+    '<html><body><pre>HTML reporter output was not produced.</pre></body></html>',
   );
+  const rawCli = await readOr(rawPaths.txt, '');
   const outputs = {
     json: `${run.outputBase}.json`,
     html: `${run.outputBase}.html`,
@@ -206,7 +213,7 @@ async function persistRun(run, rawPaths, result) {
 
   await atomicWrite(outputs.json, `${JSON.stringify(redactReport(parsedJson), null, 2)}\n`);
   await atomicWrite(outputs.html, redactText(rawHtml));
-  await atomicWrite(outputs.txt, textEvidence(run.id, result));
+  await atomicWrite(outputs.txt, redactText(rawCli));
   return outputs;
 }
 
@@ -222,8 +229,9 @@ export async function runSuites(options = {}) {
       const rawPaths = {
         json: join(temporaryDir, `${run.id}.json`),
         html: join(temporaryDir, `${run.id}.html`),
+        txt: join(temporaryDir, `${run.id}.txt`),
       };
-      const result = await runNewman(newmanRun, {
+      const captured = await captureCliOutput(() => runNewman(newmanRun, {
         collection: run.collection,
         environment: run.environment,
         iterationData: run.data,
@@ -234,7 +242,9 @@ export async function runSuites(options = {}) {
           htmlextra: { export: rawPaths.html },
         },
         color: 'off',
-      });
+      }));
+      const result = captured.result;
+      await writeFile(rawPaths.txt, captured.output, 'utf8');
       const outputs = await persistRun(run, rawPaths, result);
       results.push({ id: run.id, ...result, outputs });
     }

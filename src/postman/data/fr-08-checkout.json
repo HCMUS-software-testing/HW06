@@ -13,7 +13,7 @@
       }
     ],
     "checkoutBody": {
-      "total_amount": 1,
+      "total_amount": "__SERVER_TOTAL__",
       "shipping_address": "123 HW06 Street"
     },
     "expectedStatus": 200,
@@ -573,61 +573,6 @@
     "staleCartAddition": null
   },
   {
-    "caseId": "TC-FR08-HUMAN-005",
-    "requestName": "TC-FR08-HUMAN-005 - stale client total",
-    "setupKey": "staleTotal",
-    "authMode": "user",
-    "cartContents": [
-      {
-        "id": 1,
-        "name": "iPhone 15 Pro Max",
-        "price": 30000000,
-        "quantity": 1
-      }
-    ],
-    "checkoutBody": {
-      "total_amount": "__OLD_SERVER_TOTAL__",
-      "shipping_address": "123 HW06 Street"
-    },
-    "expectedStatus": 200,
-    "expectedCartMutation": "empty",
-    "expectedOrderMutation": "one",
-    "invariant": "staleTotal",
-    "malformedBody": null,
-    "secondaryCart": [],
-    "staleCartAddition": {
-      "id": 2,
-      "name": "Samsung Galaxy S24 Ultra",
-      "price": 28000000,
-      "quantity": 1
-    }
-  },
-  {
-    "caseId": "TC-FR08-HUMAN-006",
-    "requestName": "TC-FR08-HUMAN-006 - emptied cart barrier",
-    "setupKey": "emptiedCart",
-    "authMode": "user",
-    "cartContents": [
-      {
-        "id": 1,
-        "name": "iPhone 15 Pro Max",
-        "price": 30000000,
-        "quantity": 1
-      }
-    ],
-    "checkoutBody": {
-      "total_amount": 30000000,
-      "shipping_address": "123 HW06 Street"
-    },
-    "expectedStatus": 400,
-    "expectedCartMutation": "empty",
-    "expectedOrderMutation": "none",
-    "invariant": "emptiedCart",
-    "malformedBody": null,
-    "secondaryCart": [],
-    "staleCartAddition": null
-  },
-  {
     "caseId": "TC-FR08-HUMAN-008",
     "requestName": "TC-FR08-HUMAN-008 - simultaneous checkout",
     "setupKey": "simultaneous",
@@ -648,31 +593,6 @@
     "expectedCartMutation": "empty",
     "expectedOrderMutation": "one",
     "invariant": "simultaneous",
-    "malformedBody": null,
-    "secondaryCart": [],
-    "staleCartAddition": null
-  },
-  {
-    "caseId": "TC-FR08-HUMAN-009",
-    "requestName": "TC-FR08-HUMAN-009 - last item removed",
-    "setupKey": "lastItemRemoved",
-    "authMode": "user",
-    "cartContents": [
-      {
-        "id": 1,
-        "name": "iPhone 15 Pro Max",
-        "price": 30000000,
-        "quantity": 1
-      }
-    ],
-    "checkoutBody": {
-      "total_amount": 30000000,
-      "shipping_address": "123 HW06 Street"
-    },
-    "expectedStatus": 400,
-    "expectedCartMutation": "empty",
-    "expectedOrderMutation": "none",
-    "invariant": "emptiedCart",
     "malformedBody": null,
     "secondaryCart": [],
     "staleCartAddition": null

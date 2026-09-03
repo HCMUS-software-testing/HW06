@@ -176,7 +176,7 @@
     "search2": "",
     "companionSearch": "",
     "expectedStatus": 200,
-    "invariant": "nonExpandingSafe"
+    "invariant": "unionSafe"
   },
   {
     "caseId": "TC-FR05-AI-019",
