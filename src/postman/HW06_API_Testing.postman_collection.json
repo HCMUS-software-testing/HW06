@@ -964,7 +964,7 @@
     },
     {
       "name": "FR-08 - Checkout",
-      "description": "27 isolated checkout workflows with fresh users, carts, final requests, and order/cart readback.",
+      "description": "24 isolated checkout workflows with fresh users, carts, final requests, and order/cart readback.",
       "event": [
         {
           "listen": "prerequest",

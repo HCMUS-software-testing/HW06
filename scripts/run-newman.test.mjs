@@ -77,6 +77,29 @@ test('controller exclusion leaves exactly 91 executable IDs and no unsupported c
   assert.doesNotMatch(JSON.stringify(collection), /DELETE', '\/api\/cart\//);
 });
 
+test('checkout fixtures reserve literal total 1 for AI-009 and use the server-total placeholder elsewhere', () => {
+  const rows = JSON.parse(readFileSync('src/postman/data/fr-08-checkout.json', 'utf8'));
+  const collection = JSON.parse(readFileSync('src/postman/HW06_API_Testing.postman_collection.json', 'utf8'));
+  const checkoutFolder = collection.item.find((item) => item.name === 'FR-08 - Checkout');
+  const setup = checkoutFolder.event[0].script.exec.join('\n');
+  const literalOneRows = rows.filter((row) => row.checkoutBody?.total_amount === 1);
+
+  assert.deepEqual(literalOneRows.map((row) => row.caseId), ['TC-FR08-AI-009']);
+  for (const id of [
+    'TC-FR08-AI-001',
+    'TC-FR08-AI-004',
+    'TC-FR08-AI-005',
+    'TC-FR08-AI-006',
+    'TC-FR08-AI-007',
+    'TC-FR08-AI-008',
+    'TC-FR08-AI-023',
+    'TC-FR08-AI-033',
+  ]) {
+    assert.equal(rows.find((row) => row.caseId === id).checkoutBody.total_amount, '__SERVER_TOTAL__');
+  }
+  assert.match(setup, /copy\.total_amount === '__SERVER_TOTAL__'.*fr08ServerTotalA/);
+});
+
 test('buildRuns pairs each selected FR folder with its deterministic data partition', () => {
   const runs = buildRuns({ rootDir: '/repo', outputDir: '/evidence' });
 

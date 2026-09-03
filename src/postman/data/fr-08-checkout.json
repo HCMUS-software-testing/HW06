@@ -56,7 +56,7 @@
       }
     ],
     "checkoutBody": {
-      "total_amount": 1,
+      "total_amount": "__SERVER_TOTAL__",
       "shipping_address": ""
     },
     "expectedStatus": 400,
@@ -81,7 +81,7 @@
       }
     ],
     "checkoutBody": {
-      "total_amount": 1,
+      "total_amount": "__SERVER_TOTAL__",
       "shipping_address": "   "
     },
     "expectedStatus": 400,
@@ -106,7 +106,7 @@
       }
     ],
     "checkoutBody": {
-      "total_amount": 1
+      "total_amount": "__SERVER_TOTAL__"
     },
     "expectedStatus": 400,
     "expectedCartMutation": "unchanged",
@@ -130,7 +130,7 @@
       }
     ],
     "checkoutBody": {
-      "total_amount": 1,
+      "total_amount": "__SERVER_TOTAL__",
       "shipping_address": null
     },
     "expectedStatus": 400,
@@ -155,7 +155,7 @@
       }
     ],
     "checkoutBody": {
-      "total_amount": 1,
+      "total_amount": "__SERVER_TOTAL__",
       "shipping_address": {
         "street": "123 HW06 Street"
       }
@@ -332,7 +332,7 @@
       }
     ],
     "checkoutBody": {
-      "total_amount": 1,
+      "total_amount": "__SERVER_TOTAL__",
       "shipping_address": "User A HW06 Street"
     },
     "expectedStatus": 200,
@@ -511,7 +511,7 @@
       }
     ],
     "checkoutBody": {
-      "total_amount": 1,
+      "total_amount": "__SERVER_TOTAL__",
       "shipping_address": "123 HW06 Street"
     },
     "expectedStatus": 200,
