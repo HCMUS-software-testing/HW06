@@ -67,4 +67,4 @@ Chi tiết báo cáo và ảnh chụp bằng chứng xem tại `src/docs/cicd-re
 
 ## 6. Tự đánh giá
 
-Self-assessment hiện tại **84/100** (26 + 25 + 26 + 7). Bằng chứng public CI đã hoàn tất; video Agent Skill là mục tùy chọn.
+Self-assessment hiện tại **84/100** (26 + 25 + 26 + 7). Bằng chứng public CI đã hoàn tất; video Agent Skill demo tại: https://youtu.be/WtXNlbtjnk4

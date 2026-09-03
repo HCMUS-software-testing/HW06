@@ -51,4 +51,4 @@ Skill **không** tự chạy end-to-end trong repo này như một CLI đóng g�
 - [ ] Chỉ Newman assertion ID trùng case ID.
 - [ ] Không paste JWT lên màn hình.
 
-**Video URL:** *(tùy chọn — ghi link YouTube nếu có)*
+**Video URL:** https://youtu.be/WtXNlbtjnk4
