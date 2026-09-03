@@ -1,436 +1,3554 @@
 {
-	"info": {
-		"_postman_id": "hw06-api-testing-member-2",
-		"name": "HW06_API_Testing_Member2",
-		"description": "API Testing collection for Member 2 (Lê Trung Kiên - 23127075).\n\nGrounded on eshop-sut/api_specification.md and eshop-sut/README.md.\nBase URL: http://localhost:3000\nAssigned APIs: FR-05 (Product Listing & Search), FR-08 (Checkout), FR-18 (Admin Order Management).\n\nPre-request Script: Automatically injects 'X-Student-Id: 23127075' header into every request.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					"// =============================================================",
-					"// HW06 Collection-Level Pre-request Script",
-					"// Student: Lê Trung Kiên (MSSV: 23127075)",
-					"// Purpose: Inject X-Student-Id header into EVERY request",
-					"// Source: req/2026.HW06.API Testing_Vi.md §6.4 & §11",
-					"// =============================================================",
-					"",
-					"const studentId = pm.environment.get('studentId') || '23127075';",
-					"",
-					"// Use upsert to avoid duplicate headers on re-runs",
-					"pm.request.headers.upsert({",
-					"    key: 'X-Student-Id',",
-					"    value: studentId",
-					"});",
-					"",
-					"// Console log for anti-fraud screenshot evidence (§11)",
-					"console.log('[Pre-request] X-Student-Id: ' + studentId);",
-					"console.log('[Pre-request] Request: ' + pm.request.method + ' ' + pm.request.url.toString());"
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					"// =============================================================",
-					"// HW06 Collection-Level Test Script",
-					"// Common assertions applied to every response",
-					"// =============================================================",
-					"",
-					"// Verify response time is reasonable (< 5 seconds)",
-					"pm.test('Response time is acceptable (< 5s)', function () {",
-					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
-					"});",
-					"",
-					"// Verify response body is valid JSON (for non-204 responses)",
-					"if (pm.response.code !== 204) {",
-					"    pm.test('Response body is valid JSON', function () {",
-					"        pm.response.json();",
-					"    });",
-					"}"
-				]
-			}
-		}
-	],
-	"item": [
-		{
-			"name": "00 - Setup Authentication",
-			"description": "Login requests to obtain JWT tokens for user and admin accounts.\nSource: eshop-sut/api_specification.md §1.2\nDefault accounts from eshop-sut/README.md:\n- Admin: admin@eshop.com / Admin123!\n- User: test@eshop.com / Test1234!",
-			"item": [
-				{
-					"name": "Login as User (test@eshop.com)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test('User login returns 200 OK', function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test('Response contains JWT token', function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('token');",
-									"    pm.expect(jsonData.token).to.be.a('string').and.not.empty;",
-									"    // Auto-save token to environment variable",
-									"    pm.environment.set('userToken', jsonData.token);",
-									"    console.log('[Setup] userToken saved to environment');",
-									"});",
-									"",
-									"pm.test('Response contains user info', function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('user');",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"test@eshop.com\",\n  \"password\": \"Test1234!\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/login",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "login"]
-						}
-					}
-				},
-				{
-					"name": "Login as Admin (admin@eshop.com)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test('Admin login returns 200 OK', function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test('Response contains JWT token', function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('token');",
-									"    pm.expect(jsonData.token).to.be.a('string').and.not.empty;",
-									"    // Auto-save admin token to environment variable",
-									"    pm.environment.set('adminToken', jsonData.token);",
-									"    console.log('[Setup] adminToken saved to environment');",
-									"});",
-									"",
-									"pm.test('Response contains user info with admin role', function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('user');",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"admin@eshop.com\",\n  \"password\": \"Admin123!\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/login",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "login"]
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "Pool A - FR-05 Product Listing and Search",
-			"description": "FR-05: Xem danh sách & Tìm kiếm sản phẩm\nSource: eshop-sut/api_specification.md §3.1, §3.2\nEndpoints:\n- GET /api/products (list all)\n- GET /api/products?search=keyword (search by name)\n- GET /api/products/:id (detail by ID)\n\neshop-sut/README.md FR-05:\n- Product fields: Ảnh (imageUrl), Tên (name), Giá (price, ₫)\n- Search by name, safe display (no HTML render)\n- Loading state, empty state required",
-			"item": [
-				{
-					"name": "GET Products List",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test('Status code is 200 OK', function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test('Response is an array of products', function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.be.an('array');",
-									"});",
-									"",
-									"pm.test('Each product has required fields (id, name, price)', function () {",
-									"    const jsonData = pm.response.json();",
-									"    if (jsonData.length > 0) {",
-									"        const product = jsonData[0];",
-									"        pm.expect(product).to.have.property('id');",
-									"        pm.expect(product).to.have.property('name');",
-									"        pm.expect(product).to.have.property('price');",
-									"    }",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/products",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "products"]
-						}
-					}
-				},
-				{
-					"name": "GET Search Products by Keyword",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test('Status code is 200 OK', function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test('Response is an array', function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.be.an('array');",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/products?search=phone",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "products"],
-							"query": [
-								{
-									"key": "search",
-									"value": "phone"
-								}
-							]
-						}
-					}
-				},
-				{
-					"name": "GET Product Detail By ID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test('Status code is 200 OK', function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test('Product has full detail fields', function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('id');",
-									"    pm.expect(jsonData).to.have.property('name');",
-									"    pm.expect(jsonData).to.have.property('price');",
-									"    pm.expect(jsonData).to.have.property('description');",
-									"    pm.expect(jsonData).to.have.property('category_id');",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/products/1",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "products", "1"]
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "Pool B - FR-08 Checkout and Order Creation",
-			"description": "FR-08: Thanh toán (Checkout)\nSource: eshop-sut/api_specification.md §4.3\nEndpoint: POST /api/checkout\nRequires: Authorization: Bearer <userToken>\nBody: {\"total_amount\": number, \"shipping_address\": string}\n\neshop-sut/README.md FR-08:\n- Only logged-in users can checkout\n- Backend must recalculate total_amount (not trust client)\n- Cart is cleared after successful checkout\n- Initial order status: 'pending' (FR-10)",
-			"item": [
-				{
-					"name": "POST Checkout - Valid Order",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test('Checkout returns success status', function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test('Response contains order information', function () {",
-									"    const jsonData = pm.response.json();",
-									"    // Save order ID for later status update tests",
-									"    if (jsonData.id || jsonData.order_id) {",
-									"        const orderId = jsonData.id || jsonData.order_id;",
-									"        pm.environment.set('lastOrderId', orderId);",
-									"        console.log('[FR-08] Saved lastOrderId: ' + orderId);",
-									"    }",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{userToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"total_amount\": 200000,\n  \"shipping_address\": \"123 Le Loi, TP.HCM\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/checkout",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "checkout"]
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "Pool C - FR-18 Order Management Admin",
-			"description": "FR-18: Quản lý Đơn hàng (Admin)\nSource: eshop-sut/api_specification.md §6.2\nEndpoints:\n- GET /api/admin/orders (list all orders, requires admin token)\n- PUT /api/admin/orders/:id/status (update order status)\n\neshop-sut/README.md FR-18 + FR-10:\n- Admin views all orders across all users\n- Status transitions: pending → confirmed → shipping → delivered\n- Cancel allowed from pending or confirmed\n- Final states: delivered, canceled (no further transitions)\n- User cannot cancel orders in 'shipping' state\n- Requires role='admin' in JWT (SEC-03)",
-			"item": [
-				{
-					"name": "GET Admin Orders List",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test('Admin orders returns 200 OK', function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test('Response is an array of orders', function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.be.an('array');",
-									"});",
-									"",
-									"pm.test('Each order has required fields', function () {",
-									"    const jsonData = pm.response.json();",
-									"    if (jsonData.length > 0) {",
-									"        const order = jsonData[0];",
-									"        pm.expect(order).to.have.property('id');",
-									"        pm.expect(order).to.have.property('status');",
-									"        pm.expect(order).to.have.property('total_amount');",
-									"    }",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{adminToken}}"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/orders",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "admin", "orders"]
-						}
-					}
-				},
-				{
-					"name": "PUT Update Order Status (Admin)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test('Order status update returns success', function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test('Response confirms status change', function () {",
-									"    const jsonData = pm.response.json();",
-									"    // Verify the response acknowledges the update",
-									"    console.log('[FR-18] Status update response: ' + JSON.stringify(jsonData));",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{adminToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"status\": \"confirmed\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/orders/{{lastOrderId}}/status",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "admin", "orders", "{{lastOrderId}}", "status"]
-						}
-					}
-				}
-			]
-		}
-	],
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "http://localhost:3000",
-			"type": "default"
-		}
-	]
+  "info": {
+    "_postman_id": "hw06-api-testing-member-2-traceable",
+    "name": "HW06 API Testing - Member 2",
+    "description": "Executable, traceable workflows for FR-05, FR-08, and FR-18. Selected-FR assertion IDs are bound one-to-one to member-2-traceability.md. Runtime JWTs exist only in collection memory.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const studentId = pm.environment.get('studentId') || '23127075';",
+          "pm.request.headers.upsert({ key: 'X-Student-Id', value: studentId });",
+          "if (!pm.collectionVariables.get('runId')) {",
+          "  const random = Math.random().toString(36).slice(2, 10);",
+          "  pm.collectionVariables.set('runId', Date.now().toString(36) + '-' + random);",
+          "}",
+          "const caseId = pm.iterationData.get('caseId') || 'SETUP';",
+          "console.log('CASE_ID=' + caseId + ' X-Student-Id=' + studentId);"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "00 - Authentication",
+      "description": "Optional standalone runtime login helpers. Tokens are retained only in collection memory.",
+      "item": [
+        {
+          "name": "Login runtime user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (pm.response.code === 200 && body.token) pm.collectionVariables.set('runtimeUserToken', body.token);",
+                  "pm.test('Setup | user token remains outside the environment export', function () {",
+                  "  pm.expect(pm.environment.get('userToken')).to.equal(undefined);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"{{userEmail}}\",\"password\":\"{{userPassword}}\"}"
+            },
+            "url": "{{baseUrl}}/api/login"
+          }
+        },
+        {
+          "name": "Login runtime admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (pm.response.code === 200 && body.token) pm.collectionVariables.set('runtimeAdminToken', body.token);",
+                  "pm.test('Setup | admin token remains outside the environment export', function () {",
+                  "  pm.expect(pm.environment.get('adminToken')).to.equal(undefined);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"{{adminEmail}}\",\"password\":\"{{adminPassword}}\"}"
+            },
+            "url": "{{baseUrl}}/api/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "FR-05 - Product Search",
+      "description": "32 deterministic FR-05 rows; each iteration dispatches one exact traceability request.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.info.requestName !== '__dispatch__') {",
+              "  const baseUrl = pm.environment.get('baseUrl');",
+              "  const studentId = pm.environment.get('studentId') || '23127075';",
+              "  const runId = pm.collectionVariables.get('runId');",
+              "  const replaceRunId = (value) => String(value == null ? '' : value).replace(/\\{\\{runId\\}\\}/g, runId);",
+              "  let search = replaceRunId(pm.iterationData.get('search'));",
+              "  if (pm.iterationData.get('inputGenerator') === 'repeat') {",
+              "    search = String(pm.iterationData.get('repeatCharacter')).repeat(Number(pm.iterationData.get('repeatLength')));",
+              "  }",
+              "  pm.variables.set('search', search);",
+              "  pm.variables.set('search2', replaceRunId(pm.iterationData.get('search2')));",
+              "  pm.collectionVariables.unset('fr05SetupError');",
+              "  const send = (url, done) => pm.sendRequest({",
+              "    url,",
+              "    method: 'GET',",
+              "    header: [{ key: 'X-Student-Id', value: studentId }]",
+              "  }, done);",
+              "  send(baseUrl + '/api/products', (baselineError, baselineResponse) => {",
+              "    if (baselineError) {",
+              "      pm.collectionVariables.set('fr05SetupError', baselineError.message);",
+              "      return;",
+              "    }",
+              "    let baselineBody = null;",
+              "    try { baselineBody = baselineResponse.json(); } catch (error) {",
+              "      pm.collectionVariables.set('fr05SetupError', error.message);",
+              "      return;",
+              "    }",
+              "    pm.collectionVariables.set('fr05BeforeProducts', JSON.stringify(baselineBody));",
+              "    if (pm.iterationData.get('setupKey') === 'fixtureKeyword') {",
+              "      const fixture = baselineBody[0] && baselineBody[0].name;",
+              "      if (!fixture) {",
+              "        pm.collectionVariables.set('fr05SetupError', 'No product fixture is available');",
+              "        return;",
+              "      }",
+              "      pm.variables.set('search', fixture);",
+              "    }",
+              "    const setupKey = pm.iterationData.get('setupKey');",
+              "    if (setupKey !== 'searchCompanion' && setupKey !== 'plainCompanion' && setupKey !== 'omittedCompanion') {",
+              "      pm.collectionVariables.set('fr05Companion', JSON.stringify(null));",
+              "      return;",
+              "    }",
+              "    const companionSearch = replaceRunId(pm.iterationData.get('companionSearch'));",
+              "    const companionUrl = setupKey === 'omittedCompanion'",
+              "      ? baseUrl + '/api/products'",
+              "      : baseUrl + '/api/products?search=' + encodeURIComponent(companionSearch);",
+              "    send(companionUrl, (companionError, companionResponse) => {",
+              "      if (companionError) {",
+              "        pm.collectionVariables.set('fr05SetupError', companionError.message);",
+              "        return;",
+              "      }",
+              "      let companionBody = null;",
+              "      try { companionBody = companionResponse.json(); } catch (error) {",
+              "        pm.collectionVariables.set('fr05SetupError', error.message);",
+              "        return;",
+              "      }",
+              "      pm.collectionVariables.set('fr05Companion', JSON.stringify({",
+              "        code: companionResponse.code,",
+              "        body: companionBody",
+              "      }));",
+              "    });",
+              "  });",
+              "}"
+            ]
+          }
+        }
+      ],
+      "item": [
+        {
+          "name": "__dispatch__",
+          "description": "Selects exactly one stable traceability request for the current deterministic data row.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const target = pm.iterationData.get('requestName');",
+                  "if (!target) throw new Error('iteration row is missing requestName');",
+                  "pm.execution.setNextRequest(target);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products"
+          }
+        },
+        {
+          "name": "TC-FR05-AI-001 - baseline list",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-001 | baseline list', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-002 - fixture keyword",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-002 | fixture keyword', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-003 - no match",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-003 | no match', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-004 - empty normalization",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-004 | empty normalization', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-005 - special ASCII",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-005 | special ASCII', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-006 - Vietnamese UTF-8",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-006 | Vietnamese UTF-8', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-007 - long search",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-007 | long search', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-008 - spaces only",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-008 | spaces only', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-009 - numeric sentinel",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-009 | numeric sentinel', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-011 - duplicate query",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-011 | duplicate query', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}&search={{search2}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-012 - percent decoding",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-012 | percent decoding', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": true
+          }
+        },
+        {
+          "name": "TC-FR05-AI-013 - SQLi differential",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-013 | SQLi differential', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-014 - search content type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-014 | search content type', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-015 - raw non-reflection",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-015 | raw non-reflection', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-016 - tautology cardinality",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-016 | tautology cardinality', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-017 - union payload",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-017 | union payload', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-019 - SQL comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-019 | SQL comment', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-020 - API XSS invariant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-020 | API XSS invariant', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-023 - oversized search",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-023 | oversized search', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-024 - null byte",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-024 | null byte', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-025 - emoji UTF-8",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-025 | emoji UTF-8', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-026 - id schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-026 | id schema', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-027 - name schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-027 | name schema', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-028 - price schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-028 | price schema', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-029 - description schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-029 | description schema', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-030 - image URL schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-030 | image URL schema', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-031 - category schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-031 | category schema', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-033 - baseline content type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-033 | baseline content type', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-AI-035 - sensitive fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-AI-035 | sensitive fields', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-HUMAN-001 - blind SQLi pair",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-HUMAN-001 | blind SQLi pair', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-HUMAN-003 - HPP pair",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-HUMAN-003 | HPP pair', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}&search={{search2}}",
+            "disableUrlEncoding": false
+          }
+        },
+        {
+          "name": "TC-FR05-HUMAN-008 - HPP XSS pair",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr05Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR05-HUMAN-008 | HPP XSS pair', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search={{search}}&search={{search2}}",
+            "disableUrlEncoding": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "FR-08 - Checkout",
+      "description": "27 isolated checkout workflows with fresh users, carts, final requests, and order/cart readback.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.info.requestName !== '__dispatch__') {",
+              "  const baseUrl = pm.environment.get('baseUrl');",
+              "  const studentId = pm.environment.get('studentId') || '23127075';",
+              "  const runId = pm.collectionVariables.get('runId');",
+              "  const caseId = pm.iterationData.get('caseId');",
+              "  const password = pm.environment.get('userPassword') || 'CHANGE_ME_USER_PASSWORD';",
+              "  const seedEmail = pm.environment.get('userEmail') || 'student@example.test';",
+              "  const domain = seedEmail.includes('@') ? seedEmail.split('@').pop() : 'example.test';",
+              "  const setupKey = pm.iterationData.get('setupKey');",
+              "  pm.collectionVariables.set('fr08SetupError', '');",
+              "  const headers = function (token) {",
+              "    const values = [{ key: 'Content-Type', value: 'application/json' }, { key: 'X-Student-Id', value: studentId }];",
+              "    if (token) values.push({ key: 'Authorization', value: 'Bearer ' + token });",
+              "    return values;",
+              "  };",
+              "  const send = function (method, path, token, body, done) {",
+              "    pm.sendRequest({",
+              "      url: baseUrl + path,",
+              "      method,",
+              "      header: headers(token),",
+              "      body: body === undefined ? undefined : { mode: 'raw', raw: typeof body === 'string' ? body : JSON.stringify(body) }",
+              "    }, done);",
+              "  };",
+              "  const fail = function (error) {",
+              "    pm.collectionVariables.set('fr08SetupError', String(error && (error.message || error)));",
+              "  };",
+              "  const registerLogin = function (label, done) {",
+              "    const local = ('hw06.' + runId + '.' + pm.info.iteration + '.' + label + '.' + caseId).toLowerCase().replace(/[^a-z0-9.]/g, '');",
+              "    const email = local + '@' + domain;",
+              "    send('POST', '/api/register', null, { name: 'HW06 ' + label, email, password }, function (registerError, registerResponse) {",
+              "      if (registerError || !registerResponse || registerResponse.code < 200 || registerResponse.code >= 300) {",
+              "        fail(registerError || ('register status ' + (registerResponse && registerResponse.code)));",
+              "        return;",
+              "      }",
+              "      send('POST', '/api/login', null, { email, password }, function (loginError, loginResponse) {",
+              "        if (loginError) { fail(loginError); return; }",
+              "        let body;",
+              "        try { body = loginResponse.json(); } catch (error) { fail(error); return; }",
+              "        if (loginResponse.code !== 200 || !body.token) { fail('login did not return a token'); return; }",
+              "        done({ email, token: body.token });",
+              "      });",
+              "    });",
+              "  };",
+              "  const getJson = function (path, token, done) {",
+              "    send('GET', path, token, undefined, function (error, response) {",
+              "      if (error) { fail(error); return; }",
+              "      try { done(response.json(), response); } catch (parseError) { fail(parseError); }",
+              "    });",
+              "  };",
+              "  const addItems = function (token, items, done) {",
+              "    let index = 0;",
+              "    const next = function () {",
+              "      if (index >= items.length) { done(); return; }",
+              "      send('POST', '/api/cart', token, items[index++], function (error, response) {",
+              "        if (error || !response || response.code < 200 || response.code >= 300) {",
+              "          fail(error || ('cart setup status ' + (response && response.code)));",
+              "          return;",
+              "        }",
+              "        next();",
+              "      });",
+              "    };",
+              "    next();",
+              "  };",
+              "  const total = function (items) {",
+              "    return items.reduce(function (sum, item) { return sum + Number(item.price) * Number(item.quantity); }, 0);",
+              "  };",
+              "  const fixture = function (account, items, done) {",
+              "    getJson('/api/orders/my-orders', account.token, function (beforeOrders) {",
+              "      getJson('/api/cart', account.token, function () {",
+              "        addItems(account.token, items, function () {",
+              "          getJson('/api/cart', account.token, function (cart) {",
+              "            done({ account, beforeOrders, cart, serverTotal: total(cart) });",
+              "          });",
+              "        });",
+              "      });",
+              "    });",
+              "  };",
+              "  const storeFixture = function (label, value) {",
+              "    pm.collectionVariables.set('caseUserToken' + label, value.account.token);",
+              "    pm.collectionVariables.set('fr08BeforeOrders' + label, JSON.stringify(value.beforeOrders));",
+              "    pm.collectionVariables.set('fr08BeforeCart' + label, JSON.stringify(value.cart));",
+              "    pm.collectionVariables.set('fr08ServerTotal' + label, String(value.serverTotal));",
+              "  };",
+              "  const prepareBody = function () {",
+              "    const body = pm.iterationData.get('checkoutBody');",
+              "    let raw = pm.iterationData.get('malformedBody');",
+              "    if (raw == null) {",
+              "      const copy = body == null ? {} : JSON.parse(JSON.stringify(body));",
+              "      if (copy.total_amount === '__OLD_SERVER_TOTAL__') copy.total_amount = Number(pm.collectionVariables.get('fr08OldTotal'));",
+              "      raw = JSON.stringify(copy);",
+              "    }",
+              "    pm.variables.set('checkoutRaw', raw);",
+              "  };",
+              "  const clearByPublicMutation = function (fixtureValue, done) {",
+              "    const items = fixtureValue.cart.slice();",
+              "    let index = 0;",
+              "    const next = function () {",
+              "      if (index >= items.length) {",
+              "        getJson('/api/cart', fixtureValue.account.token, function (cart) {",
+              "          fixtureValue.cart = cart;",
+              "          fixtureValue.serverTotal = total(cart);",
+              "          done(fixtureValue);",
+              "        });",
+              "        return;",
+              "      }",
+              "      const item = items[index++];",
+              "      send('DELETE', '/api/cart/' + encodeURIComponent(item.id), fixtureValue.account.token, undefined, function (error, response) {",
+              "        if (error || !response || response.code < 200 || response.code >= 300) {",
+              "          fail(error || ('cart removal status ' + (response && response.code)));",
+              "          return;",
+              "        }",
+              "        next();",
+              "      });",
+              "    };",
+              "    next();",
+              "  };",
+              "  registerLogin('a', function (accountA) {",
+              "    fixture(accountA, pm.iterationData.get('cartContents') || [], function (fixtureA) {",
+              "      const finish = function () { storeFixture('A', fixtureA); prepareBody(); };",
+              "      if (setupKey === 'twoUsers') {",
+              "        registerLogin('b', function (accountB) {",
+              "          fixture(accountB, pm.iterationData.get('secondaryCart') || [], function (fixtureB) {",
+              "            storeFixture('B', fixtureB);",
+              "            finish();",
+              "          });",
+              "        });",
+              "      } else if (setupKey === 'staleTotal') {",
+              "        pm.collectionVariables.set('fr08OldTotal', String(fixtureA.serverTotal));",
+              "        addItems(accountA.token, [pm.iterationData.get('staleCartAddition')], function () {",
+              "          getJson('/api/cart', accountA.token, function (cart) {",
+              "            fixtureA.cart = cart;",
+              "            fixtureA.serverTotal = total(cart);",
+              "            finish();",
+              "          });",
+              "        });",
+              "      } else if (setupKey === 'emptiedCart' || setupKey === 'lastItemRemoved') {",
+              "        clearByPublicMutation(fixtureA, function () { finish(); });",
+              "      } else {",
+              "        finish();",
+              "      }",
+              "    });",
+              "  });",
+              "}"
+            ]
+          }
+        }
+      ],
+      "item": [
+        {
+          "name": "__dispatch__",
+          "description": "Selects exactly one stable traceability request for the current deterministic data row.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const target = pm.iterationData.get('requestName');",
+                  "if (!target) throw new Error('iteration row is missing requestName');",
+                  "pm.execution.setNextRequest(target);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"total_amount\":0,\"shipping_address\":\"dispatcher\"}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-001 - successful checkout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-001 | successful checkout', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-002 - empty cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-002 | empty cart', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-004 - empty address",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-004 | empty address', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-005 - whitespace address",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-005 | whitespace address', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-006 - missing address",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-006 | missing address', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-007 - null address",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-007 | null address', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-008 - object address",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-008 | object address', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-009 - tampered total",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-009 | tampered total', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-016 - cart cleared",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-016 | cart cleared', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-017 - initial pending",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-017 | initial pending', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-019 - missing auth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-019 | missing auth', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-020 - invalid JWT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-020 | invalid JWT', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer invalid-token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-022 - empty bearer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-022 | empty bearer', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer "
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-023 - cart ownership",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-023 | cart ownership', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-024 - address literal",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-024 | address literal', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-027 - malformed JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-027 | malformed JSON', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-029 - negative client total invariant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-029 | negative client total invariant', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-030 - string client total invariant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-030 | string client total invariant', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-031 - persisted order ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-031 | persisted order ID', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-032 - pending schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-032 | pending schema', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-033 - total schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-033 | total schema', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-034 - content type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-034 | content type', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-AI-035 - zero client total",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-AI-035 | zero client total', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-HUMAN-005 - stale client total",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-HUMAN-005 | stale client total', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-HUMAN-006 - emptied cart barrier",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-HUMAN-006 | emptied cart barrier', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-HUMAN-008 - simultaneous checkout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-HUMAN-008 | simultaneous checkout', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        },
+        {
+          "name": "TC-FR08-HUMAN-009 - last item removed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr08Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR08-HUMAN-009 | last item removed', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserTokenA}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{checkoutRaw}}"
+            },
+            "url": "{{baseUrl}}/api/checkout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "FR-18 - Admin Orders",
+      "description": "35 isolated admin list/state workflows. Every mutable case creates and captures a fresh order.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.info.requestName !== '__dispatch__') {",
+              "  const baseUrl = pm.environment.get('baseUrl');",
+              "  const studentId = pm.environment.get('studentId') || '23127075';",
+              "  const runId = pm.collectionVariables.get('runId');",
+              "  const caseId = pm.iterationData.get('caseId');",
+              "  const password = pm.environment.get('userPassword') || 'CHANGE_ME_USER_PASSWORD';",
+              "  const seedEmail = pm.environment.get('userEmail') || 'student@example.test';",
+              "  const domain = seedEmail.includes('@') ? seedEmail.split('@').pop() : 'example.test';",
+              "  pm.collectionVariables.set('fr18SetupError', '');",
+              "  const header = function (token) {",
+              "    const values = [{ key: 'Content-Type', value: 'application/json' }, { key: 'X-Student-Id', value: studentId }];",
+              "    if (token) values.push({ key: 'Authorization', value: 'Bearer ' + token });",
+              "    return values;",
+              "  };",
+              "  const send = function (method, path, token, body, done) {",
+              "    pm.sendRequest({ url: baseUrl + path, method, header: header(token), body: body === undefined ? undefined : { mode: 'raw', raw: typeof body === 'string' ? body : JSON.stringify(body) } }, done);",
+              "  };",
+              "  const fail = function (error) { pm.collectionVariables.set('fr18SetupError', String(error && (error.message || error))); };",
+              "  const parse = function (response) { try { return response.json(); } catch (error) { fail(error); return null; } };",
+              "  const login = function (email, loginPassword, done) {",
+              "    send('POST', '/api/login', null, { email, password: loginPassword }, function (error, response) {",
+              "      const body = !error && response ? parse(response) : null;",
+              "      if (error || !response || response.code !== 200 || !body || !body.token) { fail(error || 'login failed'); return; }",
+              "      done({ email, token: body.token, user: body.user });",
+              "    });",
+              "  };",
+              "  const registerUser = function (label, done) {",
+              "    const local = ('hw06.' + runId + '.' + pm.info.iteration + '.' + label + '.' + caseId).toLowerCase().replace(/[^a-z0-9.]/g, '');",
+              "    const email = local + '@' + domain;",
+              "    send('POST', '/api/register', null, { name: 'HW06 ' + label, email, password }, function (error, response) {",
+              "      if (error || !response || response.code < 200 || response.code >= 300) { fail(error || 'register failed'); return; }",
+              "      login(email, password, done);",
+              "    });",
+              "  };",
+              "  const getJson = function (path, token, done) {",
+              "    send('GET', path, token, undefined, function (error, response) {",
+              "      const body = !error && response ? parse(response) : null;",
+              "      if (error || !response || body == null) { fail(error || 'readback failed'); return; }",
+              "      done(body, response);",
+              "    });",
+              "  };",
+              "  const createOrder = function (account, label, done) {",
+              "    const item = { id: label === 'b' ? 2 : 1, name: label === 'b' ? 'Samsung Galaxy S24 Ultra' : 'iPhone 15 Pro Max', price: label === 'b' ? 28000000 : 30000000, quantity: 1 };",
+              "    send('POST', '/api/cart', account.token, item, function (cartError, cartResponse) {",
+              "      if (cartError || !cartResponse || cartResponse.code < 200 || cartResponse.code >= 300) { fail(cartError || 'cart setup failed'); return; }",
+              "      getJson('/api/cart', account.token, function (cart) {",
+              "        const serverTotal = cart.reduce(function (sum, entry) { return sum + Number(entry.price) * Number(entry.quantity); }, 0);",
+              "        const address = 'HW06-' + runId + '-' + label + '-' + pm.info.iteration;",
+              "        send('POST', '/api/checkout', account.token, { total_amount: serverTotal, shipping_address: address }, function (checkoutError, checkoutResponse) {",
+              "          const body = !checkoutError && checkoutResponse ? parse(checkoutResponse) : null;",
+              "          if (checkoutError || !checkoutResponse || checkoutResponse.code < 200 || checkoutResponse.code >= 300) { fail(checkoutError || 'checkout setup failed'); return; }",
+              "          const responseId = body && (body.id || body.order_id || body.orderId);",
+              "          if (responseId) { done({ id: Number(responseId), address, total: serverTotal, account }); return; }",
+              "          getJson('/api/orders/my-orders', account.token, function (orders) {",
+              "            if (!orders[0]) { fail('checkout created no readable order'); return; }",
+              "            done({ id: Number(orders[0].id), address, total: serverTotal, account });",
+              "          });",
+              "        });",
+              "      });",
+              "    });",
+              "  };",
+              "  const transitionsFor = function (state) {",
+              "    if (state === 'confirmed') return ['confirmed'];",
+              "    if (state === 'shipping') return ['confirmed', 'shipping'];",
+              "    if (state === 'delivered') return ['confirmed', 'shipping', 'delivered'];",
+              "    if (state === 'canceled') return ['canceled'];",
+              "    return [];",
+              "  };",
+              "  const transition = function (orderId, statuses, adminToken, done) {",
+              "    let index = 0;",
+              "    const next = function () {",
+              "      if (index >= statuses.length) { done(); return; }",
+              "      send('PUT', '/api/admin/orders/' + orderId + '/status', adminToken, { status: statuses[index++] }, function (error, response) {",
+              "        if (error || !response || response.code < 200 || response.code >= 300) { fail(error || ('state setup status ' + (response && response.code))); return; }",
+              "        next();",
+              "      });",
+              "    };",
+              "    next();",
+              "  };",
+              "  const b64url = function (value) { return btoa(unescape(encodeURIComponent(value))).replace(/=/g, '').replace(/\\+/g, '-').replace(/\\//g, '_'); };",
+              "  const forge = function (userToken) {",
+              "    const parts = String(userToken).split('.');",
+              "    let payload = {};",
+              "    try { payload = JSON.parse(decodeURIComponent(escape(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/'))))); } catch (error) {}",
+              "    payload.role = 'admin';",
+              "    const tampered = parts[0] + '.' + b64url(JSON.stringify(payload)) + '.' + (parts[2] || 'signature');",
+              "    const none = b64url(JSON.stringify({ alg: 'none', typ: 'JWT' })) + '.' + b64url(JSON.stringify(payload)) + '.';",
+              "    const invalidKid = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT', kid: 'missing-key' })) + '.' + b64url(JSON.stringify(payload)) + '.invalid-signature';",
+              "    return { tampered, none, invalidKid };",
+              "  };",
+              "  const adminEmail = pm.environment.get('adminEmail');",
+              "  const adminPassword = pm.environment.get('adminPassword');",
+              "  login(adminEmail, adminPassword, function (admin) {",
+              "    pm.collectionVariables.set('caseAdminToken', admin.token);",
+              "    registerUser('a', function (userA) {",
+              "      pm.collectionVariables.set('caseUserToken', userA.token);",
+              "      const forged = forge(userA.token);",
+              "      pm.collectionVariables.set('caseTamperedToken', forged.tampered);",
+              "      pm.collectionVariables.set('caseAlgNoneToken', forged.none);",
+              "      pm.collectionVariables.set('caseInvalidKidToken', forged.invalidKid);",
+              "      createOrder(userA, 'a', function (orderA) {",
+              "        pm.collectionVariables.set('caseControlOrderId', String(orderA.id));",
+              "        transition(orderA.id, transitionsFor(pm.iterationData.get('orderStartState')), admin.token, function () {",
+              "          const complete = function (secondOrder) {",
+              "            if (secondOrder) pm.collectionVariables.set('caseSecondOrderId', String(secondOrder.id));",
+              "            getJson('/api/admin/orders', admin.token, function (orders) {",
+              "              const snapshot = orders.find(function (order) { return Number(order.id) === Number(orderA.id); });",
+              "              if (!snapshot) { fail('created order missing from admin readback'); return; }",
+              "              pm.collectionVariables.set('fr18BeforeOrder', JSON.stringify(snapshot));",
+              "              pm.collectionVariables.set('fr18BeforeOrders', JSON.stringify(orders));",
+              "              const mode = pm.iterationData.get('orderIdMode');",
+              "              const maximum = orders.reduce(function (max, order) { return Math.max(max, Number(order.id) || 0); }, 0);",
+              "              const selectedId = mode === 'missingPositive' ? maximum + 1000000 : mode === 'negative' ? -1 : mode === 'alphabetic' ? 'abc' : mode === 'zero' ? 0 : orderA.id;",
+              "              pm.variables.set('caseOrderId', String(selectedId));",
+              "              pm.variables.set('statusRaw', pm.iterationData.get('statusBody') == null ? '{}' : pm.iterationData.get('statusBody'));",
+              "              const setupKey = pm.iterationData.get('setupKey');",
+              "              if (setupKey !== 'profileEscalation') return;",
+              "              getJson('/api/users/me', userA.token, function (profileBefore) {",
+              "                pm.collectionVariables.set('fr18ProfileBefore', JSON.stringify(profileBefore));",
+              "                send('PUT', '/api/users/me', userA.token, {",
+              "                  name: profileBefore.name,",
+              "                  shipping_address: profileBefore.shipping_address || orderA.address,",
+              "                  phone: profileBefore.phone || '912345678',",
+              "                  role: 'admin'",
+              "                }, function (profileError, profileResponse) {",
+              "                  if (profileError || !profileResponse || profileResponse.code < 200 || profileResponse.code >= 300) { fail(profileError || 'profile setup failed'); return; }",
+              "                  getJson('/api/users/me', userA.token, function (profileAfter) {",
+              "                    pm.collectionVariables.set('fr18ProfileAfter', JSON.stringify(profileAfter));",
+              "                  });",
+              "                });",
+              "              });",
+              "            });",
+              "          };",
+              "          if (pm.iterationData.get('setupKey') === 'twoOrders') {",
+              "            registerUser('b', function (userB) {",
+              "              createOrder(userB, 'b', function (orderB) { complete(orderB); });",
+              "            });",
+              "          } else {",
+              "            complete(null);",
+              "          }",
+              "        });",
+              "      });",
+              "    });",
+              "  });",
+              "}"
+            ]
+          }
+        }
+      ],
+      "item": [
+        {
+          "name": "__dispatch__",
+          "description": "Selects exactly one stable traceability request for the current deterministic data row.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const target = pm.iterationData.get('requestName');",
+                  "if (!target) throw new Error('iteration row is missing requestName');",
+                  "pm.execution.setNextRequest(target);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-001 - admin list",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-001 | admin list', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-002 - user list denied",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-002 | user list denied', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-003 - missing list auth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-003 | missing list auth', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-004 - invalid list JWT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-004 | invalid list JWT', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer invalid-token"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-007 - user mutation denied",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-007 | user mutation denied', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-008 - missing mutation auth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-008 | missing mutation auth', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-009 - empty bearer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-009 | empty bearer', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer "
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-010 - malformed JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-010 | malformed JSON', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-011 - forged role header",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-011 | forged role header', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserToken}}"
+              },
+              {
+                "key": "X-Role",
+                "value": "admin"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-012 - list item fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-012 | list item fields', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-014 - profile escalation chain",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-014 | profile escalation chain', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-015 - tampered role JWT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-015 | tampered role JWT', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseTamperedToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-019 - state pending confirmed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-019 | state pending confirmed', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-020 - state confirmed shipping",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-020 | state confirmed shipping', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-021 - state shipping delivered",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-021 | state shipping delivered', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-022 - state pending canceled",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-022 | state pending canceled', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-023 - state confirmed canceled",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-023 | state confirmed canceled', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-024 - reject delivered pending",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-024 | reject delivered pending', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-025 - reject delivered canceled",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-025 | reject delivered canceled', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-026 - reject canceled shipping",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-026 | reject canceled shipping', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-027 - reject canceled delivered",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-027 | reject canceled delivered', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-028 - reject delivered confirmed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-028 | reject delivered confirmed', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-029 - reject unknown status",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-029 | reject unknown status', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-030 - missing order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-030 | missing order', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-031 - negative ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-031 | negative ID', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-032 - alphabetic ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-032 | alphabetic ID', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-033 - zero ID invariant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-033 | zero ID invariant', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-034 - missing status",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-034 | missing status', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-AI-035 - JSON null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-AI-035 | JSON null', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-HUMAN-001 - user shipping cancel denied",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-HUMAN-001 | user shipping cancel denied', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-HUMAN-002 - reject same state",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-HUMAN-002 | reject same state', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-HUMAN-004 - status mass assignment invariant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-HUMAN-004 | status mass assignment invariant', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAdminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-HUMAN-006 - profile to mutation chain",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-HUMAN-006 | profile to mutation chain', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-HUMAN-007 - forged JWT variants",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-HUMAN-007 | forged JWT variants', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseAlgNoneToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        },
+        {
+          "name": "TC-FR18-HUMAN-008 - authz before body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const oracle = eval(pm.collectionVariables.get('fr18Oracle'));",
+                  "oracle.run(function (state) {",
+                  "  pm.test('TC-FR18-HUMAN-008 | authz before body', function () { oracle.assert(state); });",
+                  "});",
+                  "pm.execution.setNextRequest(null);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{caseUserToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{statusRaw}}"
+            },
+            "url": "{{baseUrl}}/api/admin/orders/{{caseOrderId}}/status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "99 - Cleanup",
+      "item": [
+        {
+          "name": "Clear in-memory runtime variables",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "['runtimeUserToken','runtimeAdminToken','caseUserTokenA','caseUserTokenB','caseUserToken','caseAdminToken','caseTamperedToken','caseAlgNoneToken','caseInvalidKidToken'].forEach(function (key) {",
+                  "  pm.collectionVariables.unset(key);",
+                  "});",
+                  "pm.test('Setup | runtime credentials cleared', function () {",
+                  "  pm.expect(pm.collectionVariables.get('runtimeAdminToken')).to.equal(undefined);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "runId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "fr05Oracle",
+      "value": "({\n  run: function (done) {\n    const state = {\n      setupError: pm.collectionVariables.get('fr05SetupError') || '',\n      before: JSON.parse(pm.collectionVariables.get('fr05BeforeProducts') || '[]'),\n      companion: JSON.parse(pm.collectionVariables.get('fr05Companion') || 'null'),\n      code: pm.response.code,\n      contentType: pm.response.headers.get('Content-Type') || '',\n      raw: pm.response.text(),\n      body: null,\n      postError: '',\n      postBody: null\n    };\n    try { state.body = pm.response.json(); } catch (error) { state.parseError = error.message; }\n    pm.sendRequest({\n      url: pm.environment.get('baseUrl') + '/api/products',\n      method: 'GET',\n      header: [{ key: 'X-Student-Id', value: pm.environment.get('studentId') || '23127075' }]\n    }, function (error, response) {\n      if (error) state.postError = error.message;\n      else {\n        try { state.postBody = response.json(); } catch (parseError) { state.postError = parseError.message; }\n      }\n      done(state);\n    });\n  },\n  assert: function (state) {\n    const invariant = pm.iterationData.get('invariant');\n    const search = pm.variables.get('search') || '';\n    const leak = /(sql|sqlite|syntax|database error|stack|trace|<html|select .* from)/i;\n    const array = state.body;\n    const safeJson = function () {\n      pm.expect(state.code).to.not.equal(500);\n      pm.expect(state.parseError).to.equal(undefined);\n      pm.expect(array).to.be.an('array');\n      pm.expect(state.raw).to.not.match(leak);\n    };\n    const unchanged = function () {\n      pm.expect(state.postError).to.equal('');\n      pm.expect(state.postBody).to.deep.equal(state.before);\n    };\n    pm.expect(state.setupError).to.equal('');\n    if (invariant === 'baselineSchema') {\n      pm.expect(state.code).to.equal(200);\n      pm.expect(array).to.be.an('array').and.not.empty;\n      array.forEach(function (product) {\n        pm.expect(product).to.include.all.keys('id', 'name', 'price', 'description', 'imageUrl', 'category_id');\n      });\n    } else if (invariant === 'fixtureMatch') {\n      pm.expect(state.code).to.equal(200);\n      pm.expect(array).to.be.an('array').and.not.empty;\n      array.forEach(function (product) {\n        pm.expect(product.name.toLowerCase()).to.include(search.toLowerCase());\n      });\n    } else if (invariant === 'emptyArray') {\n      pm.expect(state.code).to.equal(200);\n      pm.expect(array).to.deep.equal([]);\n    } else if (invariant === 'emptyEquivalent' || invariant === 'percentEquivalent' || invariant === 'differentialEqual') {\n      safeJson();\n      pm.expect(state.companion).to.be.an('object');\n      pm.expect(state.code).to.equal(state.companion.code);\n      pm.expect(array).to.deep.equal(state.companion.body);\n      unchanged();\n    } else if (invariant === 'jsonContentType') {\n      pm.expect(state.code).to.equal(200);\n      pm.expect(state.contentType.toLowerCase()).to.include('application/json');\n      pm.expect(array).to.be.an('array');\n    } else if (invariant === 'nonReflection') {\n      safeJson();\n      pm.expect(state.raw).to.not.include(search);\n      pm.expect(array.length).to.be.at.most(state.before.length);\n      unchanged();\n    } else if (invariant === 'nonExpandingSafe') {\n      safeJson();\n      pm.expect(array.length).to.be.at.most(state.before.length);\n      unchanged();\n    } else if (invariant === 'idSchema') {\n      pm.expect(state.code).to.equal(200);\n      pm.expect(array).to.be.an('array').and.not.empty;\n      array.forEach(function (product) { pm.expect(product.id).to.be.a('number').and.above(0); pm.expect(Number.isInteger(product.id)).to.equal(true); });\n    } else if (invariant === 'nameSchema') {\n      pm.expect(state.code).to.equal(200);\n      pm.expect(array).to.be.an('array').and.not.empty;\n      array.forEach(function (product) { pm.expect(product.name).to.be.a('string').and.not.empty; });\n    } else if (invariant === 'priceSchema') {\n      pm.expect(state.code).to.equal(200);\n      pm.expect(array).to.be.an('array').and.not.empty;\n      array.forEach(function (product) { pm.expect(product.price).to.be.a('number').and.above(0); pm.expect(Number.isFinite(product.price)).to.equal(true); });\n    } else if (invariant === 'descriptionSchema') {\n      pm.expect(state.code).to.equal(200);\n      array.forEach(function (product) { pm.expect(product.description).to.be.a('string'); });\n    } else if (invariant === 'imageSchema') {\n      pm.expect(state.code).to.equal(200);\n      array.forEach(function (product) { pm.expect(product.imageUrl).to.be.a('string'); });\n    } else if (invariant === 'categorySchema') {\n      pm.expect(state.code).to.equal(200);\n      array.forEach(function (product) { pm.expect(Number.isInteger(product.category_id)).to.equal(true); });\n    } else if (invariant === 'sensitiveFields') {\n      const denied = /^(password|token|secret|reset_token|locked_until|login_attempts|user_id)$/i;\n      const walk = function (value) {\n        if (!value || typeof value !== 'object') return;\n        Object.keys(value).forEach(function (key) {\n          pm.expect(key).to.not.match(denied);\n          walk(value[key]);\n        });\n      };\n      pm.expect(state.code).to.equal(200);\n      walk(array);\n    } else if (invariant === 'hppXssSafe') {\n      safeJson();\n      pm.expect(state.raw).to.not.include(pm.variables.get('search2') || '');\n      pm.expect(array.length).to.be.at.most(state.before.length);\n      unchanged();\n    } else if (invariant === 'duplicateQuerySafe' || invariant === 'hppSafe' || invariant === 'safeJsonNoMutation') {\n      safeJson();\n      pm.expect(array.length).to.be.at.most(state.before.length);\n      unchanged();\n    } else {\n      pm.expect.fail('Unknown FR-05 invariant: ' + invariant);\n    }\n  }\n})",
+      "type": "string"
+    },
+    {
+      "key": "fr08Oracle",
+      "value": "({\n  run: function (done) {\n    const baseUrl = pm.environment.get('baseUrl');\n    const studentId = pm.environment.get('studentId') || '23127075';\n    const tokenA = pm.collectionVariables.get('caseUserTokenA');\n    const tokenB = pm.collectionVariables.get('caseUserTokenB');\n    const headers = function (token) {\n      return [{ key: 'Content-Type', value: 'application/json' }, { key: 'Authorization', value: 'Bearer ' + token }, { key: 'X-Student-Id', value: studentId }];\n    };\n    const state = {\n      setupError: pm.collectionVariables.get('fr08SetupError') || '',\n      beforeOrdersA: JSON.parse(pm.collectionVariables.get('fr08BeforeOrdersA') || '[]'),\n      beforeCartA: JSON.parse(pm.collectionVariables.get('fr08BeforeCartA') || '[]'),\n      serverTotalA: Number(pm.collectionVariables.get('fr08ServerTotalA')),\n      beforeOrdersB: JSON.parse(pm.collectionVariables.get('fr08BeforeOrdersB') || '[]'),\n      beforeCartB: JSON.parse(pm.collectionVariables.get('fr08BeforeCartB') || '[]'),\n      serverTotalB: Number(pm.collectionVariables.get('fr08ServerTotalB')),\n      oldTotal: Number(pm.collectionVariables.get('fr08OldTotal')),\n      main: { code: pm.response.code, text: pm.response.text(), contentType: pm.response.headers.get('Content-Type') || '', body: null },\n      concurrent: [],\n      readError: ''\n    };\n    try { state.main.body = pm.response.json(); } catch (error) { state.main.parseError = error.message; }\n    const readbacks = function () {\n      const requests = [\n        { key: 'afterOrdersA', path: '/api/orders/my-orders', token: tokenA },\n        { key: 'afterCartA', path: '/api/cart', token: tokenA }\n      ];\n      if (tokenB) {\n        requests.push({ key: 'afterOrdersB', path: '/api/orders/my-orders', token: tokenB });\n        requests.push({ key: 'afterCartB', path: '/api/cart', token: tokenB });\n      }\n      let remaining = requests.length;\n      requests.forEach(function (entry) {\n        pm.sendRequest({ url: baseUrl + entry.path, method: 'GET', header: headers(entry.token) }, function (error, response) {\n          if (error) state.readError += error.message;\n          else {\n            try { state[entry.key] = response.json(); } catch (parseError) { state.readError += parseError.message; }\n          }\n          remaining -= 1;\n          if (remaining === 0) done(state);\n        });\n      });\n    };\n    if (pm.iterationData.get('invariant') === 'simultaneous') {\n      const options = { url: baseUrl + '/api/checkout', method: 'POST', header: headers(tokenA), body: { mode: 'raw', raw: pm.variables.get('checkoutRaw') } };\n      let barrier = 2;\n      const released = function (label, error, response) {\n        state.concurrent.push({ label, error: error && error.message, code: response && response.code, body: response && response.text() });\n        barrier -= 1;\n        if (barrier === 0) readbacks();\n      };\n      pm.sendRequest(options, function (error, response) { released('A', error, response); });\n      pm.sendRequest(options, function (error, response) { released('B', error, response); });\n    } else {\n      readbacks();\n    }\n  },\n  assert: function (state) {\n    const invariant = pm.iterationData.get('invariant');\n    const expectedStatus = pm.iterationData.get('expectedStatus');\n    const ids = function (orders) { return new Set((orders || []).map(function (order) { return order.id; })); };\n    const beforeIdsA = ids(state.beforeOrdersA);\n    const newOrdersA = (state.afterOrdersA || []).filter(function (order) { return !beforeIdsA.has(order.id); });\n    const beforeIdsB = ids(state.beforeOrdersB);\n    const newOrdersB = (state.afterOrdersB || []).filter(function (order) { return !beforeIdsB.has(order.id); });\n    const unchanged = function (left, right) { pm.expect(left).to.deep.equal(right); };\n    const jsonResponse = function () {\n      pm.expect(state.main.contentType.toLowerCase()).to.include('application/json');\n      pm.expect(state.main.parseError).to.equal(undefined);\n    };\n    const success = function () {\n      pm.expect(state.main.code).to.equal(200);\n      jsonResponse();\n      pm.expect(newOrdersA).to.have.length(1);\n      pm.expect(newOrdersA[0].status).to.equal('pending');\n      pm.expect(Number(newOrdersA[0].total_amount)).to.equal(state.serverTotalA);\n      pm.expect(state.afterCartA).to.deep.equal([]);\n    };\n    const atomicReject = function () {\n      pm.expect(state.main.code).to.equal(Number(expectedStatus));\n      jsonResponse();\n      pm.expect(newOrdersA).to.have.length(0);\n      unchanged(state.afterCartA, state.beforeCartA);\n    };\n    pm.expect(state.setupError).to.equal('');\n    pm.expect(state.readError).to.equal('');\n    if (invariant === 'success') {\n      success();\n    } else if (invariant === 'emptyCartReject' || invariant === 'addressReject' || invariant === 'malformedReject') {\n      atomicReject();\n    } else if (invariant === 'tamperedTotal') {\n      success();\n      pm.expect(Number(newOrdersA[0].total_amount)).to.not.equal(Number(pm.iterationData.get('checkoutBody').total_amount));\n    } else if (invariant === 'cartCleared') {\n      success();\n      pm.expect(state.afterCartA).to.deep.equal([]);\n    } else if (invariant === 'pending') {\n      success();\n      pm.expect(newOrdersA[0].status).to.equal('pending');\n    } else if (invariant === 'authReject') {\n      atomicReject();\n    } else if (invariant === 'ownership') {\n      success();\n      pm.expect(newOrdersB).to.have.length(0);\n      unchanged(state.afterCartB, state.beforeCartB);\n      pm.expect(state.serverTotalB).to.equal(state.beforeCartB.reduce(function (sum, item) { return sum + Number(item.price) * Number(item.quantity); }, 0));\n    } else if (invariant === 'addressLiteral') {\n      success();\n      pm.expect(newOrdersA[0].shipping_address).to.equal(pm.iterationData.get('checkoutBody').shipping_address);\n      pm.expect(state.main.text).to.not.match(/(sql|sqlite|syntax|database error)/i);\n    } else if (invariant === 'safeTotalInvariant') {\n      pm.expect([200, 400]).to.include(state.main.code);\n      jsonResponse();\n      if (state.main.code === 200) success(); else {\n        pm.expect(newOrdersA).to.have.length(0);\n        unchanged(state.afterCartA, state.beforeCartA);\n      }\n      newOrdersA.forEach(function (order) {\n        pm.expect(Number(order.total_amount)).to.equal(state.serverTotalA);\n        pm.expect(Number(order.total_amount)).to.be.above(0);\n      });\n    } else if (invariant === 'persistedId') {\n      success();\n      pm.expect(Number.isInteger(newOrdersA[0].id)).to.equal(true);\n      pm.expect(newOrdersA[0].id).to.be.above(0);\n    } else if (invariant === 'totalSchema') {\n      success();\n      pm.expect(Number.isFinite(Number(newOrdersA[0].total_amount))).to.equal(true);\n      pm.expect(Number(newOrdersA[0].total_amount)).to.be.above(0);\n    } else if (invariant === 'contentType') {\n      success();\n      pm.expect(state.main.contentType.toLowerCase()).to.include('application/json');\n    } else if (invariant === 'staleTotal') {\n      success();\n      pm.expect(state.oldTotal).to.not.equal(state.serverTotalA);\n      pm.expect(Number(newOrdersA[0].total_amount)).to.equal(state.serverTotalA);\n      pm.expect(Number(newOrdersA[0].total_amount)).to.not.equal(state.oldTotal);\n    } else if (invariant === 'emptiedCart') {\n      pm.expect(state.beforeCartA).to.deep.equal([]);\n      atomicReject();\n      pm.expect(state.afterCartA).to.deep.equal([]);\n    } else if (invariant === 'simultaneous') {\n      pm.expect(state.main.code).to.equal(200);\n      const successes = state.concurrent.filter(function (response) { return response.code >= 200 && response.code < 300; });\n      pm.expect(successes.length).to.be.at.most(1);\n      pm.expect(newOrdersA).to.have.length(1);\n      pm.expect(Number(newOrdersA[0].total_amount)).to.equal(state.serverTotalA);\n      pm.expect(state.afterCartA).to.deep.equal([]);\n      const matchingAmounts = newOrdersA.filter(function (order) { return Number(order.total_amount) === state.serverTotalA; });\n      pm.expect(matchingAmounts).to.have.length(1);\n    } else {\n      pm.expect.fail('Unknown FR-08 invariant: ' + invariant);\n    }\n  }\n})",
+      "type": "string"
+    },
+    {
+      "key": "fr18Oracle",
+      "value": "({\n  run: function (done) {\n    const baseUrl = pm.environment.get('baseUrl');\n    const studentId = pm.environment.get('studentId') || '23127075';\n    const adminToken = pm.collectionVariables.get('caseAdminToken');\n    const state = {\n      setupError: pm.collectionVariables.get('fr18SetupError') || '',\n      before: JSON.parse(pm.collectionVariables.get('fr18BeforeOrder') || 'null'),\n      beforeOrders: JSON.parse(pm.collectionVariables.get('fr18BeforeOrders') || '[]'),\n      profileBefore: JSON.parse(pm.collectionVariables.get('fr18ProfileBefore') || 'null'),\n      profileAfter: JSON.parse(pm.collectionVariables.get('fr18ProfileAfter') || 'null'),\n      main: { code: pm.response.code, text: pm.response.text(), contentType: pm.response.headers.get('Content-Type') || '', body: null },\n      secondForged: null,\n      readError: ''\n    };\n    try { state.main.body = pm.response.json(); } catch (error) { state.main.parseError = error.message; }\n    const readback = function () {\n      pm.sendRequest({\n        url: baseUrl + '/api/admin/orders',\n        method: 'GET',\n        header: [{ key: 'Authorization', value: 'Bearer ' + adminToken }, { key: 'X-Student-Id', value: studentId }]\n      }, function (error, response) {\n        if (error) state.readError = error.message;\n        else {\n          try {\n            state.afterOrders = response.json();\n            state.after = state.afterOrders.find(function (order) { return Number(order.id) === Number(pm.collectionVariables.get('caseControlOrderId')); });\n          } catch (parseError) { state.readError = parseError.message; }\n        }\n        done(state);\n      });\n    };\n    if (pm.iterationData.get('invariant') === 'forgedJwtVariants') {\n      pm.sendRequest({\n        url: baseUrl + '/api/admin/orders/' + pm.collectionVariables.get('caseControlOrderId') + '/status',\n        method: 'PUT',\n        header: [{ key: 'Content-Type', value: 'application/json' }, { key: 'Authorization', value: 'Bearer ' + pm.collectionVariables.get('caseInvalidKidToken') }, { key: 'X-Student-Id', value: studentId }],\n        body: { mode: 'raw', raw: JSON.stringify({ status: 'confirmed' }) }\n      }, function (error, response) {\n        state.secondForged = { error: error && error.message, code: response && response.code, body: response && response.text() };\n        readback();\n      });\n    } else {\n      readback();\n    }\n  },\n  assert: function (state) {\n    const invariant = pm.iterationData.get('invariant');\n    const expectedStatus = pm.iterationData.get('expectedStatus');\n    const expectedFinal = pm.iterationData.get('expectedFinalState');\n    const controlUnchanged = function () { pm.expect(state.after).to.deep.equal(state.before); };\n    const jsonMain = function () {\n      pm.expect(state.main.contentType.toLowerCase()).to.include('application/json');\n      pm.expect(state.main.parseError).to.equal(undefined);\n    };\n    pm.expect(state.setupError).to.equal('');\n    pm.expect(state.readError).to.equal('');\n    if (invariant === 'adminList') {\n      pm.expect(state.main.code).to.equal(200);\n      pm.expect(state.main.body).to.be.an('array');\n      const responseIds = state.main.body.map(function (order) { return Number(order.id); });\n      pm.expect(responseIds).to.include(Number(pm.collectionVariables.get('caseControlOrderId')));\n      pm.expect(responseIds).to.include(Number(pm.collectionVariables.get('caseSecondOrderId')));\n    } else if (invariant === 'listDenied' || invariant === 'profileListDenied') {\n      pm.expect(state.main.code).to.equal(Number(expectedStatus));\n      jsonMain();\n      pm.expect(state.main.body).to.not.be.an('array');\n      if (invariant === 'profileListDenied') {\n        pm.expect(state.profileBefore.role).to.equal('user');\n        pm.expect(state.profileAfter.role).to.equal('user');\n      }\n      controlUnchanged();\n    } else if (invariant === 'mutationDenied' || invariant === 'profileMutationDenied') {\n      pm.expect(state.main.code).to.equal(Number(expectedStatus));\n      jsonMain();\n      if (invariant === 'profileMutationDenied') {\n        pm.expect(state.profileBefore.role).to.equal('user');\n        pm.expect(state.profileAfter.role).to.equal('user');\n      }\n      controlUnchanged();\n    } else if (invariant === 'listFields') {\n      pm.expect(state.main.code).to.equal(200);\n      const order = state.main.body.find(function (entry) { return Number(entry.id) === Number(pm.collectionVariables.get('caseControlOrderId')); });\n      pm.expect(order).to.be.an('object');\n      pm.expect(order).to.include.all.keys('id', 'user_id', 'total_amount', 'status', 'shipping_address');\n      pm.expect(Number(order.total_amount)).to.be.above(0);\n    } else if (invariant === 'validTransition') {\n      pm.expect(state.main.code).to.equal(200);\n      jsonMain();\n      pm.expect(state.after.status).to.equal(expectedFinal);\n    } else if (invariant === 'invalidTransition') {\n      pm.expect(state.main.code).to.equal(Number(expectedStatus));\n      jsonMain();\n      controlUnchanged();\n    } else if (invariant === 'missingOrder') {\n      pm.expect(state.main.code).to.equal(404);\n      jsonMain();\n      controlUnchanged();\n    } else if (invariant === 'invalidIdInvariant' || invariant === 'zeroIdInvariant') {\n      pm.expect(state.main.code).to.not.equal(500);\n      jsonMain();\n      if (state.main.code === 200) {\n        const idZeroBefore = state.beforeOrders.find(function (order) { return Number(order.id) === 0; });\n        pm.expect(invariant).to.equal('zeroIdInvariant');\n        pm.expect(idZeroBefore).to.be.an('object');\n        const idZeroAfter = state.afterOrders.find(function (order) { return Number(order.id) === 0; });\n        pm.expect(idZeroAfter.status).to.equal('confirmed');\n      }\n      controlUnchanged();\n    } else if (invariant === 'massAssignment') {\n      pm.expect([200, 400]).to.include(state.main.code);\n      jsonMain();\n      if (state.main.code === 200) {\n        const expected = Object.assign({}, state.before, { status: 'confirmed' });\n        pm.expect(state.after).to.deep.equal(expected);\n      } else {\n        controlUnchanged();\n      }\n      pm.expect(state.after.total_amount).to.equal(state.before.total_amount);\n      pm.expect(state.after.shipping_address).to.equal(state.before.shipping_address);\n      pm.expect(state.after).to.not.have.property('role');\n    } else if (invariant === 'forgedJwtVariants') {\n      pm.expect(state.main.code).to.equal(401);\n      jsonMain();\n      pm.expect(state.secondForged.error).to.equal(null);\n      pm.expect(state.secondForged.code).to.equal(401);\n      controlUnchanged();\n    } else {\n      pm.expect.fail('Unknown FR-18 invariant: ' + invariant);\n    }\n  }\n})",
+      "type": "string"
+    }
+  ]
 }
