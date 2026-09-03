@@ -62,6 +62,11 @@ export function redactReport(report) {
   return redactValue(report, new WeakSet());
 }
 
+export function serializeReport(report) {
+  return `${JSON.stringify(redactReport(report))}\n`;
+}
+
+
 export function buildRuns(options = {}) {
   const rootDir = resolve(options.rootDir ?? process.cwd());
   const outputDir = resolve(options.outputDir ?? join(rootDir, 'src/newman/member-2'));
@@ -211,7 +216,7 @@ async function persistRun(run, rawPaths, result) {
     txt: `${run.outputBase}.txt`,
   };
 
-  await atomicWrite(outputs.json, `${JSON.stringify(redactReport(parsedJson), null, 2)}\n`);
+  await atomicWrite(outputs.json, serializeReport(parsedJson));
   await atomicWrite(outputs.html, redactText(rawHtml));
   await atomicWrite(outputs.txt, redactText(rawCli));
   return outputs;

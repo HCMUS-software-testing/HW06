@@ -9,6 +9,7 @@ import postmanCollection from 'postman-collection';
 import {
   buildRuns,
   redactReport,
+  serializeReport,
   runSuites,
   summarizeRuns,
 } from './run-newman.mjs';
@@ -273,4 +274,13 @@ test('runSuites atomically preserves redacted evidence and returns a failing sum
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
+});
+
+test('serializeReport writes compact JSON under pretty-print expansion', () => {
+  const report = { collection: { item: [{ name: 'case' }] }, run: { executions: [{ id: '1' }] } };
+  const compact = serializeReport(report);
+  const pretty = `${JSON.stringify(report, null, 2)}\n`;
+  assert.match(compact, /\n$/);
+  assert.doesNotMatch(compact, /\n  "collection"/);
+  assert.ok(compact.length < pretty.length);
 });
