@@ -1,0 +1,658 @@
+newman
+
+HW06 API Testing - Member 2
+
+Iteration 1/32
+
+❏ FR-05 - Product Search
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-001 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 47ms]
+
+Attempting to set next request to TC-FR05-AI-001 - baseline list
+
+↳ TC-FR05-AI-001 - baseline list
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-001 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 7ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 6ms]
+  ✓  TC-FR05-AI-001 | baseline list
+
+Iteration 2/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-002 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 6ms]
+
+Attempting to set next request to TC-FR05-AI-002 - fixture keyword
+
+↳ TC-FR05-AI-002 - fixture keyword
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-002 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 10ms]
+  GET http://localhost:3000/api/products?search=iPhone 15 Pro Max [200 OK, 453B, 6ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 6ms]
+  ✓  TC-FR05-AI-002 | fixture keyword
+
+Iteration 3/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-003 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 9ms]
+
+Attempting to set next request to TC-FR05-AI-003 - no match
+
+↳ TC-FR05-AI-003 - no match
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-003 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products?search=__hw06_no_match_mtkx6wmb-syjj2tfm__ [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  ✓  TC-FR05-AI-003 | no match
+
+Iteration 4/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-004 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-004 - empty normalization
+
+↳ TC-FR05-AI-004 - empty normalization
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-004 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search= [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-004 | empty normalization
+
+Iteration 5/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-005 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-005 - special ASCII
+
+↳ TC-FR05-AI-005 - special ASCII
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-005 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=!@#$%^&*()_+-=[]{}|;:,.<>? [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-005 | special ASCII
+
+Iteration 6/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-006 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+
+Attempting to set next request to TC-FR05-AI-006 - Vietnamese UTF-8
+
+↳ TC-FR05-AI-006 - Vietnamese UTF-8
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-006 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=không-tồn-tại-mtkx6wmb-syjj2tfm [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  ✓  TC-FR05-AI-006 | Vietnamese UTF-8
+
+Iteration 7/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-007 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-007 - long search
+
+↳ TC-FR05-AI-007 - long search
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-007 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa [200 OK, 267B, 6ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  ✓  TC-FR05-AI-007 | long search
+
+Iteration 8/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-008 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-008 - spaces only
+
+↳ TC-FR05-AI-008 - spaces only
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-008 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=    [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  ✓  TC-FR05-AI-008 | spaces only
+
+Iteration 9/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-009 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-009 - numeric sentinel
+
+↳ TC-FR05-AI-009 - numeric sentinel
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-009 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=987654321mtkx6wmb-syjj2tfm [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-009 | numeric sentinel
+
+Iteration 10/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-011 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-011 - duplicate query
+
+↳ TC-FR05-AI-011 - duplicate query
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-011 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=iPhone&search=iPhone [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-011 | duplicate query
+
+Iteration 11/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-012 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-012 - percent decoding
+
+↳ TC-FR05-AI-012 - percent decoding
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-012 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=iPhone [200 OK, 453B, 3ms]
+  GET http://localhost:3000/api/products?search=%69Phone [200 OK, 453B, 2ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-012 | percent decoding
+
+Iteration 12/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-013 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-013 - SQLi differential
+
+↳ TC-FR05-AI-013 - SQLi differential
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-013 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search='%20OR%20'1'%3D'2 [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=' OR '1'='1 [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-013 | SQLi differential
+
+Iteration 13/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-014 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-014 - search content type
+
+↳ TC-FR05-AI-014 - search content type
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-014 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=iPhone [200 OK, 453B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-014 | search content type
+
+Iteration 14/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-015 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-015 - raw non-reflection
+
+↳ TC-FR05-AI-015 - raw non-reflection
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-015 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 7ms]
+  GET http://localhost:3000/api/products?search=<svg/onload=alert(1)> [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-015 | raw non-reflection
+
+Iteration 15/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-016 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+
+Attempting to set next request to TC-FR05-AI-016 - tautology cardinality
+
+↳ TC-FR05-AI-016 - tautology cardinality
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-016 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 2ms]
+  GET http://localhost:3000/api/products?search=' OR 1=1 -- [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-016 | tautology cardinality
+
+Iteration 16/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-017 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+
+Attempting to set next request to TC-FR05-AI-017 - union payload
+
+↳ TC-FR05-AI-017 - union payload
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-017 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=' UNION SELECT 1,2,3,4,5 -- [500 Internal Server Error, 408B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  1. TC-FR05-AI-017 | union payload
+
+Iteration 17/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-019 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-019 - SQL comment
+
+↳ TC-FR05-AI-019 - SQL comment
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-019 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=iPhone' -- [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  ✓  TC-FR05-AI-019 | SQL comment
+
+Iteration 18/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-020 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+
+Attempting to set next request to TC-FR05-AI-020 - API XSS invariant
+
+↳ TC-FR05-AI-020 - API XSS invariant
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-020 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=<script>alert('hw06')</script> [500 Internal Server Error, 348B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  2. TC-FR05-AI-020 | API XSS invariant
+
+Iteration 19/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-023 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-023 - oversized search
+
+↳ TC-FR05-AI-023 - oversized search
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-023 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz [200 OK, 267B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-023 | oversized search
+
+Iteration 20/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-024 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-024 - null byte
+
+↳ TC-FR05-AI-024 - null byte
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-024 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products?search=null bytemtkx6wmb-syjj2tfm [500 Internal Server Error, 351B, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  3. TC-FR05-AI-024 | null byte
+
+Iteration 21/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-025 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-025 - emoji UTF-8
+
+↳ TC-FR05-AI-025 - emoji UTF-8
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-025 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=🧪-mtkx6wmb-syjj2tfm [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-025 | emoji UTF-8
+
+Iteration 22/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-026 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+
+Attempting to set next request to TC-FR05-AI-026 - id schema
+
+↳ TC-FR05-AI-026 - id schema
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-026 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-026 | id schema
+
+Iteration 23/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-027 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+
+Attempting to set next request to TC-FR05-AI-027 - name schema
+
+↳ TC-FR05-AI-027 - name schema
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-027 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  ✓  TC-FR05-AI-027 | name schema
+
+Iteration 24/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-028 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-028 - price schema
+
+↳ TC-FR05-AI-028 - price schema
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-028 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-028 | price schema
+
+Iteration 25/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-029 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 5ms]
+
+Attempting to set next request to TC-FR05-AI-029 - description schema
+
+↳ TC-FR05-AI-029 - description schema
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-029 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-029 | description schema
+
+Iteration 26/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-030 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-030 - image URL schema
+
+↳ TC-FR05-AI-030 - image URL schema
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-030 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-030 | image URL schema
+
+Iteration 27/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-031 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-031 - category schema
+
+↳ TC-FR05-AI-031 - category schema
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-031 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  ✓  TC-FR05-AI-031 | category schema
+
+Iteration 28/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-033 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-AI-033 - baseline content type
+
+↳ TC-FR05-AI-033 - baseline content type
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-033 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-AI-033 | baseline content type
+
+Iteration 29/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-035 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+
+Attempting to set next request to TC-FR05-AI-035 - sensitive fields
+
+↳ TC-FR05-AI-035 - sensitive fields
+  ┌
+  │ 'CASE_ID=TC-FR05-AI-035 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 2ms]
+  ✓  TC-FR05-AI-035 | sensitive fields
+
+Iteration 30/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-HUMAN-001 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+
+Attempting to set next request to TC-FR05-HUMAN-001 - blind SQLi pair
+
+↳ TC-FR05-HUMAN-001 - blind SQLi pair
+  ┌
+  │ 'CASE_ID=TC-FR05-HUMAN-001 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search='%20AND%201%3D2%20-- [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/products?search=' AND 1=1 -- [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  4. TC-FR05-HUMAN-001 | blind SQLi pair
+
+Iteration 31/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-HUMAN-003 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 4ms]
+
+Attempting to set next request to TC-FR05-HUMAN-003 - HPP pair
+
+↳ TC-FR05-HUMAN-003 - HPP pair
+  ┌
+  │ 'CASE_ID=TC-FR05-HUMAN-003 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=iPhone&search=Samsung [200 OK, 267B, 5ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  ✓  TC-FR05-HUMAN-003 | HPP pair
+
+Iteration 32/32
+
+↳ __dispatch__
+  ┌
+  │ 'CASE_ID=TC-FR05-HUMAN-008 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+
+Attempting to set next request to TC-FR05-HUMAN-008 - HPP XSS pair
+
+↳ TC-FR05-HUMAN-008 - HPP XSS pair
+  ┌
+  │ 'CASE_ID=TC-FR05-HUMAN-008 X-Student-Id=23127075'
+  └
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 3ms]
+  GET http://localhost:3000/api/products?search=&search=<svg/onload=alert(1)> [200 OK, 267B, 3ms]
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 2ms]
+  ✓  TC-FR05-HUMAN-008 | HPP XSS pair
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │              32 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │             132 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              64 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │             128 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              32 │               4 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 2.5s                                    │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 108.6kB (approx)                       │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 4ms [min: 2ms, max: 47ms, s.d.: 3ms] │
+└─────────────────────────────────────────────────────────────┘
+
+[31m  # [39m[31m failure        [39m[31m detail                                                                [39m
+[90m    [39m[90m                [39m[90m                                                                       [39m
+ 1.  AssertionError  TC-FR05-AI-017 | union payload                                        
+     iteration: 16   expected 'Unexpected token \'<\' at 1:1\n<h1>Da…' to equal undefined  
+                     at assertion:0 in test-script                                         
+                     inside "FR-05 - Product Search / TC-FR05-AI-017 - union payload"      
+[90m    [39m[90m                [39m[90m                                                                       [39m
+ 2.  AssertionError  TC-FR05-AI-020 | API XSS invariant                                    
+     iteration: 18   expected 'Unexpected token \'<\' at 1:1\n<h1>Da…' to equal undefined  
+                     at assertion:0 in test-script                                         
+                     inside "FR-05 - Product Search / TC-FR05-AI-020 - API XSS invariant"  
+[90m    [39m[90m                [39m[90m                                                                       [39m
+ 3.  AssertionError  TC-FR05-AI-024 | null byte                                            
+     iteration: 20   expected 'Unexpected token \'<\' at 1:1\n<h1>Da…' to equal undefined  
+                     at assertion:0 in test-script                                         
+                     inside "FR-05 - Product Search / TC-FR05-AI-024 - null byte"          
+[90m    [39m[90m                [39m[90m                                                                       [39m
+ 4.  AssertionError  TC-FR05-HUMAN-001 | blind SQLi pair                                   
+     iteration: 30   expected [ { id: 1, …(5) }, …(4) ] to deeply equal []                 
+                     at assertion:0 in test-script                                         
+                     inside "FR-05 - Product Search / TC-FR05-HUMAN-001 - blind SQLi pair" 
